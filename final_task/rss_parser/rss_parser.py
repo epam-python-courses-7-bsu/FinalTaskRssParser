@@ -3,11 +3,10 @@ import feedparser
 import argparse
 from dataclasses import dataclass
 
-version = 1.0
-
 
 @dataclass
 class ArgParser:
+    """class for reading console arguments"""
     source: str = ""
     status_version: bool = False
     status_json: bool = False
@@ -32,6 +31,7 @@ class ArgParser:
 
 @dataclass
 class Entry:
+    """class for every article from http:link...link.rss"""
     title: str
     date: str
     article_link: str
@@ -41,33 +41,33 @@ class Entry:
     def __post_init__(self):
         self.parse_html()
 
-    def print_title(self):
+    def print_title(self) -> None:
         print("Title: ", self.title)
 
-    def print_date(self):
+    def print_date(self) -> None:
         print("Date: ", self.date)
 
-    def print_link(self):
+    def print_link(self) -> None:
         print("Link: ", self.article_link)
 
-    def print_summary(self):
+    def print_summary(self) -> None:
         print('\n')
         print(self.summary)
         print('\n')
 
-    def print_links(self):
+    def print_links(self) -> None:
         print("Links:")
         for i, link in enumerate(self.links):
             print(f'[{i}] ', link)
         print('\n')
 
-    def parse_html(self):
-        """selects alt and src attributes from <img> and removes all the html tags from the entry"""
+    def parse_html(self) -> None:
+        """selects alt and src attributes from <img> and removes all the html tags from the entry.summary"""
         while self.summary.count('<img'):
             src = self.summary[self.summary.find("src=\"") + len("src=\""):
                                 self.summary.find('"', self.summary.find("src=\"") + len("src=\""))
                   ]
-            self.links.append({"href": src})
+            self.links.append(src)
             alt = self.summary[self.summary.find("alt=\"") + len("alt=\""):
                                 self.summary.find('"', self.summary.find("alt=\"") + len("alt=\""))
                   ]
@@ -83,143 +83,71 @@ class Entry:
 
 @dataclass()
 class Handler:
-    parsed: dict
+    """class for handling different options: --version, --json, --limit Limit"""
+    source: str
+    limit: int
+    version: float
 
-    def print_feed(self):
+    def __post_init__(self):
+        self.parsed = feedparser.parse(self.source)
+
+    """options:"""
+    def option_version(self) -> None:
+        print("version ", self.version)
+
+    def option_json(self) -> None:
+        self.print_feed()
+        for num, entry in enumerate(self.gen_entries()):
+            if num == self.limit:
+                break
+            self.print_to_json(self.convert_to_dict(entry))
+
+    def option_default(self) -> None:
+        self.print_feed()
+        for num, entry in enumerate(self.gen_entries()):
+            if num == self.limit:
+                break
+            entry.print_title()
+            entry.print_date()
+            entry.print_link()
+            entry.print_summary()
+            entry.print_links()
+
+    def gen_entries(self) -> Entry:
+        """generation instances of Entry class for farther handling them"""
+        for ent in self.parsed.entries:
+            entry = Entry(ent.title, ent.published, ent.link, ent.summary, [link["href"] for link in ent.links])
+            yield entry
+
+    def print_feed(self) -> None:
         print("Feed: ", self.parsed.feed.title, '\n')
-# def gen_entries(parsed):
-#     for entr in parsed.entries:
-#         yield entr
 
+    def print_to_json(self, obj: dict) -> None:
+        print(json.dumps(obj, indent=2))
 
-# def print_feed(parsed):
-#     print("Feed: ", parsed.feed.title, '\n')
-
-
-# def print_entry_title(entry):
-#     print("Title: ", entry.title)
-#
-#
-# def print_entry_date(entry):
-#     print("Date: ", entry.published)
-#
-#
-# def print_entry_link(entry):
-#     print("Link: ", entry.link, '\n')
-#
-#
-# def print_links_entry(entry):
-#     print("Links:")
-#     for i, link in enumerate(entry.links):
-#         print(f'[{i}] ', link["href"])
-#     print('\n')
-
-
-# def print_entry(entry):
-#     print_entry_title(entry)
-#     print_entry_date(entry)
-#     print_entry_link(entry)
-#     print(entry.summary, '\n')
-#     print_links_entry(entry)
-
-
-# def print_entries(parsed, a: ArgParser):
-#     for num, entry in enumerate(parsed.entries):
-#         if num == a.limit:
-#             break
-#         parse_html(entry)
-#         print_entry(entry)
-
-
-def print_to_json(obj):
-    print(json.dumps(obj, indent=2))
-
-
-# def parse_html(entry):
-#     """selects alt and src attributes from <img> and removes all the html tags from the entry"""
-#     while entry.summary.count('<img'):
-#         src = entry.summary[entry.summary.find("src=\"") + len("src=\""):
-#                             entry.summary.find('"', entry.summary.find("src=\"") + len("src=\""))
-#               ]
-#         entry.links.append({"href": src})
-#         alt = entry.summary[entry.summary.find("alt=\"") + len("alt=\""):
-#                             entry.summary.find('"', entry.summary.find("alt=\"") + len("alt=\""))
-#               ]
-#         start_cut = entry.summary.find("<img")
-#         entry.summary = entry.summary[: start_cut] \
-#                         + f"[image {len(entry.links) - 1}: " + alt + "]" \
-#                         + f"[{len(entry.links) - 1}] " \
-#                         + entry.summary[entry.summary.find(">", start_cut + len("<img")) + 1:]
-#
-#     while entry.summary.count('<'):
-#         entry.summary = entry.summary[:entry.summary.find('<')] + entry.summary[entry.summary.find('>') + 1:]
-
-
-def convert_to_dict(parsed, entry):
-    entry_dict = {
-        "Feed": parsed.feed.title,
-        "Title": entry.title,
-        "Date": entry.published,
-        "Link": entry.link,
-        "Links": [link["href"] for link in entry.links]
-    }
-    return entry_dict
-
-
-"""execution options: json, version, limit ..."""
-
-
-def case_json(source, limit):
-    parsed = feedparser.parse(source)
-    print_feed(parsed)
-    gen = gen_entries(parsed)
-    for num, entry in enumerate(gen):
-        if num == limit:
-            break
-        print_to_json(convert_to_dict(parsed, entry))
-
-
-def gen_entries(parsed):
-    for ent in parsed.entries:
-        entry = Entry(ent.title, ent.published, ent.link, ent.summary, [link["href"] for link in ent.links])
-        yield entry
-
-
-def case_default(source, limit):
-    parsed = feedparser.parse(source)
-    print_feed(parsed)
-    for num, entry in enumerate(gen_entries(parsed)):
-        if num == limit:
-            break
-        entry.print_title()
-        entry.print_date()
-        entry.print_link()
-        entry.print_summary()
-        entry.print_links()
-
-def case_version():
-    print("version ", version)
-
-
-# """arguments from cl"""
-# arg_parser = argparse.ArgumentParser(description="Pure Python command-line RSS reader.")
-# arg_parser.add_argument("source", type=str, help="RSS URL")
-# arg_parser.add_argument("--version", action="store_true", help="Print version info")
-# arg_parser.add_argument("--json", action="store_true", help=" Print result as JSON in stdout")
-# arg_parser.add_argument("--verbose", action="store_true", help="Outputs verbose status messages")
-# arg_parser.add_argument("--limit", type=int, default=1, help="Limit news topics if this parameter provided")
-# arg_parser_args = arg_parser.parse_args()
+    def convert_to_dict(self, entry: Entry) -> dict:
+        entry_dict = {
+            "Feed": self.parsed.feed.title,
+            "Title": entry.title,
+            "Date": entry.date,
+            "Link": entry.article_link,
+            "Links": entry.links
+        }
+        return entry_dict
 
 
 def main():
-    a = ArgParser()
+    version = 1.0
+    arg_parser = ArgParser()
+    handler = Handler(arg_parser.source, arg_parser.limit, version)
+
     try:
-        if a.status_version:
-            case_version()
-        elif a.status_json:
-            case_json(a)
+        if arg_parser.status_version:
+            handler.option_version()
+        elif arg_parser.status_json:
+            handler.option_json()
         else:
-            case_default(a.source, a.limit)
+            handler.option_default()
     except AttributeError:
         print("Error, failed to get an attribute. Check correctness URL")
 
