@@ -1,0 +1,3 @@
+[console_scripts]
+RssReader = RssReader.__main__:main
+
