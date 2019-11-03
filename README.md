@@ -20,7 +20,7 @@ Congrats! You have successfully forked our repository.
 1. `setup.py` file for setuptools  *must*  be in the root of  `final_task`  folder. Use  `setup.py`  that is already there. (that means path to this file must end with  `final_task/setup.py` )  
 2. Entry point to your application, aka its main module  *must*  be named as  `rss_reader.py` . Use  `rss_reader.py`  that is already in  `rss_reader`  folder.  
 3. You should describe how does your project work, how to launch it and etc in README.md in the  `final_task/README.md`  file.  
-4. If you used any non-standart libraries they must be listed in  `rss_reader/requirements.txt`  file.m   
+4. If you used any non-standart libraries they must be listed in  `rss_reader/requirements.txt`  file.   
 5. All unit test files should be in separate folder called `tests`.
 
 
