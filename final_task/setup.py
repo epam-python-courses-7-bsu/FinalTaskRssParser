@@ -10,7 +10,7 @@ setup(
     install_requires=['feedparser==5.2.1'],
     entry_points={
         'console_scripts': [
-            'rss-reader = rss_parser.rss_parser:run'
+            'rss-reader = rss_reader.rss_reader:run'
         ]
     },
 )
