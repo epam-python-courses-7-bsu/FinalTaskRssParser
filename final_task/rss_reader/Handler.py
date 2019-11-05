@@ -3,11 +3,12 @@ import logging
 
 import feedparser
 from Entry import Entry
+from Logging import logging_decorator
 
 
 class Handler:
     """class for handling different options: --version, --json, --limit Limit"""
-
+    @logging_decorator
     def __init__(self, source: str, limit: int, version: float):
         self.source = source
         self.limit = limit
@@ -16,27 +17,21 @@ class Handler:
         logging.info("Handler object created")
 
     """options of command line:"""
-
+    @logging_decorator
     def option_version(self) -> None:
-        logging.info("function \"option_version\" started")
-
         print("version ", self.version)
 
-        logging.info("function \"option_version\" finished")
-
+    @logging_decorator
     def option_json(self) -> None:
-        logging.info("function \"option_json\" started")
-
         for num, entry in enumerate(self.gen_entries()):
             if num == self.limit:
                 break
             self.print_to_json(self.convert_to_dict(entry))
+            if num == self.limit - 1:
+                break
 
-        logging.info("function \"option_json\" finished")
-
+    @logging_decorator
     def option_default(self) -> None:
-        logging.info("function \"option_default\" started")
-
         self.print_feed()
         for num, entry in enumerate(self.gen_entries()):
             if num == self.limit:
@@ -49,35 +44,25 @@ class Handler:
             if num == self.limit - 1:
                 break
 
-        logging.info("function \"option_default\" finished")
-
+    @logging_decorator
     def gen_entries(self) -> Entry:
         """generation instances of Entry class for farther handling them"""
-        logging.info("function \"gen_entries\" started")
-
         for ent in self.parsed.entries:
             entry = Entry(ent.title, ent.published, ent.link, ent.summary, [link["href"] for link in ent.links])
             yield entry
 
-        logging.info("function \"gen_entries\" finished")
-
+    @logging_decorator
     def print_feed(self) -> None:
         logging.info("function \"print_feed\" started")
-
         print("Feed: ", self.parsed.feed.title, '\n')
-
         logging.info("function \"print_feed\" finished")
 
+    @logging_decorator
     def print_to_json(self, obj: dict) -> None:
-        logging.info("function \"print_to_json\" started")
-
         print(json.dumps(obj, indent=2))
 
-        logging.info("function \"print_to_json\" finished")
-
+    @logging_decorator
     def convert_to_dict(self, entry: Entry) -> dict:
-        logging.info("function \"convert_to_dict\" finished")
-
         entry_dict = {
             "Feed": self.parsed.feed.title,
             "Title": entry.title,
@@ -85,6 +70,4 @@ class Handler:
             "Link": entry.article_link,
             "Links": entry.links
         }
-
-        logging.info("function \"convert_to_dict\" finished")
         return entry_dict
