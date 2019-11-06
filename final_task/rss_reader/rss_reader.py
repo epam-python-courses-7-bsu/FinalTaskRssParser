@@ -1,7 +1,6 @@
-import argparse
 from Handler import Handler
 from Logging import logging_decorator
-from Console_parse import get_arguments_from_console
+from ConsoleParse import get_arguments_from_console
 import logging
 
 
