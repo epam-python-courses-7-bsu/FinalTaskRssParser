@@ -1,0 +1,2 @@
+# cat requirements.txt
+feedparser==5.2.1
