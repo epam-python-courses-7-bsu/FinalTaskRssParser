@@ -6,6 +6,8 @@ import logging
 
 @logging_decorator
 def main():
+    if arg_parser_args.limit <= 0:
+        arg_parser_args.limit = 1
     handler = Handler(arg_parser_args.source, arg_parser_args.limit, version)
     try:
         if arg_parser_args.version:

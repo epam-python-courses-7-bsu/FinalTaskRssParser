@@ -24,8 +24,6 @@ class Handler:
     @logging_decorator
     def option_json(self) -> None:
         for num, entry in enumerate(self.gen_entries()):
-            if num == self.limit:
-                break
             self.print_to_json(self.convert_to_dict(entry))
             if num == self.limit - 1:
                 break
@@ -34,8 +32,6 @@ class Handler:
     def option_default(self) -> None:
         self.print_feed()
         for num, entry in enumerate(self.gen_entries()):
-            if num >= self.limit:
-                break
             entry.print_title()
             entry.print_date()
             entry.print_link()

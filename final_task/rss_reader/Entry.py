@@ -48,7 +48,8 @@ class Entry:
             src = summary[summary.find("src=\"") + len("src=\""):
                                summary.find('"', summary.find("src=\"") + len("src=\""))
                           ]
-            self.links.append(src)
+            if src != "":
+                self.links.append(src)
             alt = summary[summary.find("alt=\"") + len("alt=\""):
                                summary.find('"', summary.find("alt=\"") + len("alt=\""))
                           ]
