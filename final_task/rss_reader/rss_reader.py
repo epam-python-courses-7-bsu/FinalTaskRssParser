@@ -1,48 +1,23 @@
 import argparse
+import html
+import json
 import feedparser
 import logging
 import urllib.request
-import json
-import dataclasses
-from dataclasses import dataclass
 import sys
 import re
+from typing import Tuple, List
+
+import single_article
+import custom_error
 
 VERSION = 1.0
 LOG_FILE_NAME = 'app.log'
 
 
-class EnhancedJSONEncoder(json.JSONEncoder):
-    def default(self, data_class):
-        if dataclasses.is_dataclass(data_class):
-            return dataclasses.asdict(data_class)
-        return super().default(data_class)
-
-
-@dataclass
-class SingleArticle:
-    feed: str
-    title: str
-    date: str
-    link: str
-    summary: str
-    links: list
-
-    def __str__(self) -> str:
-        """Makes str with data of instance of a class"""
-        str_for_print = f"Feed: {self.feed}\n" \
-                        f"Title: {self.title}\n" \
-                        f"Date: {self.date}\n" \
-                        f"Link: {self.link}\n" \
-                        f"{self.summary}\n"
-        for link in self.links:
-            str_for_print += f"{link}\n"
-        return str_for_print
-
-
-def parse_rss(url: str) -> feedparser.FeedParserDict:
+def parse_rss(rss_url: str) -> feedparser.FeedParserDict:
     """Parse the rss"""
-    return feedparser.parse(url)
+    return feedparser.parse(rss_url)
 
 
 def get_source(parsed: feedparser.FeedParserDict) -> dict:
@@ -55,47 +30,75 @@ def get_source(parsed: feedparser.FeedParserDict) -> dict:
     }
 
 
-def get_articles(parsed: feedparser.FeedParserDict, limit: int) -> list:
+def find_links_in_article(article: feedparser.FeedParserDict) -> list:
+    """Finds links in the article"""
+    image_search = re.compile(r'<\s*img [^>]*src="([^"]+)')
+    img = image_search.findall(article['summary'])
+
+    all_links = []
+    for link in article['links']:
+        if link['href'] not in img:
+            all_links.append(link['href'])
+    all_links += img
+
+    return all_links
+
+
+def unescape(text_to_unescape: str) -> str:
+    """Unescape text"""
+    return html.unescape(text_to_unescape)
+
+
+def get_articles(parsed: feedparser.FeedParserDict, limit: int) -> Tuple[List[single_article.SingleArticle], int]:
     """Returns list with articles."""
     articles = []
     feed = parsed['feed']
     entries = parsed['entries']
+    logging.info(f'There is {len(entries)} entries')
+
     no_tags = re.compile('<.*?>')
+
+    if limit is None:
+        limit = len(entries)
 
     try:
         for index, entry in enumerate(entries):
             if index == limit:
                 break
+
+            links_in_article = find_links_in_article(entry)
+
+            if 'published' not in entry:
+                limit -= 1
+                continue
             articles.append(
-                SingleArticle(
-                    feed=feed['title'],
-                    title=entry['title'],
+                single_article.SingleArticle(
+                    feed=unescape(feed['title']),
+                    title=unescape(entry['title']),
                     date=entry['published'],
                     link=entry['link'],
-                    summary=re.sub(no_tags, '', entry['summary']),
-                    links=[f"[{num}]: {link['href']}" for num, link in enumerate(entry['links'], 1)])
+                    summary=unescape(re.sub(no_tags, '', entry['summary'])),
+                    links=[f"[{num}]: {link}" for num, link in enumerate(links_in_article, 1)])
             )
     except KeyError as value:
-        logging.error(f"One of the entries does not have {value} key")
-        logging.info('Application ended')
-        sys.exit()
+        raise custom_error.ArticleKeyError(f"One of the entries does not have {value} key")
 
-    return articles
+    return articles, limit
 
 
-def print_rss_json(data: list) -> None:
+def print_rss_json(data: List[single_article.SingleArticle]) -> None:
     """Prints result as JSON in stdout"""
-    print(json.dumps(data, cls=EnhancedJSONEncoder))
+    print(json.dumps(data, cls=single_article.EnhancedJSONEncoder, ensure_ascii=False))
 
 
-def print_article(data: SingleArticle) -> None:
+def print_article(data: single_article.SingleArticle) -> None:
     """Prints a single article in stdout"""
     print("-" * 120)
     print(data)
     print("-" * 120)
 
 
-def print_rss_articles(rss_articles: list) -> None:
+def print_rss_articles(rss_articles: List[single_article.SingleArticle]) -> None:
     """Prints source feed and articles"""
     for article in rss_articles:
         print_article(article)
@@ -117,7 +120,7 @@ def main(args: argparse.Namespace) -> None:
     parsed_rss = parse_rss(rss_url)
     logging.info('RSS URL parsed')
 
-    articles_list = get_articles(parsed_rss, limit)
+    articles_list, limit = get_articles(parsed_rss, limit)
     logging.info('Articles list created')
 
     try:
@@ -135,11 +138,11 @@ def main(args: argparse.Namespace) -> None:
     logging.info('Application ended')
 
 
-def check_the_connection() -> str:
+def check_the_connection(rss_url: str) -> str:
     """Checks the connection"""
     info = ''
     try:
-        urllib.request.urlopen(sys.argv[1])
+        urllib.request.urlopen(rss_url)
     except urllib.request.HTTPError as e:
         info = f'{e.code}: {e.reason}'
         return info
@@ -150,33 +153,27 @@ def check_the_connection() -> str:
         return info
 
 
-def check_if_link_is_correct() -> bool:
+def check_if_link_is_correct(rss_url: str) -> bool:
     """Checks if link is valid"""
     try:
-        result = urllib.request.urlparse(sys.argv[1])
+        result = urllib.request.urlparse(rss_url)
         return all([result.scheme, result.netloc, "." in result.netloc, len(result.netloc) > 2])
     except ValueError:
         return False
 
 
-def check_url_and_connection() -> None:
+def check_url_and_connection(rss_url: str) -> None:
     """Checks if url is valid and connection successful"""
     if not check_if_help_or_version_in_arguments():
-        if check_if_link_is_correct():
+        if check_if_link_is_correct(rss_url):
             logging.info('Valid url')
-            connection_info = check_the_connection()
-            if connection_info:
-                print('Connection failed')
-                logging.error(f"Connection failed: {connection_info}")
-                logging.info('Application ended')
-                sys.exit()
-            else:
+            connection_info = check_the_connection(rss_url)
+            if not connection_info:
                 logging.info('Connection successful')
+            else:
+                raise custom_error.ConnectionFailedError(f"Connection failed: {connection_info}")
         else:
-            logging.error('Not valid url')
-            logging.info('Application ended')
-            print('Not valid url')
-            sys.exit()
+            raise custom_error.NotValidUrlError
 
 
 def check_if_help_or_version_in_arguments() -> bool:
@@ -194,12 +191,23 @@ def check_if_help_or_version_in_arguments() -> bool:
 
 
 def check_the_arguments_amount() -> None:
+    """Checks if there only 1 argument and raises exception"""
     if len(sys.argv) == 1:
-        logging.error('Not enough arguments(URL link is required)')
-        logging.info('Application ended')
-        print("Not enough arguments(URL link is required)")
-        arg_parser.print_usage()
-        sys.exit()
+        raise custom_error.NotEnoughArgumentsError
+
+
+def find_url() -> str:
+    """Checks if url in args and puts it to sys.argv[1] else raises exception"""
+    for index, value in enumerate(sys.argv):
+        if "http" in value:
+            if value.count("'") == 2:
+                value = value[1:-1]
+                sys.argv[index] = value
+            if index != 1:
+                sys.argv.insert(1, sys.argv.pop(index))
+            return value
+
+    raise custom_error.UrlNotFoundInArgsError
 
 
 def create_parser() -> argparse.ArgumentParser:
@@ -210,7 +218,7 @@ def create_parser() -> argparse.ArgumentParser:
                         help="Print version info")
     parser.add_argument("--json", action="store_true", help=" Print result as JSON in stdout")
     parser.add_argument("--verbose", action="store_true", help="Outputs verbose status messages")
-    parser.add_argument("--limit", type=int, default=1, help="Limit news topics if this parameter provided")
+    parser.add_argument("--limit", type=int, default=None, help="Limit news topics if this parameter provided")
     return parser
 
 
@@ -225,15 +233,42 @@ def start_logging() -> None:
 
 
 if __name__ == '__main__':
-    start_logging()
-    logging.info('Application started')
+    try:
+        start_logging()
+        logging.info('Application started')
 
-    arg_parser = create_parser()
-    logging.info('Argument parser created')
+        arg_parser = create_parser()
+        logging.info('Argument parser created')
 
-    check_the_arguments_amount()
+        check_the_arguments_amount()
 
-    check_url_and_connection()
+        url = find_url()
 
-    args_namespace = arg_parser.parse_args()
-    main(args_namespace)
+        check_url_and_connection(url)
+
+        args_namespace = arg_parser.parse_args()
+        main(args_namespace)
+
+    except custom_error.UrlNotFoundInArgsError:
+        logging.error('UrlNotFoundInArgsError')
+        logging.info('Application ended')
+        print("Url is not found in the arguments")
+    except custom_error.NotEnoughArgumentsError:
+        logging.error('Not enough arguments(URL link is required)')
+        logging.info('Application ended')
+        print("Not enough arguments(URL link is required)")
+    except custom_error.NotValidUrlError:
+        logging.error('Not valid url')
+        logging.info('Application ended')
+        print('Not valid url')
+    except custom_error.ConnectionFailedError as error:
+        logging.error(error.message)
+        logging.info('Application ended')
+        print('Connection failed')
+    except custom_error.ArticleKeyError as error:
+        logging.error(error.message)
+        logging.info('Application ended')
+
+        # python rss_reader.py "https://news.yahoo.com/rss/"
+        # python rss_reader.py "https://news.tut.by/rss/economics.rss"
+        # python rss_reader.py 'http://rss.cnn.com/rss/edition_world.rss'
