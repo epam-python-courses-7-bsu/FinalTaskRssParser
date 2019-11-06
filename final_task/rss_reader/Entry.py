@@ -4,10 +4,9 @@ from Logging import logging_decorator
 
 class Entry:
     """class for every article from http:link...link.rss"""
-
     @logging_decorator
     def __init__(self, title: str, date: str, article_link: str, summary: str, links: list):
-        self.title = title
+        self.title = self.parse_html(title)
         self.date = date
         self.article_link = article_link
         self.links = links
@@ -36,7 +35,10 @@ class Entry:
     def print_links(self) -> None:
         print("Links:")
         for num_link, link in enumerate(self.links):
-            print(f'[{num_link}] ', link)
+            if num_link == 0:
+                print(f'[{num_link}] ', link, "(link)")
+            else:
+                print(f'[{num_link}] ', link, "(image)")
         print('\n')
 
     @logging_decorator
@@ -58,5 +60,17 @@ class Entry:
 
         while summary.count('<'):
             summary = summary[:summary.find('<')] + summary[summary.find('>') + 1:]
+
+        # decode special symbols:
+        for symbol in ['&iquest;', '&iexcl;', '&laquo;', '&raquo;', '&lsaquo;', '&rsaquo;', '&quot;', '&lsquo;',
+                    '&rsquo;', '&ldquo;', '&rdquo;', '&sbquo;', '&bdquo;', '&sect;', '&para;', '&dagger;',
+                    '&Dagger;', '&bull;', '&mdash;', '&ndash;', '&hellip;', '&nbsp;'
+                    ]:
+            while summary.count(symbol):
+                summary = summary[:summary.find(symbol)] + '"' + summary[summary.find(symbol) + len(symbol):]
+        # decode ASCII codes:
+        while summary.count("&#"):
+            code = summary[summary.find("&#") + 2: summary.find(";")]
+            summary = summary[:summary.find("&#")] + chr(int(code)) + summary[summary.find("&#") + 3 + len(code):]
 
         return summary

@@ -16,7 +16,7 @@ class Handler:
         self.parsed = feedparser.parse(self.source)
         logging.info("Handler object created")
 
-    """options of command line:"""
+    # options of command line:
     @logging_decorator
     def option_version(self) -> None:
         print("version ", self.version)
@@ -34,7 +34,7 @@ class Handler:
     def option_default(self) -> None:
         self.print_feed()
         for num, entry in enumerate(self.gen_entries()):
-            if num == self.limit:
+            if num >= self.limit:
                 break
             entry.print_title()
             entry.print_date()

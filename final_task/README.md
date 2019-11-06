@@ -1,61 +1,35 @@
 # Python RSS-reader 
 Python RSS-reader is a command-line utility which receives RSS URL and prints results in human-readable format.
-# Example:
+
+To start Python RSS-reader run one of the following commands
+in command line:
 ```shell
-$ python rss_reader.py "https://news.yahoo.com/rss/" --limit 1
-
-Feed: Yahoo News - Latest News & Headlines
-
-Title: Nestor heads into Georgia after tornados damage Florida
-Date: Sun, 20 Oct 2019 04:21:44 +0300
-Link: https://news.yahoo.com/wet-weekend-tropical-storm-warnings-131131925.html
-
-[image 2: Nestor heads into Georgia after tornados damage Florida][2]Nestor raced across Georgia as a post-tropical cyclone late Saturday, hours after the former tropical storm spawned a tornado that damaged
-homes and a school in central Florida while sparing areas of the Florida Panhandle devastated one year earlier by Hurricane Michael. The storm made landfall Saturday on St. Vincent Island, a nature preserve
-off Florida's northern Gulf Coast in a lightly populated area of the state, the National Hurricane Center said. Nestor was expected to bring 1 to 3 inches of rain to drought-stricken inland areas on its
-march across a swath of the U.S. Southeast.
-
-
-Links:
-[1]: https://news.yahoo.com/wet-weekend-tropical-storm-warnings-131131925.html
-[2]: http://l2.yimg.com/uu/api/res/1.2/Liyq2kH4HqlYHaS5BmZWpw--/YXBwaWQ9eXRhY2h5b247aD04Njt3PTEzMDs-/https://media.zenfs.com/en/ap.org/5ecc06358726cabef94585f99050f4f0
-
+python rss_reader.py "https://news.yahoo.com/rss/" --limit 1
+```
+```shell
+python rss_reader.py "https://timesofindia.indiatimes.com/rssfeedstopstories.cms" --json --limit 1
+```
+```shell
+python rss_reader.py "http://www.nato.int/cps/rss/en/natohq/rssFeed.xsl/rssFeed.xml" --limit 1
 ```
 
-Utility has the following interface:
-```shell
-usage: rss_reader.py [-h] [--version] [--json] [--verbose] [--limit LIMIT]
-                     source
+5 mains files of project:
+* rss_reader.py - the file which runs the application
+* ConsoleParse.py - contains code which parses arguments from console
+* Entry.py - contains class Entry which represent an article
+* Handler.py - contains class Handler which performes functions of processing objects Entry
+* Logging.py - contains decorator for printing loggs in stdout
 
-Pure Python command-line RSS reader.
-
-positional arguments:
-  source         RSS URL
-
-optional arguments:
-  -h, --help     show this help message and exit
-  --version      Print version info
-  --json         Print result as JSON in stdout
-  --verbose      Outputs verbose status messages
-  --limit LIMIT  Limit news topics if this parameter provided
-
-```
-In case of using `--json` argument utility converts the news into [JSON](https://en.wikipedia.org/wiki/JSON) format.
-We can see JSON structure below:
+Structure of output when `--json` is selected:
 ```
 {
-    "Feed": "Yahoo News - Latest News & Headlines",
-    "Title": "Nestor heads into Georgia after tornados damage Florida",
-    "Date": "Sun, 20 Oct 2019 04:21:44 +0300",
-  "Link": "https://news.yahoo.com/wet-weekend-tropical-storm-warnings-131131925.html",
+  "Feed": "Yahoo News - Latest News & Headlines",
+  "Title": "Trump Jr. tweets name of alleged whistleblower",
+  "Date": "Wed, 06 Nov 2019 11:44:34 -0500",
+  "Link": "https://news.yahoo.com/donald-trump-jr-tweets-name-of-whistleblower-164434463.html",
   "Links": [
-    "https://news.yahoo.com/wet-weekend-tropical-storm-warnings-131131925.html",
-    "http://l2.yimg.com/uu/api/res/1.2/Liyq2kH4HqlYHaS5BmZWpw--/YXBwaWQ9eXRhY2h5b247aD04Njt3PTEzMDs-/https://media.zenfs.com/en/ap.org/5ecc06358726cabef94585f99050f4f0"
+    "https://news.yahoo.com/donald-trump-jr-tweets-name-of-whistleblower-164434463.html",
+    "http://l.yimg.com/uu/api/res/1.2/2BQtOMLnlPTy3DNXkpQPIw--/YXBwaWQ9eXRhY2h5b247aD04Njt3PTEzMDs-/https://media-mbst-pub-ue1.s3.amazonaws.com/creatr-uploaded-images/2019-11/e7ce4300-00b0-11ea-abff-085279fefba1"
   ]
 }
 ```
-The `--limit` argument also affects JSON generation.
-
-With the argument `--verbose` program prints all logs in stdout.
-
-Withe the argument `--version` program prints in stdout it's current version and complete it's work.
