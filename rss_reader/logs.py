@@ -4,7 +4,6 @@ import logging
 import os
 
 this_directory = os.path.abspath(os.path.dirname(__file__))
-
 journalLog = 'logJournal.log'
 directory = os.path.join(this_directory, journalLog)
 
@@ -92,3 +91,31 @@ def log_print():
     logging.info('Log journal printed')
 
 
+def log_news_store():
+    """This function logs news storage operation"""
+
+    logging.info('News was written to local storage')
+
+
+def log_news_print():
+    """This function logs news print from storage"""
+
+    logging.info('News was printed from storage')
+
+
+def log_news_print_err():
+    """This function logs the error if news is not in storage"""
+
+    logging.error('The news is not in storage')
+
+
+def log_news_filenotfound():
+    """This function logs if local news storage is not found"""
+
+    logging.error('Local news storage is not found')
+
+
+def log_invalid_arguments(args: str):
+    """This function logs invalid arguments"""
+
+    logging.error('Arguments not valid: ' + args)

@@ -2,25 +2,27 @@
 This module interchange between Internet and program
 """
 
-import RssReader.feedparser as feedparser
-import RssReader.html2text as html2text
+import feedparser
+import html2text
 import re
 import datetime
 import time
 import urllib.request
+import urllib.error
+import http.client
 
 
-def get_rss(url: str):
+server_answer = http.client.responses
+
+
+def get_rss(url: str) -> dict:
     """This function receives the answer from server"""
 
     news = feedparser.parse(url)
-    if news.entries:
-        return news
-    else:
-        return None
+    return news if news.entries else None
 
 
-def process_rss(rss: dict, limit: int):
+def process_rss(rss: dict, limit: int) -> dict:
     """This function process rss news"""
 
     data = dict()
@@ -34,11 +36,11 @@ def process_rss(rss: dict, limit: int):
     data['link'] = rss.entries[limit].link
     data['title'] = rss.entries[limit].title
 
-    try:
-        data['date'] = rss.entries[limit].published
-    except AttributeError:
-        date_time = datetime.datetime.now()
-        data['date'] = date_time.strftime("%d/%m/%Y %H:%M:%S")
+    """news_date for third iteration, yyyy-mm-dd"""
+
+    date_time = datetime.datetime.now()
+    data['date'] = date_time.strftime("%d/%m/%Y %H:%M:%S")
+    data['news_date'] = date_time.strftime("%Y%m%d")
 
     try:
         data['description'] = rss.entries[limit].summary_detail['value']
@@ -83,26 +85,42 @@ def print_rss(data: dict):
         print('')
 
 
-def connect_rss(url: str):
+def connect_rss(url: str) -> bool:
     """This function tries to connect to RSS url
     In case of failure, it reconnects in 10 seconds
     """
+    for connection_tryouts in range(3):
 
-    for i in range(3):
         try:
-            a = urllib.request.urlopen(url).getcode()
-        except urllib.error.URLError:
-            a = 'Error'
-        if a == 200:
-            return True
-        else:
-            print('')
-            print('The server is not available')
-            print('Trying to reconnect')
-            for j in range(10):
-                print('. ', end='')
-                time.sleep(1)
-            print('')
+            tryout = urllib.request.urlopen(url).getcode()
+            return tryout == 200
+
+        # Everything deals with time delay will be repeated
+        except urllib.error.HTTPError as http_err:
+            if http_err.code in (503, 504, 522, 524):
+                print('')
+                print('The server is not available:')
+                print('Trying to reconnect')
+
+                """We wait between connection tryouts"""
+                for time_delay in range(10):
+                    print('. ', end='')
+                    time.sleep(1)
+                print('')
+                continue
+
+            # If server answer is a common code or something is not a common code
+            if http_err.code in server_answer.keys():
+                print('The server can not be reached: Reason: %s' % server_answer[http_err.code])
+                return False
+            else:
+                print('Unknown error: %s' % http_err.code)
+                return False
+
+        # In case HTTPError is not working
+        except urllib.error.URLError as url_err:
+            print('The server can not be reached. Reason: %s' % url_err.reason)
+            continue
 
     return False
 

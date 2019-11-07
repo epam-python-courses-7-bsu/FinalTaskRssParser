@@ -3,7 +3,7 @@
 import json
 
 
-def convert_json(data: dict):
+def convert_json(data: dict) -> dict:
     """This function converts data to JSON"""
 
     return json.dumps(data)

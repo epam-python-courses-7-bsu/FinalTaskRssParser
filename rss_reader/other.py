@@ -3,7 +3,7 @@
 import sys
 
 
-def choice():
+def choice() -> list:
     """Help the user to make choice"""
 
     user_choice = input().split()
@@ -11,4 +11,5 @@ def choice():
         sys.exit()
     else:
         return user_choice
+
 
