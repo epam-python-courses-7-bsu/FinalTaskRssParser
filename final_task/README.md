@@ -14,7 +14,7 @@ This is small application for watching feed on your device. It shows shot inform
 python setup.py sdist
 cd dist
 pip install feedparser
-pip install rss-reader-0.0.tar.gz
+pip install rss-reader-3.6.tar.gz
 ```
 5. Check workability with command: 
 ```
