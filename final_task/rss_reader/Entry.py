@@ -1,5 +1,6 @@
 import logging
 from Logging import logging_decorator
+import html
 
 
 class Entry:
@@ -62,16 +63,5 @@ class Entry:
         while summary.count('<'):
             summary = summary[:summary.find('<')] + summary[summary.find('>') + 1:]
 
-        # decode special symbols:
-        for symbol in ['&iquest;', '&iexcl;', '&laquo;', '&raquo;', '&lsaquo;', '&rsaquo;', '&quot;', '&lsquo;',
-                    '&rsquo;', '&ldquo;', '&rdquo;', '&sbquo;', '&bdquo;', '&sect;', '&para;', '&dagger;',
-                    '&Dagger;', '&bull;', '&mdash;', '&ndash;', '&hellip;', '&nbsp;'
-                    ]:
-            while summary.count(symbol):
-                summary = summary[:summary.find(symbol)] + '"' + summary[summary.find(symbol) + len(symbol):]
-        # decode ASCII codes:
-        while summary.count("&#"):
-            code = summary[summary.find("&#") + 2: summary.find(";")]
-            summary = summary[:summary.find("&#")] + chr(int(code)) + summary[summary.find("&#") + 3 + len(code):]
-
+        summary = html.unescape(summary)
         return summary
