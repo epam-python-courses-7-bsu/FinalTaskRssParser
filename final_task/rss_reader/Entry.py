@@ -6,7 +6,7 @@ import html
 class Entry:
     """class for every article from http:link...link.rss"""
     @logging_decorator
-    def __init__(self, title: str, date: str, article_link: str, summary: str, links: list):
+    def __init__(self, title: str = "", date: str = "", article_link: str = "", summary: str = "", links: list = []):
         self.title = self.parse_html(title)
         self.date = date
         self.article_link = article_link
