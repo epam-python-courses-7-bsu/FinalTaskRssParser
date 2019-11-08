@@ -1,4 +1,5 @@
 import feedparser
+import sys
 import datetime
 import argparse
 import json
@@ -28,9 +29,9 @@ class RSSReader:
     def information_about_site(self, parsed_url):
         """Function which make dictionary with data of website"""
         return {
-            'Feed': parsed_url.feed['title'],
-            'Date of access': parsed_url.updated,
-            'Version': parsed_url.version,
+            'Feed': parsed_url['feed']['title'],
+            'Updated': parsed_url['updated'],
+            'Version': parsed_url['version'],
         }
 
     def make_news_data(self, news):
@@ -56,7 +57,7 @@ class RSSReader:
         """Function that collects data from all news by calling make_news_data.
         :return string of dictionaries
         """
-        all_information_about_news = parsed_url.entries
+        all_information_about_news = parsed_url['entries']
         # amount_of_news = len(parsed_url.entries)
         all_news = []
         self.log('News gathering')
@@ -110,7 +111,7 @@ class RSSReader:
             self.output(about_website, string_of_news_dictionaries)
 
 
-def arg_parse():
+def arg_parse(args):
     """Function which parsed command-line arguments."""
     parser = argparse.ArgumentParser(description='Pure Python command-line RSS reader.')
     parser.add_argument("source", type=str,
@@ -123,11 +124,11 @@ def arg_parse():
                         help="Print result as JSON in stdout")
     parser.add_argument("--verbose", action="store_true",
                         help="Outputs verbose status messages")
-    return parser.parse_args()
+    return parser.parse_args(args)
 
 
 def main():
-    args = arg_parse()
+    args = arg_parse(sys.argv[1:])
     if args.version:
         print('RSS-reader version {}'.format(VERSION))  # program version call
         return
