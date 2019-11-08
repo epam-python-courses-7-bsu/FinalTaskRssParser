@@ -4,16 +4,19 @@ import feedparser
 import logging
 import json
 import sys
-from rss_reader.work_with_file import read_feed_form_file
-from rss_reader.work_with_file import add_feed_to_file
-from rss_reader.work_with_text import get_string_with_result
-from rss_reader.work_with_json import to_json
-from rss_reader.work_with_json import limited_json
-from rss_reader.decorators import functions_log
-from rss_reader import VERSION
+import os
+
+sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
 
-@functions_log
+import work_with_file
+import work_with_text
+import work_with_json
+import decorators
+import __init__
+
+
+@decorators.functions_log
 def get_object_feed(url: str) -> Union[str, feedparser.FeedParserDict]:
     try:
         data = feedparser.parse(url)
@@ -56,24 +59,24 @@ def run():
     logging.info('the application is running')
     logging.debug('args: ' + str(args))
     if args.version:
-        print(f'RSS reader version {VERSION}')
+        print(f'RSS reader version {__init__.VERSION}')
     elif args.date:
-        data = read_feed_form_file(args.date)
+        data = work_with_file.read_feed_form_file(args.date)
         if args.json:
-            data = limited_json(data, args.limit)
+            data = work_with_json.limited_json(data, args.limit)
             print(json.dumps(data, ensure_ascii=False))
         else:
-            print(get_string_with_result(data, args.limit))
+            print(work_with_text.get_string_with_result(data, args.limit))
     elif args.source:
         data = get_object_feed(args.source)
-        data = to_json(data)
+        data = work_with_json.to_json(data)
         if 'error' not in data:
-            add_feed_to_file(data)
+            work_with_file.add_feed_to_file(data)
         if args.json:
-            data = limited_json(json.loads(data), args.limit)
+            data = work_with_json.limited_json(json.loads(data), args.limit)
             print(json.dumps(data, ensure_ascii=False))
         else:
-            print(get_string_with_result(json.loads(data), args.limit))
+            print(work_with_text.get_string_with_result(json.loads(data), args.limit))
     else:
         print('How work with application?\nEnter in command line: rss-reader -h')
     logging.info('the application is finished')

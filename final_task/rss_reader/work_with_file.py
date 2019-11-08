@@ -1,10 +1,10 @@
 import datetime
 import os
 import json
-from rss_reader.decorators import functions_log
+import decorators
 
 
-@functions_log
+@decorators.functions_log
 def add_feed_to_file(json_data: json):
     date_str = datetime.datetime.now().date().strftime('%Y%m%d')
     lines = []
@@ -26,7 +26,7 @@ def add_feed_to_file(json_data: json):
             file.write(date_str + ' ' + str(json_data) + '\n')
 
 
-@functions_log
+@decorators.functions_log
 def read_feed_form_file(date_str: str):
     with open('cache.txt', 'r') as file:
         for line in file:

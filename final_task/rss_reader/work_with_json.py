@@ -1,10 +1,10 @@
 import json
 from feedparser import FeedParserDict
-from rss_reader.decorators import functions_log
-from rss_reader.work_with_text import text_processing
+import decorators
+import work_with_text
 
 
-@functions_log
+@decorators.functions_log
 def to_json(data) -> json:
     """convert data to JSON format"""
 
@@ -23,12 +23,12 @@ def to_json(data) -> json:
     result = {'title': '', 'items': [], 'links': []}
     if isinstance(data, FeedParserDict):
         for feed_element in structure['feed']:
-            result[feed_element] = text_processing(data['feed'][feed_element], result['links'])
+            result[feed_element] = work_with_text.text_processing(data['feed'][feed_element], result['links'])
 
         for item in data['entries']:
             temp = {}
             for items_element in structure['entries']:
-                temp[items_element] = text_processing(item[items_element], result['links'])
+                temp[items_element] = work_with_text.text_processing(item[items_element], result['links'])
             result['items'].append(temp)
     elif isinstance(data, str):
         result['error'] = data
@@ -36,7 +36,7 @@ def to_json(data) -> json:
     return result
 
 
-@functions_log
+@decorators.functions_log
 def limited_json(data: dict, limit: int) -> dict:
     result = {}
     if isinstance(data, dict):

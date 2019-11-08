@@ -1,5 +1,10 @@
 import unittest
-from rss_reader.work_with_json import limited_json
+import sys
+import os
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'rss_reader'))
+import work_with_json
+
 
 class TestJsonFunctions(unittest.TestCase):
     def test_limited_json(self):
@@ -32,8 +37,8 @@ class TestJsonFunctions(unittest.TestCase):
                 'summary': 'des1',
             }],
             'links': ['first']}
-        self.assertEqual(limited_json(entering_dict, 1), output)
-        self.assertEqual(limited_json(entering_dict, 2), entering_dict)
+        self.assertEqual(work_with_json.limited_json(entering_dict, 1), output)
+        self.assertEqual(work_with_json.limited_json(entering_dict, 2), entering_dict)
 
 
 if __name__ == '__main__':

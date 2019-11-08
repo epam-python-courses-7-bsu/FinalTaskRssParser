@@ -1,8 +1,9 @@
 import unittest
-from rss_reader.work_with_text import edit_key
-from rss_reader.work_with_text import get_string_with_result
-from rss_reader.work_with_text import text_processing
-from rss_reader.work_with_text import get_img
+import os
+import sys
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'rss_reader'))
+import work_with_text
 
 
 class TestTextFunctions(unittest.TestCase):
@@ -21,51 +22,51 @@ class TestTextFunctions(unittest.TestCase):
                   '-/https://media-mbst-pub-ue1.s3.amazonaws.com/creatr-uploaded-images/2019-11/e87f47a0-016d-11e' +
                   'a-ab5f-bdce0579bae9', 'Trump fumes about reports that he wanted Barr to host news conference c' +
                   'learing him on Ukraine call']
-        self.assertEqual(get_img(entering), output)
+        self.assertEqual(work_with_text.get_img(entering), output)
 
         entering = '<img src="link" alt="alt">'
         output = ['link', 'alt']
-        self.assertEqual(get_img(entering), output)
+        self.assertEqual(work_with_text.get_img(entering), output)
 
         entering = '<img src="link" alt="alt">'
         output = ['links', 'alt']
-        self.assertNotEqual(get_img(entering), output)
+        self.assertNotEqual(work_with_text.get_img(entering), output)
 
     def test_text_processing(self):
         links = []
         entering = 'test'
         output = 'test'
-        self.assertEqual(text_processing(entering, links), output)
+        self.assertEqual(work_with_text.text_processing(entering, links), output)
 
         entering = 'test_'
         output = 'test'
-        self.assertNotEqual(text_processing(entering, links), output)
+        self.assertNotEqual(work_with_text.text_processing(entering, links), output)
 
         entering = '<p>test'
         output = 'test'
-        self.assertEqual(text_processing(entering, links), output)
+        self.assertEqual(work_with_text.text_processing(entering, links), output)
 
         entering = '<>test<>'
         output = 'test'
-        self.assertEqual(text_processing(entering, links), output)
+        self.assertEqual(work_with_text.text_processing(entering, links), output)
 
         entering = '<img src="link" alt="text">test<>'
         output = '[image 1: text][1] test'
-        self.assertEqual(text_processing(entering, links), output)
+        self.assertEqual(work_with_text.text_processing(entering, links), output)
         self.assertEqual(links, ['link'])
 
     def test_edit_key(self):
         entering = 'key'
         output = 'Key: '
-        self.assertEqual(edit_key(entering), output)
+        self.assertEqual(work_with_text.edit_key(entering), output)
 
         entering = 'published'
         output = 'Date: '
-        self.assertEqual(edit_key(entering), output)
+        self.assertEqual(work_with_text.edit_key(entering), output)
 
         entering = 'summary'
         output = 'Description: '
-        self.assertEqual(edit_key(entering), output)
+        self.assertEqual(work_with_text.edit_key(entering), output)
 
     def test_get_string_with_result(self):
         entering_dict = {
@@ -91,7 +92,7 @@ class TestTextFunctions(unittest.TestCase):
         output = '\ntitl\n\nTitle: t1\nDate: date1\nLink: link1\nDescription: des1\n\n' + \
                  'Title: t2\nDate: date2\nLink: link2\nDescription: des2\n\n' + \
                  '\nLinks: \n[1] - first\n[2] - second\n'
-        self.assertEqual(get_string_with_result(entering_dict, 2), output)
+        self.assertEqual(work_with_text.get_string_with_result(entering_dict, 2), output)
 
 
 if __name__ == '__main__':

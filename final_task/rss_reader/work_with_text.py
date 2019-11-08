@@ -1,5 +1,5 @@
 import html
-from rss_reader.decorators import functions_log
+import decorators
 
 
 def get_img(input_string: str) -> [str, str]:
@@ -27,7 +27,7 @@ def text_processing(string: str, array_links: list):
     return html.unescape(image + string)
 
 
-@functions_log
+@decorators.functions_log
 def get_string_with_result(data: dict, limit: int) -> str:
     """Converts json to string for print"""
     result = ''
