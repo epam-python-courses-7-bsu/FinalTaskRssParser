@@ -1,15 +1,22 @@
 """Main module of the program"""
 
-import rss_reader.args_parser as args_parser
-import rss_reader.rss_parser as rss_parser
-import rss_reader.other as other
-import rss_reader.json_converter as json_converter
-import rss_reader.logs as logs
-import rss_reader.news as news
 import sys
+import os
+
+this_directory = os.path.abspath(os.path.dirname(__file__))
+sys.path.append(this_directory)
+
+
+import logs
+import args_parser
+import rss_parser
+import other
+import json_converter
+import news
 
 
 def main():
+
     """This is a main function"""
     print('============================== RSS Reader ==================================')
     logs.new_session()
@@ -110,3 +117,11 @@ def main():
 
     logs.end_session()
     print('=====================End for news==============================')
+
+
+if __name__ == '__main__':
+    main()
+
+
+
+

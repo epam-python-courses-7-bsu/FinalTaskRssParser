@@ -1,4 +1,4 @@
-# RSS Reader version 3.0 by AlexSpaceBy (fiz.zagorodnAA@gmail.com)
+# RSS Reader version 3.1 by AlexSpaceBy (fiz.zagorodnAA@gmail.com)
 
 First, second and third iteration.
 
@@ -162,54 +162,132 @@ Namely, all Exceptions in this library inherits from Exception class, not from B
 ## Installation
 
 +++++++++++++++++++++++++++++++++++++++
-FOR WINDOWS (tested for Wondows 10 1903)
-+++++++++++++++++++++++++++++++++++++++
-Package installation:
-=========================================
-zip Installation:
-=========================================
-1. Run Console with administrator privileges (run as Administrator).
-2. In console go to directory with rss-reader-3.0.zip package.
-3. Run the following command: `pip install rss-reader-3.0.zip`
-=========================================
-zip Package Run:
-=========================================
-1. Run Console with administrator privileges (run as Administrator).
-2. Run the following command: `rss-reader [url] [list of flags]`
-
-
-+++++++++++++++++++++++++++++++++++++++
-FOR LINUX (tested for Fedora 30)
-+++++++++++++++++++++++++++++++++++++++
-Package installation:
-=========================================
-zip Installation:
-=========================================
-1. Copy `rss-reader-3.0.zip` to desired directory (for example `~/rss-reader`).
-2. In console go to directory with `rss-reader-1.0.zip` package.
-3. Run the following command: `sudo pip3 install rss-reader-3.0.zip`.
-=========================================
-zip Package Run:
-=========================================
-1. In console run the following command: `sudo rss-reader [url] [list of flags]`
-
-
-+++++++++++++++++++++++++++++++++++++++
 CREATION OF PACKAGE
 ++++++++++++++++++++++++++++++++++++++
 How to create package using setup.py
 ======================================
-1. Download RssReader to desired directory
-2. Go to the `.../rss-reader` folder wich has setup.py file
-3.1 Windows: Run console as administrator
-   3.1.1 Run the following code: `python setup.py sdist --formats=zip`
-3.1 Linux: Run the following command: `sudo python3 sdist --formats=zip`
-4. The zip package will be inside `.../rss-reader/dist` folder.
+1. Go to the */final_task* folder wich has `setup.py` file
 
+3.1 Windows: Run console as Administrator
+   3.1.1 Run the following code: `python setup.py sdist --formats=zip`
+
+3.1 Linux: Run the following command: `sudo python3 setup.py sdist --formats=zip` (provided your python v3.8 has a shortcut `python3`)
+
+4. The zip package will be inside `.../final_task/dist` folder.
+
++++++++++++++++++++++++++++++++++++++++
+INSTALLATION FOR WINDOWS (tested for Wondows 10 1903)
++++++++++++++++++++++++++++++++++++++++
+Package installation:
+=========================================
+zip Installation:
+=========================================
+1. Run Console with administrator privileges (run as Administrator).
+2. In console go to directory with *rss-reader-3.1.zip* package.
+3. Run the following command: `pip install rss-reader-3.1.zip`
+=========================================
+
+
++++++++++++++++++++++++++++++++++++++++
+INSTALLATION FOR LINUX (tested for Fedora 30)
++++++++++++++++++++++++++++++++++++++++
+Package installation:
+=========================================
+zip Installation:
+=========================================
+1. In console go to directory with *rss-reader-3.1.zip* package.
+2. Run the following command: `sudo pip3 install rss-reader-3.1.zip`.
+=========================================
+
+
+
+## How to run the program
+
+DIRECT RUN FROM rss_reader FOLDER:
+====================================================================================================================
+WARINING:
+If you try to run directly from the folder, and have never installed the program from the package, YOU MUST INSTALL the following packages:
+
+Windows:
+1. feedparser version 5.2.1 (`pip install feedparser==5.2.1`)
+2. html2text version 2019.9.26 (`pip install html2text==2019.9.26`)
+
+Linux:
+1. feedparser version 5.2.1 (`sudo pip3 install feedparser==5.2.1`)
+2. html2text version 2019.9.26 (`sudo pip3 install html2text==2019.9.26`)
+====================================================================================================================
+
+Windows:
+========
+1. Run console as Administrator.
+2. Go to */rss_reader* folder with `rss_reader.py` file.
+3. Run: `python rss_reader.py [flags] [parameters]` 
+
+Example:
+ `python rss_reader.py https://news.yahoo.com/rss/` - will show you RSS feed from mews.yahoo
+ `python rss_reader.py https://news.yahoo.com/rss/ -l 10` - will show you RSS feed with 10 news
+ `python rss_reader.py https://news.yahoo.com/rss/ -v` - will show you version of the program
+ `python rss_reader.py https://news.yahoo.com/rss/ -l 10 -j` - will show you RSS feed with 10 news in JSON format
+
+ `python rss_reader.py url -b` - will show you log journal
+ `python rss_reader.py url -d 20191108` - will show you the news for 2019.11.08 in case there is news.
+
+Linux:
+======
+1. Open the console
+2. Go to */rss_reader* folder with `rss_reader.py` file.
+3. Run: `sudo python3 rss_reader.py [flags] [parameters]` (provided your python v3.8 has a shortcut `python3`)
+
+Example:
+ `sudo python3 rss_reader.py https://news.yahoo.com/rss/` - will show you RSS feed from mews.yahoo
+ `sudo python3 rss_reader.py https://news.yahoo.com/rss/ -l 10` - will show you RSS feed with 10 news
+ `sudo python3 rss_reader.py https://news.yahoo.com/rss/ -v` - will show you version of the program
+ `sudo python3 rss_reader.py https://news.yahoo.com/rss/ -l 10 -j` - will show you RSS feed with 10 news in JSON format
+
+ `sudo python3 rss_reader.py url -b` - will show you log journal
+ `sudo python3 rss_reader.py url -d 20191108` - will show you the news for 2019.11.08 in case there is news.
+
+All files like logJournal and news.log will be inside rss_reader directory.
+=====================================================================================================================
+
+
+PACKAGE RUN (assume you did every step from Installation and installed rss-reader-3.1.zip)
+=====================================================================================================================
+Windows:
+========
+1. Run console as Administrator.
+3. Run: `rss-reader [flags] [parameters]` 
+
+Example:
+ `rss-reader https://news.yahoo.com/rss/` - will show you RSS feed from mews.yahoo
+ `rss-reader https://news.yahoo.com/rss/ -l 10` - will show you RSS feed with 10 news
+ `rss-reader https://news.yahoo.com/rss/ -v` - will show you version of the program
+ `rss-reader https://news.yahoo.com/rss/ -l 10 -j` - will show you RSS feed with 10 news in JSON format
+
+ `rss-reader url -b` - will show you log journal
+ `rss-reader url -d 20191108` - will show you the news for 2019.11.08 in case there is news.
+
+All files like logJournal and news.log will be inside the default Python directory (in my case: `C:\Program Files\Python38\Lib\site-packages\rss_reader`).
+
+Linux:
+======
+1. Run the console.
+3. Run: `sudo rss-reader [flags] [parameters]` (provided your python v3.8 has a shortcut `python3`)
+
+Example:
+ `sudo rss-reader https://news.yahoo.com/rss/` - will show you RSS feed from mews.yahoo
+ `sudo rss-reader https://news.yahoo.com/rss/ -l 10` - will show you RSS feed with 10 news
+ `sudo rss-reader https://news.yahoo.com/rss/ -v` - will show you version of the program
+ `sudo rss-reader https://news.yahoo.com/rss/ -l 10 -j` - will show you RSS feed with 10 news in JSON format
+
+ `sudo rss-reader url -b` - will show you log journal
+ `sudo rss-reader url -d 20191108` - will show you the news for 2019.11.08 in case there is news.
+
+All files like logJournal and news.log will be inside the default Python directory (in my case: `/usr/local/lib/python3.7/site-packages/rss_reader`).
 
 ## progect structure
 
-RssReader
+final_task
 |---rss-reader
 |    |
 |    |---args_parser.py

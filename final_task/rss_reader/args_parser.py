@@ -4,7 +4,7 @@ This module process the input arguments
 
 import argparse
 import re
-import rss_reader.logs as logs
+import logs
 import sys
 import datetime
 
@@ -15,7 +15,7 @@ def get_parse(args_in='') -> dict:
     parser = argparse.ArgumentParser(prog='RSSTaker', description='RSS reader. Takes the arguments from command line.')
 
     parser.add_argument('url', type=str, help='Link to RSS channel(line without spaces). Mandatory for all actions.')
-    parser.add_argument('-v', '--version', action='version', version='%(prog)s 3.0', help='Print version info.')
+    parser.add_argument('-v', '--version', action='version', version='%(prog)s 3.1', help='Print version info.')
     parser.add_argument('-j', '--json', action='store_const', const=True, help='Print result as json in stdout.')
     parser.add_argument('-b', '--verbose', action='store_const', const=True, help='Print all logs in stdout.')
     parser.add_argument('-l', '--limit', type=int, default=1, help='Limit of news topics (natural number).')
@@ -69,4 +69,5 @@ def validate_args(data: dict) -> bool:
             return True
 
     return True
+
 

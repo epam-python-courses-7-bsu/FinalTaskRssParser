@@ -1,9 +1,9 @@
-from setuptools import setup, find_namespace_packages
+from setuptools import setup
 
 setup(
     name='rss-reader',
-    version='v3.0',
-    packages=find_namespace_packages(),
+    version='v3.1',
+    packages=['rss_reader'],
     include_package_data=True,
     install_requires=['feedparser == 5.2.1', 'html2text == 2019.9.26'],
     url='www.github.com',
