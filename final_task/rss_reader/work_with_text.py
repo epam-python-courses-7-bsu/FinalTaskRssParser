@@ -10,11 +10,12 @@ def get_img(input_string: str) -> [str, str]:
     return [link[:link.find('"')], str_img[:str_img.find('"')]]
 
 
-def text_processing(string, array_links):
+def text_processing(string: str, array_links: list):
     """processes a string for output"""
     image = ''
     if '<' not in string:
         return html.unescape(string)
+    string += '<'
     if 'img' in string:
         image_link_and_alt_text = get_img(string)
         array_links.append(image_link_and_alt_text[0])
@@ -51,6 +52,7 @@ def get_string_with_result(data: dict, limit: int) -> str:
 
 
 def edit_key(input_key: str) -> str:
+    """Converts a string to a beautiful for print view ('string' -> 'String: ')"""
     if input_key == 'published':
         input_key = 'Date'
     elif input_key == 'summary':

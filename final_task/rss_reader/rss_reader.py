@@ -10,7 +10,7 @@ from rss_reader.work_with_text import get_string_with_result
 from rss_reader.work_with_json import to_json
 from rss_reader.work_with_json import limited_json
 from rss_reader.decorators import functions_log
-from rss_reader import __version__
+from rss_reader import VERSION
 
 
 @functions_log
@@ -41,7 +41,7 @@ def set_start_setting():
     parser.add_argument("--date", help="Obtaining the cached news without the Internet", type=str)
     args = parser.parse_args()
     if not args.limit:
-        args.limit = 1000
+        args.limit = -1
     if args.verbose:
         logging.basicConfig(format='%(asctime)s %(message)s', datefmt='%I:%M:%S %p',
                             stream=sys.stdout, level=logging.DEBUG)
@@ -56,7 +56,7 @@ def run():
     logging.info('the application is running')
     logging.debug('args: ' + str(args))
     if args.version:
-        print(f'RSS reader version {__version__}')
+        print(f'RSS reader version {VERSION}')
     elif args.date:
         data = read_feed_form_file(args.date)
         if args.json:

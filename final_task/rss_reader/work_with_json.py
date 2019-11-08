@@ -40,6 +40,7 @@ def to_json(data) -> json:
 def limited_json(data: dict, limit: int) -> dict:
     result = {}
     if isinstance(data, dict):
+        result['title'] = data['title']
         result['items'] = data['items'][:limit]
         result['links'] = data['links'][:limit]
     else:

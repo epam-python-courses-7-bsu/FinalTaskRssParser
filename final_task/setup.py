@@ -4,7 +4,7 @@ import rss_reader
 
 setup(
     name="rss-reader",
-    version=rss_reader.__version__,
+    version=rss_reader.VERSION,
     packages=['rss_reader'],
     author="Vlad Protosevich",
     author_email="protosevic2001@gmail.com",
