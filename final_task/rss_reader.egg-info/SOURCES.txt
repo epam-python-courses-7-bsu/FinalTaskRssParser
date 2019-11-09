@@ -12,3 +12,6 @@ rss_reader.egg-info/dependency_links.txt
 rss_reader.egg-info/entry_points.txt
 rss_reader.egg-info/requires.txt
 rss_reader.egg-info/top_level.txt
+rss_reader/tests/__init__.py
+rss_reader/tests/test_entry.py
+rss_reader/tests/test_handler.py
