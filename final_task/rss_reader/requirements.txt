@@ -1,7 +1,5 @@
-import socket
-import requests
-import argparse
-import json
-import logging
-import pycodestyle
-from bs4 import BeautifulSoup
+beautifulsoup4==4.8.1
+lxml==4.4.1
+pycodestyle==2.5.0
+requests==2.22.0
+soupsieve==1.9.4
