@@ -1,0 +1,10 @@
+# Editors
+.idea/
+
+# Environments
+venv/
+
+# Byte-compiled / optimized
+__pycache__/
+*.py[cod]
+
