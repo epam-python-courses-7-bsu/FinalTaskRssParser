@@ -1,12 +1,12 @@
 import feedparser
 from pprint import pprint
-from myargparse import *
+from myargparse import parsargs
 from bs4 import BeautifulSoup 
 import json
 
+args = parsargs()
 
-def parse(url):
-    return feedparser.parse(url)
+parsed = feedparser.parse(args.source)
 
 def get_sourse(parsed):
     ''' Gets source information '''
@@ -47,7 +47,6 @@ def output(articles):
     print('\n')
 
 if __name__ == '__main__':
-    parsed = parse(args.source)
     feed = get_sourse(parsed)
     articles = get_news(parsed)
     print('Feed: ', feed['link'], '\n')
