@@ -1,5 +1,8 @@
 import feedparser
+from pprint import pprint
+from myargparse import *
 from bs4 import BeautifulSoup 
+import json
 
 
 def parse(url):
@@ -18,6 +21,7 @@ def get_news(parsed):
     """ Gets entries information """
     articles = []
     entries = parsed['entries']
+    entries = entries[:args.limit] # Get the right amount from the array
     for entry in entries:
         soup = BeautifulSoup(entry['summary'], 'lxml')
         article_img = soup.find('img')['src']
@@ -30,17 +34,28 @@ def get_news(parsed):
         })
     return articles
 
-if __name__ == '__main__':
-    parsed = parse("https://news.yahoo.com/rss/")
-    feed = get_sourse(parsed)
-    articles = get_news(parsed)
-    print('Feed: ', feed['link'], '\n')
+def to_json(articles):
+    """ Convert to json """ 
+    return json.dumps(articles)
 
-    value = articles[0]
-    
+def output(articles):
     print("Title: ", value['title'])
     print("Date: ", value['published'])
     print("Link: ", value['link'])
     print("\nSummary: ", value['summary'])
     print("\nImage: ", value['img'])
     print('\n')
+
+if __name__ == '__main__':
+    parsed = parse(args.source)
+    feed = get_sourse(parsed)
+    articles = get_news(parsed)
+    print('Feed: ', feed['link'], '\n')
+    if args.json:
+        for value in articles:
+            j = to_json(articles)
+            print(j, '\n')
+    else:
+        for value in articles:
+            output(articles)
+
