@@ -1,4 +1,8 @@
+import os
+import sys
 import unittest
+out_dir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+sys.path.append(out_dir)
 from Handler import Handler
 from Entry import Entry
 
