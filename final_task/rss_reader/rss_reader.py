@@ -1,4 +1,5 @@
 import feedparser
+from bs4 import BeautifulSoup 
 
 
 def parse(url):
@@ -13,7 +14,33 @@ def get_sourse(parsed):
         'subtitle': feed['subtitle'],
     }
 
+def get_news(parsed):
+    """ Gets entries information """
+    articles = []
+    entries = parsed['entries']
+    for entry in entries:
+        soup = BeautifulSoup(entry['summary'], 'lxml')
+        article_img = soup.find('img')['src']
+        articles.append({
+            'link': entry['link'],
+            'title': entry['title'],
+            'img': article_img,
+            'summary': entry['summary'],
+            'published': entry['published'],
+        })
+    return articles
+
 if __name__ == '__main__':
     parsed = parse("https://news.yahoo.com/rss/")
     feed = get_sourse(parsed)
+    articles = get_news(parsed)
     print('Feed: ', feed['link'], '\n')
+
+    value = articles[0]
+    
+    print("Title: ", value['title'])
+    print("Date: ", value['published'])
+    print("Link: ", value['link'])
+    print("\nSummary: ", value['summary'])
+    print("\nImage: ", value['img'])
+    print('\n')
