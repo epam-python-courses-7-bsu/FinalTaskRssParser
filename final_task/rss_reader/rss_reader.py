@@ -1,20 +1,12 @@
 import feedparser
 import argparse
 import html2text
+import json
 from requests import get
 from datetime import datetime
 
 
-parser = argparse.ArgumentParser()
-parser.add_argument('--url', type=str, help='Please enter a valid URL for RSS Feed')
-parser.add_argument('--limit', type=int, default=1, help='You can set a limit for news')
-parser.add_argument('--verbose', type=bool, default=False, help='If you want to know '
-                                                                'what\'s happening, set this to True')
-parser.add_argument('--version', type=str, default=False, help='Print version of program')
-args = parser.parse_args()
-url = args.url
-verbose = args.verbose
-version = '[Reader version: 0.01]'
+VERSION = '[RSS Reader v0.02]'
 
 
 def to_text(html, rehtml=False):
@@ -85,6 +77,10 @@ def get_feed(url: str, verbose: bool):
     return feed
 
 
+def to_json(feed):
+    jsoned = json.dumps(feed, ensure_ascii=False, indent=4)
+    return jsoned
+
 def format_feed(feed, verbose: bool, limit: int):
     """
     This function recieves feed and format all entries
@@ -95,26 +91,34 @@ def format_feed(feed, verbose: bool, limit: int):
     :param limit: Standart limit is 1 article
     :return: title, entry_title(Article title), description(Text of article), date
     """
-    global title, entry_title, description, date
-    if verbose:
-        print('Formatting your feed')
-        print('-' * 50)
     try:
-        title = to_text(feed.feed.title)
         entry_title = to_text(feed.entries[limit].title)
         description = to_text(feed.entries[limit].description)
+        link = feed.entries[limit].link
         date = to_text(feed.entries[limit].published)
+        return entry_title, description, link, date
     except AttributeError as error: # in case of AttributeError exception
         with open('log' + str(datetime.now()) + '.txt', 'w') as log:  # we will create a .txt log-file
-            log.write('[URL]: ' + str(url) + '\n')  # providing info about feed that raised an exception
+            log.write('[URL]: ' + str(args.source) + '\n')  # providing info about feed that raised an exception
             log.write('[ERROR]: ' + str(error) + '\n')  # and text of error
         print('An error has occured \n'
               'Log file was created in program folder \n'
               'To help us debug a program, please send this file to h4j0rx@gmail.com')
-    return title, entry_title, description, date
+    except IndexError as indexerror:
+        print("You've specified too many articles to print\n"
+              "Feed doesn't have specified number of articles\n")
+        print('Number of articles in feed: ' + str(len(feed.entries)))
+        print('Number of articles printed: ' + str(len(feed.entries)))
+        exit()
 
 
-def main(title, entry_title, description, date):
+def feed_info():
+    print('[URL]: ' + args.source)
+    print('[Feed]: ' + feed.feed.title)
+    return None
+
+
+def main(entry_title, description, link, date):
     """
     This function just prints all parameters given by format_feed()
     :param title: Title of whole feed returned by format_feed()
@@ -123,28 +127,42 @@ def main(title, entry_title, description, date):
     :param date: Publishing date of one article returned by format_feed()
     :return: None
     """
-    print('[URL]: ' + args.url)
-    print('[Feed]: ' + title)
     print('-' * 50)
     print('[Title]: ' + entry_title)
     print('[Text]: ' + description)
+    print('[Link]: ' + link)
     print('[Date]: ' + date)
     return None
 
 
-if __name__ == '__main__':
-    if args.url is None:
-        print('Please enter a valid URL for a feed '
-              'and run program like "python3 main.py '
-              '--url %YOUR FEED URL%')
+def arg_parse():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('source', type=str, help='Please enter a valid URL for RSS Feed')
+    parser.add_argument('--limit', type=int, default=50, help='You can set a limit for news')
+    parser.add_argument('--verbose', action='store_true', help='If you want to know '
+                                                                'what\'s happening, set this to True')
+    parser.add_argument('--version', action='store_true', help='Print version of program')
+    parser.add_argument('--json', action='store_true', help='Prints feed in JSON format')
+    args = parser.parse_args()
     if args.limit == 0:
         print('You have entered zero values to print, please specify another limit value')
+    if args.version:
+        print(VERSION)
+    return args
+
+
+if __name__ == '__main__':
+    args = arg_parse()
+    feed = get_feed(args.source, args.verbose)
+    feed_info()
+    if args.json:
+        print(to_json(feed))
     else:
-        feed = get_feed(url, verbose)
-        limit = [i for i in range(0, args.limit+1)]
+        if args.verbose:
+            print('Formatting your feed')
+            print('-' * 50)
+        limit = [index for index in range(0, args.limit+1)]
         del limit[-1]
-        for i in limit:
-            format_feed(feed, verbose, i)
-            main(title, entry_title, description, date)
-        if args.version:
-            print(version)
+        for limit in limit:
+            entry_title, description, link, date = format_feed(feed, args.verbose, limit)
+            main(entry_title, description, link, date)
