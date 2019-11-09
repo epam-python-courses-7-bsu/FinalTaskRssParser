@@ -1,2 +1,13 @@
-test.py
-volume_2.py
+# *.py and *.pyc files
+    test.py
+    volume_2.py
+
+# *.log files
+    *.log
+
+# any virtual environment files/folders and IDE technical files and folders
+    .idea/
+    rss_reader/__pycache__/
+    Lib/
+    Scripts/
+    Include/

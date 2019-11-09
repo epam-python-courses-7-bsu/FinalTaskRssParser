@@ -1,5 +1,6 @@
 import CLI
-from scrapper import Scrapper
+from rss_parser import parser
+from bs4 import BeautifulSoup as bs
 import os
 import logging as log
 
@@ -13,12 +14,16 @@ def main():
     pars = CLI.ArgParser()
     cl_args = pars.parse()
 
-    logger.debug(cl_args)
-
     if cl_args.get('version'):
         print(f"RSS-Reader {version}" + " from " + str(os.getcwd()))
 
-    scrap = Scrapper(cl_args.get('source'), cl_args.get('limit'), cl_args.get('json'))
+    print(parser())
+    # scrap = Scrapper(cl_args.get('source'), cl_args.get('limit'), cl_args.get('json'))
+    if cl_args.get('version'):
+        print(f"RSS-Reader {version}" + " from " + str(os.getcwd()))
+
+    print(parser())
+    # scrap = Scrapper(cl_args.get('source'), cl_args.get('limit'), cl_args.get('json'))
 
 
 if __name__ == '__main__':
