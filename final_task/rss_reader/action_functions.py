@@ -2,15 +2,18 @@
 
     Functions:
     create_logger(com_line_args) -> logger
+    get_com_line_args() -> com_line_args
     get_news(command_line_args, logger) -> news_collection
     print_news_stdout(news_collection) -> None
     print_news_json(news_collection) -> None
     print_news(news_collection, com_line_args, logger) -> None """
 
 import feedparser
+import argparse
 import json
 import logging
 from models import NewsEntry
+from dataclasses import asdict
 from validation_functions import check_limit_arg
 
 
@@ -45,6 +48,18 @@ def create_logger(com_line_args):
     return logger
 
 
+def get_com_line_args():
+    """ Function to get command line arguments. """
+    parser = argparse.ArgumentParser(description="Pure Python command-line RSS reader.", add_help=True)
+    parser.add_argument("source", type=str, nargs="?", help="RSS URL")
+    parser.add_argument("--version", action="store_true", help="Print version info")
+    parser.add_argument("--json", action="store_true", help="Print result as JSON in stdout")
+    parser.add_argument("--verbose", action="store_true", help="Outputs verbose status messages")
+    parser.add_argument("--limit", type=int, help="Limit news topics if this parameter provided")
+
+    return parser.parse_args()
+
+
 def get_news(command_line_args, logger):
     """ Get news function.
 
@@ -72,12 +87,12 @@ def get_news(command_line_args, logger):
 
 def print_news_stdout(news_collection):
     """ Function for print news to stdout in text format. """
-    print("###############################################################")
-    print()
+    print("################################################################################")
+    print("")
     print("Feed: ", news_collection["feed"]["title"])
     print("Publication date: ", news_collection["feed"]["date"])
     print("Language: ", news_collection["feed"]["language"])
-    print()
+    print("")
 
     for entry in news_collection["entries"]:
         entry.print_entry()
@@ -89,10 +104,7 @@ def print_news_json(news_collection):
                                 "entries": []}
 
     for entry in news_collection["entries"]:
-        entry_for_json = {"title": entry.title,
-                          "summary": entry.summary,
-                          "date": entry.date,
-                          "link": entry.link}
+        entry_for_json = asdict(entry)
         news_collection_for_json["entries"].append(entry_for_json)
 
     print(json.dumps(news_collection_for_json, indent=4))

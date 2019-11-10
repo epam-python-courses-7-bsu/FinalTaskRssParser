@@ -1,20 +1,24 @@
-JSON structure:
-
-{
-  "feed": { "title": feed title,
-            "date":  feed publication date,
-            "language": feed language }
-  "entries": [
+<H5>JSON structure:</H5>
+    
+    {   
+    
+    "feed":    { "title": feed title,   
+                 "date":  feed publication date,  
+                 "language": feed language }     
+ 
+    "entries": [
+  
                { "title": news title,
                  "summary": news content,
                  "date": news publication date,
                  "link": news link },
-
+               
                { "title": news title,
                  "summary": news content,
                  "date": news publication date,
                  "link": news link },
 
                ...
-             ]
-}
+               
+               ]
+    }
