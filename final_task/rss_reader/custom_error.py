@@ -1,9 +1,5 @@
 class Error(Exception):
     """Base class for other exceptions"""
-    message: str
-
-    def __init__(self, message):
-        self.message = message
 
 
 class UrlNotFoundInArgsError(Error):
@@ -23,9 +19,17 @@ class NotValidUrlError(Error):
 
 class ConnectionFailedError(Error):
     """Raised when can't connect to the url"""
-    pass
+    message: str
+
+    def __init__(self, message):
+        if message:
+            self.message = message
 
 
 class ArticleKeyError(Error):
     """Raised when the article miss key"""
-    pass
+    message: str
+
+    def __init__(self, message):
+        if message:
+            self.message = message

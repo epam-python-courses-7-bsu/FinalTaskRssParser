@@ -1,17 +1,22 @@
 import argparse
 import html
 import json
-import feedparser
 import logging
+import os
 import urllib.request
 import sys
-import re
 from typing import Tuple, List
+
+import feedparser
+from bs4 import BeautifulSoup
+
+directory_to_module = os.path.abspath(os.path.dirname(__file__))
+sys.path.append(directory_to_module)
 
 import single_article
 import custom_error
 
-VERSION = 1.0
+VERSION = 2.0
 LOG_FILE_NAME = 'app.log'
 
 
@@ -30,18 +35,28 @@ def get_source(parsed: feedparser.FeedParserDict) -> dict:
     }
 
 
-def find_links_in_article(article: feedparser.FeedParserDict) -> list:
-    """Finds links in the article"""
-    image_search = re.compile(r'<\s*img [^>]*src="([^"]+)')
-    img = image_search.findall(article['summary'])
-
+def find_links_in_article(article: feedparser.FeedParserDict) -> Tuple[List[str], str]:
+    """Finds images and links in the article"""
     all_links = []
-    for link in article['links']:
-        if link['href'] not in img:
-            all_links.append(link['href'])
-    all_links += img
 
-    return all_links
+    soup = BeautifulSoup(article['summary'], features="html.parser")
+    for index, img in enumerate(soup.find_all('img'), 1):
+        if (str(img['src']) == '') and (str(img['alt']) == ''):
+            continue
+        if str(img['alt']) == '':
+            all_links.append(str(img['src']))
+            img.replaceWith(f"[image {index}: no description][{index}] ")
+        elif str(img['src']) == '':
+            img.replaceWith(f"[image(no link): {img['alt']}] ")
+        else:
+            all_links.append(str(img['src']))
+            img.replaceWith(f"[image {index}: {img['alt']}][{index}] ")
+
+    for link in article['links']:
+        if link['href'] not in all_links:
+            all_links.append(link['href'])
+
+    return all_links, str(soup.text)
 
 
 def unescape(text_to_unescape: str) -> str:
@@ -49,14 +64,12 @@ def unescape(text_to_unescape: str) -> str:
     return html.unescape(text_to_unescape)
 
 
-def get_articles(parsed: feedparser.FeedParserDict, limit: int) -> Tuple[List[single_article.SingleArticle], int]:
+def get_articles(parsed: feedparser.FeedParserDict, limit: int) -> List[single_article.SingleArticle]:
     """Returns list with articles."""
     articles = []
     feed = parsed['feed']
     entries = parsed['entries']
     logging.info(f'There is {len(entries)} entries')
-
-    no_tags = re.compile('<.*?>')
 
     if limit is None:
         limit = len(entries)
@@ -66,24 +79,25 @@ def get_articles(parsed: feedparser.FeedParserDict, limit: int) -> Tuple[List[si
             if index == limit:
                 break
 
-            links_in_article = find_links_in_article(entry)
+            date_info = 'unknown'
+            if 'published' in entry:
+                date_info = entry['published']
 
-            if 'published' not in entry:
-                limit -= 1
-                continue
+            links_in_article, summary_text = find_links_in_article(entry)
+
             articles.append(
                 single_article.SingleArticle(
                     feed=unescape(feed['title']),
                     title=unescape(entry['title']),
-                    date=entry['published'],
+                    date=date_info,
                     link=entry['link'],
-                    summary=unescape(re.sub(no_tags, '', entry['summary'])),
+                    summary=unescape(summary_text),
                     links=[f"[{num}]: {link}" for num, link in enumerate(links_in_article, 1)])
             )
     except KeyError as value:
         raise custom_error.ArticleKeyError(f"One of the entries does not have {value} key")
 
-    return articles, limit
+    return articles
 
 
 def print_rss_json(data: List[single_article.SingleArticle]) -> None:
@@ -102,40 +116,6 @@ def print_rss_articles(rss_articles: List[single_article.SingleArticle]) -> None
     """Prints source feed and articles"""
     for article in rss_articles:
         print_article(article)
-
-
-def check_if_verbose(args: argparse.Namespace) -> None:
-    """Checks if verbose is on and prints logs to stdout"""
-    if args.verbose:
-        with open(LOG_FILE_NAME, 'r') as fin:
-            print(fin.read(), end='')
-        logging.info('Log was printed in stdout')
-
-
-def main(args: argparse.Namespace) -> None:
-    """The main entry point of the application"""
-    rss_url = args.source
-    limit = args.limit
-
-    parsed_rss = parse_rss(rss_url)
-    logging.info('RSS URL parsed')
-
-    articles_list, limit = get_articles(parsed_rss, limit)
-    logging.info('Articles list created')
-
-    try:
-        if args.json:
-            print_rss_json(articles_list)
-            logging.info('Articles was printed as json')
-        else:
-            print_rss_articles(articles_list)
-            logging.info(f'{limit} articles was printed')
-    except IndexError:
-        logging.error('There is no articles by this URL')
-
-    check_if_verbose(args)
-
-    logging.info('Application ended')
 
 
 def check_the_connection(rss_url: str) -> str:
@@ -206,8 +186,8 @@ def find_url() -> str:
             if index != 1:
                 sys.argv.insert(1, sys.argv.pop(index))
             return value
-
-    raise custom_error.UrlNotFoundInArgsError
+    if not check_if_help_or_version_in_arguments():
+        raise custom_error.UrlNotFoundInArgsError
 
 
 def create_parser() -> argparse.ArgumentParser:
@@ -224,15 +204,23 @@ def create_parser() -> argparse.ArgumentParser:
 
 def start_logging() -> None:
     """Setting up logging basic configuration"""
+    root = logging.getLogger()
     logging.basicConfig(
         filename=LOG_FILE_NAME,
         filemode='w',
-        format=u'[%(asctime)s] %(levelname)-8s %(message)s',
+        format='[%(asctime)s] %(levelname)-8s %(message)s',
         level=logging.DEBUG
     )
+    if "--verbose" in sys.argv:
+        handler = logging.StreamHandler(sys.stdout)
+        handler.setLevel(logging.DEBUG)
+        formatter = logging.Formatter('[%(asctime)s] %(levelname)-8s %(message)s')
+        handler.setFormatter(formatter)
+        root.addHandler(handler)
 
 
-if __name__ == '__main__':
+def main() -> None:
+    """The main entry point of the application"""
     try:
         start_logging()
         logging.info('Application started')
@@ -246,9 +234,25 @@ if __name__ == '__main__':
 
         check_url_and_connection(url)
 
-        args_namespace = arg_parser.parse_args()
-        main(args_namespace)
+        args = arg_parser.parse_args()
 
+        rss_url = args.source
+        limit = args.limit
+
+        parsed_rss = parse_rss(rss_url)
+        logging.info('RSS URL parsed')
+
+        articles_list = get_articles(parsed_rss, limit)
+        logging.info('Articles list created')
+
+        if args.json:
+            print_rss_json(articles_list)
+            logging.info('Articles was printed as json')
+        else:
+            print_rss_articles(articles_list)
+            logging.info(f'{len(articles_list)} articles was printed')
+
+        logging.info('Application ended')
     except custom_error.UrlNotFoundInArgsError:
         logging.error('UrlNotFoundInArgsError')
         logging.info('Application ended')
@@ -269,6 +273,13 @@ if __name__ == '__main__':
         logging.error(error.message)
         logging.info('Application ended')
 
-        # python rss_reader.py "https://news.yahoo.com/rss/"
-        # python rss_reader.py "https://news.tut.by/rss/economics.rss"
-        # python rss_reader.py 'http://rss.cnn.com/rss/edition_world.rss'
+
+if __name__ == '__main__':
+    main()
+
+    # python rss_reader.py "https://news.yahoo.com/rss/"
+    # python rss_reader.py "https://news.tut.by/rss/economics.rss"
+    # python rss_reader.py 'http://rss.cnn.com/rss/edition_world.rss'
+    # python rss_reader.py http://feeds.bbci.co.uk/news/rss.xml?edition=uk
+    # python rss_reader.py "http://billmaher.hbo.libsynpro.com/rss"
+    # python rss_reader.py "https://www.craigslist.org/about/best/all/index.rss"
