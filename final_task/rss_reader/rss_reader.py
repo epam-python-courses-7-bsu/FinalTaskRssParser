@@ -33,10 +33,6 @@ def log(message):
 
 
 try:
-    # Check if the request is valid
-    # if not re.match("(https|http):\/\/((\w+).)+(com|org|ru|net)(\/(\w+))+", args.sourse):
-    #     raise rre.NotRequest
-
     # Get request
     log('Start parsing')
     rss_request = requests.get(args.sourse)
@@ -79,8 +75,6 @@ try:
         log('Print result as JSON in stdout')
         json_articles = json.dumps(my_dict_articles, indent=4)
         log(json_articles)
-# except rre.NotRequest as exc:
-#     log(str(exc))
 except requests.exceptions.MissingSchema:
     log('it is not http request!')
 except requests.exceptions.ConnectTimeout:

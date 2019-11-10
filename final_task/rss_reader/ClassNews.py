@@ -33,7 +33,6 @@ def xml_arguments_for_class(xml_string, limit):
                     list_links.append(group1.group(1))
                     parser_dictionary['links'] = list_links
                     # Еще добавить описание к картинкам
-
         dict_article_list.append(parser_dictionary)
         if limit == counter + 1:
             return dict_article_list
