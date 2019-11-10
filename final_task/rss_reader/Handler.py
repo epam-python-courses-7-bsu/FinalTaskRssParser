@@ -1,5 +1,6 @@
 import json
 import logging
+from itertools import islice
 
 import feedparser
 from Entry import Entry
@@ -23,28 +24,24 @@ class Handler:
 
     @logging_decorator
     def option_json(self) -> None:
-        for num, entry in enumerate(self.gen_entries()):
+        for entry in islice(self.gen_entries(), 0, self.limit):
             self.print_to_json(self.convert_to_dict(entry))
-            if num == self.limit - 1:
-                break
 
     @logging_decorator
     def option_default(self) -> None:
         self.print_feed()
-        for num, entry in enumerate(self.gen_entries()):
+        for entry in islice(self.gen_entries(), 0, self.limit):
             entry.print_title()
             entry.print_date()
             entry.print_link()
             entry.print_summary()
             entry.print_links()
-            if num == self.limit - 1:
-                break
 
     @logging_decorator
     def gen_entries(self) -> Entry:
         """generation instances of Entry class for farther handling them"""
         for ent in self.parsed.entries:
-            entry = Entry(ent.title, ent.published, ent.link, ent.summary, [link["href"] for link in ent.links])
+            entry = Entry(ent.title, ent.published, ent.link, ent.summary, tuple([link["href"] for link in ent.links]))
             yield entry
 
     @logging_decorator

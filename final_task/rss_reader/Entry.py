@@ -6,7 +6,7 @@ import html
 class Entry:
     """class for every article from http:link...link.rss"""
     @logging_decorator
-    def __init__(self, title: str = "", date: str = "", article_link: str = "", summary: str = "", links: list = []):
+    def __init__(self, title: str = "", date: str = "", article_link: str = "", summary: str = "", links: tuple = ()):
         self.title = self.parse_html(title)
         self.date = date
         self.article_link = article_link
@@ -50,7 +50,9 @@ class Entry:
                                summary.find('"', summary.find("src=\"") + len("src=\""))
                           ]
             if src != "":
+                self.links = list(self.links)
                 self.links.append(src)
+                self.links = tuple(self.links)
             alt = summary[summary.find("alt=\"") + len("alt=\""):
                                summary.find('"', summary.find("alt=\"") + len("alt=\""))
                           ]

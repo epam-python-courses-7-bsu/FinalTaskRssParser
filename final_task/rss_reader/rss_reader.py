@@ -6,6 +6,7 @@ sys.path.append(this_dir)
 from Handler import Handler
 from Logging import logging_decorator
 from ConsoleParse import get_arguments_from_console
+from RSSReaderException import RSSReaderException
 
 
 @logging_decorator
@@ -16,18 +17,22 @@ def main():
     if arg_parser_args.verbose:
         logging.basicConfig(level=logging.INFO)
     if arg_parser_args.limit <= 0:
-        arg_parser_args.limit = 1
+        raise RSSReaderException("Error. Incorrect value of argument limit")
+
     handler = Handler(arg_parser_args.source, arg_parser_args.limit, version)
-    try:
-        if arg_parser_args.version:
-            handler.option_version()
-        elif arg_parser_args.json:
-            handler.option_json()
-        else:
-            handler.option_default()
-    except AttributeError:
-        print("Error, failed to get an attribute. Check correctness URL")
+
+    if arg_parser_args.version:
+        handler.option_version()
+    elif arg_parser_args.json:
+        handler.option_json()
+    else:
+        handler.option_default()
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except AttributeError:
+        print("Error, failed to get an attribute. Check correctness URL")
+    except RSSReaderException as rss_exc:
+        print(rss_exc)
