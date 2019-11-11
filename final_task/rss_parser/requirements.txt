@@ -1,0 +1,8 @@
+logging
+sys
+argparse
+feedparser
+bs4
+json
+itertools
+re
