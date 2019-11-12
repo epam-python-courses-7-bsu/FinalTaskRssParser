@@ -1,13 +1,13 @@
 import feedparser
 from pprint import pprint
-from myargparse import parsargs
+from arg import parsargs
 from bs4 import BeautifulSoup 
 import json
 
 args = parsargs()
 
 parsed = feedparser.parse(args.source)
-
+print("gello")
 def get_sourse(parsed):
     ''' Gets source information '''
     feed = parsed['feed']
@@ -34,10 +34,6 @@ def get_news(parsed):
         })
     return articles
 
-def to_json(articles):
-    """ Convert to json """ 
-    return json.dumps(articles)
-
 def output(articles):
     print("Title: ", value['title'])
     print("Date: ", value['published'])
@@ -52,8 +48,9 @@ if __name__ == '__main__':
     print('Feed: ', feed['link'], '\n')
     if args.json:
         for value in articles:
-            j = to_json(articles)
-            print(j, '\n')
+            """ Convert to json """ 
+            json_format = json.dumps(articles)
+            print(json_format, '\n')
     else:
         for value in articles:
             output(articles)
