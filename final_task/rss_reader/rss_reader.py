@@ -1,4 +1,4 @@
-#!rss_venv/bin/python
+#!rss_virtual_env/bin/python
 
 """rss-reader.py 1.0
 
@@ -10,18 +10,27 @@ Usage:
     rss-reader.py --verbose          Outputs verbose status messages
     rss-reader.py --limit LIMIT      Limit news topics if this parameter provided
 """
-
+try:
+    import argparse
+    import functions.check_func as ch_f
+    import functions.process_func as proc_f
+    import functions.print_func as print_f
+    import classes.exceptions as exc
+except ModuleNotFoundError as E:
+    print(E)
+    exit()
+except KeyboardInterrupt:
+    print(" KeyboardInterrupt")
+    exit()
 
 def main():
     """Main function that runs the program"""
 
-    from classes.arguments import ComLineArgParser
-    import functions.check_func as ch_f
-    import functions.process_func as proc_f
-    import functions.print_func as print_f
+    # Create argument parser instance
+    parser = argparse.ArgumentParser()
 
     # Collect command line arguments
-    command_line_args = ComLineArgParser()
+    command_line_args = proc_f.get_arguments(parser)
 
     # If --version argument, print version of program
     ch_f.check_version_argument(command_line_args)
@@ -48,7 +57,10 @@ def main():
 if __name__ == '__main__':
     try:
         main()
+    except (exc.InternetConnectionError, exc.GettingFeedError, exc.UrlError,
+            exc.LimitArgumentError, exc.FeedXmlError) as E:
+        print(E)
+    except exc.VersionPrinted:
+        pass
     except KeyboardInterrupt:
         print(" Keyboard interrupt")
-    except ModuleNotFoundError as E:
-        print(E)

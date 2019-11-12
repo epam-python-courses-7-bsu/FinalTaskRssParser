@@ -1,18 +1,11 @@
-"""Module for testing functions from check_funk.py
-
-Tested functions:
------------------
-    check_internet_connection(logger)
-    check_verbose(command_line_args)
-    check_news_collection(news_collection, logger)
-    check_feed_status(feed, logger)
-"""
+"""Module for testing functions from check_funk.py"""
 
 import unittest
 from unittest.mock import patch, Mock
 import functions.check_func as ch_f
 import requests
-import builtins
+import classes.exceptions as exc
+import feedparser
 
 
 class TestCheckFunctions(unittest.TestCase):
@@ -27,18 +20,18 @@ class TestCheckFunctions(unittest.TestCase):
         #If internet is avaliable should return True
         self.assertTrue(ch_f.check_internet_connection(self.logger))
 
-        # If internet is not avaliable should raise SystemExit
-        with self.assertRaises(SystemExit):
+        # If internet is not avaliable should raise InternetConnectionError
+        with self.assertRaises(exc.InternetConnectionError):
             with patch('requests.get', side_effect=requests.ConnectionError):
-                builtins.input = Mock('y')
                 ch_f.check_internet_connection(self.logger)
+
 
     def test_check_version_argument(self):
 
         # If version argument print should print version and raise SystemExit
         self.command_line_args.version = True
         with patch('builtins.print'):
-            with self.assertRaises(SystemExit):
+            with self.assertRaises(exc.VersionPrinted):
                 ch_f.check_version_argument(self.command_line_args)
 
         # If version argument is False, return None
@@ -57,34 +50,42 @@ class TestCheckFunctions(unittest.TestCase):
         logger = ch_f.check_verbose(self.command_line_args)
         self.assertEqual(logger.getEffectiveLevel(), 30)
 
-    def test_check_news_collection(self):
-
-        # If news_collection if empty, raises SystemExit
-        news_collection = []
-        with self.assertRaises(SystemExit):
-            ch_f.check_news_collection(news_collection, self.logger)
-
-        # If news_collection is True, return None
-        news_collection = [1]
-        self.assertIsNone(ch_f.check_news_collection(news_collection, self.logger))
 
     def test_check_feed_status(self):
 
         feed = Mock()
 
-        # If feed_status not 404, return feed
+        # If feed.status not between (400:600), return feed
         feed.status = 200
-        self.assertEqual(ch_f.check_feed_status(feed, self.logger), feed)
+        self.assertEqual(ch_f.check_feed_status(feed), feed)
 
-        # If feed_status 404, raise SystemExit
+        # If feed.status between (400:600), should raise GettingFeedError
         feed.status = 404
-        with self.assertRaises(SystemExit):
-            ch_f.check_feed_status(feed, self.logger)
+        with self.assertRaises(exc.GettingFeedError):
+            ch_f.check_feed_status(feed)
 
-        # If feed_status is None, raises SystemExit
-        feed.status = None
-        with self.assertRaises(SystemExit):
-            ch_f.check_feed_status(feed, self.logger)
+        # If getting feed.status raises AttributeError, should raises UrlError
+        feed = feedparser.parse("some_invalid_url")
+        with self.assertRaises(exc.UrlError):
+            ch_f.check_feed_status(feed)
+
+    def check_news_collection(news_collection, logger):
+        """Check if news_collection is not empty"""
+        if not news_collection:
+            raise exc.FeedXmlError("Parsed xml is not valid")
+        else:
+            logger.info("Successful collected.")
+
+    def test_check_news_collection(self):
+
+        # If news_collection if empty, raises SystemExit
+        news_collection = []
+        with self.assertRaises(exc.FeedXmlError):
+            ch_f.check_news_collection(news_collection, self.logger)
+
+        # If news_collection is True, return None
+        news_collection = [1]
+        self.assertIsNone(ch_f.check_news_collection(news_collection, self.logger))
 
 
 if __name__ == '__main__':
