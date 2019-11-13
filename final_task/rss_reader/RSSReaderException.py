@@ -1,0 +1,2 @@
+class RSSReaderException(Exception):
+    pass
