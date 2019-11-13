@@ -1,4 +1,6 @@
 import logging
+import time
+
 from Logging import logging_decorator
 import html
 
@@ -6,13 +8,23 @@ import html
 class Entry:
     """class for every article from http:link...link.rss"""
     @logging_decorator
-    def __init__(self, title: str = "", date: str = "", article_link: str = "", summary: str = "", links: tuple = ()):
+    def __init__(self, feed: str = "", title: str = "", date: str = "", article_link: str = "", summary: str = "", links: tuple = (),
+                 published_parsed: time.struct_time = ()):
+        self.feed = feed
         self.title = self.parse_html(title)
         self.date = date
         self.article_link = article_link
         self.links = links
         self.summary = self.parse_html(summary)
+        if published_parsed:
+            self.publish_year = published_parsed.tm_year
+            self.publish_month = published_parsed.tm_mon
+            self.publish_day = published_parsed.tm_mday
         logging.info("Entry object created")
+
+    @logging_decorator
+    def print_feed(self) -> None:
+        print("Feed: ", self.feed, '\n')
 
     @logging_decorator
     def print_title(self) -> None:

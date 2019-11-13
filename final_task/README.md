@@ -9,9 +9,7 @@ python rss_reader.py "https://news.yahoo.com/rss/" --limit 1
 ```shell
 python rss_reader.py "https://timesofindia.indiatimes.com/rssfeedstopstories.cms" --json --limit 1
 ```
-```shell
-python rss_reader.py "http://www.nato.int/cps/rss/en/natohq/rssFeed.xsl/rssFeed.xml" --limit 1
-```
+
 
 5 mains files of project:
 * rss_reader.py - the file which runs the application
@@ -23,15 +21,17 @@ python rss_reader.py "http://www.nato.int/cps/rss/en/natohq/rssFeed.xsl/rssFeed.
 Structure of output when `--json` is selected:
 ```
 {
-  "Feed": "Yahoo News - Latest News & Headlines",
-  "Title": "Trump Jr. tweets name of alleged whistleblower",
-  "Date": "Wed, 06 Nov 2019 11:44:34 -0500",
-  "Link": "https://news.yahoo.com/donald-trump-jr-tweets-name-of-whistleblower-164434463.html",
-  "Links": [
-    "https://news.yahoo.com/donald-trump-jr-tweets-name-of-whistleblower-164434463.html",
-    "http://l.yimg.com/uu/api/res/1.2/2BQtOMLnlPTy3DNXkpQPIw--/YXBwaWQ9eXRhY2h5b247aD04Njt3PTEzMDs-/https://media-mbst-pub-ue1.s3.amazonaws.com/creatr-uploaded-images/2019-11/e7ce4300-00b0-11ea-abff-085279fefba1"
-  ]
-}
+    "Feed": "Yahoo News - Latest News & Headlines",
+    "Title": "Is Nikki Haley auditioning to replace Pence on Trump's 2020 ticket?",
+    "DateInt": "20191112",
+    "Date": "Tue, 12 Nov 2019 11:34:28 -0500",
+    "Link": "https://news.yahoo.com/nikki-haley-book-tour-audition-vp-pence-trump-2020-ticket-163428688.html",
+    "Summary": "[image 1: Is Nikki Haley auditioning to replace Pence on Trump's 2020 ticket?][1] Less than three months ago, the former U.S. ambassador to the United Nations tried to tamp down speculation that she might replace the vice president on Trump\u2019s 2020 ticket. But multiple political observers say her new book tour is doubling as an audition for the role.",
+    "Links": [
+      "https://news.yahoo.com/nikki-haley-book-tour-audition-vp-pence-trump-2020-ticket-163428688.html",
+      "http://l2.yimg.com/uu/api/res/1.2/XnMA9mstMRV0FkOdMugjhg--/YXBwaWQ9eXRhY2h5b247aD04Njt3PTEzMDs-/https://media-mbst-pub-ue1.s3.amazonaws.com/creatr-uploaded-images/2019-11/f1884750-fcd3-11e9-bcf7-cef09bc7ad91"
+    ]
+  }
 ```
 # Iteration 2
 If you have installed Python then to export CLI utility rss-reader follow these steps:
@@ -99,3 +99,20 @@ Links:
 [0]  https://news.yahoo.com/graham-trump-ukraine-incoherent-quid-pro-quo-192210175.html (link)
 [1]  http://l2.yimg.com/uu/api/res/1.2/aWhGys7_IW5qIjKaiJpPfg--/YXBwaWQ9eXRhY2h5b247aD04Njt3PTEzMDs-/https://media-mbst-pub-ue1.s3.amazonaws.com/creatr-uploaded-images/2019-11/5527ffe0-00ca-11ea-9f7d-d1e736c1315d (image)
 ```
+# Iteration 3
+rss-reader can accept optional argument --date instead of argument source
+```
+$ python rss_reader.py --date 20191113
+```
+```
+$ python rss_reader.py "https://news.yahoo.com/rss/"  --date 20191113
+usage: rss_reader.py [-h] [--version] [--json] [--verbose] [--limit LIMIT]
+                     [--date DATE]
+                     [source]
+rss_reader.py: error: argument --date: not allowed with argument source
+```
+Argument --date work with --json, --limit and --verbose arguments
+```
+$ python rss_reader.py --date 20191113 --json --verbose
+```
+News is stored in local file cache.json as list of json objects

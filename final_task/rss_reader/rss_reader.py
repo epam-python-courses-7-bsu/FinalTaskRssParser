@@ -15,7 +15,7 @@ def main():
     version = 1.0
 
     if arg_parser_args.verbose:
-        logging.basicConfig(level=logging.INFO)
+        logging.getLogger().setLevel(logging.INFO)
     if arg_parser_args.limit <= 0:
         raise RSSReaderException("Error. Incorrect value of argument limit")
 
@@ -23,6 +23,8 @@ def main():
 
     if arg_parser_args.version:
         handler.option_version()
+    elif arg_parser_args.date:
+        handler.option_date(str(arg_parser_args.date), arg_parser_args.json)
     elif arg_parser_args.json:
         handler.option_json()
     else:
@@ -33,6 +35,6 @@ if __name__ == "__main__":
     try:
         main()
     except AttributeError:
-        print("Error, failed to get an attribute. Check correctness URL")
+        print("Error, failed to get an attribute.")
     except RSSReaderException as rss_exc:
         print(rss_exc)
