@@ -3,9 +3,10 @@ from dataclasses import dataclass
 from typing import List
 from feedparser import FeedParserDict
 from parser_rss import format_description
+from html import unescape as html_unescape
 
 
-@dataclass()
+@dataclass
 class Item:
     title: str
     date: str
@@ -29,28 +30,7 @@ def print_items(items):
         if item.img_links:
             print('Image links: ')
             for num, link in enumerate(item.img_links):
-                print(f'\t[{num+1}]: [{link}]')
-
-
-def item_to_dict(item):
-    """ Convert Item to dict
-
-    :param item: just item
-    :type item: 'items.Item'
-
-    :raise TypeError: if type of item is not 'items.Item'
-
-    :return: converted item
-    :rtype: dict
-    """
-    if not isinstance(item, Item):
-        raise TypeError(f'Object with type {type(item)} is not serializable. Expected type: {Item}')
-
-    return {'title': item.title,
-            'date': item.date,
-            'link': item.link,
-            'text': item.text,
-            'image links': item.img_links}
+                print(f'\t[{num + 1}]: [{link}]')
 
 
 def get_items_from_feedparser(parser):
@@ -70,12 +50,18 @@ def get_items_from_feedparser(parser):
 
     items = list()
 
+    logging.info('Loop for creating items.')
     for item in parser.entries:
         text_, img_links_ = format_description(item.description)
-        items.append(Item(title=item.title, date=item.published, link=item.link, text=text_, img_links=img_links_))
+
+        new_item = Item(
+            title=html_unescape(item.title),
+            date=item.published,
+            link=item.link,
+            text=text_,
+            img_links=img_links_
+        )
+
+        items.append(new_item)
 
     return items
-
-
-def log():
-    logging.basicConfig(level=logging.DEBUG)

@@ -20,15 +20,23 @@ def create_feedparser(rss_url, limit=0):
     :return: feedparser
     :rtype: 'feedparser.FeedParserDict'
     """
+    logging.info('Getting RSS from ' + rss_url)
     parser = feedparser.parse(rss_url)
 
     if parser.bozo:
-        raise Exception('Problems with getting RSS: ' + str(parser.bozo_exception))
+        raise GettingRSSException(str(parser.bozo_exception))
 
+    logging.debug('limit = ' + str(limit))
     if limit:
+        logging.info('Cutting item list.')
         parser.entries = parser.entries[:limit]
 
     return parser
+
+
+class GettingRSSException(Exception):
+    def __init__(self, msg):
+        super().__init__('Problems with getting RSS: ' + msg)
 
 
 def format_description(description):
@@ -42,18 +50,17 @@ def format_description(description):
     :return: content of formatted description and list of image links
     :rtype: tuple of: str and list of str
     """
-    if not type(description) == str:
+    if isinstance(description, str.__class__):
         raise TypeError(f'Wrong type: {type(description)}. Expected type of description: {str}')
 
+    logging.info('Creating description soup.')
     description_soup = BeautifulSoup(description, 'html.parser')
     links = list()
 
+    logging.info('Replacing img tags and extracting links.')
     for num, img in enumerate(description_soup.find_all('img')):
-        links.append(img['src'])
-        img.replace_with(f'[image {num+1}: {img["alt"]}][{num+1}]')
+        if img['src']:
+            links.append(img['src'])
+            img.replace_with(f'[image {num+1}: {img["alt"]}][{num+1}]')
 
     return description_soup.text, links
-
-
-def log():
-    logging.basicConfig(level=logging.DEBUG)
