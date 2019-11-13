@@ -3,12 +3,12 @@
 """rss-reader.py 1.0
 
 Usage:
-    rss-reader.py (-h | --help)      Show help message and exit
-    rss-reader.py <rss-url>          Print rss feeds in human-readable format
-    rss-reader.py --version          Print version info
-    rss-reader.py --json             Print result as JSON in stdout
-    rss-reader.py --verbose          Outputs verbose status messages
-    rss-reader.py --limit LIMIT      Limit news topics if this parameter provided
+    rss_reader.py (-h | --help)      Show help message and exit
+    rss_reader.py <rss-url>          Print rss feeds in human-readable format
+    rss_reader.py --version          Print version info
+    rss_reader.py --json             Print result as JSON in stdout
+    rss_reader.py --verbose          Outputs verbose status messages
+    rss_reader.py --limit LIMIT      Limit news topics if this parameter provided
 """
 try:
     import argparse
@@ -25,38 +25,34 @@ except KeyboardInterrupt:
 
 def main():
     """Main function that runs the program"""
-
-    # Create argument parser instance
-    parser = argparse.ArgumentParser()
-
-    # Collect command line arguments
-    command_line_args = proc_f.get_arguments(parser)
-
-    # If --version argument, print version of program
-    ch_f.check_version_argument(command_line_args)
-
-    # If --verbose argument, set logging level to info
-    logger = ch_f.check_verbose(command_line_args)
-
-    # Checking internet connection
-    ch_f.check_internet_connection(logger)
-
-    # Parsing the feed
-    feed = proc_f.parse_feed(command_line_args, logger)
-
-    # Collect all entries like a news object collection
-    news_collection = proc_f.process_feed(feed, logger)
-
-    # Check if news_collection is not empty
-    ch_f.check_news_collection(news_collection, logger)
-
-    # Check --json argument, print news in appropriate form
-    print_f.print_feeds(news_collection, command_line_args, logger)
-
-
-if __name__ == '__main__':
     try:
-        main()
+        # Create argument parser instance
+        parser = argparse.ArgumentParser()
+
+        # Collect command line arguments
+        command_line_args = proc_f.get_arguments(parser)
+
+        # If --version argument, print version of program
+        ch_f.check_version_argument(command_line_args)
+
+        # If --verbose argument, set logging level to info
+        logger = ch_f.check_verbose(command_line_args)
+
+        # Checking internet connection
+        ch_f.check_internet_connection(logger)
+
+        # Parsing the feed
+        feed = proc_f.parse_feed(command_line_args, logger)
+
+        # Collect all entries like a news object collection
+        news_collection = proc_f.process_feed(feed, logger)
+
+        # Check if news_collection is not empty
+        ch_f.check_news_collection(news_collection, logger)
+
+        # Check --json argument, print news in appropriate form
+        print_f.print_feeds(news_collection, command_line_args, logger)
+
     except (exc.InternetConnectionError, exc.GettingFeedError, exc.UrlError,
             exc.LimitArgumentError, exc.FeedXmlError) as E:
         print(E)
@@ -64,3 +60,7 @@ if __name__ == '__main__':
         pass
     except KeyboardInterrupt:
         print(" Keyboard interrupt")
+
+
+if __name__ == '__main__':
+    main()

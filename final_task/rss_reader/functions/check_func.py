@@ -18,7 +18,7 @@ def check_internet_connection(logger):
 def check_version_argument(command_line_args):
     """If version argument, print version and exit"""
     if command_line_args.version:
-        print("rss_reader.py 1.0")
+        print("rss_reader.py 2.2")
         raise exc.VersionPrinted()
 
 
