@@ -1,6 +1,9 @@
 class Error(Exception):
     """Base class for other exceptions"""
 
+    def __init__(self, message: str = None) -> None:
+        self.message = message
+
 
 class UrlNotFoundInArgsError(Error):
     """Raised when can't find url in arguments"""
@@ -19,17 +22,23 @@ class NotValidUrlError(Error):
 
 class ConnectionFailedError(Error):
     """Raised when can't connect to the url"""
-    message: str
-
-    def __init__(self, message):
-        if message:
-            self.message = message
+    pass
 
 
 class ArticleKeyError(Error):
     """Raised when the article miss key"""
-    message: str
+    pass
 
-    def __init__(self, message):
-        if message:
-            self.message = message
+
+class NotValidDateError(Error):
+    """Raised when date is not valid"""
+    pass
+
+
+class NotValidLimitError(Error):
+    """Raised when limit is not valid"""
+    pass
+
+
+class NoDataInCacheFileError(Error):
+    pass

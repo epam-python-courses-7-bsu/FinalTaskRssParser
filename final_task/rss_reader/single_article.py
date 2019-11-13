@@ -13,6 +13,7 @@ class EnhancedJSONEncoder(json.JSONEncoder):
 @dataclass
 class SingleArticle:
     feed: str
+    feed_url: str
     title: str
     date: str
     link: str
