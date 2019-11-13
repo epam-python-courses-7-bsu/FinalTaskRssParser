@@ -1,14 +1,8 @@
 import argparse
 import logging
 import sys
-import xml
 from os import path, remove
-
-import lxml
-from lxml import html
-
 from Classes.RSSParser import RSSParser
-from bs4 import BeautifulSoup
 
 
 def create_parser():

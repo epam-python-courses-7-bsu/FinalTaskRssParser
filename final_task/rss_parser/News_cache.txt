@@ -458,3 +458,68 @@ Images links:'https://img.buzzfeed.com/buzzfeed-static/static/2019-11/5/18/tmp/f
 Alternative text:9
 Main source: https://www.buzzfeed.com/world.xml
 _ _ _
+38.
+Title: 'Widow sues boat owner in fire off California that killed 34'
+Date: Mon, 11 Nov 2019 19:41:04 -0500
+Link: 'https://news.yahoo.com/widow-sues-boat-owner-fire-233606327.html'
+Description:
+ ('The widow of a passenger who died in a fiery dive boat disaster that killed 34 people in the waters off '
+ "California sued the vessel's owners Monday.  Christine Dignam, whose husband, Justin Dignam, died when the "
+ 'Conception caught fire Sept. 2 off the Santa Barbara coast, claimed that the boat was unsafe.  The vessel '
+ "didn't have adequate smoke detectors or firefighting equipment, it lacked enough emergency exits, and a "
+ 'required night watch was not on duty when the flames broke out in the middle of the night, according to the '
+ 'wrongful-death lawsuit filed in federal court in Los Angeles.')
+Images links:'http://l1.yimg.com/uu/api/res/1.2/jmg7C6R1RA.fc_6VSr9VEQ--/YXBwaWQ9eXRhY2h5b247aD04Njt3PTEzMDs-/https://media.zenfs.com/en/ap.org/b815e55fdb481dbc77f8585d78031554'
+Alternative text:'Widow sues boat owner in fire off California that killed 34'
+Main source: https://news.yahoo.com/rss/
+_ _ _
+39.
+Title: 'Meteor streaks through the sky over St. Louis'
+Date: Tue, 12 Nov 2019 22:40:13 -0500
+Link: 'https://news.yahoo.com/meteor-streaks-sky-over-st-103946981.html'
+Description:
+ 'Hundreds reported seeing a bright flash of light across the sky in at least two counties'
+Images links:'http://l.yimg.com/uu/api/res/1.2/7xEELU22Mk5A_j1RoDFaBg--/YXBwaWQ9eXRhY2h5b247aD04Njt3PTEzMDs-/https://media.zenfs.com/en/cbs_news_897/5ef3bcda75b18dc8ab8dd39ea2d9eebf'
+Alternative text:'Meteor streaks through the sky over St. Louis'
+Main source: https://news.yahoo.com/rss/
+_ _ _
+40.
+Title: 'Hong Kong readies for more chaos as violence spreads citywide'
+Date: Tue, 12 Nov 2019 20:58:12 -0500
+Link: 'https://news.yahoo.com/hong-kong-readies-more-chaos-015812410.html'
+Description:
+ ('Hong Kong prepared for more clashes on Wednesday as anti-government protesters planned to paralyse parts of the '
+ 'Asian financial hub for a third day, with transport, schools and many businesses closing after violence '
+ 'escalated across the city.  Protesters and police battled through the night at university campuses and other '
+ 'locations only hours after police Senior Superintendent Kwong Wing-cheung said the Chinese-ruled city had been '
+ 'pushed to the "brink of a total breakdown".  Police fired tear gas at protesters overnight, while some '
+ 'activists torched a vehicle, hurled petrol bombs at a police station and metro train and broke into a major '
+ 'shopping mall.')
+Images links:''
+Alternative text:'Hong Kong readies for more chaos as violence spreads citywide'
+Main source: https://news.yahoo.com/rss/
+_ _ _
+41.
+Title: 'Dems and GOP argue over whistleblower at impeachment hearing'
+Date: Wed, 13 Nov 2019 11:25:52 -0500
+Link: 'https://news.yahoo.com/dems-gop-argue-over-whistleblower-162552980.html'
+Description:
+ ('Following the opening statements of\xa0Adam Schiff, the chairman of the House Intelligence Committee, and Devin '
+ 'Nunes, the committee&#39;s ranking member,\xa0Elise Stefanik, R-N.Y., and Rep. Jim Jordan, R-Oh., demanded to '
+ 'know when the Democratic majority would answer the Republicans&#39; demands for certain witnesses to appear.')
+Images links:'http://l.yimg.com/uu/api/res/1.2/u2X8UjO3wTmEuc_SOvSdOg--/YXBwaWQ9eXRhY2h5b247aD04Njt3PTEzMDs-/http://d.yimg.com/hd/cp-video-transcode/creatr-uploaded-videos/2019-11/4c7a6875-41e7-5a43-ac63-8b07f45c4a00/26b6ff40-0632-11ea-95fc-3092cb835cd1_3_0.jpg?s=8ecadb37e5750d31cc41c94c992745c3&c=de1407d43b247ca2812d30cae7ca53c0&a=ynewskatiecouric&mr=0'
+Alternative text:'Dems and GOP argue over whistleblower at impeachment hearing'
+Main source: https://news.yahoo.com/rss/
+_ _ _
+42.
+Title: 'Is Nikki Haley auditioning to replace Pence on Trump&#39;s 2020 ticket?'
+Date: Tue, 12 Nov 2019 11:34:28 -0500
+Link: 'https://news.yahoo.com/nikki-haley-book-tour-audition-vp-pence-trump-2020-ticket-163428688.html'
+Description:
+ ('Less than three months ago, the former U.S. ambassador to the United Nations tried to tamp down speculation '
+ 'that she might replace the vice president on Trump’s 2020 ticket. But multiple political observers say her new '
+ 'book tour is doubling as an audition for the role.')
+Images links:'http://l2.yimg.com/uu/api/res/1.2/XnMA9mstMRV0FkOdMugjhg--/YXBwaWQ9eXRhY2h5b247aD04Njt3PTEzMDs-/https://media-mbst-pub-ue1.s3.amazonaws.com/creatr-uploaded-images/2019-11/f1884750-fcd3-11e9-bcf7-cef09bc7ad91'
+Alternative text:"Is Nikki Haley auditioning to replace Pence on Trump's 2020 ticket?"
+Main source: https://news.yahoo.com/rss/
+_ _ _
