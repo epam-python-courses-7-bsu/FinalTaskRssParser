@@ -4,9 +4,12 @@ This module process the input arguments
 
 import argparse
 import re
+from typing import Any
+
 import logs
 import sys
 import datetime
+import os
 
 
 def get_parse(args_in='') -> dict:
@@ -15,11 +18,12 @@ def get_parse(args_in='') -> dict:
     parser = argparse.ArgumentParser(prog='RSSTaker', description='RSS reader. Takes the arguments from command line.')
 
     parser.add_argument('url', type=str, help='Link to RSS channel(line without spaces). Mandatory for all actions.')
-    parser.add_argument('-v', '--version', action='version', version='%(prog)s 3.1', help='Print version info.')
+    parser.add_argument('-v', '--version', action='version', version='%(prog)s 3.5', help='Print version info.')
     parser.add_argument('-j', '--json', action='store_const', const=True, help='Print result as json in stdout.')
     parser.add_argument('-b', '--verbose', action='store_const', const=True, help='Print all logs in stdout.')
-    parser.add_argument('-l', '--limit', type=int, default=1, help='Limit of news topics (natural number).')
+    parser.add_argument('-l', '--limit', type=int, help='Limit of news topics (natural number).')
     parser.add_argument('-d', '--date', type=int, help='Date to print news from history, yyyymmdd (natural number).')
+    parser.add_argument('-p', '--pdf', type=str, help=r'Convert news to pdf (use -p [path where to store\].')
 
     if args_in:
         try:
@@ -38,7 +42,12 @@ def get_parse(args_in='') -> dict:
             logs.log_err_exit()
             parser.exit()
 
-    return {'url': args.url, 'json': args.json, 'verbose': args.verbose, 'limit': args.limit, 'date': args.date}
+    return {'url': args.url,
+            'json': args.json,
+            'verbose': args.verbose,
+            'limit': args.limit,
+            'date': args.date,
+            'pdf': args.pdf}
 
 
 def validate_url(url: str) -> bool:
@@ -57,9 +66,10 @@ def validate_args(data: dict) -> bool:
 
     date_time = datetime.datetime.now()
 
-    if data['limit'] < 0:
-        print('Limit is invalid.')
-        return False
+    if data['limit'] is not None:
+        if data['limit'] <= 0:
+            print('Limit is invalid.')
+            return False
 
     if data['date']:
         if data['date'] > int(date_time.strftime("%Y%m%d")):
@@ -68,6 +78,12 @@ def validate_args(data: dict) -> bool:
         else:
             return True
 
-    return True
+    if data['pdf']:
+        if not os.access(data['pdf'], os.W_OK):
+            print('The path is either not exist or can not be reached.')
+            return False
+        else:
+            return True
 
+    return True
 

@@ -4,6 +4,7 @@ import logging
 import os
 
 this_directory = os.path.abspath(os.path.dirname(__file__))
+
 journalLog = 'logJournal.log'
 directory = os.path.join(this_directory, journalLog)
 
@@ -85,6 +86,19 @@ def print_log():
             print(line, end='')
 
 
+def log_prepare() -> dict:
+    """This function prepares log journal for conversion"""
+    log_journal = dict()
+    counter = 0
+
+    with open(directory, 'r') as log:
+        for line in log:
+            log_journal[counter] = line
+            counter += 1
+
+    return log_journal
+
+
 def log_print():
     """This function logs print operation"""
 
@@ -119,3 +133,27 @@ def log_invalid_arguments(args: str):
     """This function logs invalid arguments"""
 
     logging.error('Arguments not valid: ' + args)
+
+
+def log_news_limit(limit: int):
+    """This function logs when news limit is reached"""
+
+    logging.info('News limit for print is reached: ' + str(limit))
+
+
+def log_news_copycat(url: str):
+    """This function logs attempt of writing duplicate news"""
+
+    logging.warning('Attempt to write duplicate news: url - ' + url)
+
+
+def log_news_local_storage_pdf():
+    """This function logs the conversion from local storage"""
+
+    logging.info('News from local storage vere converted to pdf')
+
+
+def log_news_pdf():
+    """This function logs the conversion from rss feed"""
+
+    logging.info('News from rss feed were converted to pdf')

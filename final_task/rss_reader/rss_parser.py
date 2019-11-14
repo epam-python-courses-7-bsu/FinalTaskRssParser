@@ -1,6 +1,7 @@
 """
 This module interchange between Internet and program
 """
+from typing import Any
 
 import feedparser
 import html2text
@@ -38,8 +39,13 @@ def process_rss(rss: dict, limit: int) -> dict:
 
     """news_date for third iteration, yyyy-mm-dd"""
 
-    date_time = datetime.datetime.now()
-    data['date'] = date_time.strftime("%d/%m/%Y %H:%M:%S")
+    try:
+        data['date'] = rss.entries[limit].published
+        date_time = datetime.datetime.now()
+    except AttributeError:
+        date_time = datetime.datetime.now()
+        data['date'] = date_time.strftime("%d/%m/%Y %H:%M:%S")
+
     data['news_date'] = date_time.strftime("%Y%m%d")
 
     try:
@@ -61,7 +67,13 @@ def process_rss(rss: dict, limit: int) -> dict:
         img_clean = re.sub('".+"', '', img_clean)
         data['image'] = img_clean
     else:
-        data['image'] = None
+        try:
+            img_try = rss.entries[limit].links[1]
+            data['image'] = img_try['href']
+        except IndexError:
+            data['image'] = None
+        except KeyError:
+            data['image'] = None
 
     return data
 
@@ -123,4 +135,3 @@ def connect_rss(url: str) -> bool:
             continue
 
     return False
-

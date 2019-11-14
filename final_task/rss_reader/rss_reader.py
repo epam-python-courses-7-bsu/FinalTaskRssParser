@@ -7,12 +7,14 @@ this_directory = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(this_directory)
 
 
-import logs
 import args_parser
 import rss_parser
 import other
 import json_converter
+import converter
+import logs
 import news
+import ast
 
 
 def main():
@@ -38,22 +40,68 @@ def main():
                 continue
 
             """Print log journal"""
-            if commands['verbose']:
+            if commands['verbose'] and (not commands['pdf']):
                 logs.log_print()
                 logs.print_log()
-                logs.end_session()
-                sys.exit()
+                print('Would you like to continue? (enter the url or enter "q" for quit, "-h" for help)')
+
+                choice = other.choice()
+                commands = args_parser.get_parse(choice)
+                continue
+
+            """Convert log to pdf"""
+            if commands['verbose'] and commands['pdf']:
+                log_journal = logs.log_prepare()
+                converter.convert_log_pdf(log_journal, commands['pdf'])
+                print('Log journal was converted to pdf')
+                print('Would you like to continue? (enter the url or enter "q" for quit, "-h" for help)')
+
+                choice = other.choice()
+                commands = args_parser.get_parse(choice)
+                continue
 
             """Print news log from history"""
-            if commands['date']:
-                print_tryout = news.news_print(str(commands['date']))
+            if commands['date'] and (commands['pdf'] is None):
+                if commands['limit']:
+                    print_tryout = news.news_print(str(commands['date']), commands['limit'])
+                else:
+                    print_tryout = news.news_print(str(commands['date']), -1)
+
                 if print_tryout == 0:
                     logs.log_news_print()
                 elif print_tryout == 1:
                     logs.log_news_filenotfound()
                 elif print_tryout == 2:
                     logs.log_news_print_err()
-                sys.exit()
+                elif print_tryout == 3:
+                    logs.log_news_limit(commands['limit'])
+                print('Would you like to continue? (enter the url or enter "q" for quit, "-h" for help)')
+
+                choice = other.choice()
+                commands = args_parser.get_parse(choice)
+                continue
+
+            """Convert news from history to pdf"""
+            if commands['date'] and commands['pdf']:
+                if commands['limit']:
+                    decompose_tryout = news.news_decompose(str(commands['date']), commands['limit'])
+                else:
+                    decompose_tryout = news.news_decompose(str(commands['date']), -1)
+
+                if decompose_tryout[0] == 1:
+                    logs.log_news_filenotfound()
+                elif decompose_tryout[0] == 2:
+                    logs.log_news_print_err()
+                else:
+                    converter.convert_pdf(decompose_tryout, commands['pdf'])
+
+                logs.log_news_local_storage_pdf()
+                print('News from local storage were converted to pdf.')
+                print('Would you like to continue? (enter the url or enter "q" for quit, "-h" for help)')
+
+                choice = other.choice()
+                commands = args_parser.get_parse(choice)
+                continue
 
             """Check if URL looks like URL"""
             if args_parser.validate_url(commands['url']):
@@ -83,6 +131,7 @@ def main():
             rss_news_raw = rss_parser.get_rss(commands['url'])
             if rss_news_raw:
                 logs.log_rss(commands['url'])
+                news_limit = len(rss_news_raw.entries)
             else:
                 print('The RSS feed is not responding.')
                 print('Check your URL (or enter "q" for quit, "-h" for help)')
@@ -98,21 +147,44 @@ def main():
            "i" is a running index. 
         """
         rss_news_clean = dict()
-        for i in range(commands['limit']):
+
+        """Check if we out of range in news limit, if yes we print all news, if no, we print 'limit' news"""
+        if commands['limit'] and (commands['limit'] <= news_limit):
+            limit = commands['limit']
+        else:
+            limit = news_limit
+
+        for i in range(limit):
             if rss_parser.process_rss(rss_news_raw, i):
                 rss_news_clean[i] = rss_parser.process_rss(rss_news_raw, i)
-                if commands['json']:
+                if commands['json'] and (not commands['pdf']):
                     json_converter.print_json((rss_news_clean[i]))
-                else:
+                elif not commands['pdf']:
                     rss_parser.print_rss(rss_news_clean[i])
             else:
                 print('Limit for news is reached.')
                 break
-            json_news = json_converter.convert_json(rss_news_clean)
 
         """Write the news to file"""
-        news.news_store(rss_news_clean)
-        logs.log_news_store()
+        for value in rss_news_clean.values():
+            if news.news_check(value):
+                news.news_store(value)
+                logs.log_news_store()
+            else:
+                logs.log_news_copycat(value['link'])
+
+        """Create pdf file"""
+        if commands['pdf'] and rss_news_clean and (not commands['json']):
+            converter.convert_pdf(rss_news_clean, commands['pdf'])
+            logs.log_news_pdf()
+            print("News were converted to pdf")
+
+        if commands['pdf'] and commands['json']:
+            json_news = ast.literal_eval(json_converter.convert_json(rss_news_clean))
+            converter.convert_pdf(json_news, commands['pdf'])
+            logs.log_news_pdf()
+            print("News were converted to pdf")
+
         break
 
     logs.end_session()
@@ -121,7 +193,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-
-
