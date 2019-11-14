@@ -1,0 +1,16 @@
+
+Feed: {{feed_name}}
+
+{% for item in all_news -%}
+    Title: {{item['title']}}
+Date: {{item['date']}}
+Link: {{item['link']}}
+
+{% if item['img_title'] %}[image: {{item['img_title']}}] [2] {% endif -%} {{item['text']}}
+
+Links:
+[1]: {{item['link']}} (link)
+{% if item['img_link'] %}[2]: {{item['img_link']}}
+
+{% endif -%}
+{% endfor %}
