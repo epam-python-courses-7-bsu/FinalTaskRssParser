@@ -59,9 +59,9 @@ def main():
     for value in articles:
         if args.json:
             """ Convert to json """ 
-            value['title'] = clean_title(value['title'])
             json_format = json.dumps(value)
             print(json_format, '\n')
+            value['title'] = clean_title(value['title'])
             if args.verbose:
                 logg_json(json_format)
         else:
