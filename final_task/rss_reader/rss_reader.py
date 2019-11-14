@@ -1,10 +1,9 @@
 import argparse
-import json
 import logging
 import items as itms
 import parser_rss
 from log import turn_on_logging
-from dataclasses import asdict
+from news_converter import news_as_json_str
 
 
 def create_arg_parser():
@@ -16,27 +15,12 @@ def create_arg_parser():
     arg_parser_ = argparse.ArgumentParser(description='Pure Python command-line RSS reader.')
 
     arg_parser_.add_argument('source', type=str, help='RSS URL')
-    arg_parser_.add_argument('--version', action='version', help='Print version info', version='%(prog)s v1.0')
+    arg_parser_.add_argument('--version', action='version', help='Print version info', version='%(prog)s v2.0')
     arg_parser_.add_argument('--json', action='store_true', help='Print result as JSON in stdout')
     arg_parser_.add_argument('--verbose', action='store_true', help='Outputs verbose status messages')
     arg_parser_.add_argument('--limit', type=int, default=0, help='Limit news topics if this parameter provided')
 
     return arg_parser_
-
-
-def news_as_json_str(feed_title, items_):
-    """ Return news in json format
-
-    :type feed_title: str
-    :type items_: list of 'items.Item'
-    :rtype: str
-    """
-    logging.info('Converting items to dicts.')
-    map_of_dict_items = map(lambda item: asdict(item), items_)
-
-    json_structure = {"feed": feed_title, "items": list(map_of_dict_items)}
-
-    return json.dumps(json_structure, indent=4)
 
 
 def print_news(json_arg, rss_parser_, items_):
