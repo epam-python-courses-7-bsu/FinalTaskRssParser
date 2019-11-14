@@ -26,18 +26,6 @@ class TestCheckFunctions(unittest.TestCase):
                 ch_f.check_internet_connection(self.logger)
 
 
-    def test_check_version_argument(self):
-
-        # If version argument print should print version and raise SystemExit
-        self.command_line_args.version = True
-        with patch('builtins.print'):
-            with self.assertRaises(exc.VersionPrinted):
-                ch_f.check_version_argument(self.command_line_args)
-
-        # If version argument is False, return None
-        self.command_line_args.version = False
-        self.assertIsNone(ch_f.check_version_argument(self.command_line_args))
-
     def test_check_verbose(self):
 
         # If verbose, should set level to 20

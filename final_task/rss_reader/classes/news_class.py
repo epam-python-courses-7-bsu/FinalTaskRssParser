@@ -14,6 +14,8 @@ class News:
     link: str
     text: str
     links: str
+    feed_title: str
+    source: str
 
 
     def print_feed_title(self):

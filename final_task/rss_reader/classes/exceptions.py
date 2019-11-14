@@ -16,5 +16,5 @@ class LimitArgumentError(Exception):
 class FeedXmlError(Exception):
     pass
 
-class VersionPrinted(Exception):
+class ExtractNewsException(Exception):
     pass

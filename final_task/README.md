@@ -61,3 +61,35 @@
 	    ]
 }
 ```
+
+### News storage
+>For news storage a “shelve”, persistent, dictionary-like object was used.
+>More information is avaliable on [link](https://docs.python.org/3/library/shelve.html).
+
+#### JSON structure for news from storage:
+
+```
+{
+  "news": [
+     { 
+       "Feed": "Feed title"
+       "title": "News title",
+       "date": "Publishing date",
+       "link": "News link",
+       "text": "Text content of news",
+       "links": ["links that presented in text",]
+     },
+     {
+       "Feed": "Feed title"
+       "title": "News title",
+       "date": "Publishing date",
+       "link": "News link",
+       "text": "Text content of news",
+       "links": ["links that presented in text",]
+     },
+     {
+        ...
+     }
+	    ]
+}
+```

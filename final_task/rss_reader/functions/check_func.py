@@ -15,13 +15,6 @@ def check_internet_connection(logger):
         raise exc.InternetConnectionError("No internet access")
 
 
-def check_version_argument(command_line_args):
-    """If version argument, print version and exit"""
-    if command_line_args.version:
-        print("rss_reader.py 2.2")
-        raise exc.VersionPrinted()
-
-
 def check_verbose(command_line_args):
     """If vebose argument is True, set logging to info level"""
 
