@@ -8,7 +8,6 @@ def parsargs():
     parser.add_argument(
         '--limit',
         type=int, 
-        default=1, 
         help='Limit news topics if this parameter provided'
     )
 
@@ -18,6 +17,20 @@ def parsargs():
         help='Print result as JSON in stdout'
     )
 
+    parser.add_argument(
+        '--version',
+        action='store_true',
+        help='Print version of the application'      
+    )
+
+    parser.add_argument(
+        '--verbose',
+        action="store_true",
+        help='Outputs verbose status messages'
+    )
+
     args = parser.parse_args()
     
     return args
+
+vers = 1.0
