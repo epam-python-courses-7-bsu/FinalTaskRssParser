@@ -2,8 +2,10 @@ import json
 import logging
 import re
 import pprint
+import sqlite3
 from datetime import datetime
 from itertools import groupby
+from html import unescape
 
 from bs4 import BeautifulSoup
 
@@ -13,8 +15,6 @@ from Classes.Novelty import Novelty
 def clean_html(raw_html):
     """
     Formatting our String excluding all html-tags making it easier to read our description
-    :param raw_html:
-    :return:
     """
     logging.info("Cleaning something from htlm-tags.")
     cleaner = re.compile('<.*?>')
@@ -44,9 +44,6 @@ def getting_images_links(the_feed, num_of_news) -> list:
     1. Step into entries of feed
     2. Use soup for each item of entries
     3. Compare item with different forms of where links can be
-    :param the_feed:
-    :param num_of_news:
-    :return:
     """
     logging.info("Now getting images from the page.")
     pack_of_img = []
@@ -69,17 +66,14 @@ def getting_images_links(the_feed, num_of_news) -> list:
                     if img.get('src') != '':
                         pack_of_images_links.append(img.get('src'))
                     else:
-                        pack_of_images_links.append(num)
+                        pack_of_images_links.append(str(num))
     logging.info("Got some images!")
     return pack_of_images_links
 
 
 def getting_alt_text(the_feed, num_of_news):
     """
-    getting alternative text for images
-    :param the_feed:
-    :param num_of_news:
-    :return:
+    getting alternative text for images:
     """
     pack_of_alts = []
     logging.info("Getting alternative text for images!")
@@ -88,13 +82,13 @@ def getting_alt_text(the_feed, num_of_news):
             soup = BeautifulSoup(str(item), "lxml")
             for img in soup.find_all('img'):
                 if img is None:
-                    pack_of_alts.append(num)
+                    pack_of_alts.append(str(num))
                 else:
                     try:
                         pack_of_alts.append(img['alt'])
                     except KeyError:
                         logging.warning("Solving problems with alternative text!")
-                        pack_of_alts.append(num)
+                        pack_of_alts.append(str(num))
     except IndexError:
         pass
     logging.info("Got some alternative text.")
@@ -107,10 +101,6 @@ def getting_pack_of_news(the_feed, main_source, num_of_news=None):
     1. Adding list of images, correct it if some duplicates are there
     2. Adding list of alternative texts, correct it if some duplicates are there
     3. Some problems can occur if there are no alternative text, solving them with changing list of alts
-    :param main_source:
-    :param the_feed:
-    :param num_of_news:
-    :return:
     """
     if getting_num_of_news(the_feed, num_of_news) > len(the_feed.entries):
         print("You want to get more news than exist.")
@@ -119,13 +109,17 @@ def getting_pack_of_news(the_feed, main_source, num_of_news=None):
     print("------------------------")
     print("Source: ", printing_title(the_feed))
     pack_of_news = []
+    pack_of_news_for_db = []
     pack_of_images_links = getting_images_links(the_feed, num_of_news)
     pack_of_alts = getting_alt_text(the_feed, num_of_news)
     corrected_pack_of_alts = [el for el, _ in groupby(pack_of_alts)]
 
     for num, item in enumerate(the_feed.entries[:num_of_news]):
-        pack_of_news.append(getting_novelty(item, num, pack_of_images_links, corrected_pack_of_alts, main_source))
-    return pack_of_news
+        novelty, novelty_for_database = getting_novelty(item, num, pack_of_images_links, corrected_pack_of_alts,
+                                                        main_source)
+        pack_of_news.append(novelty)
+        pack_of_news_for_db.append(novelty_for_database)
+    return pack_of_news, pack_of_news_for_db
 
 
 def getting_novelty(item, number, corrected_pack_of_images_links, corrected_pack_of_alts, main_source):
@@ -133,41 +127,30 @@ def getting_novelty(item, number, corrected_pack_of_images_links, corrected_pack
     It was really difficult to get images because of variety of templates how sites leave link for image
     Here we create object of Novelty class and fill it with our title, description and etc.
     Then if some problems with images or alt.text occur we use
-    :param main_source:
-    :param item:
-    :param number:
-    :param corrected_pack_of_images_links:
-    :param corrected_pack_of_alts:
-    :return:
     """
 
     try:
-        novelty = Novelty(number + 1, item.get('title', ''),
-                          item.get('published', ''),
-                          item.get('link', ''),
-                          clean_html(item.get('description', '')),
-                          corrected_pack_of_images_links[number],
-                          corrected_pack_of_alts[number],
-                          getting_corrected_time(item),
-                          main_source)
+        alt_text = corrected_pack_of_alts[number]
     except IndexError:
-        novelty = Novelty(number + 1, item.get('title', ''),
-                          item.get('published', ''),
-                          item.get('link', ''),
-                          clean_html(item.get('description', '')),
-                          corrected_pack_of_images_links[number],
-                          'No alternative text.',
-                          getting_corrected_time(item),
-                          main_source)
-    return novelty
+        alt_text = 'No alternative text.'
+    novelty = Novelty(number + 1, unescape(item.get('title', '')),
+                      item.get('published', ''),
+                      item.get('link', ''),
+                      unescape(clean_html(item.get('description', ''))),
+                      corrected_pack_of_images_links[number],
+                      unescape(alt_text),
+                      getting_corrected_time(item),
+                      main_source)
+    novelty_for_database = (novelty.number_of_novelty, novelty.title_of_novelty, novelty.time_of_novelty,
+                            novelty.source_link, novelty.description, novelty.images_links,
+                            novelty.alt_text, novelty.date_corrected, novelty.main_source)
+    return novelty, novelty_for_database
 
 
 def getting_full_info(pack_of_news):
     """
     Getting full info from news
     try-except for printing links and alternative text
-    :param pack_of_news:
-    :return:
     """
     for novelty in pack_of_news:
         print()
@@ -183,7 +166,7 @@ def getting_full_info(pack_of_news):
                 print("[{0}] {1}".format(2, novelty.images_links))
             else:
                 print("[{0}] {1}".format(2, "no image"))
-            if novelty.alt_text != novelty.number_of_novelty - 1:
+            if novelty.alt_text != str(novelty.number_of_novelty - 1):
                 print("Alternative text: ", novelty.alt_text)
             else:
                 print("Alternative text: ", "no alternative text.")
@@ -194,22 +177,26 @@ def getting_full_info(pack_of_news):
             print("Alternative text: ", "no alt")
 
 
-def converting_to_json(the_feed, pack_of_news, num_of_news):
+def converting_to_json(pack_of_news, the_feed=''):
     logging.info("Converting to json view!")
+    try:
+        source = the_feed.get('feed', '').get('title')
+    except AttributeError:
+        source = ''
     news_dict = {
-        "Source": the_feed.get('feed', '').get('title'),
-        "Number of news": num_of_news,
-        "News": [{"number": item.number_of_novelty,
-                  "title": item.title_of_novelty,
-                  "published": item.time_of_novelty,
-                  "link": item.source_link,
-                  "description": item.description,
-                  "images links": item.images_links,
-                  "alternative text": item.alt_text,
-                  "corrected time": item.date_corrected,
-                  "main source": item.main_source,
-                  } for num, item in enumerate(pack_of_news)]
-    }
+            "Source": source,
+            "Number of news": len(pack_of_news),
+            "News": [{"number": item.number_of_novelty,
+                      "title": item.title_of_novelty,
+                      "published": item.time_of_novelty,
+                      "link": item.source_link,
+                      "description": item.description,
+                      "images links": item.images_links,
+                      "alternative text": item.alt_text,
+                      "corrected time": item.date_corrected,
+                      "main source": item.main_source,
+                      } for num, item in enumerate(pack_of_news)]
+        }
     logging.info("Converted to json view!")
     return json.dumps(news_dict)
 
@@ -218,8 +205,6 @@ def converting_novelty_to_json(item):
     """
     Transfer novelty from novelty view to json view to put it in the file
     for future using when creating cache pack of news
-    :param item:
-    :return:
     """
     news_dict = {
         "number": item.number_of_novelty,
@@ -256,8 +241,6 @@ def getting_info_into_file(item):
 def getting_corrected_time(item):
     """
     Getting time in view %Y%m%d
-    :param item:
-    :return:
     """
     corrected_date = datetime.strptime(item.get('published', ''), '%a, %d %b %Y %X %z')
     return corrected_date.strftime('%Y%m%d')
@@ -273,9 +256,9 @@ def reading_file(name_of_file):
         return news_cache.read()
 
 
-def writing_to_file(pack_of_news, filename):
+def writing_to_file(pack_of_news, pack_of_news_for_db, filename):
     """
-    Writing information into 2 files: News_cache.txt and News_cache_json.txt
+    Writing information into 2 files: News_cache.txt and News_cache_json.json
     Creating 2 files because it's easier to read information into computer from JSON file than another file
     1. Open file
     2. Check if file is empty or not
@@ -286,47 +269,56 @@ def writing_to_file(pack_of_news, filename):
                  If Not in the file: Find out length of file (amount of news), put that number to incoming novelty
     If that novelty exists it will go to another novelty in limit
     It means that if you enter --limit 15 and 10 news are already in list it will add only 5 news to list
-    :param pack_of_news:
-    :param filename:
-    :return:
     """
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+    cursor.execute('create table if not exists projects(num integer, title text, time text, source_link text, '
+                   'description text, images_links text, alt_tx text, date_corrected integer, main_source text)')
+    conn.commit()
+    logging.info("Opening file News_cache.")
     with open(filename, 'a', encoding='utf-8') as news_cache:
+        logging.info("Reading from News_cache.")
         content = reading_file('News_cache.txt')
         if not content:
-            print("CONTENT")
-            for item in pack_of_news:
-                with open('News_cache_json.txt', 'a', encoding='utf-8') as news_cache_json:
-                    news_cache_json.write(converting_novelty_to_json(item))
-                    news_cache_json.write('\n')
+            if cursor.execute("SELECT * FROM projects"):
+                cursor.execute("DELETE FROM projects")
+                conn.commit()
+            for num, item in enumerate(pack_of_news):
+                logging.info("Writing into file if it was empty.")
                 news_cache.write(getting_info_into_file(item))
                 news_cache.write("\n_ _ _")
+                cursor.execute('insert into projects values (?,?,?,?,?,?,?,?,?)', pack_of_news_for_db[num])
+                conn.commit()
         else:
-            for item in pack_of_news:
+            for number, item in enumerate(pack_of_news):
                 if item.source_link in content:
                     continue
                 else:
-                    length = sum(1 for line in open('News_cache_json.txt', 'r')) + 1
+                    length = sum(1 for line in cursor.execute("SELECT * FROM projects")) + 1
+                    logging.info("Counting lines.")
+                    logging.info("Counted lines.")
                     item.number_of_novelty = length
-                    with open('News_cache_json.txt', 'a', encoding='utf-8') as news_cache_json:
-                        news_cache_json.write(converting_novelty_to_json(item))
-                        news_cache_json.write('\n')
+                    logging.info("Writing into file if it was not empty.")
                     news_cache.write(getting_info_into_file(item))
                     news_cache.write("\n_ _ _")
+                    cursor.execute('insert into projects values (?,?,?,?,?,?,?,?,?)', pack_of_news_for_db[number])
+                    conn.commit()
+    conn.close()
 
 
-def getting_from_json_to_pack(filename):
-    """For easier searching by date put all cache into class Novelty from the JSON file"""
-    pack = []
-    data = []
+def getting_from_database_to_pack():
     pack_of_news = []
-    with open(filename, 'r', encoding='utf-8') as news_cache_json:
-        for line in news_cache_json:
-            pack.append(line)
-    for item in pack:
-        data.append(json.loads(item))
-    for novelty in data:
-        pack_of_news.append(Novelty(novelty.get('number'), novelty.get('title'), novelty.get('published'),
-                                    novelty.get('link'), novelty.get('description'), novelty.get('images links'),
-                                    novelty.get('alternative text'), getting_time_for_json(novelty.get('published')),
-                                    novelty.get('main source')))
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+    for item in cursor.execute("SELECT * FROM projects"):
+        pack_of_news.append(Novelty(item[0], item[1], item[2], item[3], item[4], item[5], item[6], item[7], item[8]))
+    conn.close()
     return pack_of_news
+
+
+def verbose(list_of_args):
+    if '--verbose' in list_of_args:
+        print()
+        with open('Snake.log') as log:
+            for line in log:
+                print(line)
