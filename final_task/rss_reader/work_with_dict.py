@@ -5,7 +5,7 @@ import work_with_text
 
 
 @decorators.functions_log
-def to_json(data) -> json:
+def to_dict(data) -> dict:
     """convert data to JSON format"""
 
     structure = {
@@ -32,12 +32,11 @@ def to_json(data) -> json:
             result['items'].append(temp)
     elif isinstance(data, str):
         result['error'] = data
-    result = json.dumps(result)
     return result
 
 
 @decorators.functions_log
-def limited_json(data: dict, limit: int) -> dict:
+def limited_dict(data: dict, limit: int) -> dict:
     result = {}
     if isinstance(data, dict):
         result['title'] = data['title']

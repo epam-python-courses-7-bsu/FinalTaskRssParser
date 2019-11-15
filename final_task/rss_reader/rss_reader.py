@@ -11,7 +11,9 @@ sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
 import work_with_file
 import work_with_text
-import work_with_json
+import work_with_dict
+import work_with_html
+import work_with_pdf
 import decorators
 import __init__
 
@@ -42,6 +44,8 @@ def set_start_setting():
     parser.add_argument("--verbose", help="Outputs verbose status messages", action="store_true")
     parser.add_argument("--limit", help="Limit news topics if this parameter provided", type=int)
     parser.add_argument("--date", help="Obtaining the cached news without the Internet", type=str)
+    parser.add_argument("--to-html", help="The argument gets the path where the HTML news will be saved", type=str)
+    parser.add_argument("--to-pdf", help="The argument gets the path where the PDF news will be saved", type=str)
     args = parser.parse_args()
     if not args.limit:
         args.limit = -1
@@ -55,30 +59,39 @@ def set_start_setting():
 
 
 def run():
+    os.chdir(os.path.abspath(os.path.dirname(__file__)))
+    print(os.getcwd())
     args = set_start_setting()
     logging.info('the application is running')
     logging.debug('args: ' + str(args))
+    data = None
     if args.version:
         print(f'RSS reader version {__init__.VERSION}')
     elif args.date:
         data = work_with_file.read_feed_form_file(args.date)
-        if args.json:
-            data = work_with_json.limited_json(data, args.limit)
-            print(json.dumps(data, ensure_ascii=False))
-        else:
-            print(work_with_text.get_string_with_result(data, args.limit))
     elif args.source:
         data = get_object_feed(args.source)
-        data = work_with_json.to_json(data)
+        data = work_with_dict.to_dict(data)
         if 'error' not in data:
             work_with_file.add_feed_to_file(data)
-        if args.json:
-            data = work_with_json.limited_json(json.loads(data), args.limit)
-            print(json.dumps(data, ensure_ascii=False))
-        else:
-            print(work_with_text.get_string_with_result(json.loads(data), args.limit))
     else:
         print('How work with application?\nEnter in command line: rss-reader -h')
+        exit(1)
+
+    logging.debug(type(data))
+    logging.debug(data)
+    if args.limit:
+        data = work_with_dict.limited_dict(data, args.limit)
+    if data.get('error', False):
+        print(data['error'])
+    elif args.json:
+        print(json.dumps(data, ensure_ascii=False, indent=4))
+    elif args.to_html:
+        work_with_html.write_to_html_file(data, args.to_html)
+    elif args.to_pdf:
+        work_with_pdf.write_to_pdf_file(data, args.to_pdf)
+    else:
+        print(work_with_text.get_string_with_result(data, args.limit))
     logging.info('the application is finished')
 
 

@@ -28,7 +28,7 @@ def text_processing(string: str, array_links: list):
 
 
 @decorators.functions_log
-def get_string_with_result(data: dict, limit: int) -> str:
+def get_string_with_result(data: dict, limit=-1) -> str:
     """Converts json to string for print"""
     result = ''
     if isinstance(data, dict):

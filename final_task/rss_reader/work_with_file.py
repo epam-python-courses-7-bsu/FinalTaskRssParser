@@ -5,10 +5,11 @@ import decorators
 
 
 @decorators.functions_log
-def add_feed_to_file(json_data: json):
+def add_feed_to_file(dict_data: dict):
+    json_data = json.dumps(dict_data)
     date_str = datetime.datetime.now().date().strftime('%Y%m%d')
     lines = []
-    if os.path.exists('./cache.txt'):
+    if os.path.exists('cache.txt'):
         with open('cache.txt', 'r') as fin:
             lines = fin.readlines()
     flag = True
@@ -28,9 +29,13 @@ def add_feed_to_file(json_data: json):
 
 @decorators.functions_log
 def read_feed_form_file(date_str: str):
-    with open('cache.txt', 'r') as file:
-        for line in file:
-            if date_str in line:
-                return json.loads(line[line.find(date_str) + len(date_str) + 1:].encode('UTF-8'))
-        else:
-            return 'Date ' + date_str + ' not found in cache.'
+    if os.path.exists('cache.txt'):
+        with open('cache.txt', 'r') as file:
+            for line in file:
+                if date_str in line:
+                    return json.loads(line[line.find(date_str) + len(date_str) + 1:].encode('UTF-8'))
+            else:
+                return 'Date ' + date_str + ' not found in cache.'
+    else:
+        return 'Cache is empty. Please launch the app from the URL to the news site.\n' + \
+               'EXAMPLE: rss-reader https://news.yahoo.com/rss'
