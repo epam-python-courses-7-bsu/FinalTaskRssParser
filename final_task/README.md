@@ -4,7 +4,7 @@
 
 This is small application for watching feed on your device. It shows shot information about the latest news and keeps previous news.
 
-## How to instal?
+## How to install?
 
 1. To install the application on your device must be python 3.7 and more.
 2. Download this repository on your device.
@@ -14,9 +14,10 @@ This is small application for watching feed on your device. It shows shot inform
 python setup.py sdist
 cd dist
 pip install feedparser
-pip install rss-reader-4.0.tar.gz
+pip install rss-reader-5.0.tar.gz
 pip install requests
 pip install fpdf
+pip install colored
 ```
 5. Check workability with command: 
 ```
@@ -40,7 +41,7 @@ optional arguments:
   --date DATE        Obtaining the cached news without the Internet
   --to-html TO_HTML  The argument gets the path where the HTML news will be saved
   --to-pdf TO_PDF    The argument gets the path where the PDF news will be saved
-
+  --colorize         Colorize text
 ```
 
 ##JSON format

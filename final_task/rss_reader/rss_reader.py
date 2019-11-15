@@ -14,6 +14,7 @@ import work_with_text
 import work_with_dict
 import work_with_html
 import work_with_pdf
+import work_with_colorize
 import decorators
 import __init__
 
@@ -46,6 +47,7 @@ def set_start_setting():
     parser.add_argument("--date", help="Obtaining the cached news without the Internet", type=str)
     parser.add_argument("--to-html", help="The argument gets the path where the HTML news will be saved", type=str)
     parser.add_argument("--to-pdf", help="The argument gets the path where the PDF news will be saved", type=str)
+    parser.add_argument("--colorize", help="Colorize text", action="store_true")
     args = parser.parse_args()
     if not args.limit:
         args.limit = -1
@@ -90,6 +92,8 @@ def run():
         work_with_html.write_to_html_file(data, args.to_html)
     elif args.to_pdf:
         work_with_pdf.write_to_pdf_file(data, args.to_pdf)
+    elif args.colorize:
+        work_with_colorize.colorize_text(data)
     else:
         print(work_with_text.get_string_with_result(data, args.limit))
     logging.info('the application is finished')

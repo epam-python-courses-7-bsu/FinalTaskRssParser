@@ -7,7 +7,7 @@ setup(
     packages=find_packages(),
     author="Vlad Protosevich",
     author_email="protosevic2001@gmail.com",
-    install_requires=['feedparser==5.2.1'],
+    install_requires=['feedparser==5.2.1', 'colored', 'fpdf', 'requests'],
     entry_points={
         'console_scripts': [
             'rss-reader = rss_reader.rss_reader:run'
