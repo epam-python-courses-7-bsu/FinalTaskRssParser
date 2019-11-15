@@ -8,7 +8,7 @@ import feedparser
 from jinja2 import Environment, FileSystemLoader
 import requests
 
-from rss_reader import rss_exceptions
+from rss_exceptions import InvalidURL, FeedError
 
 
 class RSSparser:
@@ -42,6 +42,7 @@ class RSSparser:
         self.logger.info('Separate a news from the URL.')
 
         self.news = self.response.entries
+        self.check_news_collection(self.news, self.logger)
 
         self.limit = self.check_limit_value(self.limit)
         self.all_news = self.parse_feed()
@@ -91,10 +92,19 @@ class RSSparser:
             self.check_response_status_code(response, logger)
             logger.info(f'Getting the response from the URL: {url}.')
         except AttributeError:
-            raise rss_exceptions.InvalidURL("Please, check the URL.")
+            raise InvalidURL("Please, check the URL.")
         else:
             logger.info('Valid URL')
             return response
+
+    def check_news_collection(self, news, logger):
+        """
+        Check news_collection is not empty
+        """
+        if not news:
+            raise FeedError("Link doesn't contain any news.")
+        else:
+            logger.info("News was collected successfully.")
 
     def check_limit_value(self, limit):
         """
@@ -106,14 +116,10 @@ class RSSparser:
         # total amount of news received from the site
         total = len(self.news)
 
-        if total == 0:
-            raise rss_exceptions.EmptyLink("Link doesn't contain any news.")
-
-        if limit and not 0 < limit <= total:
+        if limit < 0:
             self.logger.info(f'Check if the received limit value = {limit} is valid.')
             raise ValueError(f'Limit value is outside the valid range: from 1 to {total}.')
-
-        if not limit:
+        elif not limit or limit > total:
             limit = total
             self.logger.info(f"The 'limit' variable is assigned the total amount of received news {limit}.")
             return limit

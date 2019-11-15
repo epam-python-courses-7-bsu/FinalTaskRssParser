@@ -5,14 +5,19 @@ import json
 import logging
 
 
-# Make a parser for parsing exact arguments out of sys.argv.
-PARSER = argparse.ArgumentParser(description="Performs a variety of operations on a file.")
+def make_arg_parser():
+    """
+    Make a parser for parsing exact arguments out of sys.argv.
+    :return: parser
+    """
+    parser = argparse.ArgumentParser(description="Performs a variety of operations on a file.")
 
-PARSER.add_argument('source', help='RSS URL')
-PARSER.add_argument('--version', action="store_true", help="Print version info")
-PARSER.add_argument('--json', action="store_true", help="Print result as JSON in stdout")
-PARSER.add_argument('--verbose', action="store_true", help="Outputs verbose status messages")
-PARSER.add_argument('--limit', type=int, default=None, help="Limit news topics if this parameter provided")
+    parser.add_argument('source', help='RSS URL')
+    parser.add_argument('--version', action="store_true", help="Print version info")
+    parser.add_argument('--json', action="store_true", help="Print result as JSON in stdout")
+    parser.add_argument('--verbose', action="store_true", help="Outputs verbose status messages")
+    parser.add_argument('--limit', type=int, default=None, help="Limit news topics if this parameter provided")
+    return parser
 
 
 def output_json(news_parser, arguments, logger):

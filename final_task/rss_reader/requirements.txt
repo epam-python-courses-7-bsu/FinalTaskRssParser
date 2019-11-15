@@ -1,5 +1,0 @@
-beautifulsoup4==4.8.1
-feedparser==5.2.1
-Jinja2==2.10.3
-twine==2.0.0
-requests==2.22.0

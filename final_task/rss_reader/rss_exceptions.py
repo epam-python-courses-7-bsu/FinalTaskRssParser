@@ -3,11 +3,14 @@
 
 class Error(Exception):
     """Base class for exceptions in this module"""
+    pass
 
 
 class InvalidURL(Error):
     """Exception is raised for invalid URL"""
+    pass
 
 
-class EmptyLink(Error):
+class FeedError(Error):
     """Exception is raised for link without news"""
+    pass
