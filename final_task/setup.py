@@ -15,7 +15,7 @@ setup(
       url='https://github.com/Leonid-Shutov/FinalTaskRssParser',
       author='Leonid Shutov',
       author_email='14m64y87w@gmail.com',
-      install_requires=['beautifulsoup4==4.8.1','lxml==4.4.1','requests==2.22.0','soupsieve==1.9.4'],
+      install_requires=['beautifulsoup4==4.8.1','lxml==4.4.1','requests==2.22.0'],
       entry_points={
       'console_scripts': [
                           'rss-reader = rss_reader.rss_reader:main',
