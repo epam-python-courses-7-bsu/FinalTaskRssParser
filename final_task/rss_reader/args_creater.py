@@ -1,5 +1,6 @@
 import argparse
 
+
 def arguments():
     """create command line arguments"""
 
@@ -36,4 +37,3 @@ def arguments():
         help='Limit news topics'
     )
     return parser.parse_args()
-    

@@ -1,6 +1,7 @@
 from string_operations import *
 import logging
 
+
 class Article:
     """single article class"""
 

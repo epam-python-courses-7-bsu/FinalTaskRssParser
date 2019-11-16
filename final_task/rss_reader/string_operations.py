@@ -23,23 +23,38 @@ def make_string_readable(basic_str):
     my_str = my_str.replace('&#39;', "\'")
     return my_str
 
+
 def extract_topic_info_from_summary(basic_str):
     start = basic_str.find('></a>')
     len_ = 5
     if start == -1:
         start = basic_str.find('/>')
         len_ = 2
+    if start == -1:
+        start = 0
+        len_ = 0
     end = basic_str.find('<p><br')
     if end == -1:
         end = basic_str.find('<br')
+    if end == -1:
+        end = len(basic_str)
     return basic_str[start + len_:end]
+
 
 def extract_image_info_from_summary(basic_str):
 
     start_description = basic_str.find('alt="')
+    len_ = len('alt="')
+    if start_description == -1:
+        start_description = 0
+        len_ = 0
     end_description = min(basic_str.find('" border='), basic_str.find('" align='))
-    media_description = basic_str[start_description + len('alt="'): end_description]
+    if end_description == -1:
+        end_description = len(basic_str)
+
+    media_description = basic_str[start_description + len_: end_description]
     return media_description
+
 
 def extract_date(parsed):
     try:
@@ -47,4 +62,3 @@ def extract_date(parsed):
     except KeyError:
         date = parsed.updated
     return date
-        
