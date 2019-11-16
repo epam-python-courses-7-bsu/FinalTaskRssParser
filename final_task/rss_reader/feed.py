@@ -5,9 +5,9 @@ import article
 
 
 class Feed:
-    """ """
+    """Feed class, contain feed info and list of articles """
     def __init__(self, parsed, number_of_articles):
-        """ """
+        """create feed with fixed number of articles """
         logging.info('Started creting feed')
         self.feed_name = make_string_readable(parsed.feed.title)
         self.link = parsed.feed.link
@@ -18,9 +18,8 @@ class Feed:
             logging.info('  Finished creating Article %s', i + 1)
         self.articles = articles_list
 
-
     def print_readable_feed(self):
-        """   """
+        """print feed to stdout in readable format"""
         logging.info('Started printing feed')
         print('.' * 79)
         print('\n\n%s\n\n', self.feed_name) 
@@ -32,7 +31,7 @@ class Feed:
         logging.info('Finished printing feed')
 
     def print_json_feed(self):
-        """"""
+        """print feed to stdout in json"""
         json = {}
         for i, article_ in enumerate(self.articles):
             name = "Article {}".format(i + 1)
