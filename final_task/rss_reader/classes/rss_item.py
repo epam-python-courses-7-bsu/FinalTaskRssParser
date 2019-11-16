@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class rss_item:
+class RssItem:
     '''
     Represents a single news from RSS channel
     '''

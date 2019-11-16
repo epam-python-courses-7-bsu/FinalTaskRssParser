@@ -8,9 +8,12 @@ class logger:
     within whole project
     '''
     is_log_on = False
-    logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
+    logging.basicConfig(stream=sys.stdout, format='%(levelname)s:%(message)s', level=logging.DEBUG)
         
     @staticmethod
     def log(msg):
+        '''
+        Receives message and prints it into stdout if logging is turned on
+        '''
         if logger.is_log_on:
             logging.debug(msg)

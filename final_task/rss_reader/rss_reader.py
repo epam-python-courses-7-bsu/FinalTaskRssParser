@@ -1,7 +1,7 @@
 import argparse
 import feedparser
-from classes.rss_item import rss_item
-from classes.rss_feed import rss_feed
+from classes.rss_item import RssItem
+from classes.rss_feed import RssFeed
 from classes.exceptions import FeedError
 from classes.logger import logger
 
@@ -16,9 +16,24 @@ def init_parser():
 
     return parser.parse_args()
 
+def init_news_list(feed_dict, limit):
+    news_list = []
+    for index, entry in enumerate(feed_dict.entries):
+        if index == limit:
+            break
+        tit = entry.get('title', 'unknown')
+        pub = entry.get('published', 'unknown')
+        lnk = entry.get('link', 'no link')
+        med = entry.get('media_content', 'no media content')
+        if isinstance(med, list):
+            med = med[0].get('url', 'no media')
+        news = RssItem(tit, pub, lnk, med)
+        news_list.append(news)
+    return news_list
+
 def init_feed(url, limit):
     feed_dict = feedparser.parse(url)
-    if len(feed_dict.entries) == 0:
+    if feed_dict.bozo:
         raise FeedError('Invalid feed')
 
     if len(feed_dict.entries) < limit:
@@ -27,18 +42,8 @@ def init_feed(url, limit):
     logger.log('GOT FEED FROM SOURCE')
     logger.log('FEED INIT')
 
-    news_list = []
-    for index in range(0, limit):
-        tit = feed_dict.entries[index].get('title', 'unknown')
-        pub = feed_dict.entries[index].get('published', 'unknown')
-        lnk = feed_dict.entries[index].get('link', 'no link')
-        med = feed_dict.entries[index].get('media_content', 'no media content')
-        if isinstance(med, list):
-            med = med[0].get('url', 'no media')
-        news = rss_item(tit, pub, lnk, med)
-        news_list.append(news)
-    
-    feed = rss_feed(feed_dict.feed.title, feed_dict.feed.description, feed_dict.feed.link, news_list)
+    news_list = init_news_list(feed_dict, limit)    
+    feed = RssFeed(feed_dict.feed.title, feed_dict.feed.description, feed_dict.feed.link, news_list)
     logger.log('DONE')
 
     return feed
@@ -52,7 +57,6 @@ def main():
     try:
         news_feed = init_feed(args.url, args.limit)
         if args.json:
-
             news_feed.toJSON()
 
         else:
