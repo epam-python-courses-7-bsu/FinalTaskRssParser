@@ -18,3 +18,6 @@ class FeedXmlError(Exception):
 
 class ExtractNewsException(Exception):
     pass
+
+class DirectoryError(Exception):
+    pass

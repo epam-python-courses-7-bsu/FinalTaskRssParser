@@ -36,8 +36,10 @@ def check_feed_status(feed):
 
     try:
         status = feed.status
-        if 600 > status >= 400:
-            raise exc.GettingFeedError("Server Error! Feed wasn't received.")
+        if 500 > status >= 400:
+            raise exc.GettingFeedError("Client error – the request contains bad syntax or cannot be fulfilled.")
+        elif 600 > status >= 500:
+            raise exc.GettingFeedError("Server error – the server failed to fulfill an apparently valid request.")
         else:
             return feed
     except AttributeError:

@@ -35,6 +35,8 @@ def generate_news_json(news_collection, logger):
         news_dict['date'] = news.date
         news_dict['link'] = news.link
         news_dict['text'] = news.text
+
+        news.create_string_of_links()
         if news.links:
             list_of_links = news.links.split('\n')
             news_dict['links'] = list_of_links
@@ -57,6 +59,7 @@ def print_feeds(news_collection, command_line_args, logger):
             news_collection[0].print_feed_title()
             for num, news in enumerate(news_collection):
                 logger.info("Printing news №{}:".format(num+1))
+                news.create_string_of_links()
                 news.print_news()
 
 
@@ -71,6 +74,8 @@ def generate_news_json_from_database(news_collection, logger):
         news_dict['date'] = news.date
         news_dict['link'] = news.link
         news_dict['text'] = news.text
+
+        news.create_string_of_links()
         if news.links:
             list_of_links = news.links.split('\n')
             news_dict['links'] = list_of_links
@@ -93,4 +98,5 @@ def print_feeds_from_database(news_collection, command_line_args, logger):
             for num, news in enumerate(news_collection):
                 logger.info("Printing news №{}:".format(num+1))
                 news.print_feed_title()
+                news.create_string_of_links()
                 news.print_news()

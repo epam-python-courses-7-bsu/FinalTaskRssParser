@@ -17,8 +17,8 @@ class TestCheckFunctions(unittest.TestCase):
 
     def test_check_internet_connection(self):
 
-        #If internet is avaliable should return True
-        self.assertTrue(ch_f.check_internet_connection(self.logger))
+        with patch('requests.get'):
+            self.assertTrue(ch_f.check_internet_connection(self.logger))
 
         # If internet is not avaliable should raise InternetConnectionError
         with self.assertRaises(exc.InternetConnectionError):
@@ -57,12 +57,6 @@ class TestCheckFunctions(unittest.TestCase):
         with self.assertRaises(exc.UrlError):
             ch_f.check_feed_status(feed)
 
-    def check_news_collection(news_collection, logger):
-        """Check if news_collection is not empty"""
-        if not news_collection:
-            raise exc.FeedXmlError("Parsed xml is not valid")
-        else:
-            logger.info("Successful collected.")
 
     def test_check_news_collection(self):
 

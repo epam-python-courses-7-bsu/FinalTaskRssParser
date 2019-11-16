@@ -13,25 +13,35 @@ class TestProcessFunctions(unittest.TestCase):
 
     def setUp(self):
         # Get description root from local xml
-        feed = feedparser.parse('files/test_example.xml')
+        feed = feedparser.parse('tests/files/test_example.xml')
         description = feed.entries[0].get("description", "")
         self.root = proc_f.get_xml_root(description)
+
 
     def test_extract_text_from_description(self):
 
         # Assert description that was got by function and local file description
-        with open('files/test_description.txt', 'r') as text:
+        with open('tests/files/test_description.txt', 'r') as text:
             local_file_description = text.read()
             self.assertEqual(proc_f.extract_text_from_description(self.root),
                              local_file_description)
 
     def test_extract_links_from_description(self):
 
-        # Assert links that was got by function and local file links
-        with open('files/test_links.txt', 'r') as text:
-            local_file_links = text.read()
-            self.assertEqual(proc_f.extract_links_from_description(self.root),
-                             local_file_links)
+        # Tuple of links
+        links = (['http://rss.cnn.com/~ff/rss/cnn_topstories?a=0yorQIkIJGk:Sht6XkuB3rs:yIl2AUoC8zA',
+                  'http://rss.cnn.com/~ff/rss/cnn_topstories?a=0yorQIkIJGk:Sht6XkuB3rs:7Q72WNTAKBA',
+                  'http://rss.cnn.com/~ff/rss/cnn_topstories?a=0yorQIkIJGk:Sht6XkuB3rs:V_sGLiPBpWU',
+                  'http://rss.cnn.com/~ff/rss/cnn_topstories?a=0yorQIkIJGk:Sht6XkuB3rs:qj6IDK7rITs',
+                  'http://rss.cnn.com/~ff/rss/cnn_topstories?a=0yorQIkIJGk:Sht6XkuB3rs:gIN9vFwOqvQ'],
+                 ['http://feeds.feedburner.com/~ff/rss/cnn_topstories?d=yIl2AUoC8zA',
+                  'http://feeds.feedburner.com/~ff/rss/cnn_topstories?d=7Q72WNTAKBA',
+                  'http://feeds.feedburner.com/~ff/rss/cnn_topstories?i=0yorQIkIJGk:Sht6XkuB3rs:V_sGLiPBpWU',
+                  'http://feeds.feedburner.com/~ff/rss/cnn_topstories?d=qj6IDK7rITs',
+                  'http://feeds.feedburner.com/~ff/rss/cnn_topstories?i=0yorQIkIJGk:Sht6XkuB3rs:gIN9vFwOqvQ',
+                  'http://feeds.feedburner.com/~r/rss/cnn_topstories/~4/0yorQIkIJGk'])
+
+        self.assertEqual(proc_f.extract_links_from_description(self.root), links)
 
 
 class TestPrintFunctions(unittest.TestCase):

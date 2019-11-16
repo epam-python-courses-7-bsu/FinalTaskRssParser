@@ -25,7 +25,7 @@ def parse_date(date_time_str):
 def get_arguments(parser):
     """Getting command-line arguments"""
 
-    parser.add_argument('--version', action='version', version='rss-reader 3.4')
+    parser.add_argument('--version', action='version', version='rss-reader 4.5')
     parser.add_argument("--json", help="Print result as JSON in stdout",
                         action="store_true")
     parser.add_argument("--verbose", help="Outputs verbose status messages",
@@ -35,6 +35,10 @@ def get_arguments(parser):
     parser.add_argument("--date", help="""Take a date in %%Y%%m%%d format.
                         Print cached news, published on this date. 
                         If source argument passed, print only news from this source""", type=parse_date)
+    parser.add_argument("--to-epub", help="""Create a book in epub format from internet
+                        source or database. Receive the path where file will be saved""", type=str, default='')
+    parser.add_argument("--to-html", help="""Create a file in html format from internet
+                        source or database. Receive the path where file will be saved""", type=str, default='')
     parser.add_argument("source", help="RSS URL", nargs='?', default='')
     command_line_args = parser.parse_args()
     return command_line_args
@@ -77,21 +81,21 @@ def extract_text_from_description(root):
 def extract_links_from_description(root):
     """Extract links from description
 
-    Function uses inside process_feed() function
+    Function uses inside process_feed() function.
+    Return tuple of lists ([href_links], [img_links])
     """
-    list_of_links = []
+    list_of_href_links = []
+    list_of_img_links = []
+
     # find href and img links
     href_links = root.xpath('.//a/@href')
     img_links = root.xpath('.//img/@src')
+
     # Add links in list of links
-    list_of_links.extend(href_links)
-    list_of_links.extend(img_links)
-    # Turn a list of links to a pretty formating string
-    string_repr_of_links = ''
-    for num, link in enumerate(list_of_links):
-        if link:
-            string_repr_of_links = string_repr_of_links + '[{}] '.format(num+1) + link + '\n'
-    return string_repr_of_links
+    list_of_href_links.extend(href_links)
+    list_of_img_links.extend(img_links)
+
+    return (list_of_href_links, list_of_img_links)
 
 
 def process_feed(command_line_args, feed, logger):

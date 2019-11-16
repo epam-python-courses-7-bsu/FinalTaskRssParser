@@ -1,6 +1,6 @@
 #!rss_virtual_env/bin/python
 
-"""rss-reader.py 3.4
+"""rss-reader.py 4.5
 
 Usage:
     rss_reader.py (-h | --help)      Show help message and exit
@@ -11,6 +11,10 @@ Usage:
     rss_reader.py --limit LIMIT      Limit news topics if this parameter provided
     rss_reader.py --date DATE        Take a date in %%Y%%m%%d format. Print cached news, published on this date.
                                      If source argument passed, print only news from this source
+    rss_reader.py --to-epub TO_EPUB  Create a book in epub format from internet
+                                     source or database. Receive the path where file will be saved
+    rss_reader.py --to-html TO_HTML  Create a file in html format from internet
+                                     source or database. Receive the path where file will be saved
 """
 try:
     import argparse
@@ -19,11 +23,9 @@ try:
     import functions.print_func as print_f
     import classes.exceptions as exc
     from functions.caching import cache_news, get_cached_news
+    from functions.convertation import create_epub, create_html
 except ModuleNotFoundError as E:
     print(E)
-    exit()
-except KeyboardInterrupt:
-    print(" KeyboardInterrupt")
     exit()
 
 def main():
@@ -42,8 +44,18 @@ def main():
             # Collect news from database
             news_collection = get_cached_news(command_line_args, logger)
 
-            # Check --json argument, print news in appropriate form
-            print_f.print_feeds_from_database(news_collection, command_line_args, logger)
+            if command_line_args.to_epub or command_line_args.to_html:
+                if command_line_args.to_epub:
+                    # Creates epub book
+                    create_epub(command_line_args, news_collection, logger)
+
+                if command_line_args.to_html:
+                    # Create html file
+                    create_html(command_line_args, news_collection, logger)
+
+            else:
+                # Check --json argument, print news in appropriate form
+                print_f.print_feeds_from_database(news_collection, command_line_args, logger)
 
         else:
 
@@ -62,11 +74,24 @@ def main():
             # Cache news in database
             cache_news(news_collection, logger)
 
-            # Check --json argument, print news in appropriate form
-            print_f.print_feeds(news_collection, command_line_args, logger)
+            create_html(command_line_args, news_collection, logger)
+
+            if command_line_args.to_epub or command_line_args.to_html:
+                if command_line_args.to_epub:
+                    # Creates epub book
+                    create_epub(command_line_args, news_collection, logger)
+
+                if command_line_args.to_html:
+                    # Create html file
+                    create_html(command_line_args, news_collection, logger)
+
+            else:
+                # Check --json argument, print news in appropriate form
+                print_f.print_feeds(news_collection, command_line_args, logger)
 
     except (exc.InternetConnectionError, exc.GettingFeedError, exc.UrlError,
-            exc.LimitArgumentError, exc.FeedXmlError, exc.ExtractNewsException) as E:
+            exc.LimitArgumentError, exc.FeedXmlError, exc.ExtractNewsException,
+            exc.DirectoryError) as E:
         print(E)
     except KeyboardInterrupt:
         print(" Keyboard interrupt")
