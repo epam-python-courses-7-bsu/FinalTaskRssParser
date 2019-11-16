@@ -9,6 +9,8 @@
     print_news(news_collection, com_line_args, logger) -> None """
 
 import feedparser
+from bs4 import BeautifulSoup
+import html
 import argparse
 import json
 import logging
@@ -63,11 +65,14 @@ def get_com_line_args():
 def get_news(command_line_args, logger):
     """ Get news function.
 
-        Uses feedparser library to receive news. """
+        Uses feedparser library to receive news,
+        and BeautifulSoup library to converting news in readable format.  """
     logger.info("Getting news.")
     news_feed = feedparser.parse(command_line_args.source)
     news_collection = {}
-    feed = {"title": news_feed.feed.get("title", ""),
+
+    # convert title string to unicode
+    feed = {"title": html.unescape(news_feed.feed.get("title", "")),
             "date": news_feed.feed.get("published", ""),
             "language": news_feed.feed.get("language", "")}
 
@@ -76,10 +81,14 @@ def get_news(command_line_args, logger):
 
     for entry in news_feed.entries:
         news_entry = NewsEntry()
-        news_entry.title = entry.get("title", "")
+        news_entry.title = html.unescape(entry.get("title", ""))
         news_entry.date = entry.get("published", "")
         news_entry.link = entry.get("link", "")
-        news_entry.summary = entry.get("summary", "")
+
+        # get rid of html tags
+        soup = BeautifulSoup(entry.get("summary", ""), "html.parser")
+        news_entry.summary = html.unescape(soup.text)
+
         news_collection["entries"].append(news_entry)
 
     return news_collection
