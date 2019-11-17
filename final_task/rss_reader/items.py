@@ -15,13 +15,20 @@ class Item:
     img_links: List[str]
 
 
-def print_items(items):
-    """ Print all items in stdout.
+@dataclass
+class ItemGroup:
+    feed: str
+    items: List[Item]
 
-    :param items: just all items
-    :type items: list of Item
+
+def print_item_group(item_group):
+    """ Print item group in stdout.
+
+    :type item_group: ItemGroup
     """
-    for item in items:
+    print('Feed: ' + item_group.feed)
+
+    for item in item_group.items:
         print(f'\nTitle: {item.title}'
               f'\nDate: {item.date}'
               f'\nLink: {item.link}'
@@ -33,16 +40,14 @@ def print_items(items):
                 print(f'\t[{num + 1}]: [{link}]')
 
 
-def get_items_from_feedparser(parser):
-    """ Retrieve all items from feedparser and convert them to Item.
+def get_item_group_from_feedparser(parser):
+    """ Retrieve all items from feedparser and return item group.
 
-    :param parser: feedparser
     :type parser: 'feedparser.FeedParserDict'
 
     :raise TypeError: if type of parser is not 'feedparser.FeedParserDict'
 
-    :return: items
-    :rtype: list if Item
+=    :rtype: ItemGroup
     """
 
     if not isinstance(parser, FeedParserDict):
@@ -50,18 +55,18 @@ def get_items_from_feedparser(parser):
 
     items = list()
 
-    logging.info('Loop for creating items.')
+    logging.info('Loop for retrieving items.')
     for item in parser.entries:
-        text_, img_links_ = format_description(item.description)
+        text, img_links = format_description(item.description)
 
         new_item = Item(
             title=html_unescape(item.title),
             date=item.published,
             link=item.link,
-            text=text_,
-            img_links=img_links_
+            text=text,
+            img_links=img_links
         )
 
         items.append(new_item)
 
-    return items
+    return ItemGroup(feed=parser.feed.title, items=items)

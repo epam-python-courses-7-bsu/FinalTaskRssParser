@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 from os import path
 
 
@@ -9,7 +9,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='rss-reader',
-    version='2.0',
+    version='3.0',
     description='Pure Python command-line RSS reader',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -17,7 +17,17 @@ setup(
     author='Kirill Ulich',
     author_email='k.ulitch@yandex.ru',
     license='MIT',
-    packages=find_packages(exclude=['rss_reader', 'tests']),
     zip_safe=False,
-    install_requires=['feedparser', 'bs4']
+    scripts=['rss_reader/exceptions.py',
+             'rss_reader/items.py',
+             'rss_reader/log.py',
+             'rss_reader/news_converter.py',
+             'rss_reader/news_storage.py',
+             'rss_reader/parser_rss.py',
+             'rss_reader/rss_reader.py',
+             'rss_reader/tools.py'],
+    install_requires=['feedparser==5.2.1', 'bs4==0.0.1'],
+    entry_points={
+        'console_scripts': ['rss-reader=rss_reader:main'],
+    }
 )

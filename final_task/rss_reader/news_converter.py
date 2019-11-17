@@ -1,18 +1,24 @@
-import logging
-import json
+from json import dumps as jdumps
 from dataclasses import asdict
 
 
-def news_as_json_str(feed_title, items_):
+def news_as_json_str(item_group):
     """ Convert news in json format
 
-    :type feed_title: str
-    :type items_: list of 'items.Item'
+    :type item_group: 'items.ItemGroup'
     :rtype: str
     """
-    logging.info('Converting items to dicts.')
-    map_of_dict_items = map(lambda item: asdict(item), items_)
+    news_dict = asdict(item_group)
 
-    json_structure = {"feed": feed_title, "items": list(map_of_dict_items)}
+    return jdumps(news_dict, indent=4, ensure_ascii=False)
 
-    return json.dumps(json_structure, indent=4)
+
+def news_as_json_str_from_list(item_groups):
+    """ Convert list of news in json format
+
+    :type item_groups: list of 'items.ItemGroup'
+    :rtype: str
+    """
+    lst = [asdict(item_gr) for item_gr in item_groups]
+
+    return jdumps(lst, indent=4, ensure_ascii=False)

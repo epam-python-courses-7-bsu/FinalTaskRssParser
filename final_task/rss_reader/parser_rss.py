@@ -1,9 +1,10 @@
 import feedparser
 import logging
 from bs4 import BeautifulSoup
+from exceptions import GettingRSSException
 
 
-def create_feedparser(rss_url, limit=0):
+def create_feedparser(rss_url, limit=None):
     """ Create feedparser with limited number of items or all items.
 
     If limit value is not set or =0 or =None created feedparser with all items.
@@ -15,9 +16,8 @@ def create_feedparser(rss_url, limit=0):
     :param limit: count of items
     :type limit: int
 
-    :raise Exception: if there are problems with getting rss
+    :raise GettingRSSException: if there are problems with getting rss
 
-    :return: feedparser
     :rtype: 'feedparser.FeedParserDict'
     """
     logging.info('Getting RSS from ' + rss_url)
@@ -34,11 +34,6 @@ def create_feedparser(rss_url, limit=0):
     return parser
 
 
-class GettingRSSException(Exception):
-    def __init__(self, msg):
-        super().__init__('Problems with getting RSS: ' + msg)
-
-
 def format_description(description):
     """ Format 'description' tag.
 
@@ -46,6 +41,8 @@ def format_description(description):
 
     :param description: description tag with his content
     :type description: str
+
+    :raise TypeError: if type of description is not str
 
     :return: content of formatted description and list of image links
     :rtype: tuple of: str and list of str

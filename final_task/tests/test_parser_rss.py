@@ -1,10 +1,11 @@
 import unittest
 import parser_rss
+from exceptions import GettingRSSException
 
 
 class TestParserRss(unittest.TestCase):
     def test_create_feedparser(self):
-        with self.assertRaises(parser_rss.GettingRSSException):
+        with self.assertRaises(GettingRSSException):
             parser_rss.create_feedparser('abcdefg')
 
     def test_format_description(self):

@@ -9,4 +9,5 @@ def turn_on_logging(logger):
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s: %(message)s')
     handler.setFormatter(formatter)
 
+    logger.handlers = []
     logger.addHandler(handler)
