@@ -1,42 +1,44 @@
 import re
 import html2text
+from dataclasses import dataclass
 
-links_template = '\"((http|https)://(\w|.)+?)\"'
+
+LINKS_TEMPLATE = '\"((http|https)://(\w|.)+?)\"'
 
 
 def xml_arguments_for_class(xml_string, limit):
     """This function receive the xml and limit of articles and returns list of dictionaries"""
     dict_article_list = []
-    for counter, neighbor in enumerate(xml_string.iter('item')):
+    text = html2text.HTML2Text()
+    text.ignore_images = True
+    text.ignore_links = True
+    text.ignore_emphasis = True
+    for counter, xml_news in enumerate(xml_string.iter('item')):
         parser_dictionary = {}
-        text = html2text.HTML2Text()
-        text.ignore_images = True
-        text.ignore_links = True
-        text.ignore_emphasis = True
-        for child in neighbor:
+        for xml_news_item in xml_news:
             # Here we create the article in the form of a dictionary
-            if child.tag == 'title':
-                parser_dictionary['title'] = text.handle(child.text).replace('\n', "")
+            if xml_news_item.tag == 'title':
+                parser_dictionary['title'] = text.handle(xml_news_item.text).replace('\n', "")
 
-            if child.tag == 'pubDate':
-                parser_dictionary['date'] = child.text
+            if xml_news_item.tag == 'pubDate':
+                parser_dictionary['date'] = xml_news_item.text
 
-            if child.tag == 'link':
-                parser_dictionary['link'] = child.text
+            if xml_news_item.tag == 'link':
+                parser_dictionary['link'] = xml_news_item.text
 
-            if child.tag == 'description':
-                parser_dictionary['article'] = text.handle(child.text).replace('\n', '')
+            if xml_news_item.tag == 'description':
+                parser_dictionary['article'] = text.handle(xml_news_item.text).replace('\n', '')
 
-                # здесь мы ищем все ссылки, их шаблон задан в links_template и находиться ответ будет в группе 1
                 list_links = []
-                for group1 in re.finditer(links_template, child.text):
+                for group1 in re.finditer(LINKS_TEMPLATE, xml_news_item.text):
                     list_links.append(group1.group(1))
                     parser_dictionary['links'] = list_links
-                    # Еще добавить описание к картинкам
+
         dict_article_list.append(parser_dictionary)
+
         if limit == counter + 1:
             return dict_article_list
-
+    return dict_article_list
 
 def dicts_to_articles(dict_list):
     """This function receive list of dictionaries and convert it to list of articles """
@@ -45,7 +47,7 @@ def dicts_to_articles(dict_list):
         article_list.append(MyArticle(item))
     return article_list
 
-
+@dataclass
 class MyArticle:
     """This is news class, which receives dictionary and have title, date, link, article and links keys fields"""
     def __init__(self, article_dict):

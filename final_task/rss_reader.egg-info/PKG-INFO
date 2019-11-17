@@ -1,0 +1,13 @@
+Metadata-Version: 1.0
+Name: rss-reader
+Version: 1.1
+Summary: RSS parser
+Home-page: https://github.com/ElizabethUniverse/FinalTaskRssParser
+Author: Elizaveta Lapunova
+Author-email: liza.lapunova99@gmail.com
+License: BSD
+Description: # Your readme here
+        Some text.
+        Checkout how to write this file using *markdown*.
+        
+Platform: any
