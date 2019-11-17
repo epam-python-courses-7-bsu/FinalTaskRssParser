@@ -3,7 +3,7 @@ import argparse
 
 version = '4.0'
 
-'''Add argument commands using library '''
+""" Add argument commands for script """
 
 
 def command_line():
@@ -13,7 +13,7 @@ def command_line():
         prog='rss-reader')
 
     parser.add_argument(
-        'url',
+        'URL',
         action="store",
         help='rss url')
 
