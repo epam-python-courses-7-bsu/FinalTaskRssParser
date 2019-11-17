@@ -2,22 +2,22 @@ import datetime
 import json
 import feedparser
 import logging
-import sys
 from bs4 import BeautifulSoup
 from RSSReaderException import RSSReaderException
+from NewsCache import NewsCache
+
+CACHE_FILE_NAME = "Cache_file.json"
 
 
 class RSSReader:
 
-    def __init__(self, url, is_verbose=False):
-        self.url = url
-        self.is_verbose = is_verbose
+    def __init__(self):
+        self.cache = NewsCache(CACHE_FILE_NAME)
+        self.date = None
+        self.url = None
         self.is_json = False
         self.limit = None
-        logging.basicConfig(format='[%(asctime)s][%(levelname)s]%(message)s', stream=sys.stdout, level=logging.ERROR)
         self.logger = logging.getLogger(__name__)
-        if is_verbose:
-            self.logger.setLevel(level=logging.INFO)
 
     def url_parsing(self):
         parsed_url = feedparser.parse(self.url)
@@ -25,7 +25,7 @@ class RSSReader:
             self.logger.error("Can't load RSS feed.")
             raise RSSReaderException('RSS-reader failed. Status: {}.'.format(parsed_url.status))
         else:
-            self.logger.info('RSS parsed successfully')
+            self.logger.info('RSS parsed successfully!')
             return parsed_url
 
     def information_about_site(self, parsed_url):
@@ -42,7 +42,6 @@ class RSSReader:
         Function which parsed HTML summary of news and make dictionary with all the necessary news data.
         :return dictionary
         """
-        print(news)
         if 'summary' in news:
             bs = BeautifulSoup(news['summary'], 'html.parser')
             img = bs.find_all('img')
@@ -53,12 +52,15 @@ class RSSReader:
         else:
             summary = news['title']
             image_data = 'No image'
+        date_info = news['published_parsed'] if 'published' in news else news['updated_parsed']
+        date_key = str("{}{}{}".format(date_info.tm_year, date_info.tm_mon, date_info.tm_mday))
         news_summary = {
             'Title': news['title'],
             'Date': news['published'] if 'published' in news else news['updated'],
             'Link': news['link'],
             'Summary': summary,
             'Image': image_data,
+            'Date key': date_key
         }
         return news_summary
 
@@ -82,31 +84,47 @@ class RSSReader:
     def parse_to_json(self, dictionary):
         return json.dumps(dictionary, indent=4)
 
-    def output(self, about_website, all_news):
+    def output(self, all_news, about_website=None):
         """Function which print information about site and a set of news."""
-        for key, value in about_website.items():
-            print('\n', key, ': ', value)
+        if about_website is not None:
+            for key, value in about_website.items():
+                print('\n', key, ': ', value)
         for number_of_news in all_news:
             print("--------------------------------------------------------")
             for key, value in number_of_news.items():
                 print(key, ': ', value)
 
-    def output_json(self, about_website, all_news):
-        print(self.parse_to_json([about_website] + all_news))
+    def output_json(self, all_news, about_website=None):
+        if about_website is not None:
+            print(self.parse_to_json([about_website] + all_news))
+        else:
+            print(self.parse_to_json(all_news))
 
     def get_news(self):
         """Get news!"""
-        self.logger.info('Start parsing')
-        try:
-            parsed_url = self.url_parsing()
-            about_website = self.information_about_site(parsed_url)
-        except Exception as ex:  # for any exception after website parsing
-            self.logger.error("Error reading site data: {}, {}".format(type(ex), ex))
+        if self.date is None:
+            if self.url is None:
+                self.logger.error("URL is not provided.")
+                return
+            self.logger.info('Start parsing...')
+            try:
+                parsed_url = self.url_parsing()
+                about_website = self.information_about_site(parsed_url)
+            except Exception as ex:  # for any exception after website parsing
+                self.logger.error("Error reading site data: {}, {}.".format(type(ex), ex))
+                return
+            string_of_news_dictionaries = self.news_data_collection(parsed_url)
+            self.cache.caching(string_of_news_dictionaries, self.url)
+        else:
+            string_of_news_dictionaries = self.cache.returning(self.date, self.url)[:self.limit]
+            about_website = None
+        # empty list and return
+        if not string_of_news_dictionaries:
+            self.logger.error('There is no news.')
             return
-        string_of_news_dictionaries = self.news_data_collection(parsed_url)
         if self.is_json:
             self.logger.info('Convert to JSON-format')
-            self.output_json(about_website, string_of_news_dictionaries)
+            self.output_json(string_of_news_dictionaries, about_website)
         else:
             self.logger.info('Output news')
-            self.output(about_website, string_of_news_dictionaries)
+            self.output(string_of_news_dictionaries, about_website)
