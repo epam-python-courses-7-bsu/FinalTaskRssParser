@@ -1,16 +1,19 @@
 import os
 import datetime
+import MyException
 
 
 def write_to_html_file(data: dict, path: str):
     if os.path.isdir(path):
         date_str = datetime.datetime.now().date().strftime('%Y%m%d')
-        filename = path + os.path.sep + date_str + '_' + data['title'][:data['title'].find(' ')].replace(':', '') + '.html'
+        filename = os.path.join(path, date_str + '_' +
+                                data['title'][:data['title'].find(' ')].replace(':', '').replace('.', '') + '.html')
         with open(filename, 'w', encoding="utf-8") as file:
             file.write(text_processing_for_html(data))
         return f'the recording has been completed in the file:\n{filename}'
     else:
-        return f'{path} is not found'
+        raise MyException.MyException(f'{path} is not found')
+
 
 def text_processing_for_html(data: dict):
     style = '<style type="text/css">body{text-align: center; font-size: 120%;' + \

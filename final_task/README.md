@@ -14,10 +14,10 @@ This is small application for watching feed on your device. It shows shot inform
 python setup.py sdist
 cd dist
 pip install feedparser
-pip install rss-reader-5.0.tar.gz
 pip install requests
 pip install fpdf
 pip install colored
+pip install rss-reader-5.1.tar.gz
 ```
 5. Check workability with command: 
 ```
@@ -77,3 +77,51 @@ optional arguments:
     * "link" - link
     * "summary" - description
 * "links" - this is a list with links to the image of the I-th news
+
+##How is data keeping?
+
+Data keep in local file which is located in directory:
+Windows:`C:\Users\User\AppData\Local\Programs\Python\Python38-32\Lib\site-packages\rss_reader`
+Linux:\
+macOS:
+
+There is only json string in the file. JSON format: 
+```
+{
+   "20191117" : {
+      "title" : "News by Sun, 17 Nov 2019",
+      "links" : [
+         "https://img.tyt.by/thumbnails/n/buryakina/0e/5/lidiya_ermoshina_20170208_bur_tutby_phsl_-9760.jpg",
+         "https://img.tyt.by/thumbnails/n/buryakina/0e/5/lidiya_ermoshina_20170208_bur_tutby_phsl_-9760.jpg"
+      ],
+      "items" : [
+         {
+            "link" : "https://news.tut.by/economics/661603.html?utm_campaign=news-feed&utm_medium=rss&utm_source=rss-news",
+            "published" : "Sun, 17 Nov 2019 18:03:00 +0300",
+            "summary" : "[image 1: Фото: Дарья Бурякина, TUT.BY][1] В воскресенье утром Лукашенко сказал, что ему известны 6 случаев провокаций во время кампании и выборов, и заявил, что что со всеми жестко разберутся.",
+            "title" : "Глава ЦИК об инцидентах в избиркомах: Думаю, эти граждане себя точно так же ведут на кухне с женой"
+         },
+         {
+            "link" : "https://news.tut.by/economics/661603.html?utm_campaign=news-feed&utm_medium=rss&utm_source=rss-news",
+            "published" : "Sun, 17 Nov 2019 18:03:00 +0300",
+            "summary" : "[image 1: Фото: Дарья Бурякина, TUT.BY][1] В воскресенье утром Лукашенко сказал, что ему известны 6 случаев провокаций во время кампании и выборов, и заявил, что что со всеми жестко разберутся.",
+            "title" : "Глава ЦИК об инцидентах в избиркомах: Думаю, эти граждане себя точно так же ведут на кухне с женой"
+         }
+      ]
+   },
+   "20191116" : {
+      "title" : "News by Sat, 16 Nov 2019",
+      "links" : [
+         "https://img.tyt.by/thumbnails/n/buryakina/08/6/dinamo-torpedo_20191026_bur_tutby_phsl-2466.jpg",
+      ],
+      "items" : [
+         {
+            "link" : "https://sport.tut.by/news/hockey/661569.html?utm_campaign=news-feed&utm_medium=rss&utm_source=rss-news",
+            "published" : "Sat, 16 Nov 2019 23:02:00 +0300",
+            "summary" : "[image 62: Фото: Дарья Бурякина, TUT.BY][62] Главный тренер омского «Авангарда» Боб Хартли недоволен действиями защитника минского «Динамо» Романа Дюкова. Напомним, что после столкновения с Андреем Стасем Дюков долго не мог подняться, после чего судьи удалили игрока «Авангарда» до конца матча.",
+            "title" : "«Актеры должны быть в Голливуде, а не на льду!» Тренер «Авангарда» считает хоккеиста «Динамо» симулянтом"
+         },
+      ]
+   }
+}
+```

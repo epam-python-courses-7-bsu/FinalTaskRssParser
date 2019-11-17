@@ -91,7 +91,7 @@ class TestTextFunctions(unittest.TestCase):
         }
         output = '\ntitl\n\nTitle: t1\nDate: date1\nLink: link1\nDescription: des1\n\n' + \
                  'Title: t2\nDate: date2\nLink: link2\nDescription: des2\n\n' + \
-                 '\nLinks: \n[1] - first\n[2] - second\n'
+                 '\nLinks:\n[1] - first\n[2] - second\n'
         self.assertEqual(work_with_text.get_string_with_result(entering_dict, 2), output)
 
 

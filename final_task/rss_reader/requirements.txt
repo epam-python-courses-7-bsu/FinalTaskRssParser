@@ -1,1 +1,4 @@
 feedparser==5.2.1
+colored
+fpdf
+requests

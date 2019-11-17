@@ -15,6 +15,7 @@ import work_with_dict
 import work_with_html
 import work_with_pdf
 import work_with_colorize
+import MyException
 import decorators
 import __init__
 
@@ -25,15 +26,15 @@ def get_object_feed(url: str) -> Union[str, feedparser.FeedParserDict]:
         data = feedparser.parse(url)
         if data.status == 200:
             if data.bozo:
-                return f'ERROR: There is no rss feed at this url: {url}'
+                raise MyException.MyException(f'There is no rss feed at this url: {url}')
             else:
                 return data
         else:
-            return f'HTTP Status Code {data.status}'
+            raise MyException.MyException(f'HTTP Status Code {data.status}')
     except AttributeError:
-        return f'ERROR: {url} - is not url(example url "https://google.com")'
+        raise MyException.MyException(f'{url} - is not url(example url "https://google.com")')
     except Exception as exc:
-        return f'ERROR: {exc}'
+        raise MyException.MyException(exc)
 
 
 def set_start_setting():
@@ -62,40 +63,41 @@ def set_start_setting():
 
 def run():
     os.chdir(os.path.abspath(os.path.dirname(__file__)))
-    print(os.getcwd())
     args = set_start_setting()
     logging.info('the application is running')
     logging.debug('args: ' + str(args))
+    logging.info(os.getcwd())
     data = None
-    if args.version:
-        print(f'RSS reader version {__init__.VERSION}')
-    elif args.date:
-        data = work_with_file.read_feed_form_file(args.date)
-    elif args.source:
-        data = get_object_feed(args.source)
-        data = work_with_dict.to_dict(data)
-        if 'error' not in data:
+    try:
+        if args.version:
+            print(f'RSS reader version {__init__.VERSION}')
+        elif args.date:
+            data = work_with_file.read_feed_form_file(args.date)
+        elif args.source:
+            data = get_object_feed(args.source)
+            data = work_with_dict.to_dict(data)
             work_with_file.add_feed_to_file(data)
-    else:
-        print('How work with application?\nEnter in command line: rss-reader -h')
-        exit(1)
+        else:
+            raise MyException.MyException('How work with application?\nEnter in command line: rss-reader -h')
 
-    logging.debug(type(data))
-    logging.debug(data)
-    if args.limit:
-        data = work_with_dict.limited_dict(data, args.limit)
-    if data.get('error', False):
-        print(data['error'])
-    elif args.json:
-        print(json.dumps(data, ensure_ascii=False, indent=4))
-    elif args.to_html:
-        work_with_html.write_to_html_file(data, args.to_html)
-    elif args.to_pdf:
-        work_with_pdf.write_to_pdf_file(data, args.to_pdf)
-    elif args.colorize:
-        work_with_colorize.colorize_text(data)
-    else:
-        print(work_with_text.get_string_with_result(data, args.limit))
+        logging.debug(type(data))
+        logging.debug(data)
+        if args.limit:
+            data = work_with_dict.limited_dict(data, args.limit)
+        if args.json:
+            print(json.dumps(data, ensure_ascii=False, indent=4))
+        elif args.to_html:
+            result = work_with_html.write_to_html_file(data, args.to_html)
+        elif args.to_pdf:
+            result = work_with_pdf.write_to_pdf_file(data, args.to_pdf)
+        elif args.colorize:
+            result = work_with_colorize.colorize_text(data)
+        else:
+            result = work_with_text.get_string_with_result(data, args.limit)
+        print(result)
+    except MyException.MyException as exc:
+        print('ERROR:')
+        print(exc)
     logging.info('the application is finished')
 
 

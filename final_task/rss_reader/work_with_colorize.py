@@ -1,5 +1,6 @@
 import colored
 
+
 def colorize_text(data: dict):
     yellow = colored.fg(11)
     red = colored.fg(9)
@@ -9,14 +10,12 @@ def colorize_text(data: dict):
     description_color = colored.fg(14)
     default = colored.fg(230)
     print()
-    if 'error' in data.keys():
-        print(('{0} ' + data['error'] + ' {1}').format(red, default))
-    print(('{0} ' + data['title'] + '\n').format(yellow))
+    print(f"{yellow} {data['title']} {default}")
     for index_news, dict_news in enumerate(data['items']):
-        print(('{0}Title: {1}' + dict_news['title']).format(green, red))
-        print(('{0}Date: {1}' + dict_news['published']).format(green, pink))
-        print(('{0}Link: {1}' + dict_news['link']).format(green, blue))
-        print(('{0}Description: {1}' + dict_news['summary'] + '{2}\n').format(green, description_color, default))
-    print('{0}Links:'.format(colored.fg(89)))
+        print(f"{green}Title: {red}{data['title']} ")
+        print(f"{green}Title: {pink}{data['published']} ")
+        print(f"{green}Title: {blue}{data['link']} ")
+        print(f"{green}Title: {description_color}{data['summary']}{default} ")
+    print(f'{colored.fg(89)}Links:')
     for index_links, link in enumerate(data['links']):
-        print(('{0}[' + str(index_links+1) + '] - {1}' + link + '{2}').format(green, blue, default))
+        print(f'{green}[{index_links+1}] - {blue}{default}')

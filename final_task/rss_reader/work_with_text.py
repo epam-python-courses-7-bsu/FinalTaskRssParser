@@ -19,7 +19,8 @@ def text_processing(string: str, array_links: list):
     if 'img' in string:
         image_link_and_alt_text = get_img(string)
         array_links.append(image_link_and_alt_text[0])
-        image = '[image ' + str(len(array_links)) + ': ' + image_link_and_alt_text[1] + '][' + str(len(array_links)) + '] '
+        image = '[image ' + str(len(array_links)) + ': ' + image_link_and_alt_text[1] + '][' + \
+                str(len(array_links)) + '] '
     string = string[string.find('<') + 1:]
     while string.find('<') - string.find('>') == 1:
         string = string[string.find('<') + 2:]
@@ -31,8 +32,6 @@ def text_processing(string: str, array_links: list):
 def get_string_with_result(data: dict, limit=-1) -> str:
     """Converts json to string for print"""
     result = '\n'
-    if 'error' in data.keys():
-        return result + data['error']
     result += data['title'] + '\n\n'
     for index_news, dict_news in enumerate(data['items']):
         result += 'Title: ' + dict_news['title'] + '\n'
@@ -43,23 +42,6 @@ def get_string_with_result(data: dict, limit=-1) -> str:
     result += '\nLinks:\n'
     for index_links, link in enumerate(data['links']):
         result += '[' + str(index_links+1) + '] - ' + link + '\n'
-    # if isinstance(data, dict):
-    #     for key, value in data.items():
-    #         if isinstance(value, str):
-    #             result += '\n' + value + '\n\n'
-    #             continue
-    #         if isinstance(value, list) and key != 'items' and value:
-    #             result += '\n' + edit_key(key) + '\n'
-    #         for index, item in (enumerate(value) if len(value) < limit else enumerate(value[:limit])):
-    #             if isinstance(item, dict):
-    #                 for key_l, value_l in item.items():
-    #                     result += edit_key(key_l) + value_l
-    #                     result += '\n'
-    #             else:
-    #                 result += f'[{index + 1}] - {item}'
-    #             result += '\n'
-    # else:
-    #     result = data
     return result
 
 
