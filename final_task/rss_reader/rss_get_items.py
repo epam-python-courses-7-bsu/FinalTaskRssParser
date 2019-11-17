@@ -21,7 +21,7 @@ def get_items(url):
             key = setitem_node.name
             value = setitem_node.text
             item[key] = value
-    yield item
+    return item
 
 
 """ Try to delete all html in description """
