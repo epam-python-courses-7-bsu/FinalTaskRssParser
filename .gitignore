@@ -5,3 +5,6 @@ jsonout.txt
 *.pyc
 .coveragerc
 .mypy_cache
+build/
+dist/
+rss_reader.egg-info/
