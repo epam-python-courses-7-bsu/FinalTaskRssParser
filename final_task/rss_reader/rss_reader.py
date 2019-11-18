@@ -15,7 +15,7 @@ import work_with_dict
 import work_with_html
 import work_with_pdf
 import work_with_colorize
-import MyException
+import RssReaderException
 import decorators
 import __init__
 
@@ -25,16 +25,16 @@ def get_object_feed(url: str) -> Union[str, feedparser.FeedParserDict]:
     try:
         data = feedparser.parse(url)
         if data.status == 200:
-            if data.bozo:
-                raise MyException.MyException(f'There is no rss feed at this url: {url}')
-            else:
+            if data['version']:
                 return data
+            else:
+                raise RssReaderException.ConnectException(f'There is no rss feed at this url: {url}')
         else:
-            raise MyException.MyException(f'HTTP Status Code {data.status}')
+            raise RssReaderException.ConnectException(f'HTTP Status Code {data.status}')
     except AttributeError:
-        raise MyException.MyException(f'{url} - is not url(example url "https://google.com")')
+        raise RssReaderException.ConnectException(f'{url} - is not url(example url "https://google.com")')
     except Exception as exc:
-        raise MyException.MyException(exc)
+        raise RssReaderException.ConnectException(exc)
 
 
 def set_start_setting():
@@ -78,14 +78,13 @@ def run():
             data = work_with_dict.to_dict(data)
             work_with_file.add_feed_to_file(data)
         else:
-            raise MyException.MyException('How work with application?\nEnter in command line: rss-reader -h')
+            raise RssReaderException.RssReaderException('How work with application?\nEnter in command line: rss-reader -h')
 
         logging.debug(type(data))
-        logging.debug(data)
         if args.limit:
             data = work_with_dict.limited_dict(data, args.limit)
         if args.json:
-            print(json.dumps(data, ensure_ascii=False, indent=4))
+            result = json.dumps(data, ensure_ascii=False, indent=4)
         elif args.to_html:
             result = work_with_html.write_to_html_file(data, args.to_html)
         elif args.to_pdf:
@@ -95,8 +94,8 @@ def run():
         else:
             result = work_with_text.get_string_with_result(data, args.limit)
         print(result)
-    except MyException.MyException as exc:
-        print('ERROR:')
+    except RssReaderException.RssReaderException as exc:
+        print(exc.expression)
         print(exc)
     logging.info('the application is finished')
 

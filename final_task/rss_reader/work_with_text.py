@@ -10,17 +10,19 @@ def get_img(input_string: str) -> [str, str]:
     return [link[:link.find('"')], str_img[:str_img.find('"')]]
 
 
-def text_processing(string: str, array_links: list):
+def text_processing(string: str, array_links=None):
     """processes a string for output"""
+    if array_links is None:
+        array_links = []
     image = ''
     if '<' not in string:
+        array_links.append('')
         return html.unescape(string)
     string += '<'
     if 'img' in string:
         image_link_and_alt_text = get_img(string)
         array_links.append(image_link_and_alt_text[0])
-        image = '[image ' + str(len(array_links)) + ': ' + image_link_and_alt_text[1] + '][' + \
-                str(len(array_links)) + '] '
+        image = '[image: ' + image_link_and_alt_text[1] + ']'
     string = string[string.find('<') + 1:]
     while string.find('<') - string.find('>') == 1:
         string = string[string.find('<') + 2:]
@@ -38,10 +40,9 @@ def get_string_with_result(data: dict, limit=-1) -> str:
         result += 'Date: ' + dict_news['published'] + '\n'
         result += 'Link: ' + dict_news['link'] + '\n'
         result += 'Description: ' + dict_news['summary'] + '\n'
+        if dict_news['contain_image']:
+            result += 'Link on image: ' + dict_news['link_on_image'] + '\n'
         result += '\n'
-    result += '\nLinks:\n'
-    for index_links, link in enumerate(data['links']):
-        result += '[' + str(index_links+1) + '] - ' + link + '\n'
     return result
 
 

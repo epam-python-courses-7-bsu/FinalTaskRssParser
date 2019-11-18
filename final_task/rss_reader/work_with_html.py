@@ -1,6 +1,6 @@
 import os
 import datetime
-import MyException
+import RssReaderException
 
 
 def write_to_html_file(data: dict, path: str):
@@ -12,7 +12,7 @@ def write_to_html_file(data: dict, path: str):
             file.write(text_processing_for_html(data))
         return f'the recording has been completed in the file:\n{filename}'
     else:
-        raise MyException.MyException(f'{path} is not found')
+        raise RssReaderException.FileException(f'{path} is not found')
 
 
 def text_processing_for_html(data: dict):
@@ -24,8 +24,9 @@ def text_processing_for_html(data: dict):
     for index_news, dict_news in enumerate(data['items']):
         result += '<h3><center><a href="' + dict_news['link'] + '">' + dict_news['title'] + '</a></center></h3>'
         result += dict_news['published'] + '<br>'
-        result += '<img src="' + data['links'][index_news] + '" alt="' + \
-                  dict_news['summary'][dict_news['summary'].find(': ') + 1:dict_news['summary'].find(']')] + '"><br>'
+        if dict_news['contain_image']:
+            result += '<img src="' + dict_news['link_on_image'] + '" alt="' + \
+                    dict_news['summary'][dict_news['summary'].find(': ') + 1:dict_news['summary'].find(']')] + '"><br>'
         result += dict_news['summary'][dict_news['summary'].rfind(']') + 1:]
         result += '<br><br>'
     return result

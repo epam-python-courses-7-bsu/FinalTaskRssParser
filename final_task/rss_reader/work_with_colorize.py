@@ -9,13 +9,13 @@ def colorize_text(data: dict):
     blue = colored.fg(20)
     description_color = colored.fg(14)
     default = colored.fg(230)
-    print()
-    print(f"{yellow} {data['title']} {default}")
+    result = '\n'
+    result += f"{yellow} {data['title']} {default}\n\n"
     for index_news, dict_news in enumerate(data['items']):
-        print(f"{green}Title: {red}{data['title']} ")
-        print(f"{green}Title: {pink}{data['published']} ")
-        print(f"{green}Title: {blue}{data['link']} ")
-        print(f"{green}Title: {description_color}{data['summary']}{default} ")
-    print(f'{colored.fg(89)}Links:')
-    for index_links, link in enumerate(data['links']):
-        print(f'{green}[{index_links+1}] - {blue}{default}')
+        result += f"{green}Title: {red}{dict_news['title']}\n"
+        result += f"{green}Date: {pink}{dict_news['published']}\n"
+        result += f"{green}Link: {blue}{dict_news['link']}\n"
+        result += f"{green}Description: {description_color}{dict_news['summary']}\n"
+        if dict_news['contain_image']:
+            result += f"{green}Link on image: {blue}{dict_news['link_on_image']}{default}\n\n"
+    return result
