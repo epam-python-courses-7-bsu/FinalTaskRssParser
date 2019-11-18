@@ -59,7 +59,6 @@ def print_feeds(news_collection, command_line_args, logger):
             news_collection[0].print_feed_title()
             for num, news in enumerate(news_collection):
                 logger.info("Printing news №{}:".format(num+1))
-                news.create_string_of_links()
                 news.print_news()
 
 
@@ -98,5 +97,4 @@ def print_feeds_from_database(news_collection, command_line_args, logger):
             for num, news in enumerate(news_collection):
                 logger.info("Printing news №{}:".format(num+1))
                 news.print_feed_title()
-                news.create_string_of_links()
                 news.print_news()
