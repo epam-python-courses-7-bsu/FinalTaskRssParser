@@ -1,4 +1,3 @@
-*.рус
 *.pyc
 *.idea'.idea'
 *.db
@@ -7,3 +6,4 @@
 *.egg-info
 final_task/FinalTaskRssParser.egg-info
 final_task/dist
+

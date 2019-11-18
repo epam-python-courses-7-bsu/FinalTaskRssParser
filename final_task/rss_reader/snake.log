@@ -1,0 +1,57 @@
+INFO:root:Program started
+INFO:root:Creating parser for console
+INFO:root:Created parser for console
+INFO:root:Started rss_reader with args
+INFO:root:Trying to get page from feedparser!
+INFO:root:Got it (the page)!
+INFO:root:Getting pack of news!
+INFO:root:Now getting images from the page.
+INFO:root:Got some images!
+INFO:root:Getting alternative text for images!
+INFO:root:Got some alternative text.
+INFO:root:Cleaning something from htlm-tags.
+INFO:root:Cleaned from html-tags!
+INFO:root:Cleaning something from htlm-tags.
+INFO:root:Cleaned from html-tags!
+INFO:root:Cleaning something from htlm-tags.
+INFO:root:Cleaned from html-tags!
+INFO:root:Cleaning something from htlm-tags.
+INFO:root:Cleaned from html-tags!
+INFO:root:Cleaning something from htlm-tags.
+INFO:root:Cleaned from html-tags!
+INFO:root:Cleaning something from htlm-tags.
+INFO:root:Cleaned from html-tags!
+INFO:root:Cleaning something from htlm-tags.
+INFO:root:Cleaned from html-tags!
+INFO:root:Cleaning something from htlm-tags.
+INFO:root:Cleaned from html-tags!
+INFO:root:Cleaning something from htlm-tags.
+INFO:root:Cleaned from html-tags!
+INFO:root:Cleaning something from htlm-tags.
+INFO:root:Cleaned from html-tags!
+INFO:root:Got pack of news!
+INFO:root:Opening file News_cache.
+INFO:root:Reading from News_cache.
+INFO:root:Counting lines.
+INFO:root:Counted lines.
+INFO:root:Writing into file if it was not empty.
+INFO:root:Counting lines.
+INFO:root:Counted lines.
+INFO:root:Writing into file if it was not empty.
+INFO:root:Counting lines.
+INFO:root:Counted lines.
+INFO:root:Writing into file if it was not empty.
+INFO:root:Counting lines.
+INFO:root:Counted lines.
+INFO:root:Writing into file if it was not empty.
+INFO:root:Counting lines.
+INFO:root:Counted lines.
+INFO:root:Writing into file if it was not empty.
+INFO:root:Counting lines.
+INFO:root:Counted lines.
+INFO:root:Writing into file if it was not empty.
+INFO:root:Getting full info!
+INFO:root:Getting title.
+INFO:root:Got title.
+INFO:root:Got full info!
+INFO:root:Finished rss_reader with args
