@@ -4,7 +4,7 @@ import requests
 import json
 import logging
 
-import ClassNews
+import rss_reader.ClassNews as ClassNews
 
 VERSION = 1.1
 
@@ -22,7 +22,7 @@ def my_parser():
     return args
 
 
-if __name__ == '__main__':
+def main():
     try:
         args = my_parser()
         logging_level = logging.CRITICAL
@@ -91,3 +91,7 @@ if __name__ == '__main__':
     except requests.exceptions.ConnectionError:
         logging.critical("Sorry, you have an proxy or SSL error")
         # A proxy or SSL error occurred.
+
+
+if __name__ == '__main__':
+    main()

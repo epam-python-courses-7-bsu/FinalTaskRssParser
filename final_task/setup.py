@@ -19,7 +19,7 @@ setup(
 
     #options
     packages=find_packages(),
-    install_requires=['html2text==2019.9.26'],
+    install_requires=['html2text==2019.9.26', 'dataclasses==0.6'],
     package_data={
          '': ['*.py', '*.txt']
     },
