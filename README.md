@@ -10,13 +10,16 @@ python3 rss_reader.py https://news.yahoo.com/rss - -limit 1
 ```
 Output:
 ```
-**Title** : Rep. Justin Amash turned on Trump. Will his Michigan district follow him — or turn on him?
+Title : Rep. Justin Amash turned on Trump. Will his Michigan district follow him — or turn on him?
 
-**Date** : Sun, 17 Nov 2019 06:00:35 -0500
+Date : Sun, 17 Nov 2019 06:00:35 -0500
 
-**Link** : https://news.yahoo.com/rep-justin-amash-turned-on-trump-will-his-michigan-district-follow-him-or-turn-on-him-110017880.html
+Link : https://news.yahoo.com/rep-justin-amash-turned-on-trump-will-his-michigan-district-follow-him-or-turn-on-him-110017880.html
 
-**Description** : If you want to understand how impeachment is being seen by actual Americans, there may be no better place to go than Grand Rapids, Mich. In part that’s because the area around Grand Rapids, comprising Michigan’s Third Congressional District, is one of only about two dozen districts in the nation to vote for Barack Obama and for Donald Trump.
+Description : If you want to understand how impeachment is being seen by actual Americans, 
+there may be no better place to go than Grand Rapids, Mich. In part that’s because 
+the area around Grand Rapids, comprising Michigan’s Third Congressional District,
+ is one of only about two dozen districts in the nation to vote for Barack Obama and for Donald Trump.
 ```
 Help:
 ```
