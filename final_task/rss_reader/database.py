@@ -42,9 +42,13 @@ def insert_news_into_table():
     pass
 
 
-def article_is_not_db(article_title, article_date):
-    cur.execute("SELECT * from myrss WHERE title=? AND date=?", (article_title, article_date))
-    if not cur.fetchall():
-        return True
-    else:
-        return False
+# What is cur here?
+# def article_is_not_db(article_title, article_date):
+#     cur.execute(
+#         "SELECT * from myrss WHERE title=? AND date=?",
+#         (article_title, article_date)
+#     )
+#     if not cur.fetchall():
+#         return True
+#     else:
+#         return False
