@@ -1,3 +1,4 @@
+import argparse
 import logging
 import os
 import sys
@@ -16,7 +17,7 @@ import custom_error
 LOG_FILE_NAME = os.path.join(directory_to_module, 'app.log')
 
 
-def start_logging() -> None:
+def create_and_configure_logger() -> None:
     """Setting up logging basic configuration"""
     root = logging.getLogger()
     logging.basicConfig(
@@ -33,25 +34,27 @@ def start_logging() -> None:
         root.addHandler(handler)
 
 
-def converting_starter(key: str, list_with_articles: List[single_article.SingleArticle], path_to_file: str) -> None:
+def converting_starter(key: str, list_with_articles: List[single_article.SingleArticle], path_to_file: str,
+                       rss_link: str) -> None:
     """Starts the chosen conversion"""
     logging.info(f"Converting to {key} started")
     if key == 'html':
-        html_converter.convert_to_html(list_with_articles, path_to_file)
+        html_converter.convert_to_html(list_with_articles, path_to_file, rss_link)
     else:
-        pdf_converter.convert_to_pdf(list_with_articles, path_to_file)
+        pdf_converter.convert_to_pdf(list_with_articles, path_to_file, rss_link)
     logging.info(f"Converting to {key} ended")
 
 
-def arguments_logic(args, list_of_articles):
+def arguments_logic(args: argparse.Namespace, list_of_articles: List[single_article.SingleArticle],
+                    rss_link: str = None) -> None:
     conversion = False
 
     if args.to_html:
         conversion = True
-        converting_starter('html', list_of_articles, args.to_html)
+        converting_starter('html', list_of_articles, args.to_html, rss_link)
     if args.to_pdf:
         conversion = True
-        converting_starter('pdf', list_of_articles, args.to_pdf)
+        converting_starter('pdf', list_of_articles, args.to_pdf, rss_link)
 
     if not conversion:
         if args.json:
@@ -67,7 +70,7 @@ def arguments_logic(args, list_of_articles):
 def main() -> None:
     """The main entry point of the application"""
     try:
-        start_logging()
+        create_and_configure_logger()
         logging.info('Application started')
 
         argparse_handler.check_the_arguments_amount()
@@ -107,13 +110,12 @@ def main() -> None:
             cache_handler = articles_handler.CachedArticlesClass()
             cache_handler.save_articles_to_cache(articles_list)
 
-            arguments_logic(args, articles_list)
+            arguments_logic(args, articles_list, rss_url)
         elif switcher == 'date_only':
             arg_parser = argparse_handler.create_parser('no link')
             logging.info('Argument parser created')
 
             args = arg_parser.parse_args()
-
             limit = args.limit
 
             cache_handler = articles_handler.CachedArticlesClass()
@@ -136,7 +138,7 @@ def main() -> None:
 
             articles_on_date_list = cache_handler.make_list_of_articles_by_date_and_url(args.date, rss_url, limit)
 
-            arguments_logic(args, articles_on_date_list)
+            arguments_logic(args, articles_on_date_list, rss_url)
     except custom_error.UrlNotFoundInArgsError:
         logging.error('UrlNotFoundInArgsError')
         logging.info('Application ended')

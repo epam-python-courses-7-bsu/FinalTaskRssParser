@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title> {{title}} </title>
+    <link rel="stylesheet" href="{{css_path}}">
+</head>
+
+<body>
+    <h1> {{title}} </h1>
+    {% for value in articles_list: %}
+        <h3>Article {{loop.index}}</h3>
+        <table>
+            <tr><th>Feed</th><td>{{value.feed}}</td></tr>
+            <tr><th>Title</th><td>{{value.title}}</td></tr>
+            <tr><th>Date</th><td>{{value.date}}</td></tr>
+            <tr><th>Link</th><td><a href="{{value.link}}">{{value.link}}</a></td></tr>
+            <tr><th>Article</th><td>{{value.summary}}</td></tr>
+        {% if connection %}
+            {% for link in value.links: %}
+                {% if link[1] == 'image' %}
+                    {% if loop.index == 1 %}
+                        <tr><th rowspan="{{value.links|length}}">Links:</th><td>[{{loop.index}}]:
+                                <a href="{{link[0]}}"><img src="{{link[0]}}" alt={{link[0]}}></a></td></tr>
+                    {% else %}
+                        <tr><td>[{{loop.index}}]:<a href="{{link[0]}}"><img src="{{link[0]}}" alt={{link[0]}} height="400"></a></td></tr>
+                    {% endif %}
+                {% else %}
+                    {% if loop.index == 1 %}
+                        <tr><th rowspan="{{value.links|length}}">Links:</th><td>[{{loop.index}}]:
+                                <a href="{{link[0]}}">{{link[0]}}</a></td></tr>
+                    {% else %}
+                        <tr><td>[{{loop.index}}]:<a href="{{link[0]}}">{{link[0]}}</a></td></tr>
+                    {% endif %}
+                {% endif %}
+           {% endfor %}
+        {% else %}
+            {% for link in value.links: %}
+                {% if loop.index == 1 %}
+                    <tr><th rowspan="{{value.links|length}}">Links:</th><td>[{{loop.index}}]: <a href="{{link[0]}}">{{link[0]}}</a></td></tr>
+                {% else %}
+                    <tr><td>[{{loop.index}}]: <a href="{{link[0]}}">{{link[0]}}</a></td></tr>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        </table>
+    {% endfor %}
+
+</body>
+
+</html>

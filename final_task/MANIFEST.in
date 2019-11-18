@@ -1,1 +1,2 @@
 include rss_reader\font\DejaVuSans.ttf
+recursive-include rss_reader\templates *

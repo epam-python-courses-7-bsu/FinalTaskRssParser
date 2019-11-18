@@ -5,7 +5,7 @@ setup(
     version='v4.0',
     packages=['rss_reader'],
     include_package_data=True,
-    install_requires=['feedparser', 'bs4', 'python-dateutil', 'fpdf'],
+    install_requires=['feedparser', 'bs4', 'python-dateutil', 'fpdf', 'jinja2'],
     url='',
     author='Evgeny Androsik',
     author_email='androsikei95@gmail.com',

@@ -168,9 +168,12 @@ Usage: `rss_reader.py [-h] [ --version ] [ --json ] [ --verbose ] [ --limit LIMI
 │   ├── custom_error.py
 │   ├── rss_reader.py
 │   ├── single_article.py
-│   └── 📁tests
-│       ├── __init__.py
-│       └── test_module_1.py
+│   ├── 📁tests
+│   │   ├── __init__.py
+│   │   └── test_module_1.py
+│   ├── 📁templates
+│   │   ├── base.html
+│   │   └── style.css
 │   └── 📁font
 │       └── DejaVuSans.ttf
 ├── __init__.py

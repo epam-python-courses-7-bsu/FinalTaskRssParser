@@ -4,8 +4,8 @@ import html
 import json
 import logging
 import os
-import urllib.request
 from typing import List, Tuple, Optional
+import itertools
 
 import dateutil.parser
 from bs4 import BeautifulSoup
@@ -61,17 +61,6 @@ def find_links_in_article(article: feedparser.FeedParserDict) -> Tuple[List, str
     for link in article['links']:
         if link['href'] not in all_links:
             all_links.append([link['href'], 'other'])
-            """if link['href'] == article['link']:
-                all_links.append([link['href'], 'text'])
-            else:
-                head = requests.head(link['href'])
-                header = head.headers
-                content_type = header.get('content-type')
-
-                if 'image' in content_type:
-                    all_links.append([link['href'], 'image'])
-                else:
-                    all_links.append([link['href'], 'text'])"""
 
     return all_links, str(soup.text)
 
@@ -81,17 +70,6 @@ def unescape(text_to_unescape: str) -> str:
     return html.unescape(text_to_unescape)
 
 
-def is_connected():
-    hostname = 'https://www.google.com/'
-    try:
-        urllib.request.urlopen(hostname)
-        return True
-    except urllib.request.HTTPError:
-        return False
-    except urllib.request.URLError:
-        return False
-
-
 def get_articles(parsed: feedparser.FeedParserDict, limit: int) -> List[single_article.SingleArticle]:
     """Returns list with articles."""
     articles = []
@@ -99,13 +77,8 @@ def get_articles(parsed: feedparser.FeedParserDict, limit: int) -> List[single_a
     entries = parsed['entries']
     logging.info(f'There is {len(entries)} entries')
 
-    if limit is None:
-        limit = len(entries)
-
     try:
-        for index, entry in enumerate(entries):
-            if index == limit:
-                break
+        for entry in itertools.islice(entries, 0, limit):
 
             date_info = 'unknown'
             if 'published' in entry:
@@ -122,7 +95,6 @@ def get_articles(parsed: feedparser.FeedParserDict, limit: int) -> List[single_a
                     link=entry['link'],
                     summary=unescape(summary_text),
                     links=links_in_article)
-                # links=[[number, value] for number, value in enumerate(links_in_article, 1)])
             )
     except KeyError as value:
         raise custom_error.ArticleKeyError(f"One of the entries does not have {value} key")
@@ -167,10 +139,12 @@ class CachedArticlesClass:
         if not os.path.exists(CACHE_FILE_NAME):
             with open(CACHE_FILE_NAME, 'w'):
                 pass
+            is_file_empty = True
+        else:
+            is_file_empty = os.stat(CACHE_FILE_NAME).st_size == 0
 
         with open(CACHE_FILE_NAME, 'r') as cache_file:
-            if cache_file and os.stat(CACHE_FILE_NAME).st_size != 0:
-                is_file_empty = False
+            if not is_file_empty:
                 loaded_data_list = json.load(cache_file)
                 parsed_data_list = json.loads(loaded_data_list)
 
@@ -182,8 +156,6 @@ class CachedArticlesClass:
                 self.cached_data_list = parsed_data_list
 
                 parsed_data_list_json = create_rss_json(parsed_data_list)
-            else:
-                is_file_empty = True
 
         with open(CACHE_FILE_NAME, 'w+') as cache_file:
             if not is_file_empty:

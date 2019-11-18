@@ -1,14 +1,16 @@
 import logging
 import os
 import urllib.request
+from datetime import date
+
 from fpdf import FPDF
-from html_converter import is_connected
+from argparse_handler import check_the_connection
 
 directory_to_module = os.path.abspath(os.path.dirname(__file__))
 FONT_PATH = os.path.join(directory_to_module, 'font')
 
 
-def convert_to_pdf(articles_list: list, path: str) -> None:
+def convert_to_pdf(articles_list: list, path: str, rss_url: str) -> None:
     """Converts articles to pdf format"""
     pdf = FPDF(orientation='P', unit='mm', format='A4')
     pdf.set_margins(10, 10, 10)
@@ -18,7 +20,8 @@ def convert_to_pdf(articles_list: list, path: str) -> None:
 
     pdf.set_font('dejavu')
 
-    connection = is_connected()
+    connection_info = check_the_connection('https://www.google.com/')
+    connection = connection_info == 'ok'
 
     if connection:
         logging.info("Converting to pdf with images")
@@ -71,8 +74,16 @@ def convert_to_pdf(articles_list: list, path: str) -> None:
                 pdf.ln(5)
 
         pdf.ln(20)
+
     try:
-        pdf.output(path, 'F')
+        today = date.today().strftime("%B %d, %Y")
+        if rss_url:
+            filename = f'{today} {urllib.request.urlparse(rss_url).netloc}.pdf'
+        else:
+            filename = f'{today}.pdf'
+
+        full_name = os.path.join(path, filename)
+        pdf.output(full_name, 'F')
     except PermissionError:
         print('Please, close pdf file before converting or you need to run program as system administrator, '
               'to save files in that location')

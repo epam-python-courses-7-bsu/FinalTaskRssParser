@@ -13,10 +13,7 @@ VERSION = 4.0
 
 def check_if_date_in_arguments() -> bool:
     """Checks if date is arguments"""
-    if '--date' in sys.argv:
-        return True
-    else:
-        return False
+    return '--date' in sys.argv
 
 
 def check_if_help_or_version_in_arguments() -> Optional[str]:
@@ -66,16 +63,15 @@ def check_if_url_or_date_in_arguments() -> str:
         return flag
 
 
-def check_the_connection(rss_url: str) -> None:
+def check_the_connection(rss_url: str) -> str:
     """Checks the connection"""
     try:
         urllib.request.urlopen(rss_url)
+        return 'ok'
     except urllib.request.HTTPError as e:
-        info = f'{e.code}: {e.reason}'
-        raise custom_error.ConnectionFailedError(f"Connection failed: {info}")
+        return f'{e.code}: {e.reason}'
     except urllib.request.URLError as e:
-        info = f'{e.reason}'
-        raise custom_error.ConnectionFailedError(f"Connection failed: {info}")
+        return f'{e.reason}'
 
 
 def check_if_url_is_valid(rss_url: str) -> bool:
@@ -91,7 +87,11 @@ def valid_url(rss_url: str) -> str:
     """Checks if url is valid and connection successful"""
     if check_if_url_is_valid(rss_url):
         logging.info('Valid url')
-        check_the_connection(rss_url)
+
+        connection = check_the_connection(rss_url)
+        if connection != 'ok':
+            raise custom_error.ConnectionFailedError(f"Connection failed: {connection}")
+
         logging.info('Connection successful')
         return rss_url
     else:
@@ -116,7 +116,7 @@ def valid_limit(limit: str) -> Optional[int]:
 def valid_date(date: str) -> datetime.datetime:
     """Checks if date is valid"""
     try:
-        if len(str(date)) != 8:
+        if len(date) != 8:
             msg = f'Date must be 8 digits (yyyymmdd)'
             raise custom_error.NotValidDateError(msg)
         else:
@@ -128,16 +128,11 @@ def valid_date(date: str) -> datetime.datetime:
 
 def valid_directory_path(path: str, key: str) -> str:
     """Checks if path is valid"""
-    if path[-1] != "\\":
-        path += "\\"
+    if not path.endswith(os.path.sep):
+        path += os.path.sep
 
     if os.path.isdir(path):
-        if key == 'html':
-            filename = 'NEWS.html'
-        else:
-            filename = 'NEWS.pdf'
-        full_name = os.path.join(path, filename)
-        return full_name
+        return path
     else:
         raise custom_error.NotValidPathError(f'Not valid path to {key}: {path}')
 
