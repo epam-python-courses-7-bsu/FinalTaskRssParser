@@ -1,36 +1,49 @@
-# FinalTaskRssReader
-For final task pull requests.
+# **Rss-reader**
+Command-line utility to receive RSS feeds, save it and convert to common formats.
 
 
-## How to create a pull request
+## **Example**
 
-1. Create github account.  *Preferrably using email you used when registerer on this course*  
-2. Fork this repository. ('Fork' button at the top right of this repository page)  
-3. Open the page of your  *new repository*  that was created when you forked this repo.  
-4. Press button clone or download at the middle right of the page and CTRL-C the url.  
-5. On your machine go to the directory you want.  
-6. Depending on the OS you are working with, open GitBash(Windows)/Command Line or Terminal(Linux) there  
-7. Use command  `git clone <url_you_copied>`  
-  
-Congrats! You have successfully forked our repository.
+Input:
+```
+python3 rss_reader.py https://news.yahoo.com/rss - -limit 1
+```
+Output:
+```
+Title : Rep. Justin Amash turned on Trump. Will his Michigan district follow him — or turn on him?
+
+Date : Sun, 17 Nov 2019 06:00:35 -0500
+
+Link : https://news.yahoo.com/rep-justin-amash-turned-on-trump-will-his-michigan-district-follow-him-or-turn-on-him-110017880.html
+
+Description : If you want to understand how impeachment is being seen by actual Americans, 
+there may be no better place to go than Grand Rapids, Mich. In part that’s because 
+the area around Grand Rapids, comprising Michigan’s Third Congressional District,
+is one of only about two dozen districts in the nation to vote for Barack Obama and for Donald Trump.
+```
+Help:
+```
+positional arguments:
+  source         RSS URL
+
+optional arguments:
+  -h, --help     show this help message and exit
+  --version      Print version info
+  --json         Print result as JSON in stdout
+  --verbose      Outputs verbose status messages
+  --limit LIMIT  Limit news topics if this parameter provided
+  --data         Print news from the specified day
+  --html         Convert news in HTML format
+  --pdf          Condert news in PDF format
+  ```
+
+## Installation
+```
+pip install -r requirements.txt
+pip install rss-reader
+```
 
 
-## Additional project structure requirements
-
-1. `setup.py` file for setuptools  *must*  be in the root of  `final_task`  folder. Use  `setup.py`  that is already there. (that means path to this file must end with  `final_task/setup.py` )  
-2. Entry point to your application, aka its main module  *must*  be named as  `rss_reader.py` . Use  `rss_reader.py`  that is already in  `rss_reader`  folder.  
-3. You should describe how does your project work, how to launch it and etc in README.md in the  `final_task/README.md`  file.  
-4. If you used any non-standart libraries they must be listed in  `rss_reader/requirements.txt`  file.  
-5. All unit test files should be in separate folder called `tests`.
-
-
-## Pull request requirements(!!!)
-
-1. When creating pull request make sure that  `target branch`  is  `master`  on OUR repo, not yours.  
-2. Pull request name  *MUST*  be in format:  `YourFirstName_YourLastName_EmailYouUsedWhileRegisteringOnThisCourse`  
-3. Pull request which have any other name format, or invalid e-mail  *will be ignored completely until you fix it*. So make sure you specified correct e-mail.  
-4. In pull request description specify your current iteration. You also can add there any other info you want us to know before we start code review.  
-5. *Pull request must NOT contain any .pyc files, any virtual environment files/folders, any IDE technical files*.
 
 
 
