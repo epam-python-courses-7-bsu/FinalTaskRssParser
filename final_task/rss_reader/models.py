@@ -16,14 +16,9 @@ class NewsEntry:
     link: str = ""
 
     def print_entry(self):
-        print("")
-        print("-------------------------------------------------------------")
-        print("")
-        print("Title: " + self.title)
-        print("")
-        print("Summary: " + self.summary)
-        print("")
-        print("Publication date: " + self.date)
-        print("")
-        print("Link: " + self.link)
-        print("")
+        print("-------------------------------------------------------------",
+              "Title: " + self.title + '\n',
+              "Summary: " + self.summary + '\n',
+              "Publication date: " + self.date + '\n',
+              "Link: " + self.link + '\n',
+              sep='\n')

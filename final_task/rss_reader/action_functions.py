@@ -14,9 +14,9 @@ import html
 import argparse
 import json
 import logging
-from models import NewsEntry
+from rss_reader.models import NewsEntry
 from dataclasses import asdict
-from validation_functions import check_limit_arg
+from rss_reader.validation_functions import check_limit_arg
 
 
 def create_logger(com_line_args):
@@ -96,12 +96,11 @@ def get_news(command_line_args, logger):
 
 def print_news_stdout(news_collection):
     """ Function for print news to stdout in text format. """
-    print("################################################################################")
-    print("")
-    print("Feed: ", news_collection["feed"]["title"])
-    print("Publication date: ", news_collection["feed"]["date"])
-    print("Language: ", news_collection["feed"]["language"])
-    print("")
+    print("################################################################################\n",
+          "Feed: " + news_collection["feed"]["title"],
+          "Publication date: " + news_collection["feed"]["date"],
+          "Language: " + news_collection["feed"]["language"] + '\n',
+          sep='\n')
 
     for entry in news_collection["entries"]:
         entry.print_entry()

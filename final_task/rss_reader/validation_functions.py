@@ -2,15 +2,15 @@
 
     Functions:
     check_url(com_line_args, logger) -> True
-    check_internet_connection(com_line_args, logger) -> True
+    check_internet_connection(logger) -> True
     check_emptiness(news_collection, logger) -> True
-    check_version_arg(com_line_args, logger) -> None
+    check_version_arg(com_line_args, logger) -> True
     check_limit_arg(news_collection, com_line_args, logger) -> limit (int) """
 
 import requests
 from urllib.request import Request, urlopen
 from urllib.error import URLError
-from exceptions import Error
+from rss_reader.exceptions import Error
 
 
 def check_url(com_line_args, logger):
@@ -34,7 +34,7 @@ def check_url(com_line_args, logger):
         return True
 
 
-def check_internet_connection(com_line_args, logger):
+def check_internet_connection(logger):
     """ Check internet connection function. """
     try:
         logger.info("Checking internet connection.")
@@ -60,7 +60,9 @@ def check_version_arg(com_line_args, logger):
     if com_line_args.version:
         logger.info("View program version.")
         print("rss_reader.py 1.0")
-        raise Error("")
+        return True
+    else:
+        return False
 
 
 def check_limit_arg(news_collection, com_line_args, logger):
