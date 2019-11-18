@@ -1,3 +1,9 @@
 *.рус
 *.pyc
-*.idea'.idea' 
+*.idea'.idea'
+*.db
+*.pkl
+*.cw127.pkl
+*.egg-info
+final_task/FinalTaskRssParser.egg-info
+final_task/dist
