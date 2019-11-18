@@ -1,9 +1,9 @@
 # h1**Rss-reader**
 Command-line utility to receive RSS feeds, save it and convert to common formats.
 
---------------------------------------------------------------------------------------------------
 
-## h2**Example**
+
+## **h2Example**
 Input:
 ```
 python3 rss_reader.py https://news.yahoo.com/rss - -limit 1
