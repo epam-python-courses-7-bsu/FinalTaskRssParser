@@ -1,5 +1,6 @@
 ﻿
-#  RSS Reader v.3.0, Evgeny Androsik (androsikei95@gmail.com)
+
+#  RSS Reader v.4.0, Evgeny Androsik (androsikei95@gmail.com)
 
 **First**, **second** and **third** iterations.
 1. [Creation and Installation](#creation-and-installation)  
@@ -17,6 +18,7 @@
 	6.2 [Iteration 1](#iteration-1-rss-reader.)  
 	6.3 [Iteration 2](#iteration-2-distribution)  
 	6.4 [Iteration 3](#iteration-3-news-caching)  
+	6.5 [Iteration 4](#iteration-4-format-converter)  
 
 ##  Creation and Installation
 
@@ -34,13 +36,13 @@
 ####  WINDOWS:
 
 1. Run Console with administrator privileges (run as Administrator).  
-2. In console go to directory with rss-reader-3.0.zip package.  
-3. Run the following command: `pip install rss-reader-3.0.zip`  
+2. In console go to directory with rss-reader-4.0.zip package.  
+3. Run the following command: `pip install rss-reader-4.0.zip`  
 
 #### LINUX
 
-1. In console go to directory with *rss-reader-3.0.zip* package.
-2. Run the following command: `sudo pip3 install rss-reader-3.0.zip`.
+1. In console go to directory with *rss-reader-4.0.zip* package.
+2. Run the following command: `sudo pip3 install rss-reader-4.0.zip`.
 
 ## Application launch
 
@@ -64,7 +66,7 @@ Check [usage](#usage)  for arguments description. Check [here](#direct-launch-ex
 
 ### Launch as CLI utility
 
-1. [Install package](#package-installation) `rss-reader-3.0.zip`  
+1. [Install package](#package-installation) `rss-reader-4.0.zip`  
 2. Open console and run rss-reader utility with arguments:  
 + **Windows**: `rss_reader [arguments]`  
 + **Linux**: `sudo rss_reader.py [arguments]`  
@@ -72,7 +74,7 @@ Check [usage](#usage)  for arguments description. Check [here](#cli-utility-exam
 
 
 ## Usage  
-Usage: `rss_reader.py [-h] [ --version ] [ --json ] [ --verbose ] [ --limit LIMIT ] [--date DATE ] source`  
+Usage: `rss_reader.py [-h] [ --version ] [ --json ] [ --verbose ] [ --limit LIMIT ] [--date DATE ] [--to-html TO_HTML] [--to-pdf TO_PDF] source`  
 
 + Positional arguments:
 
@@ -82,14 +84,16 @@ Usage: `rss_reader.py [-h] [ --version ] [ --json ] [ --verbose ] [ --limit LIMI
 
 + Optional arguments:
 
-|    Argument   |      Description                                             |
-|---------------|--------------------------------------------------------------|
-|`-h`, `--help` |Show help message and exit                                    |
-|`--version`    |Print version info and complete it's work                     |
-|`--json`       |Print result as JSON in stdout                                |
-|`--verbose`    |Outputs verbose status messages(Logs in stdout)               |
-|`--limit LIMIT`|Limit news topics if this parameter provided                  |
-|`--date DATE`  |Prints the cashed news from the specified day. Format - %Y%m%d|
+|    Argument       |      Description                                             |
+|-------------------|--------------------------------------------------------------|
+|`-h`, `--help`     |Show help message and exit                                    |
+|`--version`        |Print version info and complete it's work                     |
+|`--json`           |Print result as JSON in stdout                                |
+|`--verbose`        |Outputs verbose status messages(Logs in stdout)               |
+|`--limit LIMIT`    |Limit news topics if this parameter provided                  |
+|`--date DATE`      |Prints the cashed news from the specified day. Format - %Y%m%d|
+|`--to-html TO_HTML`|Converts news to html                                         |
+|`--to-pdf TO_PDF`  |Converts news to html                                         |
 
 ## Examples
 1.  [Direct launch examples](#direct-launch-examples).  
@@ -159,13 +163,18 @@ Usage: `rss_reader.py [-h] [ --version ] [ --json ] [ --verbose ] [ --limit LIMI
 │   ├── __init__.py
 │   ├── argparse_handler.py
 │   ├── articles_handler.py
+│   ├── html_converter.py
+│   ├── pdf_converter.py
 │   ├── custom_error.py
 │   ├── rss_reader.py
 │   ├── single_article.py
 │   └── 📁tests
 │       ├── __init__.py
 │       └── test_module_1.py
+│   └── 📁font
+│       └── DejaVuSans.ttf
 ├── __init__.py
+├── MANIFEST.in
 ├── FinalTask.md
 ├── README.md
 └── setup.py
@@ -174,6 +183,7 @@ Usage: `rss_reader.py [-h] [ --version ] [ --json ] [ --verbose ] [ --limit LIMI
 ### [Iteration 1] RSS reader.  
 
 ### [Iteration 2] Distribution
+Utility was wrapped into distribution package with setuptools . This package can be exported as CLI utility named rss-reader .
 
 ### [Iteration 3] News caching  
 
@@ -216,7 +226,13 @@ Example:
 `python rss_reader.py https://news.yahoo.com/rss/ --date 20191112` will print first article  
 
 ### [Iteration 4] Format converter  
+Two more arguments was added: `--to-html PATH`, `--to-pdf PATH`
+Works with URL: `python rss_reader.py https://news.yahoo.com/rss/ --to-html D: --to-pdf C:`
+Works with date: `python rss_reader.py https://news.yahoo.com/rss/ --date 20191116 --to-html D:`
 
+For pdf creation FPDF module was used.
+
+If Internet conection is on images will be loaded, else only URL's.
 ### [Iteration 5] Output colorization  
 
 ### [Iteration 6] Web-server  

@@ -27,6 +27,6 @@ class SingleArticle:
                         f"Date: {self.date}\n" \
                         f"Link: {self.link}\n" \
                         f"{self.summary}\n"
-        for link in self.links:
-            str_for_print += f"{link}\n"
+        for index, value in enumerate(self.links, 1):
+            str_for_print += f"[{index}]: {value[0]}\n"
         return str_for_print

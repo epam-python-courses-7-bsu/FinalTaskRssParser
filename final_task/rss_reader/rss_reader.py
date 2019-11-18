@@ -1,15 +1,19 @@
 import logging
 import os
 import sys
+from typing import List
 
 directory_to_module = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(directory_to_module)
 
+import single_article
+import html_converter
+import pdf_converter
 import articles_handler
 import argparse_handler
 import custom_error
 
-LOG_FILE_NAME = directory_to_module + '\\app.log'
+LOG_FILE_NAME = os.path.join(directory_to_module, 'app.log')
 
 
 def start_logging() -> None:
@@ -27,6 +31,37 @@ def start_logging() -> None:
         formatter = logging.Formatter('[%(asctime)s] %(levelname)-8s %(message)s')
         handler.setFormatter(formatter)
         root.addHandler(handler)
+
+
+def converting_starter(key: str, list_with_articles: List[single_article.SingleArticle], path_to_file: str) -> None:
+    """Starts the chosen conversion"""
+    logging.info(f"Converting to {key} started")
+    if key == 'html':
+        html_converter.convert_to_html(list_with_articles, path_to_file)
+    else:
+        pdf_converter.convert_to_pdf(list_with_articles, path_to_file)
+    logging.info(f"Converting to {key} ended")
+
+
+def arguments_logic(args, list_of_articles):
+    conversion = False
+
+    if args.to_html:
+        conversion = True
+        converting_starter('html', list_of_articles, args.to_html)
+    if args.to_pdf:
+        conversion = True
+        converting_starter('pdf', list_of_articles, args.to_pdf)
+
+    if not conversion:
+        if args.json:
+            print(articles_handler.create_rss_json(list_of_articles))
+            logging.info('Articles was printed as json')
+        else:
+            articles_handler.print_rss_articles(list_of_articles)
+            logging.info(f'{len(list_of_articles)} articles was printed')
+
+    logging.info('Application ended')
 
 
 def main() -> None:
@@ -72,14 +107,7 @@ def main() -> None:
             cache_handler = articles_handler.CachedArticlesClass()
             cache_handler.save_articles_to_cache(articles_list)
 
-            if args.json:
-                print(articles_handler.create_rss_json(articles_list))
-                logging.info('Articles was printed as json')
-            else:
-                articles_handler.print_rss_articles(articles_list)
-                logging.info(f'{len(articles_list)} articles was printed')
-
-            logging.info('Application ended')
+            arguments_logic(args, articles_list)
         elif switcher == 'date_only':
             arg_parser = argparse_handler.create_parser('no link')
             logging.info('Argument parser created')
@@ -93,16 +121,9 @@ def main() -> None:
 
             articles_on_date_list = cache_handler.make_list_of_articles_by_date_and_url(args.date, None, limit)
 
-            if args.json:
-                print(articles_handler.create_rss_json(articles_on_date_list))
-                logging.info('Articles was printed as json')
-            else:
-                articles_handler.print_rss_articles(articles_on_date_list)
-                logging.info(f'{len(articles_on_date_list)} articles was printed')
-
-            logging.info('Application ended')
+            arguments_logic(args, articles_on_date_list)
         elif switcher == 'link_and_date':
-            arg_parser = argparse_handler.create_parser('full')
+            arg_parser = argparse_handler.create_parser('link_and_date')
             logging.info('Argument parser created')
 
             args = arg_parser.parse_args()
@@ -115,14 +136,7 @@ def main() -> None:
 
             articles_on_date_list = cache_handler.make_list_of_articles_by_date_and_url(args.date, rss_url, limit)
 
-            if args.json:
-                print(articles_handler.create_rss_json(articles_on_date_list))
-                logging.info('Articles was printed as json')
-            else:
-                articles_handler.print_rss_articles(articles_on_date_list)
-                logging.info(f'{len(articles_on_date_list)} articles was printed')
-
-            logging.info('Application ended')
+            arguments_logic(args, articles_on_date_list)
     except custom_error.UrlNotFoundInArgsError:
         logging.error('UrlNotFoundInArgsError')
         logging.info('Application ended')
@@ -152,7 +166,12 @@ def main() -> None:
         print(error.message)
     except custom_error.NoDataInCacheFileError:
         logging.error('No data in cache file')
+        logging.info('Application ended')
         print('No data in cache file')
+    except custom_error.NotValidPathError as error:
+        logging.error(error.message)
+        logging.info('Application ended')
+        print(error.message)
 
 
 if __name__ == '__main__':

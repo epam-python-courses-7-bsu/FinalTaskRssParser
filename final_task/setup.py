@@ -2,9 +2,10 @@ from setuptools import setup
 
 setup(
     name='rss-reader',
-    version='v3.0',
+    version='v4.0',
     packages=['rss_reader'],
-    install_requires=['feedparser', 'bs4', 'python-dateutil'],
+    include_package_data=True,
+    install_requires=['feedparser', 'bs4', 'python-dateutil', 'fpdf'],
     url='',
     author='Evgeny Androsik',
     author_email='androsikei95@gmail.com',

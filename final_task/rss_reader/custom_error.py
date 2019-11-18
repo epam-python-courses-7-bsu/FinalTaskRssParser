@@ -42,3 +42,8 @@ class NotValidLimitError(Error):
 
 class NoDataInCacheFileError(Error):
     pass
+
+
+class NotValidPathError(Error):
+    """Raised when path is not valid"""
+    pass

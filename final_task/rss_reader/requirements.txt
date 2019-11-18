@@ -1,3 +1,4 @@
 python-dateutil
 feedparser
 bs4
+fpdf

@@ -1,13 +1,14 @@
 import argparse
 import datetime
 import logging
+import os
 import sys
 import urllib.request
 from typing import Optional
 
 import custom_error
 
-VERSION = 3.0
+VERSION = 4.0
 
 
 def check_if_date_in_arguments() -> bool:
@@ -125,12 +126,41 @@ def valid_date(date: str) -> datetime.datetime:
         raise custom_error.NotValidDateError(msg)
 
 
+def valid_directory_path(path: str, key: str) -> str:
+    """Checks if path is valid"""
+    if path[-1] != "\\":
+        path += "\\"
+
+    if os.path.isdir(path):
+        if key == 'html':
+            filename = 'NEWS.html'
+        else:
+            filename = 'NEWS.pdf'
+        full_name = os.path.join(path, filename)
+        return full_name
+    else:
+        raise custom_error.NotValidPathError(f'Not valid path to {key}: {path}')
+
+
+def valid_directory_html(path: str) -> str:
+    """Checks if path is valid"""
+    return valid_directory_path(path, 'html')
+
+
+def valid_directory_pdf(path: str) -> str:
+    """Checks if path is valid"""
+    return valid_directory_path(path, 'pdf')
+
+
 def create_parser(checker: str) -> argparse.ArgumentParser:
     """Adding arguments to run the application"""
     parser = argparse.ArgumentParser(description="Pure Python command-line RSS reader.")
 
-    if checker == 'full':
-        parser.add_argument("source", type=valid_url, help="RSS URL")
+    if checker != 'link_and_date':
+        if checker == 'full':
+            parser.add_argument("source", type=valid_url, help="RSS URL")
+    else:
+        parser.add_argument("source", type=str, help="RSS URL")
 
     parser.add_argument("--version", action='version', version=f'%(prog)s version: {VERSION}',
                         help="Print version info")
@@ -139,4 +169,8 @@ def create_parser(checker: str) -> argparse.ArgumentParser:
     parser.add_argument("--limit", type=valid_limit, default=None, help="Limit news topics if this parameter provided")
     parser.add_argument("--date", type=valid_date,
                         help="Prints the cashed news from the specified day. Format - %%Y%%m%%d")
+    parser.add_argument("--to-html", type=valid_directory_html,
+                        help="Converts news to html")
+    parser.add_argument("--to-pdf", type=valid_directory_pdf,
+                        help="Converts news to pdf")
     return parser

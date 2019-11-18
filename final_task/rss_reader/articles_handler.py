@@ -4,7 +4,8 @@ import html
 import json
 import logging
 import os
-from typing import List, Tuple
+import urllib.request
+from typing import List, Tuple, Optional
 
 import dateutil.parser
 from bs4 import BeautifulSoup
@@ -14,7 +15,7 @@ import custom_error
 import single_article
 
 directory_to_module = os.path.abspath(os.path.dirname(__file__))
-CACHE_FILE_NAME = directory_to_module + '\\cache.json'
+CACHE_FILE_NAME = os.path.join(directory_to_module, 'cache.json')
 
 
 def parse_rss(rss_url: str) -> feedparser.FeedParserDict:
@@ -40,7 +41,7 @@ def print_rss_articles(rss_articles: List[single_article.SingleArticle]) -> None
         print_article(article)
 
 
-def find_links_in_article(article: feedparser.FeedParserDict) -> Tuple[List[str], str]:
+def find_links_in_article(article: feedparser.FeedParserDict) -> Tuple[List, str]:
     """Finds images and links in the article"""
     all_links = []
 
@@ -49,17 +50,28 @@ def find_links_in_article(article: feedparser.FeedParserDict) -> Tuple[List[str]
         if (str(img['src']) == '') and (str(img['alt']) == ''):
             continue
         if str(img['alt']) == '':
-            all_links.append(str(img['src']))
+            all_links.append([str(img['src']), 'image'])
             img.replaceWith(f"[image {index}: no description][{index}] ")
         elif str(img['src']) == '':
             img.replaceWith(f"[image(no link): {img['alt']}] ")
         else:
-            all_links.append(str(img['src']))
+            all_links.append([str(img['src']), 'image'])
             img.replaceWith(f"[image {index}: {img['alt']}][{index}] ")
 
     for link in article['links']:
         if link['href'] not in all_links:
-            all_links.append(link['href'])
+            all_links.append([link['href'], 'other'])
+            """if link['href'] == article['link']:
+                all_links.append([link['href'], 'text'])
+            else:
+                head = requests.head(link['href'])
+                header = head.headers
+                content_type = header.get('content-type')
+
+                if 'image' in content_type:
+                    all_links.append([link['href'], 'image'])
+                else:
+                    all_links.append([link['href'], 'text'])"""
 
     return all_links, str(soup.text)
 
@@ -67,6 +79,17 @@ def find_links_in_article(article: feedparser.FeedParserDict) -> Tuple[List[str]
 def unescape(text_to_unescape: str) -> str:
     """Unescape text"""
     return html.unescape(text_to_unescape)
+
+
+def is_connected():
+    hostname = 'https://www.google.com/'
+    try:
+        urllib.request.urlopen(hostname)
+        return True
+    except urllib.request.HTTPError:
+        return False
+    except urllib.request.URLError:
+        return False
 
 
 def get_articles(parsed: feedparser.FeedParserDict, limit: int) -> List[single_article.SingleArticle]:
@@ -89,6 +112,7 @@ def get_articles(parsed: feedparser.FeedParserDict, limit: int) -> List[single_a
                 date_info = entry['published']
 
             links_in_article, summary_text = find_links_in_article(entry)
+
             articles.append(
                 single_article.SingleArticle(
                     feed=unescape(feed['title']),
@@ -97,7 +121,8 @@ def get_articles(parsed: feedparser.FeedParserDict, limit: int) -> List[single_a
                     date=date_info,
                     link=entry['link'],
                     summary=unescape(summary_text),
-                    links=[f"[{num}]: {link}" for num, link in enumerate(links_in_article, 1)])
+                    links=links_in_article)
+                # links=[[number, value] for number, value in enumerate(links_in_article, 1)])
             )
     except KeyError as value:
         raise custom_error.ArticleKeyError(f"One of the entries does not have {value} key")
@@ -166,7 +191,7 @@ class CachedArticlesClass:
             else:
                 json.dump(create_rss_json(articles_list), cache_file)
 
-    def make_list_of_articles_by_date_and_url(self, date: datetime.datetime, url: str, limit: int) \
+    def make_list_of_articles_by_date_and_url(self, date: datetime.datetime, url: Optional[str], limit: int) \
             -> List[single_article.SingleArticle]:
         """Find articles in cache by date and feed url"""
 
