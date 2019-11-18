@@ -54,7 +54,7 @@ class Handler:
             json.dump(entries, cache, indent=2)
 
     @logging_decorator
-    def option_date(self, date: str, do_json: bool):
+    def option_date(self, date: str, do_json: bool, do_html: bool, path: str):
         """read entries from cache.json into list daily_news that have date that is equal to --date DATE
             and then raise an exception or print to console"""
         try:
@@ -66,6 +66,9 @@ class Handler:
 
         if not daily_news:
             raise RSSReaderException("Error. News aren't found")
+        elif do_html:
+            for news in daily_news[:self.limit]:
+                self.write_to_html(self.get_entry_from_dict(news), path)
         elif do_json:
             for news in daily_news[:self.limit]:
                 self.print_to_json(news)
