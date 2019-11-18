@@ -9,6 +9,7 @@ def get_arguments_from_console():
     arg_parser.add_argument("--json", action="store_true", help=" Print result as JSON in stdout")
     arg_parser.add_argument("--verbose", action="store_true", help="Outputs verbose status messages")
     arg_parser.add_argument("--limit", type=int, default=700, help="Limit news topics if this parameter provided")
+    arg_parser.add_argument("--to-html", type=str, help="Output to html format")
     group.add_argument("--date", type=int, help="The new from the specified day will be printed out")
 
     return arg_parser.parse_args()

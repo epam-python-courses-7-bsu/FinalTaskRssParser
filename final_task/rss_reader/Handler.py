@@ -23,6 +23,11 @@ class Handler:
         print("version ", self.version)
 
     @logging_decorator
+    def option_html(self, path: str) -> None:
+        for entry in islice(self.gen_entries(), 0, self.limit):
+            self.write_to_html(entry, path)
+
+    @logging_decorator
     def option_json(self) -> None:
         for entry in islice(self.gen_entries(), 0, self.limit):
             self.print_to_json(self.convert_to_dict(entry))
@@ -107,3 +112,38 @@ class Handler:
             "Links": entry.links,
         }
         return entry_dict
+
+    @logging_decorator
+    def write_to_html(self, entry: Entry, path: str) -> None:
+        if path[-1] != '/':
+            path += '/'
+
+        if path.find(".html") == -1:
+            path += "index.html"
+        else:
+            raise RSSReaderException("Error. It isn't a folder")
+
+        html = '<div style="font-family: Calibri; margin: 5px; padding: 10px;">\n'
+        html += '<h1>' + entry.title + '</h1>\n'
+        html += '<p>\n<b>Date:</b> ' + entry.date + '</p>\n'
+
+        # extract src and alt attributes from field Entry.summary
+        text = entry.summary
+        if len(entry.links) > 1:
+            alt = text[text.find("image 1: ") + len("image 1: "):text.find(']')]
+            src = entry.links[1]
+            while text.count('['):
+                text = text[:text.find('[')] + text[text.find(']') + 1:]
+            if text[0] == ' ':
+                text = text[1:]
+            html += f'<div style="width: 850px">\n<img alt="{alt}" src="{src}" ' \
+                    f'style="width: 250px; height: 130px; padding: 0"><p>' + text + '</p>\n</div>\n'
+        else:
+            html += '<div style="width: 850px">\n<p>' + text + '</p>\n</div>\n'
+        html += '\n</div>'
+
+        try:
+            with open(path, 'a', encoding='utf-8') as f:
+                f.write(html)
+        except FileNotFoundError:
+            raise RSSReaderException('Error. No such folder. Check the correctness of the entered path \n')

@@ -39,11 +39,13 @@ If you have installed Python then to export CLI utility rss-reader follow these 
 ```
 $ git clone https://github.com/IlyaTorch/FinalTaskRssParser.git
 ```
-2. Go to the directory dist
+2. Go to the directory FinalTaskRssParser\final_task
+3. run ```$ python setup.py sdist```
+4. Go to the directory dist
 ```
 $ cd dist
 ```
-3. Install CLI utility rss-reader:
+5. Install CLI utility rss-reader:
 ```
 $pip install rss-reader-1.0.tar.gz
 ```
@@ -72,11 +74,13 @@ If you don't have installed Python, follow these steps:
 ```
 $ git clone https://github.com/IlyaTorch/FinalTaskRssParser.git
 ```
-3. Go to the directory dist
+2. Go to the directory FinalTaskRssParser\final_task
+3. run ```$ python setup.py sdist```
+4. Go to the directory dist
 ```
 $ cd dist
 ```
-4. Install CLI utility rss-reader:
+5. Install CLI utility rss-reader:
 ```
 $pip install rss-reader-1.0.tar.gz
 ```
