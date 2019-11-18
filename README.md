@@ -1,19 +1,14 @@
-# Rss-reader
-For final task pull requests.
+# h1**Rss-reader**
+Command-line utility to receive RSS feeds, save it and convert to common formats.
 
+--------------------------------------------------------------------------------------------------
 
-## How to create a pull request
-
-1. Create github account.  *Preferrably using email you used when registerer on this course*  
-2. Fork this repository. ('Fork' button at the top right of this repository page)  
-3. Open the page of your  *new repository*  that was created when you forked this repo.  
-4. Press button clone or download at the middle right of the page and CTRL-C the url.  
-5. On your machine go to the directory you want.  
-6. Depending on the OS you are working with, open GitBash(Windows)/Command Line or Terminal(Linux) there  
-7. Use command  `git clone <url_you_copied>`  
-  
-Congrats! You have successfully forked our repository.
-
+## h2**Example**
+Input:
+```
+python3 rss_reader.py https://news.yahoo.com/rss - -limit 1
+```
+Output:
 
 ## Additional project structure requirements
 
