@@ -103,11 +103,9 @@ def getting_pack_of_news(the_feed, main_source, num_of_news=None):
     3. Some problems can occur if there are no alternative text, solving them with changing list of alts
     """
     if getting_num_of_news(the_feed, num_of_news) > len(the_feed.entries):
-        print("You want to get more news than exist.")
-        print("Printing all news from the source!")
+        print("You want to get more news than we can get!")
+        print("Printing all news from the storage!")
 
-    print("------------------------")
-    print("Source: ", printing_title(the_feed))
     pack_of_news = []
     pack_of_news_for_db = []
     pack_of_images_links = getting_images_links(the_feed, num_of_news)
@@ -147,11 +145,13 @@ def getting_novelty(item, number, corrected_pack_of_images_links, corrected_pack
     return novelty, novelty_for_database
 
 
-def getting_full_info(pack_of_news):
+def getting_full_info(the_feed, pack_of_news):
     """
     Getting full info from news
     try-except for printing links and alternative text
     """
+    print("------------------------")
+    print("Source: ", printing_title(the_feed))
     for novelty in pack_of_news:
         print()
         print("{0}.".format(novelty.number_of_novelty), "Title: ", novelty.title_of_novelty)
@@ -201,24 +201,6 @@ def converting_to_json(pack_of_news, the_feed=''):
     return json.dumps(news_dict)
 
 
-def converting_novelty_to_json(item):
-    """
-    Transfer novelty from novelty view to json view to put it in the file
-    for future using when creating cache pack of news
-    """
-    news_dict = {
-        "number": item.number_of_novelty,
-        "title": item.title_of_novelty,
-        "published": item.time_of_novelty,
-        "link": item.source_link,
-        "description": item.description,
-        "images links": item.images_links,
-        "alternative text": item.alt_text,
-        "main source": item.main_source,
-    }
-    return json.dumps(news_dict)
-
-
 def getting_info_into_file(item):
     """
     Preparing information to be written into the file in more readable way
@@ -231,7 +213,7 @@ def getting_info_into_file(item):
                 pprint.pformat(item.title_of_novelty, width=115),
                 item.time_of_novelty,
                 pprint.pformat(item.source_link, width=115),
-                pprint.pformat(item.description, width=115),
+                pprint.pformat(item.description.replace("\xa0", " "), width=115),
                 pprint.pformat(item.images_links),
                 pprint.pformat(item.alt_text, width=115),
                 item.main_source)
@@ -308,11 +290,12 @@ def writing_to_file(pack_of_news, pack_of_news_for_db, filename):
 
 def getting_from_database_to_pack():
     pack_of_news = []
-    conn = sqlite3.connect("database.db")
-    cursor = conn.cursor()
-    for item in cursor.execute("SELECT * FROM projects"):
-        pack_of_news.append(Novelty(item[0], item[1], item[2], item[3], item[4], item[5], item[6], item[7], item[8]))
-    conn.close()
+    with sqlite3.connect("database.db") as conn:
+        cursor = conn.cursor()
+        for item in cursor.execute("SELECT * FROM projects"):
+            (number, title, date, source, description, im_links, alt, date_corr, main_source) = item
+            novelty = Novelty(number, title, date, source, description, im_links, alt, date_corr, main_source)
+            pack_of_news.append(novelty)
     return pack_of_news
 
 

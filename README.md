@@ -1,6 +1,6 @@
 # That's how it works
 
-* Creating class RSSParser
+* Creating RSSParser class object
 * Using feedparser to get a page with function parse
 * Then using output functions get info from the page
 * Info (source link, image link, etc.) for every novelty pack in class Novelty
