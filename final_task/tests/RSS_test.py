@@ -1,7 +1,9 @@
 import unittest
 import sys
-sys.path.append('../')
-from rss_reader.rss_reader import RSSReader, arg_parse
+import time
+sys.path.append('../rss_reader')
+from rss_reader import arg_parse
+from RSSReader import RSSReader
 
 RSS_DICT_TEST = {
     'updated': 'Fri, 08 Nov 2019 13:59:06 GMT',
@@ -16,6 +18,7 @@ RSS_DICT_TEST = {
         {
             'title': 'Graham now says Trump',
             'published': 'Wed, 06 Nov 2019 14:22:10 -0500',
+            'published_parsed': time.strptime('06 Nov 2019', '%d %b %Y'),
             'id': 'graham-trump-ukraine-incoherent-quid-pro-quo-192210175.html',
             'summary': '<p><a href="test"><img src="test2" alt="Trump" title="Trump"></a>day<p><br clear="all">',
             'link': 'https://news.yahoo.com/graham-trump-ukraine.html'
@@ -23,6 +26,7 @@ RSS_DICT_TEST = {
         {
             'title': '2 escaped murder suspects arrested at US-Mexico border',
             'published': 'Thu, 07 Nov 2019 07:25:46 -0500',
+            'published_parsed': time.strptime('07 Nov 2019', '%d %b %Y'),
             'id': '2-escaped-murder-suspects-arrested-050940220.html',
             'summary': '<p><a href="test3"><img src="test4" alt="border" title="border"></a>are<p><br clear="all">',
             'link': 'https://news.yahoo.com/2-escaped-murder-suspects-arrested.html'
@@ -33,7 +37,7 @@ RSS_DICT_TEST = {
 
 class RSSTestCase(unittest.TestCase):
     def setUp(self):
-        self.rss = RSSReader('')
+        self.rss = RSSReader()
 
     def test_make_news_data(self):
         result = self.rss.make_news_data(RSS_DICT_TEST['entries'][0])
@@ -63,12 +67,14 @@ class RSSTestCase(unittest.TestCase):
         self.assertEqual(result[1].get('Image'), 'border\nSource of image: test4')
 
     def test_arg_parse(self):
-        parser = arg_parse(['source', '--limit', '1', '--json', '--verbose', '--version'])
+        parser = arg_parse(['--source', 'source', '--limit', '1', '--json', '--verbose', '--version',
+                            '--date', '20191117'])
         self.assertTrue(parser.limit == 1)
         self.assertTrue(parser.source == 'source')
         self.assertTrue(parser.json)
         self.assertTrue(parser.verbose)
         self.assertTrue(parser.version)
+        self.assertTrue(parser.date == '20191117')
 
 
 if __name__ == '__main__':
