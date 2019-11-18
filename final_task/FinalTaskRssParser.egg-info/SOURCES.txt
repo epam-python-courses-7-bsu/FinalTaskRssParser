@@ -1,9 +1,0 @@
-README.md
-setup.py
-FinalTaskRssParser.egg-info/PKG-INFO
-FinalTaskRssParser.egg-info/SOURCES.txt
-FinalTaskRssParser.egg-info/dependency_links.txt
-FinalTaskRssParser.egg-info/requires.txt
-FinalTaskRssParser.egg-info/top_level.txt
-rss_parser/Output_functions.py
-rss_parser/rss_parser.py
