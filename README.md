@@ -1,4 +1,4 @@
-# FinalTaskRssReader
+# Rss-reader
 For final task pull requests.
 
 
