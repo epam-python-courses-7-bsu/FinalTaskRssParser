@@ -1,8 +1,6 @@
 import json
 import logging
 from itertools import islice
-from json import JSONDecodeError
-
 import feedparser
 from Entry import Entry
 from Logging import logging_decorator
@@ -41,7 +39,7 @@ class Handler:
     def write_json_to_cache(self, entry_dict):
         try:
             entries = json.load(open("cache.json"))
-        except JSONDecodeError:
+        except json.JSONDecodeError:
             entries = []
 
         if not [entry for entry in entries if entry["Title"] == entry_dict["Title"]]:
@@ -51,12 +49,12 @@ class Handler:
             json.dump(entries, cache, indent=2)
 
     @logging_decorator
-    # read entries from cache.json into list daily_news that have date that is equal to --date DATE
-    # and then raise an exception or print to console
     def option_date(self, date: str, do_json: bool):
+        """read entries from cache.json into list daily_news that have date that is equal to --date DATE
+            and then raise an exception or print to console"""
         try:
             entries = json.load(open("cache.json"))
-        except JSONDecodeError:
+        except json.JSONDecodeError:
             entries = []
 
         daily_news = [entry for entry in entries if entry["DateInt"] == date]
