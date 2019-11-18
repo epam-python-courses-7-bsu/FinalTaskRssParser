@@ -1,23 +1,22 @@
+from dataclasses import dataclass
 
 
+@dataclass()
 class NewsArticle:
     """Contain data about an article"""
-    def __init__(self, news_outlett_name, news_title, pub_date, news_link,
-                 news_description, img_alt='', img_src=''):
-
-        self.news_outlett_name = news_outlett_name
-        self.news_title = news_title
-        self.pub_date = pub_date
-        self.news_link = news_link
-        self.news_description = news_description
-        self.img_alt = img_alt
-        self.img_src = img_src
+    news_outlett_name: str
+    news_title: str
+    pub_date: str
+    news_link: str
+    news_description: str
+    img_alt: str = ''
+    img_src: str = ''
 
     def __repr__(self):
         result = (f"Feed: {self.news_outlett_name}\n\nTitle: {self.news_title}\n"
                   + f"Date: {self.pub_date}\nLink: {self.news_link}\n\n")
         links = f"Links:\n[1]: {self.news_link}\n"
-        # add image date if it exists
+        # add image data if it exists
         if self.img_alt:
             result += f"[image 2: {self.img_alt}][2]"
             links += f"[2]: {self.img_src or 'No link'}\n"
