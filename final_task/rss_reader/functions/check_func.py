@@ -25,10 +25,9 @@ def check_verbose(command_line_args):
     logger = logging.getLogger("rss_reader_logger")
     if command_line_args.verbose:
         logger.setLevel(level=logging.INFO)
-        return logger
     else:
         logger.setLevel(level=logging.WARNING)
-        return logger
+    return logger
 
 
 def check_feed_status(feed):

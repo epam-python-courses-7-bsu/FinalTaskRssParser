@@ -2,7 +2,7 @@
 
 from functions.check_func import check_internet_connection
 from classes.exceptions import InternetConnectionError, DirectoryError
-from functions.print_func import check_limit_argument
+from functions.print_func import limit_news_collections
 
 from ebooklib import epub
 import os
@@ -17,13 +17,12 @@ def set_internet_flag(logger):
         internet = check_internet_connection(logger)
     except InternetConnectionError:
         internet = False
-    finally:
-        return internet
+    return internet
 
 
 def create_html(command_line_args, news_collection, logger):
     """Creates html file"""
-    news_collection = check_limit_argument(command_line_args, news_collection, logger)
+    news_collection = limit_news_collections(command_line_args, news_collection, logger)
 
     logger.info("Creating html file...")
     doc_html = dominate.document(title='RSS News')
@@ -113,7 +112,7 @@ def create_epub_object():
 
 def create_epub(command_line_args, news_collection, logger):
     """Creates epub book from news collection"""
-    news_collection = check_limit_argument(command_line_args, news_collection, logger)
+    news_collection = limit_news_collections(command_line_args, news_collection, logger)
 
     book = create_epub_object()
 
@@ -171,7 +170,7 @@ def create_html_news_entry_for_epub(news, doc_html, internet, list_of_image_obje
                     tag.a("Image link", href=link)
         tag.p(news.text)
         for num, link in enumerate(all_links):
-            tag.a("Link №{}".format(num + 1), href=link)
+            tag.a(f"Link №{num+1}", href=link)
             tag.br()
     return doc_html
 
@@ -180,6 +179,8 @@ def download_images(news):
     """Download images and return list of bytestrings images"""
     images_links = news.links[1]
     list_of_images = []
+
+
     for link in images_links:
         if link:
             responce = requests.get(link)
@@ -195,7 +196,7 @@ def create_image_objects(news, image_number):
     list_of_images = download_images(news)
     for image in list_of_images:
         img_obj = epub.EpubImage()
-        img_obj.file_name = "{}.jpg".format(image_number)
+        img_obj.file_name = f"{image_number}.jpg"
         image_number += 1
         img_obj.media_type = "image/jpeg"
         img_obj.set_content(image)

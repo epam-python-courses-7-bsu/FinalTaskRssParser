@@ -3,7 +3,7 @@
 import unittest
 from unittest.mock import Mock
 import functions.process_func as proc_f
-from functions.print_func import check_limit_argument
+from functions.print_func import limit_news_collections
 import classes.exceptions as exc
 import feedparser
 
@@ -19,7 +19,7 @@ class TestProcessFunctions(unittest.TestCase):
 
 
     def test_extract_text_from_description(self):
-
+        """Tests function extract_text_from_description()"""
         # Assert description that was got by function and local file description
         with open('tests/files/test_description.txt', 'r') as text:
             local_file_description = text.read()
@@ -27,7 +27,7 @@ class TestProcessFunctions(unittest.TestCase):
                              local_file_description)
 
     def test_extract_links_from_description(self):
-
+        """Tests function extract_links_from_description()"""
         # Tuple of links
         links = (['http://rss.cnn.com/~ff/rss/cnn_topstories?a=0yorQIkIJGk:Sht6XkuB3rs:yIl2AUoC8zA',
                   'http://rss.cnn.com/~ff/rss/cnn_topstories?a=0yorQIkIJGk:Sht6XkuB3rs:7Q72WNTAKBA',
@@ -47,7 +47,8 @@ class TestProcessFunctions(unittest.TestCase):
 class TestPrintFunctions(unittest.TestCase):
     """Class for testing output functions"""
 
-    def test_check_limit_argument(self):
+    def test_limit_news_collections(self):
+        """Test function limit_news_collections"""
         # Mocking objects
         command_line_args = Mock()
         news_collection = [num for num in range(10)]
@@ -57,16 +58,16 @@ class TestPrintFunctions(unittest.TestCase):
         # Limit is negative
         command_line_args.limit = -5
         with self.assertRaises(exc.LimitArgumentError):
-            check_limit_argument(command_line_args, news_collection, logger)
+            limit_news_collections(command_line_args, news_collection, logger)
 
         # Limit is positive and less than news_collection length
         command_line_args.limit = 5
-        self.assertEqual(len(check_limit_argument(command_line_args,
+        self.assertEqual(len(limit_news_collections(command_line_args,
                                                   news_collection, logger)), 5)
 
         # Limit is more than news_collection
         command_line_args.limit = 15
-        self.assertEqual(len(check_limit_argument(command_line_args,
+        self.assertEqual(len(limit_news_collections(command_line_args,
                                                   news_collection, logger)), 10)
 
 

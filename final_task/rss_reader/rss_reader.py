@@ -74,8 +74,6 @@ def main():
             # Cache news in database
             cache_news(news_collection, logger)
 
-            create_html(command_line_args, news_collection, logger)
-
             if command_line_args.to_epub or command_line_args.to_html:
                 if command_line_args.to_epub:
                     # Creates epub book

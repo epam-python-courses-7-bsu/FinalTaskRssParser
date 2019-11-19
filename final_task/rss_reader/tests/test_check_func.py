@@ -27,7 +27,7 @@ class TestCheckFunctions(unittest.TestCase):
 
 
     def test_check_verbose(self):
-
+        """Tests check_verbose()"""
         # If verbose, should set level to 20
         self.command_line_args.verbose = True
         logger = ch_f.check_verbose(self.command_line_args)
@@ -40,7 +40,7 @@ class TestCheckFunctions(unittest.TestCase):
 
 
     def test_check_feed_status(self):
-
+        """Tests check_feed_status()"""
         feed = Mock()
 
         # If feed.status not between (400:600), return feed
@@ -59,7 +59,7 @@ class TestCheckFunctions(unittest.TestCase):
 
 
     def test_check_news_collection(self):
-
+        """Tests check_news_collection()"""
         # If news_collection if empty, raises SystemExit
         news_collection = []
         with self.assertRaises(exc.FeedXmlError):

@@ -2,9 +2,9 @@
 
 import json
 import classes.exceptions as exc
+from dataclasses import asdict
 
-
-def check_limit_argument(command_line_args, news_collection, logger):
+def limit_news_collections(command_line_args, news_collection, logger):
     """Check presence and validness of limit argument
 
     If present and valid, then limit collection of news
@@ -24,22 +24,14 @@ def check_limit_argument(command_line_args, news_collection, logger):
 
 def generate_news_json(news_collection, logger):
     """Create json of news"""
-    all_news_dict = {
-                    'Feed': news_collection[0].feed_title,
-                    'news': []
-                    }
+    all_news_dict = {'news': []}
     logger.info("Configure json file...")
     for news in news_collection:
-        news_dict = {}
-        news_dict['title'] = news.title
-        news_dict['date'] = news.date
-        news_dict['link'] = news.link
-        news_dict['text'] = news.text
-
-        news.create_string_of_links()
-        if news.links:
-            list_of_links = news.links.split('\n')
-            news_dict['links'] = list_of_links
+        news_dict = asdict(news)
+        links = news.create_string_of_links()
+        if links:
+            list_of_str_links = links.split('\n')
+            news_dict['links'] = list_of_str_links
         all_news_dict['news'].append(news_dict)
     news_json = json.dumps(all_news_dict, indent=4, ensure_ascii=False)
     return news_json
@@ -47,7 +39,7 @@ def generate_news_json(news_collection, logger):
 
 def print_feeds(news_collection, command_line_args, logger):
     """Print news to stdout in json or text format"""
-    news_collection = check_limit_argument(command_line_args, news_collection, logger)
+    news_collection = limit_news_collections(command_line_args, news_collection, logger)
     if news_collection:
         if command_line_args.json:
             news_json = generate_news_json(news_collection, logger)
@@ -62,33 +54,12 @@ def print_feeds(news_collection, command_line_args, logger):
                 news.print_news()
 
 
-def generate_news_json_from_database(news_collection, logger):
-    """Create json of news"""
-    all_news_dict = {'news': []}
-    logger.info("Configure json file...")
-    for news in news_collection:
-        news_dict = {}
-        news_dict['Feed'] = news.feed_title,
-        news_dict['title'] = news.title
-        news_dict['date'] = news.date
-        news_dict['link'] = news.link
-        news_dict['text'] = news.text
-
-        news.create_string_of_links()
-        if news.links:
-            list_of_links = news.links.split('\n')
-            news_dict['links'] = list_of_links
-        all_news_dict['news'].append(news_dict)
-    news_json = json.dumps(all_news_dict, indent=4, ensure_ascii=False)
-    return news_json
-
-
 def print_feeds_from_database(news_collection, command_line_args, logger):
     """Print news to stdout in json or text format"""
-    news_collection = check_limit_argument(command_line_args, news_collection, logger)
+    news_collection = limit_news_collections(command_line_args, news_collection, logger)
     if news_collection:
         if command_line_args.json:
-            news_json = generate_news_json_from_database(news_collection, logger)
+            news_json = generate_news_json(news_collection, logger)
             logger.info("Json successful configured")
             logger.info("Printing json:")
             print(news_json)

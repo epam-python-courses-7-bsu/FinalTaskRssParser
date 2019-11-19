@@ -54,21 +54,24 @@ source or database. Receive the path where file will be saved
 
 ```
 {
-  "Feed": "Feed title"
-  "news": [
+"news": [
      {
        "title": "News title",
        "date": "Publishing date",
        "link": "News link",
        "text": "Text content of news",
-       "links": ["links that presented in text",]
+       "links": ["links that presented in text",],
+       "feed_title": "Feed title"
+       "source": "source url"
      },
      {
        "title": "News title",
        "date": "Publishing date",
        "link": "News link",
        "text": "Text content of news",
-       "links": ["links that presented in text",]
+       "links": ["links that presented in text",],
+       "feed_title": "Feed title"
+       "source": "source url"
      },
      {
         ...
@@ -84,32 +87,3 @@ source or database. Receive the path where file will be saved
 >The keys for search is a rss publication date string. 
 >The values is python News() objects.
 >More information about "shelve" is avaliable on [link](https://docs.python.org/3/library/shelve.html).
-
-
-#### JSON structure for news from storage:
-
-```
-{
-  "news": [
-     { 
-       "Feed": "Feed title"
-       "title": "News title",
-       "date": "Publishing date",
-       "link": "News link",
-       "text": "Text content of news",
-       "links": ["links that presented in text",]
-     },
-     {
-       "Feed": "Feed title"
-       "title": "News title",
-       "date": "Publishing date",
-       "link": "News link",
-       "text": "Text content of news",
-       "links": ["links that presented in text",]
-     },
-     {
-        ...
-     }
-	    ]
-}
-```

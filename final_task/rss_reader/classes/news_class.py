@@ -36,7 +36,7 @@ class News:
         string_repr_of_links = ''
         for num, link in enumerate(list_of_links):
             if link:
-                string_repr_of_links = string_repr_of_links + "[{}] {}\n".format(num+1, link)
+                string_repr_of_links = string_repr_of_links + f"[{num+1}] {link}\n"
         return string_repr_of_links
 
 
