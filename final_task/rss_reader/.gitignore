@@ -1,13 +1,14 @@
 # *.py and *.pyc files
-    test.py
-    volume_2.py
+test.py
+volume_2.py
 
 # *.log files
-    *.log
+*.log
 
 # any virtual environment files/folders and IDE technical files and folders
-    .idea/
-    rss_reader/__pycache__/
-    Lib/
-    Scripts/
-    Include/
+.idea/
+__pycache__/
+rss_reader/__pycache__/
+Lib/
+Scripts/
+Include/
