@@ -19,7 +19,8 @@ def text_processing_for_html(data: dict):
     style = '<style type="text/css">body{text-align: center; font-size: 120%;' + \
             'font-family: Verdana, Arial, Helvetica, sans-serif;' + \
             'color: #333366; } </style>'
-    result = '<!DOCTYPE html><html><head><title>' + data['title'] + '</title>' + style + '</head><center><h1>' \
+    result = '<!DOCTYPE html><html><head><meta charset="utf-8">' + \
+             '<title>' + data['title'] + '</title>' + style + '</head><center><h1>' \
              + data['title'] + '</h1></center><br>'
     for index_news, dict_news in enumerate(data['items']):
         result += '<h3><center><a href="' + dict_news['link'] + '">' + dict_news['title'] + '</a></center></h3>'

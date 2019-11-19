@@ -17,7 +17,7 @@ pip install feedparser
 pip install requests
 pip install fpdf
 pip install colored
-pip install rss-reader-5.1.tar.gz
+pip install rss-reader-5.2.tar.gz
 ```
 5. Check workability with command: 
 ```

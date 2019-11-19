@@ -70,7 +70,7 @@ def run():
     data = None
     try:
         if args.version:
-            print(f'RSS reader version {__init__.VERSION}')
+            pass
         elif args.date:
             data = work_with_file.read_feed_form_file(args.date)
         elif args.source:
@@ -80,19 +80,21 @@ def run():
         else:
             raise RssReaderException.RssReaderException('How work with application?\nEnter in command line: rss-reader -h')
 
-        logging.debug(type(data))
-        if args.limit:
-            data = work_with_dict.limited_dict(data, args.limit)
-        if args.json:
-            result = json.dumps(data, ensure_ascii=False, indent=4)
-        elif args.to_html:
-            result = work_with_html.write_to_html_file(data, args.to_html)
-        elif args.to_pdf:
-            result = work_with_pdf.write_to_pdf_file(data, args.to_pdf)
-        elif args.colorize:
-            result = work_with_colorize.colorize_text(data)
+        if args.version:
+            result = f'RSS reader version {__init__.VERSION}'
         else:
-            result = work_with_text.get_string_with_result(data, args.limit)
+            if args.limit:
+                data = work_with_dict.limited_dict(data, args.limit)
+            if args.json:
+                result = json.dumps(data, ensure_ascii=False, indent=4)
+            elif args.to_html:
+                result = work_with_html.write_to_html_file(data, args.to_html)
+            elif args.to_pdf:
+                result = work_with_pdf.write_to_pdf_file(data, args.to_pdf)
+            elif args.colorize:
+                result = work_with_colorize.colorize_text(data)
+            else:
+                result = work_with_text.get_string_with_result(data, args.limit)
         print(result)
     except RssReaderException.RssReaderException as exc:
         print(exc.expression)
