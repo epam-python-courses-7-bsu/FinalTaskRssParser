@@ -1,0 +1,2 @@
+class RssException(Exception):
+    pass
