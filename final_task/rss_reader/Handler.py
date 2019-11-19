@@ -105,3 +105,4 @@ class Handler:
     def get_all(self):
         # return all news which user want see
         return self.parsers
+ 
