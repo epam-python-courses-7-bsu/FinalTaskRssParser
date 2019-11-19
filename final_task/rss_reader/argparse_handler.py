@@ -8,7 +8,7 @@ from typing import Optional
 
 import custom_error
 
-VERSION = 4.0
+VERSION = 5.0
 
 
 def check_if_date_in_arguments() -> bool:
@@ -168,4 +168,5 @@ def create_parser(checker: str) -> argparse.ArgumentParser:
                         help="Converts news to html")
     parser.add_argument("--to-pdf", type=valid_directory_pdf,
                         help="Converts news to pdf")
+    parser.add_argument("--colorize", action="store_true", help="Prints the result of the utility in colorized mode.")
     return parser

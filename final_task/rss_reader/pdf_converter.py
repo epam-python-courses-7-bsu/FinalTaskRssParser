@@ -3,7 +3,7 @@ import os
 import urllib.request
 from datetime import date
 
-from fpdf import FPDF
+from fpdf import FPDF, set_global
 from argparse_handler import check_the_connection
 
 directory_to_module = os.path.abspath(os.path.dirname(__file__))
@@ -12,10 +12,10 @@ FONT_PATH = os.path.join(directory_to_module, 'font')
 
 def convert_to_pdf(articles_list: list, path: str, rss_url: str) -> None:
     """Converts articles to pdf format"""
+    set_global("FPDF_CACHE_MODE", 1)
     pdf = FPDF(orientation='P', unit='mm', format='A4')
     pdf.set_margins(10, 10, 10)
     pdf.add_page()
-
     pdf.add_font('dejavu', '', os.path.join(FONT_PATH, 'dejavusans.ttf'), uni=True)
 
     pdf.set_font('dejavu')

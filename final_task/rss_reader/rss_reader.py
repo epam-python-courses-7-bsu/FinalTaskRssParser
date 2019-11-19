@@ -4,6 +4,9 @@ import os
 import sys
 from typing import List
 
+import coloredlogs
+from colorama import Fore
+
 directory_to_module = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(directory_to_module)
 
@@ -13,25 +16,35 @@ import pdf_converter
 import articles_handler
 import argparse_handler
 import custom_error
+import colorizing_handler
 
+COLORIZE_STATUS = False
 LOG_FILE_NAME = os.path.join(directory_to_module, 'app.log')
 
 
-def create_and_configure_logger() -> None:
+def setup_logger() -> None:
     """Setting up logging basic configuration"""
     root = logging.getLogger()
+    logs_format = '[%(asctime)s] %(levelname)-8s %(message)s'
     logging.basicConfig(
         filename=LOG_FILE_NAME,
         filemode='w',
-        format='[%(asctime)s] %(levelname)-8s %(message)s',
+        format=logs_format,
         level=logging.DEBUG
     )
     if "--verbose" in sys.argv:
-        handler = logging.StreamHandler(sys.stdout)
-        handler.setLevel(logging.DEBUG)
-        formatter = logging.Formatter('[%(asctime)s] %(levelname)-8s %(message)s')
-        handler.setFormatter(formatter)
-        root.addHandler(handler)
+        if colorizing_handler.COLORIZING_STATUS:
+            coloredlogs.DEFAULT_FIELD_STYLES = {'asctime': {'color': 'green'},
+                                                'levelname': {'color': 'magenta', 'bold': True},
+                                                'name': {'color': 'blue'}}
+            coloredlogs.install(fmt=logs_format)
+        else:
+            handler = logging.StreamHandler(sys.stdout)
+            handler.setLevel(logging.DEBUG)
+
+            formatter = logging.Formatter(logs_format)
+            handler.setFormatter(formatter)
+            root.addHandler(handler)
 
 
 def converting_starter(key: str, list_with_articles: List[single_article.SingleArticle], path_to_file: str,
@@ -70,7 +83,10 @@ def arguments_logic(args: argparse.Namespace, list_of_articles: List[single_arti
 def main() -> None:
     """The main entry point of the application"""
     try:
-        create_and_configure_logger()
+        if "--colorize" in sys.argv:
+            colorizing_handler.set_colorizing_status()
+
+        setup_logger()
         logging.info('Application started')
 
         argparse_handler.check_the_arguments_amount()
@@ -93,6 +109,8 @@ def main() -> None:
 
             arg_parser.parse_args()
         elif switcher == 'link_only':
+            global COLORIZE_STATUS
+            COLORIZE_STATUS = True
             arg_parser = argparse_handler.create_parser('full')
             logging.info('Argument parser created')
 
@@ -142,38 +160,42 @@ def main() -> None:
     except custom_error.UrlNotFoundInArgsError:
         logging.error('UrlNotFoundInArgsError')
         logging.info('Application ended')
-        print("Url is not found in the arguments")
+        print(Fore.RED + "Url is not found in the arguments")
     except custom_error.NotEnoughArgumentsError:
         logging.error('Not enough arguments(URL link is required)')
         logging.info('Application ended')
-        print("Not enough arguments(URL link is required)")
+        print(Fore.RED + "Not enough arguments(URL link is required)")
     except custom_error.NotValidUrlError as error:
         logging.error(error.message)
         logging.info('Application ended')
-        print(error.message)
+        print(Fore.RED + error.message)
     except custom_error.ConnectionFailedError as error:
         logging.error(error.message)
         logging.info('Application ended')
-        print('Connection failed')
+        print(Fore.RED + 'Connection failed')
     except custom_error.ArticleKeyError as error:
         logging.error(error.message)
         logging.info('Application ended')
     except custom_error.NotValidDateError as error:
         logging.error(error.message)
         logging.info('Application ended')
-        print(error.message)
+        print(Fore.RED + error.message)
     except custom_error.NotValidLimitError as error:
         logging.error(error.message)
         logging.info('Application ended')
-        print(error.message)
+        print(Fore.RED + error.message)
     except custom_error.NoDataInCacheFileError:
         logging.error('No data in cache file')
         logging.info('Application ended')
-        print('No data in cache file')
+        print(Fore.RED + 'No data in cache file')
     except custom_error.NotValidPathError as error:
         logging.error(error.message)
         logging.info('Application ended')
-        print(error.message)
+        print(Fore.RED + error.message)
+    except PermissionError:
+        logging.error('PermissionError. Run program as administrator')
+        logging.info('Application ended')
+        print(Fore.RED + "PermissionError. Run program as administrator")
 
 
 if __name__ == '__main__':

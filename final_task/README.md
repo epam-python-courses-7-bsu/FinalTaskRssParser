@@ -1,8 +1,9 @@
 ﻿
 
-#  RSS Reader v.4.0, Evgeny Androsik (androsikei95@gmail.com)
 
-**First**, **second** and **third** iterations.
+#  RSS Reader v.5.0, Evgeny Androsik (androsikei95@gmail.com)
+
+**1-5** iterations.
 1. [Creation and Installation](#creation-and-installation)  
 	1.1. [Package creation](#package-creation)  
 	1.2. [Package installation](#package-installation)  
@@ -19,6 +20,7 @@
 	6.3 [Iteration 2](#iteration-2-distribution)  
 	6.4 [Iteration 3](#iteration-3-news-caching)  
 	6.5 [Iteration 4](#iteration-4-format-converter)  
+	6.6 [Iteration 5](#iteration-5-output-colorization)
 
 ##  Creation and Installation
 
@@ -36,13 +38,13 @@
 ####  WINDOWS:
 
 1. Run Console with administrator privileges (run as Administrator).  
-2. In console go to directory with rss-reader-4.0.zip package.  
-3. Run the following command: `pip install rss-reader-4.0.zip`  
+2. In console go to directory with rss-reader-5.0.zip package.  
+3. Run the following command: `pip install rss-reader-5.0.zip`  
 
 #### LINUX
 
-1. In console go to directory with *rss-reader-4.0.zip* package.
-2. Run the following command: `sudo pip3 install rss-reader-4.0.zip`.
+1. In console go to directory with *rss-reader-5.0.zip* package.
+2. Run the following command: `sudo pip3 install rss-reader-5.0.zip`.
 
 ## Application launch
 
@@ -57,6 +59,12 @@ To run this app directly you need to install this external python libraries in y
 2. bs4 (**Windows**: `pip install bs4` **/** **Linux**: `sudo apt-get install python3-bs4`)  
 3. dateutil (**Windows**: `pip install python-dateutil` **/** **Linux**: `
 sudo apt-get install python3-dateutil`)  
+4. fpdf [https://pypi.org/project/fpdf/](https://pypi.org/project/fpdf/)  
+5. jinja2 [https://pypi.org/project/Jinja2/](https://pypi.org/project/Jinja2/)  
+6. colorama [https://pypi.org/project/colorama/](https://pypi.org/project/colorama/)  
+7. termcolor [https://pypi.org/project/termcolor/](https://pypi.org/project/termcolor/)  
+8. coloredlogs [https://pypi.org/project/coloredlogs/](https://pypi.org/project/coloredlogs/)  
+
 #### Launching  
 1. Open console in folder with `rss_reader.py` file.  
 2. Run rss_reader.py with arguments:  
@@ -66,7 +74,7 @@ Check [usage](#usage)  for arguments description. Check [here](#direct-launch-ex
 
 ### Launch as CLI utility
 
-1. [Install package](#package-installation) `rss-reader-4.0.zip`  
+1. [Install package](#package-installation) `rss-reader-5.0.zip`  
 2. Open console and run rss-reader utility with arguments:  
 + **Windows**: `rss_reader [arguments]`  
 + **Linux**: `sudo rss_reader.py [arguments]`  
@@ -74,7 +82,7 @@ Check [usage](#usage)  for arguments description. Check [here](#cli-utility-exam
 
 
 ## Usage  
-Usage: `rss_reader.py [-h] [ --version ] [ --json ] [ --verbose ] [ --limit LIMIT ] [--date DATE ] [--to-html TO_HTML] [--to-pdf TO_PDF] source`  
+Usage: `rss_reader.py [-h] [ --version ] [ --json ] [ --verbose ] [ --limit LIMIT ] [--date DATE ] [--to-html TO_HTML] [--to-pdf TO_PDF] [--colorize] source`  
 
 + Positional arguments:
 
@@ -94,7 +102,7 @@ Usage: `rss_reader.py [-h] [ --version ] [ --json ] [ --verbose ] [ --limit LIMI
 |`--date DATE`      |Prints the cashed news from the specified day. Format - %Y%m%d|
 |`--to-html TO_HTML`|Converts news to html                                         |
 |`--to-pdf TO_PDF`  |Converts news to html                                         |
-
+|`--colorize`       |Prints the result of the utility in colorized mode.           |  
 ## Examples
 1.  [Direct launch examples](#direct-launch-examples).  
 2.  [CLI utility examples](#cli-utility-examples).  
@@ -165,6 +173,7 @@ Usage: `rss_reader.py [-h] [ --version ] [ --json ] [ --verbose ] [ --limit LIMI
 │   ├── articles_handler.py
 │   ├── html_converter.py
 │   ├── pdf_converter.py
+│   ├── colorizing_handler.py
 │   ├── custom_error.py
 │   ├── rss_reader.py
 │   ├── single_article.py
@@ -175,7 +184,7 @@ Usage: `rss_reader.py [-h] [ --version ] [ --json ] [ --verbose ] [ --limit LIMI
 │   │   ├── base.html
 │   │   └── style.css
 │   └── 📁font
-│       └── DejaVuSans.ttf
+│       └── dejavusans.ttf
 ├── __init__.py
 ├── MANIFEST.in
 ├── FinalTask.md
@@ -186,6 +195,7 @@ Usage: `rss_reader.py [-h] [ --version ] [ --json ] [ --verbose ] [ --limit LIMI
 ### [Iteration 1] RSS reader.  
 
 ### [Iteration 2] Distribution
+
 Utility was wrapped into distribution package with setuptools . This package can be exported as CLI utility named rss-reader .
 
 ### [Iteration 3] News caching  
@@ -229,14 +239,19 @@ Example:
 `python rss_reader.py https://news.yahoo.com/rss/ --date 20191112` will print first article  
 
 ### [Iteration 4] Format converter  
-Two more arguments was added: `--to-html PATH`, `--to-pdf PATH`
-Works with URL: `python rss_reader.py https://news.yahoo.com/rss/ --to-html D: --to-pdf C:`
-Works with date: `python rss_reader.py https://news.yahoo.com/rss/ --date 20191116 --to-html D:`
 
-For pdf creation FPDF module was used.
+Two more arguments was added: `--to-html PATH`, `--to-pdf PATH`  
+Works with URL: `python rss_reader.py https://news.yahoo.com/rss/ --to-html D: --to-pdf C:`  
+Works with date: `python rss_reader.py https://news.yahoo.com/rss/ --date 20191116 --to-html D:`  
 
-If Internet conection is on images will be loaded, else only URL's.
+For pdf creation FPDF module was used.  
+
+If Internet conection is on images will be loaded, else only URL's.  
+
 ### [Iteration 5] Output colorization  
+
+**colorama** and **termcolor** was used to colorize output
+**coloredlogs** was used to colorize logs
 
 ### [Iteration 6] Web-server  
 
