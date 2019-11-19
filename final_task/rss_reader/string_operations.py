@@ -1,27 +1,26 @@
+from html.parser import HTMLParser
+
 
 def cut_string_to_length_with_space(basic_str, length):
     """function that cut given string to the list of strings with a given max length"""
-    my_strings = []
-    my_str = ''
+    strings_list = []
+    string = ''
     for i, word in enumerate(basic_str.split()):
-        my_str += word + ' '
+        string += word + ' '
         if i + 1 < len(basic_str.split()):
             next_word = basic_str.split()[i+1]
         else:
             next_word = ''
-            my_strings.append(my_str)
-        if len(my_str + next_word) >= length:
-            my_strings.append(my_str)
-            my_str = ''
-    return my_strings
+            strings_list.append(string)
+        if len(string + next_word) >= length:
+            strings_list.append(string)
+            string = ''
+    return strings_list
 
 
 def make_string_readable(basic_str):
-    """return copy of string, replace &#39; to ' and &quot; to " """
-    my_str = basic_str[:]
-    my_str = my_str.replace('&quot;', '\"')
-    my_str = my_str.replace('&#39;', "\'")
-    return my_str
+    h = HTMLParser()
+    return h.unescape(basic_str)
 
 
 def extract_topic_info_from_summary(basic_str):
@@ -58,7 +57,7 @@ def extract_image_info_from_summary(basic_str):
 
 def extract_date(parsed):
     try:
-        date = parsed.published
+        date = parsed.published_parsed
     except KeyError:
-        date = parsed.updated
+        date = parsed.updated_parsed
     return date
