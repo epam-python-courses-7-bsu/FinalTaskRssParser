@@ -1,3 +1,0 @@
-[console_scripts]
-rss-reader = rss_reader.rss_reader:main
-

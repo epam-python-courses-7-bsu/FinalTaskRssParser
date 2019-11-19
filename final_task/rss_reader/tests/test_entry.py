@@ -15,11 +15,10 @@ class TestEntry(unittest.TestCase):
     def test_parse_html(self):
         entry = Entry()
         self.assertEqual(entry.parse_html
-                        (
+                         (
                           "Graham now says Trump&#39;s Ukraine policy was too &#39;incoherent&#39; for quid pro quo"
-                        ),
-                          "Graham now says Trump's Ukraine policy was too 'incoherent' for quid pro quo"
-        )
+                          ), "Graham now says Trump's Ukraine policy was too 'incoherent' for quid pro quo"
+                         )
         self.assertEqual(entry.parse_html(
             '<p><a href="https://news.yahoo.com/graham-trump-ukraine-incoherent-quid-pro-quo-192210175.html">'
             '<img src="http://l2.yimg.com/uu/api/res/1.2/aWhGys7_IW5qIjKaiJpPfg--/YXBwaWQ9eXRhY2h5b247aD04Njt'

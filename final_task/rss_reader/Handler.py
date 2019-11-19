@@ -54,13 +54,15 @@ class Handler:
             json.dump(entries, cache, indent=2)
 
     @logging_decorator
-    def option_date(self, date: str, do_json: bool, do_html: bool, path: str):
+    def option_date(self, date: str, do_json: bool, do_html: bool, html_path: str):
         """read entries from cache.json into list daily_news that have date that is equal to --date DATE
             and then raise an exception or print to console"""
         try:
             entries = json.load(open("cache.json"))
         except json.JSONDecodeError:
             entries = []
+        except FileNotFoundError:
+            raise RSSReaderException("Error. You have no cache. Try to run app with internet-connection")
 
         daily_news = [entry for entry in entries if entry["DateInt"] == date]
 
@@ -68,7 +70,7 @@ class Handler:
             raise RSSReaderException("Error. News aren't found")
         elif do_html:
             for news in daily_news[:self.limit]:
-                self.write_to_html(self.get_entry_from_dict(news), path)
+                self.write_to_html(self.get_entry_from_dict(news), html_path)
         elif do_json:
             for news in daily_news[:self.limit]:
                 self.print_to_json(news)
@@ -118,8 +120,11 @@ class Handler:
 
     @logging_decorator
     def write_to_html(self, entry: Entry, path: str) -> None:
-        if path[-1] != '/':
-            path += '/'
+        try:
+            if path[-1] != '/':
+                path += '/'
+        except IndexError:
+            raise IndexError
 
         if path.find(".html") == -1:
             path += "index.html"
@@ -128,6 +133,7 @@ class Handler:
 
         html = '<div style="font-family: Calibri; margin: 5px; padding: 10px;">\n'
         html += '<h1>' + entry.title + '</h1>\n'
+        html += '<p>\n<b>Feed:</b> ' + entry.feed + '</p>\n'
         html += '<p>\n<b>Date:</b> ' + entry.date + '</p>\n'
 
         # extract src and alt attributes from field Entry.summary

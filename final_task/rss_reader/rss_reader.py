@@ -25,7 +25,8 @@ def main():
     if arg_parser_args.version:
         handler.option_version()
     elif arg_parser_args.date:
-        handler.option_date(str(arg_parser_args.date), arg_parser_args.json, arg_parser_args.to_html, arg_parser_args.to_html)
+        handler.option_date(str(arg_parser_args.date), arg_parser_args.json, arg_parser_args.to_html,
+                            arg_parser_args.to_html)
     elif arg_parser_args.json:
         handler.option_json()
     elif arg_parser_args.to_html:
@@ -41,3 +42,5 @@ if __name__ == "__main__":
         print("Error, failed to get an attribute.")
     except RSSReaderException as rss_exc:
         print(rss_exc)
+    except IndexError:
+        print("Error, enter the correct path")
