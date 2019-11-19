@@ -6,7 +6,7 @@ Command-line utility to receive RSS feeds, save it and convert to common formats
 
 Input:
 ```
-python3 rss_reader.py https://news.yahoo.com/rss - -limit 1
+python3 rss_reader.py --lim 1 "https://news.yahoo.com/rss"
 ```
 Output:
 ```
