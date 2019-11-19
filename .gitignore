@@ -8,3 +8,4 @@ jsonout.txt
 build/
 dist/
 rss_reader.egg-info/
+*.json

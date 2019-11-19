@@ -1,12 +1,9 @@
-from setuptools import find_namespace_packages, setup
+from setuptools import setup, find_namespace_packages
 
 try:
     from pip._internal.req import parse_requirements
 except ImportError:
     from pip.req import parse_requirements
-
-with open('final_task/rss_reader/requirements.txt') as fp:
-    install_requires = fp.read()
 
 setup(
    name='rss_reader',
@@ -14,12 +11,12 @@ setup(
    description='RSS reader',
    author='Roman Shagun',
    author_email='rshag17@gmail.com',
-   package_dir={'rss_reader': 'rss_reader'},
+   package_dir={'': 'rss_reader'},
+   scripts=['rss_reader/rss_feed.py', 'rss_reader/rss_item.py', 'rss_reader/exceptions_.py'],
    entry_points={
-        'console_scripts': ['rss-reader=final_task.rss_reader.rss_reader:main'],
+        'console_scripts': ['rss-reader=rss_reader.rss_reader:main'],
    },
-   packages=find_namespace_packages(),
-   install_requires=install_requires,
+   install_requires=['feedparser==5.2.1', 'argparse==1.4.0', 'jsonpickle==1.2', 'tinydb==3.15.1'],
    license="none",
    platforms="Linux, Windows (not tested)",
    long_description="Yet another RSS reader"

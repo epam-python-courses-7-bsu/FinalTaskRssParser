@@ -5,8 +5,7 @@ Yet another RSS parser
 # Quick start
 
 ## Usage
-    rss_reader.py --help
-    usage: rss_reader.py [-h] [--version] [--json] [--verbose] [--limit LIMIT] url
+    usage: rss_reader.py [-h] [--version] [--json] [--verbose] [--limit LIMIT] [--date DATE] [url]
 
     RRS feed receiver
 
@@ -18,22 +17,24 @@ Yet another RSS parser
     --version      prints version
     --json         converts news to JSON
     --verbose      output verbose status messages
-    --limit LIMIT  determines the number of showed news
+    --limit LIMIT  determines the number of showed news.
+    --date DATE    shows cached news at given date
 ## Installation
 1. Install setuptools
 
         pip install setuptools
 2. Download source code
 3. Unpack downloaded *.zip
-4. Go to FinalTaskRssParser-master
+4. Go to `FinalTaskRssParser-master/final_task`
 5. In terminal execute:
     
-        python final_task/setup.py bdist_wheel
-        sudo pip install dist/rss_reader-1.0-py3-none-any.whl
+        python setup.py install
+
 Done!
 To see help use
     
     rss-reader --help
+
 ## JSON format
     {
         "description": "description",
@@ -55,3 +56,19 @@ news_item is represented as:
         "published": "date",
         "title": "title"
     }
+
+## Caching
+TinyDB have been used for caching.
+
+Items are stored in json format.
+News are stored in db.
+##### Database item format
+    "id": {
+            "date": "date",
+            "link": "link",
+            "media": "media",
+            "published": "published",
+            "source": "source",
+            "title": "title"
+        },
+`date` is stored in format `yyyy%mm%dd`

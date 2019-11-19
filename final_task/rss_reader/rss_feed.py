@@ -3,8 +3,10 @@ import logging
 import sys
 
 import jsonpickle
+from tinydb import TinyDB, Query, where
 
-logger = logging.getLogger('rss_logger')
+
+LOGGER = logging.getLogger('rss_logger')
 
 
 class RssFeed:
@@ -13,7 +15,7 @@ class RssFeed:
     Contatins method for parsing class to json via jsonpickle module
     '''
     def __init__(self, title, description, link, news_list):
-        logger.debug('INIT RSS FEED CLASS')
+        LOGGER.debug('INIT RSS FEED CLASS')
         self.news_list = news_list
         self.title = title
         self.description = description
@@ -31,17 +33,31 @@ class RssFeed:
             result += '='*120 + '\n'
         print(result)
 
-    def toJSON(self):
+    def to_json(self):
         '''
         Parses rss_feed class to JSON
         Method uses jsonpickle module because of using list of classes as field.
         load_backend() and set_encoder_options() loads standart json lib and set
         proper params to beautify json string
         '''
-        logger.debug('FORMATTING FEED TO JSON')
+        LOGGER.debug('FORMATTING FEED TO JSON')
         jsonpickle.load_backend('json', 'dumps', 'loads')
         jsonpickle.set_preferred_backend('json')
         jsonpickle.set_encoder_options('json', indent=4, sort_keys=False)
         json_string = jsonpickle.encode(self, make_refs=False, unpicklable=False)
-        logger.debug('PRINTING JSON')
+        LOGGER.debug('PRINTING JSON')
         print(json_string)
+
+    def cache(self, cache_store):
+        '''
+        Using TinyDB for simple caching. Database stores RssItem class in
+        json format.
+        '''
+        LOGGER.debug('INIT DATABASE')
+        database = TinyDB(cache_store, sort_keys=True, indent=4, separators=(',', ': '))
+        LOGGER.debug('CACHING...')
+        for _, news_item in enumerate(self.news_list):
+            current_news = Query()
+            # Checking if the news is already stored in database
+            if not database.contains(current_news.link == news_item.link):
+                database.insert(news_item.__dict__)

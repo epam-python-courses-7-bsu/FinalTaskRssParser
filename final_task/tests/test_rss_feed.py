@@ -1,10 +1,11 @@
 import sys
 import unittest
 from io import StringIO
-from unittest.mock import patch
+from unittest.mock import patch, mock_open
 
 sys.path.insert(1, 'final_task/rss_reader')
-from classes.rss_feed import RssFeed
+from rss_feed import RssFeed
+from rss_reader import init_feed
 
 
 class TestRssFeed(unittest.TestCase):
@@ -40,5 +41,34 @@ class TestRssFeed(unittest.TestCase):
             '\n    "title": "title"\n}'
         result += '\n'
         with patch('sys.stdout', new=StringIO()) as fake_out:
-            feed.toJSON()
+            feed.to_json()
             self.assertEqual(fake_out.getvalue(), result)
+
+    def test_cache(self):
+        news_feed = init_feed('final_task/tests/test_feed.xml', 2)
+        expected_result = '{\n'\
+            '    "_default": {\n'\
+            '        "1": {\n'\
+            '            "date": "20031231",\n'\
+            '            "link": "ITEM1 LINK",\n'\
+            '            "media": "http://www.foo.com/bar.jpg",\n'\
+            '            "published": "2003-12-31",\n'\
+            '            "source": "final_task/tests/test_feed.xml",\n'\
+            '            "title": "ITEM1 TITLE"\n'\
+            '        },\n'\
+            '        "2": {\n'\
+            '            "date": "20031231",\n'\
+            '            "link": "ITEM2 LINK",\n'\
+            '            "media": "http://www.foo.com/bar.jpg",\n'\
+            '            "published": "2003-12-31",\n'\
+            '            "source": "final_task/tests/test_feed.xml",\n'\
+            '            "title": "ITEM2 TITLE"\n'\
+            '        }\n'\
+            '    }\n'\
+            '}'
+        news_feed.cache('test_db.json')
+
+        with open('test_db.json') as fp:
+            result = fp.read()
+        self.assertEqual(result, expected_result)
+        pass
