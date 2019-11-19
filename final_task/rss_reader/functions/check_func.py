@@ -4,6 +4,7 @@ import requests
 import logging
 import sys
 import classes.exceptions as exc
+import coloredlogs
 
 def check_internet_connection(logger):
     """Check if network connection is avaliable"""
@@ -17,7 +18,8 @@ def check_internet_connection(logger):
 
 def check_verbose(command_line_args):
     """If vebose argument is True, set logging to info level"""
-
+    if command_line_args.colorize:
+        coloredlogs.install()
     logging.basicConfig(format='[%(asctime)s][%(levelname)s] %(message)s',
                         stream=sys.stdout,
                         level=logging.INFO

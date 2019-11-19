@@ -1,6 +1,8 @@
 """Module contain definition of "News" class"""
 
 from dataclasses import dataclass
+from termcolor import cprint
+import argparse
 
 @dataclass
 class News:
@@ -16,17 +18,21 @@ class News:
     links: str
     feed_title: str
     source: str
+    command_line_args: "argparse instance"
 
+    def asdict(self):
+        """Return a dictionary representation of news instance"""
+        return {key: value
+                for key, value in self.__dict__.items()
+                if type(value) is not argparse.Namespace}
 
-    def print_feed_title(self):
-        """Print feed title"""
-        print(self.feed_title)
 
     def create_list_of_links(self):
         """Turn tuple ([href_links], [img_links]) into list of links"""
         # Merge list of links
         list_of_links = self.links[0] + self.links[1]
         return list_of_links
+
 
     def create_string_of_links(self):
         """Turn tuple ([href_links], [img_links]) of lists into formatted string"""
@@ -40,16 +46,37 @@ class News:
         return string_repr_of_links
 
 
+    def print_feed_title(self):
+        """Print feed title"""
+        if self.command_line_args.colorize:
+            cprint(self.feed_title, 'magenta')
+        else:
+            print(self.feed_title)
+
+
     def print_news(self):
         """Print to stdout title, date, link, text
         and links from text in particular sequence."""
-        print('-----------------------------------------------------------')
-        print('Title: '+self.title)
-        print('Date: '+self.date)
-        print('Link: '+self.link, end='\n\n')
-        print(self.text, end='\n\n')
-        links = self.create_string_of_links()
-        if links:
-            print('Links:')
-            print(links)
-        print('-----------------------------------------------------------')
+        if self.command_line_args.colorize:
+            cprint('-----------------------------------------------------------', 'magenta')
+            cprint('Title: '+self.title, 'magenta')
+            cprint('Date: '+self.date, 'magenta')
+            cprint('Link: '+self.link, 'magenta', end='\n\n')
+            cprint(self.text, 'green', end='\n\n')
+            links = self.create_string_of_links()
+            if links:
+                cprint('Links:', 'blue')
+                cprint(links, 'blue')
+            cprint('-----------------------------------------------------------', 'magenta')
+
+        else:
+            print('-----------------------------------------------------------')
+            print('Title: '+self.title)
+            print('Date: '+self.date)
+            print('Link: '+self.link, end='\n\n')
+            print(self.text, end='\n\n')
+            links = self.create_string_of_links()
+            if links:
+                print('Links:')
+                print(links)
+            print('-----------------------------------------------------------')

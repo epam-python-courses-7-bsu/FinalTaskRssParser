@@ -49,6 +49,9 @@ source or database. Receive the path where file will be saved
 -Create a file in html format from internet
 source or database. Receive the path where file will be saved
 
+`$ rss-reader.py --colorize`
+
+-Print the result of the utility in colorized mode
 
 ### JSON structure:
 

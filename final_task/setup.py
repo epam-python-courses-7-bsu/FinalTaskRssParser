@@ -13,7 +13,8 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/AntonZimahorau/FinalTaskRssParser.git",
     packages=['rss_reader', 'rss_reader.functions', 'rss_reader.classes'],
-    install_requires=['feedparser', 'lxml', 'argparse', 'requests', 'EbookLib==0.17.1', 'dominate==2.4.0'],
+    install_requires=['feedparser', 'lxml', 'argparse', 'requests', 'EbookLib==0.17.1',
+                      'dominate==2.4.0', 'termcolor==1.1.0', 'coloredlogs==10.0'],
     classifiers=[
         "Programming Language :: Python :: 3.8",
         "Operating System :: OS Independent",

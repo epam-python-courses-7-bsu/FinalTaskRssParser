@@ -25,7 +25,8 @@ class TestConvertationFunctions(unittest.TestCase):
                 )
         feed_title = "Yahoo News - Latest News & Headlines"
         source = "https://news.yahoo.com/rss/"
-        self.news1 = News(title, date, link, text, links, feed_title, source)
+        command_line_args = Mock()
+        self.news1 = News(title, date, link, text, links, feed_title, source, command_line_args)
 
         self.internet = Mock(return_value=False)
         self.doc_html = dominate.document(title='RSS News')

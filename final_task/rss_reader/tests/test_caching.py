@@ -13,6 +13,7 @@ class TestCachingFunctions(unittest.TestCase):
 
     def setUp(self):
         """Initialize collections of news"""
+        self.command_line_args = "command line args"
         title = "UN warns Bolivia crisis could ‘spin out of control’ after nine killed in latest violence"
         date = "Sun, 17 Nov 2019 10:49:00 -0500"
         link = "https://news.yahoo.com/un-warns-boliva-crisis-could-154900324.html"
@@ -28,7 +29,7 @@ class TestCachingFunctions(unittest.TestCase):
                 )
         feed_title = "Yahoo News - Latest News & Headlines"
         source = "https://news.yahoo.com/rss/"
-        self.news1 = News(title, date, link, text, links, feed_title, source)
+        self.news1 = News(title, date, link, text, links, feed_title, source, self.command_line_args)
 
         title = "Japan space probe on its way back after asteroid mission"
         date = "Mon, 17 Nov 2019 05:29:05 -0500"
@@ -55,11 +56,11 @@ class TestCachingFunctions(unittest.TestCase):
                 )
         feed_title = "Reuters: Science News"
         source = "http://feeds.reuters.com/reuters/scienceNews"
-        self.news2 = News(title, date, link, text, links, feed_title, source)
+        self.news2 = News(title, date, link, text, links, feed_title, source, self.command_line_args)
 
         self.news_collection = [self.news1, self.news2]
         self.logger = Mock()
-        self.command_line_args = Mock()
+
 
         # Clear test database
         self.home_dir = os.path.expanduser('~')
@@ -74,7 +75,7 @@ class TestCachingFunctions(unittest.TestCase):
 
         with patch("os.path.join", return_value=os.path.join(self.database_path)):
             cache_news(self.news_collection, self.logger)
-
+            self.command_line_args = Mock()
             self.command_line_args.date = "18 Nov 2019"
             self.command_line_args.source = ''
             with self.assertRaises(ExtractNewsException):

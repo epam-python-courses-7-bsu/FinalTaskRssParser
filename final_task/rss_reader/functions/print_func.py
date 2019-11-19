@@ -2,7 +2,8 @@
 
 import json
 import classes.exceptions as exc
-from dataclasses import asdict
+from termcolor import cprint
+
 
 def limit_news_collections(command_line_args, news_collection, logger):
     """Check presence and validness of limit argument
@@ -27,7 +28,7 @@ def generate_news_json(news_collection, logger):
     all_news_dict = {'news': []}
     logger.info("Configure json file...")
     for news in news_collection:
-        news_dict = asdict(news)
+        news_dict = news.asdict()
         links = news.create_string_of_links()
         if links:
             list_of_str_links = links.split('\n')
@@ -45,7 +46,7 @@ def print_feeds(news_collection, command_line_args, logger):
             news_json = generate_news_json(news_collection, logger)
             logger.info("Json successful configured")
             logger.info("Printing json:")
-            print(news_json)
+            col_print(news_json, command_line_args, 'cyan')
         else:
             logger.info("Printing news:")
             news_collection[0].print_feed_title()
@@ -62,10 +63,17 @@ def print_feeds_from_database(news_collection, command_line_args, logger):
             news_json = generate_news_json(news_collection, logger)
             logger.info("Json successful configured")
             logger.info("Printing json:")
-            print(news_json)
+            col_print(news_json, command_line_args, 'cyan')
         else:
             logger.info("Printing news:")
             for num, news in enumerate(news_collection):
                 logger.info("Printing news №{}:".format(num+1))
                 news.print_feed_title()
                 news.print_news()
+
+def col_print(text, command_line_arguments, color):
+    """If colorize argument, prints in color"""
+    if command_line_arguments.colorize:
+        cprint(text, color)
+    else:
+        print(text)
