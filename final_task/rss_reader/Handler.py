@@ -52,7 +52,8 @@ class Handler:
 
     @log_decore
     def get_title(self, index):
-        return self.article.entries[index].title
+        return html.unescape(self.article.entries[index].title)
+
 
     @log_decore
     def get_date(self, index):
