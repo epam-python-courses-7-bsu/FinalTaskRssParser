@@ -1,7 +1,7 @@
 import feedparser
 from output_functions import getting_full_info, getting_pack_of_news, converting_to_json, \
     writing_to_file, getting_from_database_to_pack
-from pdf_and_html_converting import converting_to_pdf, converting_to_html
+from pdf_and_html_converting import converting_to_pdf, converting_to_html, pdf_path, html_path
 import logging
 
 
@@ -20,6 +20,8 @@ class RSSParser:
         1. Use feedparser to get the page
         2. If we have some problems with connection - raise ConnectionError
         3. Handle Exception without showing a traceback
+        4. Do parse method
+        5. If there are some arguments from console - work with them
         """
         try:
             logging.info("Trying to get page from feedparser!")
@@ -28,16 +30,18 @@ class RSSParser:
             if the_feed.get('bozo') == 1:
                 if '--date' in self.list_of_args:
                     if '--to-pdf' in self.list_of_args:
-                        path_pdf = self.list_of_args[self.list_of_args.index('--to-pdf') + 1]
+                        path_pdf = pdf_path(self.list_of_args)
                         pack_news = self.news_for_date()
                         converting_to_pdf(path_pdf, pack_news)
                     elif '--to-html' in self.list_of_args:
-                        path_html = self.list_of_args[self.list_of_args.index('--to-html') + 1]
+                        path_html = html_path(self.list_of_args)
                         pack_news = self.news_for_date()
                         converting_to_pdf(path_html, pack_news)
                     else:
+                        logging.info("Getting news for date!")
                         news = self.news_for_date()
-                        getting_full_info(the_feed, news)
+                        getting_full_info(the_feed, news, self.list_of_args)
+                        logging.info("Got news for date!")
                 else:
                     logging.info("Got some problems due to connection!")
         except ConnectionError:
@@ -45,11 +49,11 @@ class RSSParser:
             print("You have some connection problems!")
             if '--date' in self.list_of_args:
                 if '--to-pdf' in self.list_of_args:
-                    path_pdf = self.list_of_args[self.list_of_args.index('--to-pdf') + 1]
+                    path_pdf = pdf_path(self.list_of_args)
                     pack_news = self.news_for_date()
                     converting_to_pdf(path_pdf, pack_news)
                 elif '--to-html' in self.list_of_args:
-                    path_html = self.list_of_args[self.list_of_args.index('--to-html') + 1]
+                    path_html = html_path(self.list_of_args)
                     pack_news = self.news_for_date()
                     converting_to_html(path_html, pack_news)
                 else:
@@ -60,17 +64,18 @@ class RSSParser:
         logging.info("Got pack of news!")
         if '--json' in self.list_of_args:
             print("\nJSON VIEW OF NEWS:", converting_to_json(pack_of_news, the_feed))
-
+        logging.info("Writing news from source and DB to file!")
         writing_to_file(pack_of_news, pack_of_news_for_db, 'news_cache.txt')
+        logging.info("News are in the file!")
         if '--to-html' in self.list_of_args:
-            path_html = self.list_of_args[self.list_of_args.index('--to-html') + 1]
+            path_html = html_path(self.list_of_args)
             if '--date' in self.list_of_args:
                 pack = self.news_for_date()
                 converting_to_html(path_html, pack)
             else:
                 converting_to_html(path_html, pack_of_news)
         if '--to-pdf' in self.list_of_args:
-            path_pdf = self.list_of_args[self.list_of_args.index('--to-pdf') + 1]
+            path_pdf = pdf_path(self.list_of_args)
             if '--date' in self.list_of_args:
                 pack = self.news_for_date()
                 converting_to_pdf(path_pdf, pack)
@@ -80,11 +85,11 @@ class RSSParser:
         else:
             if '--date' in self.list_of_args:
                 logging.info("Getting full info!")
-                getting_full_info(the_feed, self.news_for_date())
+                getting_full_info(the_feed, self.news_for_date(), self.list_of_args)
                 logging.info("Got full info!")
             else:
                 logging.info("Getting full info!")
-                getting_full_info(the_feed, pack_of_news)
+                getting_full_info(the_feed, pack_of_news, self.list_of_args)
                 logging.info("Got full info!")
 
     def news_for_date(self):

@@ -6,6 +6,10 @@ import sqlite3
 from datetime import datetime
 from itertools import groupby
 from html import unescape
+import random
+from termcolor import cprint
+from colorama import init, Fore, Back
+import colorama
 
 from bs4 import BeautifulSoup
 
@@ -144,35 +148,54 @@ def getting_novelty(item, number, corrected_pack_of_images_links, corrected_pack
                             novelty.alt_text, novelty.date_corrected, novelty.main_source)
     return novelty, novelty_for_database
 
+"""
+colors = list(vars(colorama.Fore).values())
+random.choice(colors)
+"""
 
-def getting_full_info(the_feed, pack_of_news):
+
+def colirizing(colors_list):
+    init()
+    colors = colors_list
+    return random.choice(colors)
+
+
+def getting_full_info(the_feed, pack_of_news, list_of_args):
     """
     Getting full info from news
     try-except for printing links and alternative text
     """
+    logging.info("Getting news to output!")
+    if '--colorize' in list_of_args:
+        colorama.init()
+        colors_list = list(vars(colorama.Fore).values())
+    else:
+        colorama.init()
+        colors_list = [""]
     print("------------------------")
-    print("Source: ", printing_title(the_feed))
+    print(colirizing(colors_list) + "Source: " + printing_title(the_feed))
     for novelty in pack_of_news:
-        print()
-        print("{0}.".format(novelty.number_of_novelty), "Title: ", novelty.title_of_novelty)
-        print("Published: ", novelty.time_of_novelty)
-        print("Link: ", novelty.source_link)
-        print("Description: ")
+        logging.info("Getting novelty to output!")
+        print(colirizing(colors_list) + f"\n{novelty.number_of_novelty}." + "Title: " + novelty.title_of_novelty)
+        print(colirizing(colors_list) + "Published: " + novelty.time_of_novelty)
+        print(colirizing(colors_list) + "Link: " + novelty.source_link)
+        print(colirizing(colors_list) + "Description: ")
         print(pprint.pformat(novelty.description, width=115))
         try:
-            print(f"\n[{1}] {novelty.source_link}")
+            print(colirizing(colors_list) + f"\n[{1}] {novelty.source_link}")
             if novelty.images_links != novelty.number_of_novelty - 1:
-                print(f"[{2}] {novelty.images_links}")
+                print(colirizing(colors_list) + f"[{2}] {novelty.images_links}")
             else:
-                print(f"[{2}] {'no image'}")
+                print(colirizing(colors_list) + f"[{2}] {'no image'}")
             if novelty.alt_text != str(novelty.number_of_novelty - 1):
-                print("Alternative text: ", novelty.alt_text)
+                print(colirizing(colors_list) + "Alternative text: " + novelty.alt_text)
             else:
-                print("Alternative text: ", "no alternative text.")
+                print(colirizing(colors_list) + "Alternative text: " + "no alternative text.")
         except AttributeError:
-            print(f"\n[{1}] {novelty.source_link}")
-            print(f"[{2}] {'no image'}" )
-            print("Alternative text: ", "no alt")
+            print(colirizing(colors_list) + f"\n[{1}] {novelty.source_link}")
+            print(colirizing(colors_list) + f"[{2}] {'no image'}")
+            print(colirizing(colors_list) + "Alternative text: " + "no alt")
+        logging.info("Got novelty!")
 
 
 def converting_to_json(pack_of_news, the_feed=''):
@@ -202,9 +225,8 @@ def converting_to_json(pack_of_news, the_feed=''):
 def getting_info_into_file(item):
     """
     Preparing information to be written into the file in more readable way
-    :param item:
-    :return:
     """
+    logging.info("Getting novelty into file!")
     novelty = "\n{0}.\nTitle: {1}\nDate: {2}\nLink: {3}\nDescription:\n {4}\nImages links:{5}\nAlternative text:{6}\n" \
               "Main source: {7}" \
         .format(item.number_of_novelty,
@@ -215,6 +237,7 @@ def getting_info_into_file(item):
                 pprint.pformat(item.images_links),
                 pprint.pformat(item.alt_text, width=115),
                 item.main_source)
+    logging.info("Got novelty into file!")
     return novelty
 
 
@@ -222,7 +245,9 @@ def getting_corrected_time(item):
     """
     Getting time in view %Y%m%d
     """
+    logging.info("Getting corrected date!")
     corrected_date = datetime.strptime(item.get('published', ''), '%a, %d %b %Y %X %z')
+    logging.info("Got corrected date!")
     return corrected_date.strftime('%Y%m%d')
 
 
@@ -260,13 +285,21 @@ def writing_to_file(pack_of_news, pack_of_news_for_db, filename):
         logging.info("Reading from News_cache.")
         content = reading_file('news_cache.txt')
         if not content:
+            logging.info("Writing news to an empty file!")
             writing_if_file_empty(news_cache, pack_of_news, pack_of_news_for_db)
+            logging.info("Wrote news to an empty file!")
         else:
+            logging.info("Writing news to NOT empty file!")
             writing_if_something_in_file(news_cache, pack_of_news, pack_of_news_for_db, content)
+            logging.info("Wrote news to NOT empty file!")
     conn.close()
 
 
 def writing_if_something_in_file(news_cache, pack_of_news, pack_of_news_for_db, content):
+    """
+    checking if something is in file. If it is we continue to write into it and database. If it is Not
+    we clear database to synchronise txt file and DB
+    """
     conn = sqlite3.connect("database.db")
     cursor = conn.cursor()
     for number, item in enumerate(pack_of_news):
@@ -286,6 +319,9 @@ def writing_if_something_in_file(news_cache, pack_of_news, pack_of_news_for_db, 
 
 
 def writing_if_file_empty(news_cache, pack_of_news, pack_of_news_for_db):
+    """
+    Writing news when file is empty to DB and txt file
+    """
     conn = sqlite3.connect("database.db")
     cursor = conn.cursor()
     if cursor.execute("SELECT * FROM projects"):
@@ -301,6 +337,10 @@ def writing_if_file_empty(news_cache, pack_of_news, pack_of_news_for_db):
 
 
 def getting_from_database_to_pack():
+    """
+    Getting news from database back to the pack to use them for our needs
+    """
+    logging.info("Getting news from DB!")
     pack_of_news = []
     with sqlite3.connect("database.db") as conn:
         cursor = conn.cursor()
@@ -308,12 +348,8 @@ def getting_from_database_to_pack():
             (number, title, date, source, description, im_links, alt, date_corr, main_source) = item
             novelty = Novelty(number, title, date, source, description, im_links, alt, date_corr, main_source)
             pack_of_news.append(novelty)
+    logging.info("Got news from DB!")
     return pack_of_news
 
 
-def verbose(list_of_args):
-    if '--verbose' in list_of_args:
-        print()
-        with open('snake.log') as log:
-            for line in log:
-                print(line)
+

@@ -13,8 +13,9 @@ def create_parser():
     parse.add_argument('--date', help='Read news from this date', metavar='', default=None)
     parse.add_argument('--limit', nargs='?', help='Limit news if this parameter provided', metavar='', type=int,
                        default=None)
-    parse.add_argument('--to-pdf', help='Transfer news to PDF file. It should receive path', metavar='')
-    parse.add_argument('--to-html', help='Transfer news to html file. It should receive path', metavar='')
+    parse.add_argument('--to-pdf', nargs='?', help='Transfer news to PDF file. It can receive path', metavar='')
+    parse.add_argument('--to-html', nargs='?', help='Transfer news to html file. It can receive path', metavar='')
+    parse.add_argument('--colorize', nargs='?', help='Colorizes your output', metavar='')
     parse.add_argument('source', nargs='?', help='RSS URL', default=None)
     return parse
 
@@ -38,7 +39,6 @@ def main(link, limit, list_of_arguments):
     elif limit is not None and '--date' in list_of_arguments:
         RSSParser(link, limit, list_of_arguments).news_for_date()
     elif link:
-        print("A")
         RSSParser(link, limit, list_of_arguments).parse()
 
 
@@ -48,7 +48,9 @@ if __name__ == '__main__':
         print("VERSION 1.0")
     if path.isfile("snake.log"):
         remove("snake.log")
-    logging.basicConfig(filename="snake.log", level=logging.INFO)
+    logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+    if '--verbose' not in list_of_args:
+        logging.disable(logging.CRITICAL)
     logging.info("Program started")
     logging.info("Creating parser for console")
     parser = create_parser()

@@ -69,7 +69,7 @@ def converting_to_pdf(path, pack_of_news):
         file_name = path + directory + name_by_date + '.jpg'
 
         pdf.set_text_color(0, 0, 0)
-        pdf.write(15, str(item.number_of_novelty) + ". " + item.title_of_novelty + "\n")
+        pdf.write(10, str(item.number_of_novelty) + ". " + item.title_of_novelty + "\n")
         try:
             pdf.image(file_name, w=140, h=100)
         except RuntimeError:
@@ -114,3 +114,17 @@ def converting_to_html(path, pack_of_news):
             except RuntimeError:
                 html_news.write(f"Image links: {item.images_links}<br> Alternative text: {item.alt_text}<br>")
             html_news.write("Main source: <a href="">{0}</a> <br></p>".format(item.main_source))
+
+
+def html_path(list_of_args):
+    try:
+        return list_of_args[list_of_args.index('--to-html') + 1]
+    except IndexError:
+        return os.path.abspath(os.curdir)
+
+
+def pdf_path(list_of_args):
+    try:
+        return list_of_args[list_of_args.index('--to-pdf') + 1]
+    except IndexError:
+        return os.path.abspath(os.curdir)
