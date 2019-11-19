@@ -6,17 +6,15 @@ import socket
 import bs4
 from bs4 import BeautifulSoup
 import CustomException
-
-
-log = logging.getLogger("Log")
+from datetime import datetime
+import converter
+LOG = logging.getLogger("LOG")
 
 
 def is_connected() -> bool:
-    log.info("Checking internet connection...")
+    LOG.info("Checking internet connection...")
     try:
         socket.create_connection(("www.google.com", 80))
-    except OSError:
-        pass
     except Exception:
         raise CustomException.ConnectionError
     return True
@@ -29,11 +27,11 @@ def find_news(url) -> bs4.element.ResultSet:
         resp = requests.get(url)
         soup = BeautifulSoup(resp.content, features="xml")
         items = soup.findAll('item')
-        log.info(f'{len(items)} pieces of news have been found')
+        LOG.info(f'{len(items)} pieces of news have been found')
     except requests.exceptions.MissingSchema:
         raise CustomException.WrongUrl
     except requests.exceptions.ConnectionError:
-        log.error("Can't connect to the " + url)
+        LOG.error("Can't connect to the " + url)
         raise CustomException.UrlUnreachable
     return items
 
@@ -55,7 +53,7 @@ def find_channel(url) -> bs4.element.Tag:
 
 def collect_news(items, limit) -> list:
     """Sorts the components of the news into dictionaries and adds them into a list"""
-    log.info("Collecting news...")
+    LOG.info("Collecting news...")
     news = []
     for item in items:
         try:
@@ -69,13 +67,16 @@ def collect_news(items, limit) -> list:
             news_item['link'] = item.link.text
             if item.thumbnail:
                 for img in item.findAll('thumbnail'):
-                    images.append(img['url'])
+                    if not img['url'] in images:
+                        images.append(img['url'])
             if item.content:
                 for img in item.findAll('content'):
-                    images.append(img['url'])
+                    if not img['url'] in images:
+                        images.append(img['url'])
             if item.enclosure:
                 for img in item.findAll('enclosure'):
-                    images.append(img['url'])
+                    if not img['url'] in images:
+                        images.append(img['url'])
             if not images:
                 news_item['image'] = None
             else:
@@ -92,14 +93,14 @@ def collect_news(items, limit) -> list:
             else:
                 news_item['alt'] = alts
         except TypeError:
-            log.error("Could not load an image")
+            LOG.error("Could not load an image")
             news_item['image'] = "No image"
         except AttributeError:
-            log.error("Probably no description")
+            LOG.error("Probably no description")
             news_item['description'] = "No description"
         news.append(news_item)
         if len(news) == limit:
-            log.info(f'The limit of {limit} pieces of news reached')
+            LOG.info(f'The limit of {limit} pieces of news reached')
             break
     return news
 
@@ -128,7 +129,8 @@ def print_one(item):
 
 def print_news(list_of_news, channel):
     try:
-        print("Feed: " + channel.title.text + '\n\n')
+        if channel:
+            print("Feed: " + channel.title.text + '\n\n')
         for item in list_of_news:
             print_one(item)
     except AttributeError:
@@ -137,12 +139,12 @@ def print_news(list_of_news, channel):
 
 def json_convert(news):
     """Converts the news into JSON format"""
-    log.info("Converting to JSON...")
+    LOG.info("Converting to JSON...")
     print(json.dumps(news, sort_keys=False, indent=4, ensure_ascii=False, separators=(',', ': ')))
 
 
 def args_parse() -> argparse.Namespace:
-    log.info("Parsing arguments...")
+    LOG.info("Parsing arguments...")
     parser = argparse.ArgumentParser(description="RSS")
     parser.add_argument('source', type=str, help='RSS URL', nargs='?')
     parser.add_argument('--version', action='store_true', help='Print version info')
@@ -150,10 +152,13 @@ def args_parse() -> argparse.Namespace:
     parser.add_argument('--verbose', action='store_true', help='Outputs verbose status messages')
     parser.add_argument('--limit', type=int, default=999, help='Limit news topics if this parameter provided')
     parser.add_argument('--date', type=str, help='Specifies the date of news')
+    parser.add_argument('--topdf', type=str, help='Converts news into PDF')
+    parser.add_argument('--tohtml', type=str, help='Converts news into HTML')
     return parser.parse_args()
 
 
 def write_cache(news):
+    LOG.info('Writing news to cache...')
     flag = True
     exists = True
     try:
@@ -176,92 +181,108 @@ def write_cache(news):
             json.dump(news, file, indent=2, ensure_ascii=False)
 
 
-
-
-def get_by_date(date, source, limit):
-    flag = False
-    calendar = {
-        "01": 'Jan',
-        "02": 'Feb',
-        "03": 'Mar',
-        "04": 'Apr',
-        "05": 'May',
-        "06": 'Jun',
-        "07": 'Jul',
-        "08": 'Aug',
-        "09": 'Sep',
-        "10": 'Oct',
-        "11": 'Nov',
-        "12": 'Dec',
-    }
-    date = date[6:] + ' ' + calendar[date[4:6]] + ' ' + date[0:4]
-    try:
-        file = open('cache.json')
-    except FileNotFoundError:
-        print('No news in cache yet')
-    else:
-        with file:
-            json_list = json.load(file)
-            print(date + ':\n')
+def get_by_date(datestr, source, limit, html_flag, pdf_flag, path_html, path_pdf):
+    if limit > 0:
+        news = []
+        flag = False
+        date = datetime.strptime(datestr, '%Y%m%d').strftime("%d %b %Y")
+        date = str(date)
+        try:
+            with open('cache.json') as file:
+                json_list = json.load(file)
+        except FileNotFoundError:
+            print('No news in cache yet')
+        else:
             if source:
                 source = source[8:source.find('/', 8)]
-                for item in json_list:
+                for ind, item in enumerate(json_list):
                     if date in item['date'] and source in item['link']:
                         flag = True
-                        print_one(item)
-                        limit -= 1
-                        if not limit:
+                        news.append(item)
+                        if len(news) > limit - 1:
                             break
-                else:
-                    for item in json_list:
-                        if date in item['date']:
-                            flag = True
-                            print_one(item)
-                            limit -= 1
-                            if not limit:
-                                break
+            else:
+                for ind, item in enumerate(json_list):
+                    if date in item['date']:
+                        flag = True
+                        news.append(item)
+                        if len(news) > limit - 1:
+                            break
+
             if not flag:
-                log.error('No news on ' + date + ' have been found')
+                LOG.error('No news on ' + date + ' have been found')
                 print('No news on ' + date + ' have been found')
+            else:
+                if not html_flag and not pdf_flag:
+                    print('------------------- FROM CACHE ------------------------------\n\n')
+                    print(date + ':\n')
+                    print_news(news, None)
+                if html_flag:
+                    converter.html_convert(news, limit, path_html)
+                if pdf_flag:
+                    converter.pdf_convert(news, limit, path_pdf)
 
 
 if __name__ == '__main__':
+    flag = True
+    html_flag = False
+    pdf_flag = False
     try:
-        log.info("Main")
+        LOG.info("Main")
         args = args_parse()
+        if args.version:
+            LOG.info(f'Version {args.version}')
+            print('Version is 1.2')
+
+        if args.verbose:
+            logging.basicConfig(level=logging.INFO)
         if is_connected():
-            if args.version:
-                log.info(f'Version {args.version}')
-                print('Version is 1.2')
-            if args.verbose:
-                logging.basicConfig(level=logging.INFO)
 
             if args.limit:
                 limit = args.limit
-                log.info(f'Limit = {limit}')
+                LOG.info(f'Limit = {limit}')
+                if limit <= 0:
+                    raise CustomException.WrongLimit
+
             if args.source:
                 if 'www' in args.source:
                     args.source = args.source[:8] + args.source[12:]
                 channel = find_channel(args.source)
                 items = find_news(args.source)
                 news = collect_news(items, limit)
-                if args.json:
+
+                if args.json and not args.topfd and not args.tohtml:
+                    flag = False
                     json_convert(news)
-                else:
+
+                if args.tohtml:
+                    flag = False
+                    converter.html_convert(news, limit, args.tohtml)
+
+                if args.topdf:
+                    flag = False
+                    converter.pdf_convert(news, limit, args.topdf)
+
+                if flag:
                     print_news(news, channel)
+
                 write_cache(news)
+
                 if args.date:
                     print('\n\n\n\n')
+
     except CustomException.ConnectionError:
         print('Can not connect to the internet. Check your connection')
-    # except NameError:
-    #     log.error('Wrong limit')
-    #     print('Wrong limit')
+    except CustomException.WrongLimit:
+        LOG.error('Wrong limit')
+        print('Wrong limit')
     except CustomException.WrongUrl:
         print('Wrong url ' + args.source)
     except CustomException.UrlUnreachable:
         print('Can not make the connection with the site')
     if args.date:
-        print('------------------- FROM CACHE ------------------------------\n\n')
-        get_by_date(args.date, args.source, args.limit)
-
+        if args.tohtml:
+            html_flag = True
+        if args.topdf:
+            pdf_flag = True
+        get_by_date(args.date, args.source, args.limit, html_flag, pdf_flag, args.tohtml, args.topdf)
