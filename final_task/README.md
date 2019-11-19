@@ -120,3 +120,18 @@ Argument --date work with --json, --limit and --verbose arguments
 $ python rss_reader.py --date 20191113 --json --verbose
 ```
 News is stored in local file cache.json as list of json objects
+# Iteration 4
+Option of conversation of news in htmlf format is available. 
+Example:
+```
+$ python rss_reader.py "https://news.yahoo.com/rss/" --to-html "F:/Path/to/your/folder" 
+```
+Option works with --limit and --date attributes
+```
+$ python rss_reader.py --date 20191118 --to-html "F:/Path/to/your/folder" --limit 1
+```
+Option throws an exception when the path to the folder is incorrect
+```
+$ python rss_reader.py "https://news.yahoo.com/rss/" --to-html "F:/incorrect/path"
+Error. No such folder. Check the correctness of the entered path
+```

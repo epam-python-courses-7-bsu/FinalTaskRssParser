@@ -25,6 +25,7 @@ class Handler:
     @logging_decorator
     def option_html(self, path: str) -> None:
         for entry in islice(self.gen_entries(), 0, self.limit):
+            self.write_json_to_cache(self.convert_to_dict(entry))
             self.write_to_html(entry, path)
 
     @logging_decorator
@@ -46,6 +47,8 @@ class Handler:
             entries = json.load(open("cache.json"))
         except json.JSONDecodeError:
             entries = []
+        except FileNotFoundError:
+            entries = []
 
         if not [entry for entry in entries if entry["Title"] == entry_dict["Title"]]:
             entries.append(entry_dict)
@@ -56,7 +59,7 @@ class Handler:
     @logging_decorator
     def option_date(self, date: str, do_json: bool, do_html: bool, html_path: str):
         """read entries from cache.json into list daily_news that have date that is equal to --date DATE
-            and then raise an exception or print to console"""
+            and then raise an exception or print to console or to outputs to html"""
         try:
             entries = json.load(open("cache.json"))
         except json.JSONDecodeError:
