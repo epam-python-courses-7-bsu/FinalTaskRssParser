@@ -84,9 +84,18 @@ source or database. Receive the path where file will be saved
 ```
 
 ### News storage
+>Store all fetched news.
 >For news storage a “shelve”, persistent, dictionary-like object was used.
 >"Shelve object will be situated in your home directory. 
 >All fetched news will be saved in "shelve" object.
 >The keys for search is a rss publication date string. 
 >The values is python News() objects.
 >More information about "shelve" is avaliable on [link](https://docs.python.org/3/library/shelve.html).
+
+### Convertation to epub or html format
+>Utility can convert fetched news to epub or html format.
+>Convertation could be carry out both from internet source 
+>or news storage. File with fetched news will be created in specified directory.
+
+### Output colorization
+> Utility supports colorization of terminal output, including logger messages.

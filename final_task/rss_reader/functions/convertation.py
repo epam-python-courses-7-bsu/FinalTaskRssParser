@@ -37,7 +37,7 @@ def create_html(command_line_args, news_collection, logger):
         logger.info("Add html entry {}".format(num + 1))
         doc_html = create_html_news_entry(news, doc_html, internet)
 
-    path_to_html = os.path.join(command_line_args.to_html, 'News.html')
+    path_to_html = os.path.join(command_line_args.to_html, 'RSS News.html')
     try:
         with open(path_to_html, 'w') as html_obj:
             html_obj.write(str(doc_html))
@@ -143,7 +143,7 @@ def create_epub(command_line_args, news_collection, logger):
     book.add_item(epub.EpubNcx())
     book.add_item(epub.EpubNav())
 
-    path_to_ebook = os.path.join(command_line_args.to_epub, 'News.epub')
+    path_to_ebook = os.path.join(command_line_args.to_epub, 'RSS News.epub')
     epub.write_epub(path_to_ebook, book, {})
     if os.path.exists(path_to_ebook):
         logger.info("Epub book is created")

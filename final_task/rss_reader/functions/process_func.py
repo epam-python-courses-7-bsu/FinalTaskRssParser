@@ -104,6 +104,9 @@ def process_feed(command_line_args, feed, logger):
     Get feed title
     Create a list of news instance objects
     """
+    # Appoint command_line_args as News class attribute
+    News.command_line_args = command_line_args
+
     # Get feed title and source of feed
     feed_title = feed.feed.get("title", "")
     source = command_line_args.source
@@ -126,7 +129,7 @@ def process_feed(command_line_args, feed, logger):
         link = entry.get("link", "")
 
         # Create News object
-        news = News(title, date, link, text, links, feed_title, source, command_line_args)
+        news = News(title, date, link, text, links, feed_title, source)
 
         # Adding news entry in the collection
         news_collection.append(news)

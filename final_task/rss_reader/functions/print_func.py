@@ -3,6 +3,7 @@
 import json
 import classes.exceptions as exc
 from termcolor import cprint
+from dataclasses import asdict
 
 
 def limit_news_collections(command_line_args, news_collection, logger):
@@ -28,7 +29,7 @@ def generate_news_json(news_collection, logger):
     all_news_dict = {'news': []}
     logger.info("Configure json file...")
     for news in news_collection:
-        news_dict = news.asdict()
+        news_dict = asdict(news)
         links = news.create_string_of_links()
         if links:
             list_of_str_links = links.split('\n')
