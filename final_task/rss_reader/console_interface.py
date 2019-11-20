@@ -4,11 +4,12 @@ import logging
 class ConsoleInterface():
     """ Implement console interface"""
 
-    source = ""
+    source = None
     limit = -1
-    version = "Version 1.2"
+    version = "Version 1.3"
     json = False
     verbose = False
+    date = None
 
     def __init__(self):
         """ Gets parametres from console"""
@@ -19,7 +20,7 @@ class ConsoleInterface():
         parser.add_argument("--version", action="store_true", help="Print version info")
         parser.add_argument("--json", action="store_true", help="Print result as JSON in stdout")
         parser.add_argument("--verbose", action="store_true", help="Outputs verbose status messages")
-
+        parser.add_argument("--date", type=str, help="Print the new from the specified day, YYYYMMDD format")
         args = parser.parse_args()
 
 
@@ -35,4 +36,6 @@ class ConsoleInterface():
             logging.basicConfig(level=logging.DEBUG, format='%(process)d-%(levelname)s-%(message)s')
         else:
             logging.basicConfig(filename='app.log', level=logging.DEBUG, filemode='w', format='%(name)s - %(levelname)s - %(message)s')
+        if args.date:
+            self.date = args.date
         logging.debug("Check in interface")

@@ -5,7 +5,7 @@ import logging
 def main():
     console = ConsoleInterface()
     logging.debug("Check in main")
-    rssobject = RssParser(console.source, console.limit, console.json)
+    rssobject = RssParser(console.source, console.limit, console.json, console.date)
 
 if __name__ == '__main__':
     main()

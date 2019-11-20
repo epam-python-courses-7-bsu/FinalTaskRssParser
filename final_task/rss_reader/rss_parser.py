@@ -1,23 +1,98 @@
 import feedparser
 import json
 import logging
+import psycopg2
+from database_functions import checkExistance
+from database_functions import createTable
+from database_functions import putIntoDB
+from database_functions import readingPasswordFromFile
 
 class RssParser():
     """ Parses news from website"""
 
     url = ""
     limit = 0
+    date = None
     jsonFormat = False
 
-    def __init__(self, parametrUrl, parametrLimit, parametrJsonFormat = False):
+    def __init__(self, parametrUrl, parametrLimit, parametrJsonFormat = False, parametrDate = None):
         """ Inits arguments"""
 
         self.url = parametrUrl
         self.limit = parametrLimit
         self.jsonFormat = parametrJsonFormat
+        self.date = parametrDate
         logging.debug("Check in parser")
-        self.parse()
 
+        if self.date != None:
+            self.printCashe()
+        else:
+            self.parse()
+
+
+    def printCashe(self):
+        """ Prints news from database from the specified day."""
+
+        con = None
+        exists = checkExistance()
+        if not exists:
+            createTable()
+        try:
+            con = psycopg2.connect(
+                database="postgres",
+                user="postgres",
+                password=readingPasswordFromFile(),
+                host="localhost",
+                port="5432"
+            )
+            logging.debug("Database opened successfully")
+            cur = con.cursor()
+            if self.limit > 0:
+                cur.execute("SELECT * from cache WHERE feed = %s AND date = %s LIMIT %s",
+                            (self.url, self.date, str(self.limit)))
+            else:
+                cur.execute("SELECT * from cache WHERE feed = %s AND date = %s", (self.url, self.date))
+
+            rows = cur.fetchall()
+            if not rows:
+                print("No results\nTry to enter another date or url")
+            if self.jsonFormat:
+                listToJsonFormat = []
+                for row in rows:
+                    if row[4][1]:
+                        dictionary = {"Title": row[1],
+                                      "Date": row[2],
+                                      "Description": row[3],
+                                      "Link [1]": row[4][0],
+                                      "Link [2]": row[4][1]}
+                    else:
+                        dictionary = {"Title": row[1],
+                                      "Date": row[2],
+                                      "Description": row[3],
+                                      "Link [1]": row[4][0]}
+                    listToJsonFormat.append(dictionary)
+                jsonData = json.dumps(listToJsonFormat, indent=5, ensure_ascii=False)
+                print(jsonData)
+            else:
+                for row in rows:
+                    print("Title: ", row[1])
+                    print("Date: ", row[2])
+                    print("Link: ", row[4][0])
+
+                    print()
+                    print("Description: " + row[3])
+
+                    print("\nLinks:")
+                    print("[1]:", row[4][0])
+                    if row[4][1]:
+                        print("[2]:", row[4][1])
+                    print("__________________________________________________________________")
+        except (Exception, psycopg2.DatabaseError) as error:
+            logging.error(error)
+        finally:
+            if con is not None:
+                con.close()
+        return None
 
     def findDescription(self, description) -> str:
         """ Parses description in readable format, return description"""
@@ -60,7 +135,8 @@ class RssParser():
                     print("[2]:", listOfTags[4])
                     linkOfImg = listOfTags[4]
                 print("__________________________________________________________________")
-
+                putIntoDB(self.url, listOfTags[0], thefeedentry.get("published_parsed", thefeed.feed.published_parsed),
+                          listOfTags[3], listOfTags[2], linkOfImg)
         return None
 
     def takingInformationFromFeedparser(self, thefeedentry) -> list:
@@ -115,6 +191,8 @@ class RssParser():
                                   "Description": descriptionForDict, "Link [1]": listOfTags[2]}
                     linkOfImg = ""
                 listToJson.append(dictionary)
+                putIntoDB(self.url, listOfTags[0], thefeedentry.get("published_parsed", thefeed.feed.published_parsed),
+                          listOfTags[3], listOfTags[2], linkOfImg)
 
         # converts to json
         jsonData = json.dumps(listToJson, indent=5, ensure_ascii=False)
@@ -128,7 +206,7 @@ class RssParser():
         if thefeed.get('bozo') == 1:
             stringException = thefeed.get('bozo_exception')
             logging.error(stringException)
-            print(stringException.reason)
+            print(stringException)
             return None
 
         logging.debug("Parsing from website was successful")
