@@ -11,7 +11,7 @@ setup(
     name="rss_reader",
     version="4.0",
     packages=find_packages(),
-    install_requires=['beautifulsoup4', 'dominate', 'feedparser', 'urllib3', 'xhtml2pdf'],
+    install_requires=['beautifulsoup4', 'feedparser', 'urllib.error'],
     author="Stacy Merkushova",
     author_email="st.merkush@gmail.com",
     url="https://github.com/Clonder/FinalTaskRssParser.git",
