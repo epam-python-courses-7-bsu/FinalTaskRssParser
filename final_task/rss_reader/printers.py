@@ -1,6 +1,8 @@
-import rss_get_items as filters
-from collections import defaultdict
 from collections import OrderedDict
+from collections import defaultdict
+import logging as log
+
+import rss_get_items as filters
 
 
 def split_string_by_lines(input_string: str, word_number: int) -> str:
@@ -24,7 +26,7 @@ def prepare_one_item(item_xml: defaultdict) -> OrderedDict:
         10
     )
     media_content = split_string_by_lines(
-        ' '.join(item_xml['content']),
+        ''.join(item_xml['content']),
         1
     )
     prepared_news = OrderedDict()
@@ -38,17 +40,46 @@ def prepare_one_item(item_xml: defaultdict) -> OrderedDict:
 
 
 def print_one_item(news_item: OrderedDict) -> None:
+    log.info('Start print news')
     print("===Wow! News!===")
     for key, value in news_item.items():
         print(key, value)
     print("===End, news!===")
+    log.info('End print news')
 
 
-def print_news(items: list, limit: int) -> None:
+def print_news(items: list) -> None:
     """" Take list of rss items and print all this news"""
-    for item in items[:limit]:
+    log.info('Start print news')
+    for item in items:
         item = prepare_one_item(item)
         print_one_item(item)
+    log.info('End print news')
+
+
+def make_json(items: list) -> dict:
+    """convert article data in json format"""
+    log.info('Start make json format')
+    for item in items:
+        item = prepare_one_item(item)
+        json = {
+            'images': item['Media content:\n'],
+            'link': item['Link: '],
+            'description': item['Description:\n'],
+            'date': item['Date:'],
+            'title': item['Title:'],
+        }
+    log.info('End make json format')
+    return json
+
+
+def print_json(items: list) -> None:
+    json = make_json(items)
+    log.info('Start print json')
+    print("Json: {")
+    for item, amount in json.items():
+        print('"' + item + '":' + "{ " + amount + "}")
+    log.info('End print json')
 
 # link_1 = "https://news.yahoo.com/rss/"
 # link_2 = "https://news.tut.by/rss/s~173.rss"

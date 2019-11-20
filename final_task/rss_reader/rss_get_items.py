@@ -1,4 +1,3 @@
-import datetime
 import logging as log
 import urllib.error
 import urllib.request
@@ -7,6 +6,7 @@ from collections import defaultdict
 
 
 def get_items(url: str):
+    log.info('Start get items from url')
     request = urllib.request.Request(url)
     try:
         soup_xml = BeautifulSoup(
@@ -29,12 +29,13 @@ def get_items(url: str):
                 else:
                     item_xml[key] = value
             items.append(item_xml)
-
+        log.info('Successful parsing')
         return items
 
 
 def description(description_element: str) -> str:
     """ Try to delete all html in description """
+    log.info('Try to delete all html in description')
     return BeautifulSoup(description_element, "html.parser").getText()
 
 
@@ -47,7 +48,3 @@ def pubdate(pub_date: str) -> str:
     return pub_date
 
 
-def get_json(item):
-    json = {}
-    item.update(json)
-    print(json)
