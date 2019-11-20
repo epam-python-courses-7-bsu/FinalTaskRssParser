@@ -12,7 +12,8 @@ def main():
     arg = get_console_argument()
     link = arg.link
 
-    lim = 10
+    # standart value -1, in handler we  will process and get all the value
+    lim = -1
     if arg.version:
         print("version:  1.0")
         return
@@ -22,8 +23,6 @@ def main():
         if arg.limit <= 0:
             raise RssException("Error count news <0")
         lim = arg.limit
-    # else:
-    #     lim = 100
     hand = Handler(link, lim)
     news = hand.get_all()
     if len(news) < lim:
