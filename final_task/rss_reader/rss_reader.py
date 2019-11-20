@@ -7,7 +7,7 @@ from parse_rss_functions import get_news_list
 from personal_exceptions import *
 from print_functions import *
 
-VERSION = 1
+VERSION = 2
 
 
 def main():
