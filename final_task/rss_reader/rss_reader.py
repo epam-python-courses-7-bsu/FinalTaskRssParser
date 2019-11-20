@@ -33,16 +33,8 @@ def main():
     list_of_news = []
     news_feed = parser_rss.get_news_feed(args.source)
     parser_rss.init_list_of_news(list_of_news, news_feed, args.limit)
-    item = News(feed="feed",
-                     title="title",
-                     date=parser.parse("2019-11-17 10:44:20-05:00"),
-                     link="link",
-                     info_about_image="info_about_image",
-                     briefly_about_news="briefly_about_news",
-                     links_from_news=["link", "link_on_image"]
-                     )
     if args.json:
-        parser_rss.print_news_in_json([item,])
+        parser_rss.print_news_in_json(list_of_news)
     else:
         parser_rss.print_news(list_of_news)
 

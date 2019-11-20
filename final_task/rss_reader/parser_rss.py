@@ -114,7 +114,7 @@ def print_news(list_of_news: list):
     for number, news in enumerate(list_of_news):
         print(number + 1)  # because number starts at 0
         print(news)
-        # print('-' * 100)
+        print('-' * 100)
 
 
 def print_news_in_json(list_of_news: list):

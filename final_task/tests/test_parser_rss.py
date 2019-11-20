@@ -74,19 +74,3 @@ the Russian military intelligence service, according to a Western intelligence s
 
     if __name__ == '__main__':
         unittest.main()
-
-    #  nosetests --with-coverage --cover-erase
-# [
-#     {
-#         "Feed": "feed",
-#         "Title": "title",
-#         "Date": "2019-11-17 10:44:20-05:00",
-#         "Link": "link",
-#         "Info about image": "info_about_image",
-#         "Briefly about news": "briefly_about_news",
-#         "Links": [
-#             "link",
-#             "link_on_image"
-#         ]
-#     }
-# ]
