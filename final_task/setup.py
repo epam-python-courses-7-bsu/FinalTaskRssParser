@@ -2,10 +2,10 @@ from setuptools import setup
 
 setup(
     name='rss-reader',
-    version='v3.1',
+    version='v4.0',
     packages=['rss_reader'],
-    include_package_data=True,
-    install_requires=['feedparser == 5.2.1', 'html2text == 2019.9.26'],
+    package_data={'rss_reader': ['ARIALUNI.ttf']},
+    install_requires=['feedparser == 5.2.1', 'html2text == 2019.9.26', 'fpdf==1.7.2'],
     url='www.github.com',
     license='LICENCE.txt',
     author='AlexSpaceBy',

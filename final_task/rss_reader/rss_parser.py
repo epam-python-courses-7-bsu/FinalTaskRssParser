@@ -38,9 +38,14 @@ def process_rss(rss: dict, limit: int) -> dict:
 
     """news_date for third iteration, yyyy-mm-dd"""
 
-    date_time = datetime.datetime.now()
-    data['date'] = date_time.strftime("%d/%m/%Y %H:%M:%S")
-    data['news_date'] = date_time.strftime("%Y%m%d")
+    try:
+        data['date'] = rss.entries[limit].published
+        date_time = datetime.datetime.now()
+        data['news_date'] = convert_date(rss.entries[limit].published)
+    except AttributeError:
+        date_time = datetime.datetime.now()
+        data['date'] = date_time.strftime("%d/%m/%Y %H:%M:%S")
+        data['news_date'] = date_time.strftime("%Y%m%d")
 
     try:
         data['description'] = rss.entries[limit].summary_detail['value']
@@ -61,7 +66,13 @@ def process_rss(rss: dict, limit: int) -> dict:
         img_clean = re.sub('".+"', '', img_clean)
         data['image'] = img_clean
     else:
-        data['image'] = None
+        try:
+            img_try = rss.entries[limit].links[1]
+            data['image'] = img_try['href']
+        except IndexError:
+            data['image'] = None
+        except KeyError:
+            data['image'] = None
 
     return data
 
@@ -107,10 +118,9 @@ def connect_rss(url: str) -> bool:
                     print('. ', end='')
                     time.sleep(1)
                 print('')
-                continue
 
             # If server answer is a common code or something is not a common code
-            if http_err.code in server_answer.keys():
+            elif http_err.code in server_answer.keys():
                 print('The server can not be reached: Reason: %s' % server_answer[http_err.code])
                 return False
             else:
@@ -120,7 +130,26 @@ def connect_rss(url: str) -> bool:
         # In case HTTPError is not working
         except urllib.error.URLError as url_err:
             print('The server can not be reached. Reason: %s' % url_err.reason)
-            continue
 
     return False
 
+
+def convert_date(date: str):
+    """This function converts date"""
+    month = {'Jan': '1',
+             'Feb': '2',
+             'Mar': '3',
+             'Apr': '4',
+             'May': '5',
+             'Jun': '6',
+             'Jul': '7',
+             'Aug': '8',
+             'Sep': '9',
+             'Oct': '10',
+             'Nov': '11',
+             'Dec': '12'}
+    day = date[5:7]
+    month_num = month[date[8:11]]
+    year = date[12:16]
+
+    return year+month_num+day

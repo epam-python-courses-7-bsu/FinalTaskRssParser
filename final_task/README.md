@@ -1,6 +1,6 @@
-# RSS Reader version 3.1 by AlexSpaceBy (fiz.zagorodnAA@gmail.com)
+# RSS Reader version 4.0 by AlexSpaceBy (fiz.zagorodnAA@gmail.com)
 
-First, second and third iteration.
+First, second, third and fourth iteration.
 
 ## General description:
 
@@ -46,9 +46,9 @@ Program behavior is guided by a number of flags:
 `-j` - Print news in JSON format to console( use: `[url] -j`).
 `-l` - Limit the number of news topics (use: `[url] -l [number]`).
 `-d` - Date to print the news with it from history (use: `[url] -d [YYYYmmdd]`).
+`-p` - Convert news to pdf and store it locally (use: `[url] -p [destination folder]`).
+`-hl` - Convert news to html and store it locally(use: `[url] -hl [destination folder]`).
 
-Since argsparse.py lib is used, it ismandatory to use positional `[url]` parameter
-for `[-j]`, `[-b]`, `[-l]`, `[-d]` flags. 
 
 ## logJournal
 
@@ -77,7 +77,8 @@ or to quit. If there is a server on the other side, the program tries to take RS
 site, server, or something that doesn't have RSS feed, the program will ask you either to change `[url]` or to quit.
 If everything is ok, the program will print news to console. The `[-l]` flag set up the limit for the news to print to console.
 By default the program stores the news in local news.log file. The `[-d]` flag with `YYYYmmdd` format prints all news corresponding to
-the `YYYYmmdd` date. The detailed description of news storage is described below.
+the `YYYYmmdd` date. The detailed description of news storage is described below. There is an option to convert nwes to pdf. The detailed
+description of this option is provided below.
 
 ## JSON format
 
@@ -134,6 +135,7 @@ By default RssReader stores all news taken from the Internet in news.log file in
 *Title: (line with litle)*
 *Date: (line with date)*
 *Link: (line with link)*
+*Image: (line with image)*
  
 *TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT*
 *TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT*
@@ -146,12 +148,56 @@ The first and the last line show the beginning and the end of news respectively.
 through all journal for the news that strat with `!!!#####STARTOFNEWS#####!!!YYYYmmdd` and ends with `!!!#####ENDOFNEWS#####!!!YYYYmmdd` and
 prints all lines in between. There is a builtin function that does preliminary check of date. If date is from the future, the program will tell about it.
 If there is no news.log file (that may happened if you run the program for the first time, the news.log in this case have not existed yet) or there is
-no news that corresponds to the specified `YYYYmmdd` date, the program will tell about it. 
+no news that corresponds to the specified `YYYYmmdd` date, the program will tell about it.
+There is a builtin function that checks whether the news has been already added to the local storage. If so, the program logs the attempt, and does not add it to
+the local storage. To use this function the program takes the link for the news and checks if there is a news with the same link.
+
+Typical usage (provided you have the news log in your local storage, if not, just provide a valid rss url to create one):
+
+               `rss-reader url -d 20191119` - prints all news for 2019.11.19 to console from local storage
+
+               `rss-reader url -d 20191119 -l 10` - prints 10 news for 2019.11.19 to console from local storage
 
 *For Windows:* News Journal is stored in the default Python directory (in my case: `C:\Program Files\Python38\Lib\site-packages\rss_reader`).
 
 *For Linux:* News Journal is stored in the default Python directory (in my case: `/usr/local/lib/python3.7/site-packages/rss_reader`).
 
+## Convert news to pdf or html
+
+The program can convert the news to pdf or html. It can take either news from the Internet, or from local storage. The program converts news to pdf by invoking `[-p]` flag.
+The program converts news to html by invoking `[-hl]` flag.In the document the program provide all data about the news, including image and link. If the image is not available, or corrupted,
+the program will let you know about it. The image and link are interactive and can be used as URL for the sourse by clicking. Due to saving of free space on hard drive, the program cashes only text
+information and link to the news. When you convert news from local storage, the program downloads the picture from the Internet. In there is no Internet, the program converts the
+news from local storage, but instead of picture, it draws notice that there is no Internet connection.
+
+Typical usage of the pdf converter (if it was installed from the package):
+
+                                  `rss-reader https://news.yahoo.com/rss/ -p C:\Users\User\Destination_Folder\` - convert all news from the feed to pdf. 
+
+                                  `rss-reader https://news.yahoo.com/rss/ -p C:\Users\User\Destination_Folder\ -l 10` - convert 10 news from the feed to pdf.
+
+                                  `rss-reader https://news.yahoo.com/rss/ -p C:\Users\User\Destination_Folder\ -l 10 -j` - convert 10 news from the json feed to pdf.
+
+                                  `rss-reader url -b -p C:\Users\User\Destination_Folder\` - convert log journal to pdf
+
+                                  `rss-reader url -d 20191119 -p C:\Users\User\Destination_Folder\` - convert all news from the local storage to pdf for 20191119.
+
+                                  `rss-reader url -d 20191119 -p C:\Users\User\Destination_Folder\ -l 10` - convert 10 news from the local storage to pdf for 20191119.
+
+                                  `rss-reader https://news.yahoo.com/rss/ -hl C:\Users\User\Destination_Folder\` - convert all news from the feed to html. 
+
+                                  `rss-reader https://news.yahoo.com/rss/ -hl C:\Users\User\Destination_Folder\ -l 10` - convert 10 news from the feed to html.
+
+                                  `rss-reader url -b -hl C:\Users\User\Destination_Folder\` - convert log journal to html/
+
+                                  `rss-reader url -d 20191119 -hl C:\Users\User\Destination_Folder\` - convert all news from the local storage to pdf for 20191119.
+
+                                  `rss-reader url -d 20191119 -hl C:\Users\User\Destination_Folder\ -l 10` - convert 10 news from the local storage to pdf for 20191119.
+
+
+
+The `Destination_Folder\` is a folder where files after pdf conversion will be stored. The `\` in the end of the path is a mandatory for the program. If the `Destination_Folder` does not exist, or you have no permission to create pdf inside it,
+the program will let you know. Since pdf convertion is a heavy weight procedure, it can take time. If ther is no errors, just wait until it converts.  
 
 ## General issues
 
@@ -183,8 +229,8 @@ Package installation:
 zip Installation:
 =========================================
 1. Run Console with administrator privileges (run as Administrator).
-2. In console go to directory with *rss-reader-3.1.zip* package.
-3. Run the following command: `pip install rss-reader-3.1.zip`
+2. In console go to directory with *rss-reader-3.5.zip* package.
+3. Run the following command: `pip install rss-reader-3.5.zip`
 =========================================
 
 
@@ -195,8 +241,8 @@ Package installation:
 =========================================
 zip Installation:
 =========================================
-1. In console go to directory with *rss-reader-3.1.zip* package.
-2. Run the following command: `sudo pip3 install rss-reader-3.1.zip`.
+1. In console go to directory with *rss-reader-3.5.zip* package.
+2. Run the following command: `sudo pip3 install rss-reader-3.5.zip`.
 =========================================
 
 
@@ -211,10 +257,16 @@ If you try to run directly from the folder, and have never installed the program
 Windows:
 1. feedparser version 5.2.1 (`pip install feedparser==5.2.1`)
 2. html2text version 2019.9.26 (`pip install html2text==2019.9.26`)
+3. fpdf version 1.7.2 (`pip install fpdf==1.7.2`)
+
+To convert the news to pdf, it is highly recommended to check if `ARIALUNI.TTF` is inside the rss_reader folder. 
 
 Linux:
 1. feedparser version 5.2.1 (`sudo pip3 install feedparser==5.2.1`)
 2. html2text version 2019.9.26 (`sudo pip3 install html2text==2019.9.26`)
+3. fpdf version 1.7.2 (`sudo pip3 install fpdf==1.7.2`)
+
+To convert the news to pdf, it is highly recommended to check if `ARIALUNI.TTF` is inside the rss_reader folder.
 ====================================================================================================================
 
 Windows:
@@ -230,7 +282,22 @@ Example:
  `python rss_reader.py https://news.yahoo.com/rss/ -l 10 -j` - will show you RSS feed with 10 news in JSON format
 
  `python rss_reader.py url -b` - will show you log journal
- `python rss_reader.py url -d 20191108` - will show you the news for 2019.11.08 in case there is news.
+
+ `python rss_reader.py url -d 20191119` - prints all news for 2019.11.19 to console from local storage
+ `python rss_reader.py url -d 20191119 -l 10` - prints 10 news for 2019.11.19 to console from local storage
+
+ `python rss_reader.py https://news.yahoo.com/rss/ -p C:\Users\User\Destination_Folder\` - convert all news from the feed to pdf. 
+ `python rss_reader.py https://news.yahoo.com/rss/ -p C:\Users\User\Destination_Folder\ -l 10` - convert 10 news from the feed to pdf.
+ `python rss_reader.py https://news.yahoo.com/rss/ -p C:\Users\User\Destination_Folder\ -l 10 -j` - convert 10 news from the json feed to pdf.
+ `python rss_reader.py url -b -p C:\Users\User\Destination_Folder\` - convert log journal to pdf
+ `python rss_reader.py url -d 20191119 -p C:\Users\User\Destination_Folder\` - convert all news from the local storage to pdf for 20191119.
+ `python rss_reader.py url -d 20191119 -p C:\Users\User\Destination_Folder\ -l 10` - convert 10 news from the local storage to pdf for 20191119.
+
+ `python rss_reader.py https://news.yahoo.com/rss/ -hl C:\Users\User\Destination_Folder\` - convert all news from the feed to html. 
+ `python rss_reader.py https://news.yahoo.com/rss/ -hl C:\Users\User\Destination_Folder\ -l 10` - convert 10 news from the feed to html.
+ `python rss_reader.py url -b -hl C:\Users\User\Destination_Folder\` - convert log journal to html.
+ `python rss_reader.py url -d 20191119 -hl C:\Users\User\Destination_Folder\` - convert all news from the local storage to html for 20191119.
+ `python rss_reader.py url -d 20191119 -hl C:\Users\User\Destination_Folder\ -l 10` - convert 10 news from the local storage to html for 20191119.
 
 Linux:
 ======
@@ -244,14 +311,27 @@ Example:
  `sudo python3 rss_reader.py https://news.yahoo.com/rss/ -v` - will show you version of the program
  `sudo python3 rss_reader.py https://news.yahoo.com/rss/ -l 10 -j` - will show you RSS feed with 10 news in JSON format
 
- `sudo python3 rss_reader.py url -b` - will show you log journal
- `sudo python3 rss_reader.py url -d 20191108` - will show you the news for 2019.11.08 in case there is news.
+ `sudo python3 rss_reader.py url -d 20191119` - prints all news for 2019.11.19 to console from local storage
+ `sudo python3 rss_reader.py url -d 20191119 -l 10` - prints 10 news for 2019.11.19 to console from local storage
+
+ `sudo python3 rss_reader.py https://news.yahoo.com/rss/ -p /Users/User/Destination_Folder/` - convert all news from the feed to pdf. 
+ `sudo python3 rss_reader.py https://news.yahoo.com/rss/ -p /Users/User/Destination_Folder/ -l 10` - convert 10 news from the feed to pdf.
+ `sudo python3 rss_reader.py https://news.yahoo.com/rss/ -p /Users/User/Destination_Folder/ -l 10 -j` - convert 10 news from the json feed to pdf.
+ `sudo python3 rss_reader.py url -b -p /Users/User/Destination_Folder/` - convert log journal to pdf
+ `sudo python3 rss_reader.py url -d 20191119 -p /Users/User/Destination_Folder/` - convert all news from the local storage to pdf for 20191119.
+ `sudo python3 rss_reader.py url -d 20191119 -p /Users/User/Destination_Folder/ -l 10` - convert 10 news from the local storage to pdf for 20191119.
+
+ `sudo python3 rss_reader.py https://news.yahoo.com/rss/ -hl /Users/User/Destination_Folder/` - convert all news from the feed to html. 
+ `sudo python3 rss_reader.py https://news.yahoo.com/rss/ -hl /Users/User/Destination_Folder/ -l 10` - convert 10 news from the feed to html.
+ `sudo python3 rss_reader.py url -b -hl /Users/User/Destination_Folder/` - convert log journal to html.
+ `sudo python3 rss_reader.py url -d 20191119 -hl /Users/User/Destination_Folder/` - convert all news from the local storage to html for 20191119.
+ `sudo python3 rss_reader.py url -d 20191119 -hl /Users/User/Destination_Folder/ -l 10` - convert 10 news from the local storage to html for 20191119.
 
 All files like logJournal and news.log will be inside rss_reader directory.
 =====================================================================================================================
 
 
-PACKAGE RUN (assume you did every step from Installation and installed rss-reader-3.1.zip)
+PACKAGE RUN (assume you did every step from Installation and installed rss-reader-4.0.zip)
 =====================================================================================================================
 Windows:
 ========
@@ -265,7 +345,22 @@ Example:
  `rss-reader https://news.yahoo.com/rss/ -l 10 -j` - will show you RSS feed with 10 news in JSON format
 
  `rss-reader url -b` - will show you log journal
- `rss-reader url -d 20191108` - will show you the news for 2019.11.08 in case there is news.
+
+ `rss-reader url -d 20191119` - prints all news for 2019.11.19 to console from local storage
+ `rss-reader url -d 20191119 -l 10` - prints 10 news for 2019.11.19 to console from local storage
+
+ `rss-reader https://news.yahoo.com/rss/ -p C:\Users\User\Destination_Folder\` - convert all news from the feed to pdf. 
+ `rss-reader https://news.yahoo.com/rss/ -p C:\Users\User\Destination_Folder\ -l 10` - convert 10 news from the feed to pdf.
+ `rss-reader https://news.yahoo.com/rss/ -p C:\Users\User\Destination_Folder\ -l 10 -j` - convert 10 news from the json feed to pdf.
+ `rss-reader url -b -p C:\Users\User\Destination_Folder\` - convert log journal to pdf
+ `rss-reader url -d 20191119 -p C:\Users\User\Destination_Folder\` - convert all news from the local storage to pdf for 20191119.
+ `rss-reader url -d 20191119 -p C:\Users\User\Destination_Folder\ -l 10` - convert 10 news from the local storage to pdf for 20191119.
+
+ `rss-reader https://news.yahoo.com/rss/ -hl C:\Users\User\Destination_Folder\` - convert all news from the feed to html. 
+ `rss-reader https://news.yahoo.com/rss/ -hl C:\Users\User\Destination_Folder\ -l 10` - convert 10 news from the feed to html.
+ `rss-reader url -b -hl C:\Users\User\Destination_Folder\` - convert log journal to html.
+ `rss-reader url -d 20191119 -hl C:\Users\User\Destination_Folder\` - convert all news from the local storage to html for 20191119.
+ `rss-reader url -d 20191119 -hl C:\Users\User\Destination_Folder\ -l 10` - convert 10 news from the local storage to html for 20191119.
 
 All files like logJournal and news.log will be inside the default Python directory (in my case: `C:\Program Files\Python38\Lib\site-packages\rss_reader`).
 
@@ -281,7 +376,22 @@ Example:
  `sudo rss-reader https://news.yahoo.com/rss/ -l 10 -j` - will show you RSS feed with 10 news in JSON format
 
  `sudo rss-reader url -b` - will show you log journal
- `sudo rss-reader url -d 20191108` - will show you the news for 2019.11.08 in case there is news.
+
+ `sudo rss-reader url -d 20191119` - prints all news for 2019.11.19 to console from local storage
+ `sudo rss-reader url -d 20191119 -l 10` - prints 10 news for 2019.11.19 to console from local storage
+
+ `sudo rss-reader https://news.yahoo.com/rss/ -p /Users/User/Destination_Folder/` - convert all news from the feed to pdf. 
+ `sudo rss-reader https://news.yahoo.com/rss/ -p /Users/User/Destination_Folder/ -l 10` - convert 10 news from the feed to pdf.
+ `sudo rss-reader https://news.yahoo.com/rss/ -p /Users/User/Destination_Folder/ -l 10 -j` - convert 10 news from the json feed to pdf.
+ `sudo rss-reader url -b -p /Users/User/Destination_Folder/` - convert log journal to pdf
+ `sudo rss-reader url -d 20191119 -p /Users/User/Destination_Folder/` - convert all news from the local storage to pdf for 20191119.
+ `sudo rss-reader url -d 20191119 -p /Users/User/Destination_Folder/ -l 10` - convert 10 news from the local storage to pdf for 20191119.
+
+ `sudo rss-reader https://news.yahoo.com/rss/ -hl /Users/User/Destination_Folder/` - convert all news from the feed to html. 
+ `sudo rss-reader https://news.yahoo.com/rss/ -hl /Users/User/Destination_Folder/ -l 10` - convert 10 news from the feed to html.
+ `sudo rss-reader url -b -hl /Users/User/Destination_Folder/` - convert log journal to html.
+ `sudo rss-reader url -d 20191119 -hl /Users/User/Destination_Folder/` - convert all news from the local storage to html for 20191119.
+ `sudo rss-reader url -d 20191119 -hl /Users/User/Destination_Folder/ -l 10` - convert 10 news from the local storage to html for 20191119.
 
 All files like logJournal and news.log will be inside the default Python directory (in my case: `/usr/local/lib/python3.7/site-packages/rss_reader`).
 
@@ -297,6 +407,8 @@ final_task
 |    |---news.py
 |    |---rss_reader.py
 |    |---rss_parser.py
+|    |---converter.py
+|    |---ARIALUNI.TTF
 |    |---requirements.txt
 |    |---tests
 |        |-----test_args_parser.py
@@ -311,11 +423,11 @@ final_task
 
 RssReader was tested with following RSS:
 
-http://feeds.bbci.co.uk/news/rss.xml?edition=int
 https://news.yahoo.com/rss/
 https://3dnews.ru/news/rss/
 https://www.tomshardware.com/feeds/all
 https://people.onliner.by/feed
+http://feeds.bbci.co.uk/news/rss.xml?edition=int
 http://static.feed.rbc.ru/rbc/logical/footer/news.rss
 https://www.gazeta.ru/export/rss/first.xml
 https://rss.nytimes.com/services/xml/rss/nyt/World.xml

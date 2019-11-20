@@ -2,8 +2,10 @@
 
 import logging
 import os
+import news
 
 this_directory = os.path.abspath(os.path.dirname(__file__))
+
 journalLog = 'logJournal.log'
 directory = os.path.join(this_directory, journalLog)
 
@@ -82,7 +84,27 @@ def print_log():
 
     with open(directory, 'r') as log:
         for line in log:
-            print(line, end='')
+            if 'INFO - News was written to local storage: url -' in line:
+                url = line[73:]
+                info = line[0:66]
+                print(info)
+                print('Link for the news: ' + url, end='')
+                news.news_log_add(url)
+            else:
+                print(line, end='')
+
+
+def log_prepare() -> dict:
+    """This function prepares log journal for conversion"""
+    log_journal = dict()
+    counter = 0
+
+    with open(directory, 'r') as log:
+        for line in log:
+            log_journal[counter] = line
+            counter += 1
+
+    return log_journal
 
 
 def log_print():
@@ -91,10 +113,10 @@ def log_print():
     logging.info('Log journal printed')
 
 
-def log_news_store():
+def log_news_store(url: str):
     """This function logs news storage operation"""
 
-    logging.info('News was written to local storage')
+    logging.info('News was written to local storage: url - '+url)
 
 
 def log_news_print():
@@ -119,3 +141,51 @@ def log_invalid_arguments(args: str):
     """This function logs invalid arguments"""
 
     logging.error('Arguments not valid: ' + args)
+
+
+def log_news_limit(limit: int):
+    """This function logs when news limit is reached"""
+
+    logging.info('News limit for print is reached: ' + str(limit))
+
+
+def log_news_copycat(url: str):
+    """This function logs attempt of writing duplicate news"""
+
+    logging.warning('Attempt to write duplicate news: url - ' + url)
+
+
+def log_news_local_storage_pdf():
+    """This function logs the conversion from local storage"""
+
+    logging.info('News from local storage vere converted to pdf')
+
+
+def log_news_pdf():
+    """This function logs the conversion from rss feed"""
+
+    logging.info('News from rss feed were converted to pdf')
+
+
+def log_news_local_storage_html():
+    """This function logs the conversion from local storage"""
+
+    logging.info('News from local storage vere converted to html')
+
+
+def log_news_html():
+    """This function logs the conversion from rss feed"""
+
+    logging.info('News from rss feed were converted to html')
+
+
+def log_log_pdf():
+    """This function logs the conversion of log journal to pdf"""
+
+    logging.info('Log journal was converted to pdf')
+
+
+def log_log_html():
+    """This function logs the conversion of log journal to html"""
+
+    logging.info('Log journal was converted to html')
