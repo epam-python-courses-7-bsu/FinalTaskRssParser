@@ -5,17 +5,17 @@ from Log import log_decore
 
 @log_decore
 def print_json(list_json):
-    for i in list_json:
-        pprint(i)
+    for item_list in list_json:
+        pprint(item_list)
 
 
 @log_decore
 def print_array_of_news(news):
-    for i in news:
-        print("Title: " + i.title)
-        print("Date:  " + i.date)
-        print("Link:  " + i.link)
-        print("\n" + i.news + '\n')
+    for item_news in news:
+        print("Title: " + item_news.title)
+        print("Date:  " + item_news.date)
+        print("Link:  " + item_news.link)
+        print("\n" + item_news.news + '\n')
         print("Links: ")
-        for l in i.links:
-            print(l + "\n")
+        for item_link in item_news.links:
+            print(item_link + "\n")

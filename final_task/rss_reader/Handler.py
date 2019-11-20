@@ -1,5 +1,5 @@
 import feedparser
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 import html
 
 from Log import log_decore
@@ -8,12 +8,7 @@ from Log import log_decore
 # convert from News class to json
 @log_decore
 def parse_to_json(news):
-    json_dict = {}
-    json_dict["title"] = news.title
-    json_dict["link"] = news.link
-    json_dict["date"] = news.date
-    json_dict["news"] = news.news
-    return json_dict
+    return asdict(news)
 
 
 # news kept
@@ -34,7 +29,12 @@ class Handler:
         self.article = feedparser.parse(url)
         self.numb_news = 0
         self.parsers = []
-
+        # standart value if user did not indicate limit we get all news
+        if limit == -1:
+            limit = len(self.article.entries)
+        self.create_news(url, limit)
+    @log_decore
+    def create_news(self, url, limit):
         # for every news, which user will see we create object
         while self.numb_news < limit:
             tmp_img_link = self.get_img_links(self.get_news(self.numb_news))
@@ -52,8 +52,8 @@ class Handler:
 
     @log_decore
     def get_title(self, index):
-        return html.unescape(self.article.entries[index].title)
 
+        return html.unescape(self.article.entries[index].title)
 
     @log_decore
     def get_date(self, index):
@@ -91,7 +91,7 @@ class Handler:
         img_alt = self.get_img_alt(text)
         # add imgLinks to article
         for id, item in enumerate(img_alt):
-            news += ("[img " + str(id))
+            news += ("[img " + str(id)+" ")
             news += (item + "]")
 
         # clean the news from
@@ -105,4 +105,3 @@ class Handler:
     def get_all(self):
         # return all news which user want see
         return self.parsers
- 
