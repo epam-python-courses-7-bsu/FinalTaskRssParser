@@ -13,6 +13,7 @@ def create_connection(db_file):
     connection = None
     try:
         connection = sqlite3.connect(db_file)
+        log.info("connect to database is okey")
         return connection
     except sqlite3.Error as e:
         log.info("Can't connect to database")
