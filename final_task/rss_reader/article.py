@@ -23,14 +23,7 @@ class Article:
         """print article to stdout in human-readable format"""
         print("_" * 79)
         date = self.published
-        print('{}/{}/{}, {}:{}:{}\n'.format(
-            date.tm_year,
-            date.tm_mon,
-            date.tm_mday,
-            date.tm_hour,
-            date.tm_min,
-            date.tm_sec
-        ))
+        print(f'{date.tm_year}/{date.tm_mon}/{date.tm_mday}, {date.tm_hour}:{date.tm_min}:{date.tm_sec}\n')
 
         cutted_title = cut_string_to_length_with_space(self.title, 77)
         for str_number, string in enumerate(cutted_title):
@@ -42,8 +35,8 @@ class Article:
         # images description and their links numbers (like [2] - [5])
         str_number_of_img = ' '
         if len(self.media) > 1:
-            str_number_of_img = ' - [{}]'.format(len(self.media) + 1)
-        print('\n\nImages:\n{} [2]{}\n'.format(self.media_description, str_number_of_img))
+            str_number_of_img = f' - [{len(self.media) + 1}]'
+        print(f'\n\nImages:\n{self.media_description} [2]{str_number_of_img}\n')
 
         cutted_summary = cut_string_to_length_with_space(self.summary, 79)
         for string in cutted_summary:
@@ -52,7 +45,7 @@ class Article:
         # Links of article and images
         print('\n\nLinks:\n[1]', self.link)
         for number, img in enumerate(self.media):
-            print('[{}]'.format(number+2), img['url'])
+            print(f'[{number+2}]', img['url'])
 
         print("_" * 79)
 

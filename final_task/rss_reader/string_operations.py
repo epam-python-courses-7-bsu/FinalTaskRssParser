@@ -5,10 +5,10 @@ def cut_string_to_length_with_space(basic_str, length):
     """function that cut given string to the list of strings with a given max length"""
     strings_list = []
     string = ''
-    for i, word in enumerate(basic_str.split()):
+    for word_number, word in enumerate(basic_str.split()):
         string += word + ' '
-        if i + 1 < len(basic_str.split()):
-            next_word = basic_str.split()[i+1]
+        if word_number + 1 < len(basic_str.split()):
+            next_word = basic_str.split()[word_number + 1]
         else:
             next_word = ''
             strings_list.append(string)
@@ -19,8 +19,8 @@ def cut_string_to_length_with_space(basic_str, length):
 
 
 def make_string_readable(basic_str):
-    h = HTMLParser()
-    return h.unescape(basic_str)
+    html_parser = HTMLParser()
+    return html_parser.unescape(basic_str)
 
 
 def extract_topic_info_from_summary(basic_str):

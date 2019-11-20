@@ -1,5 +1,6 @@
 import logging
 from string_operations import make_string_readable
+import exceptions as ex
 from pprint import pprint
 import article
 import shelve
@@ -15,15 +16,18 @@ class Feed:
         cashed_news_number = 0
         if args.date:
             logging.info('Started extracting data from cash')
-            check.check_data_base('cashed_feeds')
             self.link = args.source
             self.feed_name = 'Feeds from {}'.format(args.source)
             with shelve.open('cashed_feeds') as database:
-                check.is_date_in_database(args.date, 'cashed_feeds')
+                if not database:
+                    raise ex.EmptyDataBase('Local feed storage is empty')
                 for date in database:
-                    if args.date in date  and database[date].feed_link == args.source:
+                    if args.date in date and database[date].feed_link == args.source:
                         articles_list.append(database[date])
                         cashed_news_number += 1
+            if cashed_news_number == 0:
+                raise ex.DateNotInDatabase('There is no feeds with this date and source in local storage')
+
             
             if args.limit:
                 if args.limit > cashed_news_number:
@@ -54,7 +58,7 @@ class Feed:
         """print feed to stdout in readable format"""
         logging.info('Started printing feed')
         print('.' * 79)
-        print('\n\n{}\n\n'.format(self.feed_name))
+        print('\n\n{self.feed_name}\n\n')
         print(self.link)
         for article_number, article_ in enumerate(self.articles):
             article_.print_readable_article()
@@ -75,14 +79,14 @@ class Feed:
         logging.info('Saving feed to database')
         with shelve.open('cashed_feeds') as database:
             for article in self.articles:
-                date = '{}{}{} {}:{}:{}'.format(
-                    article.published.tm_year,
-                    article.published.tm_mon,
-                    article.published.tm_mday,
-                    article.published.tm_hour,
-                    article.published.tm_min,
-                    article.published.tm_sec,
-                )
+                year = article.published.tm_year
+                mon = article.published.tm_mon
+                day = article.published.tm_mday
+                hour = article.published.tm_hour
+                minute = article.published.tm_min
+                sec = article.published.tm_sec
+                
+                date = f'{year}{mon}{day} {hour}:{minute}:{sec}'
                 if date not in database:
                     database[date] = article
         logging.info('feed saved')
