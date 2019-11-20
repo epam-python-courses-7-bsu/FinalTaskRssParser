@@ -1,4 +1,8 @@
 feedparser
 termcolor
+pymysql
 colorama
+mysql-connector-python
 py-dateutil
+requests
+Pillow

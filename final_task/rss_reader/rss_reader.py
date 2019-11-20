@@ -9,7 +9,7 @@ from personal_exceptions import *
 from print_functions import *
 from save_in_format_functions import save_in_fb2, save_in_html
 
-VERSION = 4
+VERSION = 5
 
 
 def main():
@@ -25,6 +25,7 @@ def main():
     argument_parser.add_argument('--date', help='represent news from local storage by date')
     argument_parser.add_argument('--to-html', help='save news in html format')
     argument_parser.add_argument('--to-fb2', help='save news in fb2 format')
+    argument_parser.add_argument('--colorize', action='store_true', help='print news in colorized mode')
     argument_parser.add_argument('source')
     arguments = argument_parser.parse_args()
     if arguments.verbose:
@@ -57,10 +58,16 @@ def main():
                 save_in_fb2(arguments.to_fb2, news_list)
         else:
             if news_list:
-                if arguments.json:
-                    print_news_JSON(news_list)
+                if arguments.colorize:
+                    if arguments.json:
+                        print_news_JSON_colorize(news_list)
+                    else:
+                        print_news_colorize(news_list)
                 else:
-                    print_news(news_list)
+                    if arguments.json:
+                        print_news_JSON(news_list)
+                    else:
+                        print_news(news_list)
             else:
                 print('No news by this date')
         return
@@ -73,10 +80,16 @@ def main():
         if arguments.to_fb2:
             save_in_fb2(arguments.to_fb2, news_list)
     else:
-        if arguments.json:
-            print_news_JSON(news_list)
+        if arguments.colorize:
+            if arguments.json:
+                print_news_JSON_colorize(news_list)
+            else:
+                print_news_colorize(news_list)
         else:
-            print_news(news_list)
+            if arguments.json:
+                print_news_JSON(news_list)
+            else:
+                print_news(news_list)
     write_news_to_database(news_list)
 
 
