@@ -19,10 +19,11 @@ setup(
 
     #options
     packages=find_packages(),
-    install_requires=['html2text==2019.9.26', 'dataclasses==0.6'],
+    install_requires=['html2text==2019.9.26'],
     package_data={
          '': ['*.py', '*.txt']
     },
+    python_requires ='>=3.7.0',
     entry_points={
         "console_scripts":
             "rss_reader=rss_reader.rss_reader:main"

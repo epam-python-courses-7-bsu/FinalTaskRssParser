@@ -1,2 +1,1 @@
 html2text==2019.9.26
-dataclasses==0.6
