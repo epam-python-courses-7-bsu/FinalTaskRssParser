@@ -14,3 +14,23 @@ class InvalidURL(Error):
 class FeedError(Error):
     """Exception is raised for link without news"""
     pass
+
+
+class InvalidDateFormat(Error):
+    """Exception is raised for date not in %%Y%%m%%d format"""
+    pass
+
+
+class SpecifiedDayNewsError(Error):
+    """Exception is raised if on the specified day there are no entries in DB."""
+    pass
+
+
+class PATHError(Error):
+    """Exception is raised if the wrong PATH was specified."""
+    pass
+
+
+class EmptyCacheError(Error):
+    """Exception is raised if retrieving data from empty cache."""
+    pass
