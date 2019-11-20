@@ -1,7 +1,5 @@
 import re
 import html2text
-from dataclasses import dataclass
-
 
 LINKS_TEMPLATE = '\"((http|https)://(\w|.)+?)\"'
 
@@ -28,11 +26,7 @@ def xml_arguments_for_class(xml_string, limit):
 
             if xml_news_item.tag == 'description':
                 parser_dictionary['article'] = text.handle(xml_news_item.text).replace('\n', '')
-
-                list_links = []
-                for group1 in re.finditer(LINKS_TEMPLATE, xml_news_item.text):
-                    list_links.append(group1.group(1))
-                    parser_dictionary['links'] = list_links
+                parser_dictionary['links'] = xml_news_item.text.replace('\n', '')
 
         dict_article_list.append(parser_dictionary)
 
@@ -47,20 +41,28 @@ def dicts_to_articles(dict_list):
         article_list.append(Article(item))
     return article_list
 
+def html_text_to_list_links(html_links):
+    html_links = html_links.replace("\'", "\"")
+    list_links = []
+    for group1 in re.finditer(LINKS_TEMPLATE, html_links):
+        list_links.append(group1.group(1))
+    return list_links
+
 
 class Article:
     """This is news class, which receives dictionary and have title, date, link, article and links keys fields"""
     def __init__(self, article_dict):
-        self.title = article_dict['title']
         self.date = article_dict['date']
+        self.title = article_dict['title']
         self.link = article_dict['link']
         self.article = article_dict['article']
-        self.links_list = article_dict['links']
+        self.links = html_text_to_list_links(article_dict['links'])
+
 
     def __str__(self):
         result_string_article = "\nTitle: %s\nDate: %s\nLink: %s\n\n%s\n\n" % (self.title, self.date, self.link,
-                                                                               self.article)
-        for link_idx, link in enumerate(self.links_list):
+                                                                                  self.article)
+        for link_idx, link in enumerate(self.links):
             result_string_article += "[%d]: %s\n" % (link_idx + 1, link)
         result_string_article += '\n'
         return result_string_article

@@ -42,3 +42,17 @@ to run rss parser on your computer you need to:
 4)  `$cd dist`
 3) `$pip install rss_reader-1.1.tar.gz`
 4) run `$rss_reader https://news.yahoo.com/rss --limit 2 --verbose`
+
+
+## Iteration 3
+News is stored in the csv cache in following format and with tab delimiter.
+
+`date    title    link   article   list_links`
+
+Now we are searching for the news in the cache with O(n) complexity. But in the near future we plan to optimize this process.
+
+If you want to receive news for the 15/11/2019, please enter the following command in the command line
+
+`$python rss_reader.py https://news.yahoo.com/rss --date 20191115`
+
+--date argument works without internet connection and with --verbose, --json, --limit LIMIT arguments the same way.
