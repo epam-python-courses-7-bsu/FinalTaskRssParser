@@ -6,7 +6,7 @@ class ConsoleInterface():
 
     source = ""
     limit = -1
-    version = "Version 1.1"
+    version = "Version 1.2"
     json = False
     verbose = False
 

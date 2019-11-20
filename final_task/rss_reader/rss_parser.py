@@ -43,15 +43,15 @@ class RssParser():
             if (index < self.limit) | (self.limit == -1):
                 listOfTags = self.takingInformationFromFeedparser(thefeedentry)
 
-                print("Title: " + listOfTags[0].replace("&#39;", "'"))
+                print("Title: " + listOfTags[0])
                 print("Date: " + listOfTags[1])
                 print("Link: " + listOfTags[2])
 
                 print()
                 if len(listOfTags) > 3:
-                    print("[image: ", listOfTags[5].replace("&#39;", "'"), "][2]", listOfTags[3].replace("&#39;", "'"))
+                    print("[image: ", listOfTags[5], "][2]", listOfTags[3])
                 else:
-                    print(listOfTags[3].replace("&#39;", "'"))
+                    print(listOfTags[3])
 
                 print("\nLinks:")
                 print("[1]:", listOfTags[2])
@@ -101,16 +101,16 @@ class RssParser():
                 listOfTags = self.takingInformationFromFeedparser(thefeedentry)
 
                 if (len(listOfTags) > 3):
-                    descriptionForDict = "[image: " + listOfTags[5].replace("&#39;", "'") + "][2]" + listOfTags[3].replace("&#39;", "'")
+                    descriptionForDict = "[image: " + listOfTags[5] + "][2]" + listOfTags[3]
                     dictionary = {"Feed": thefeed.feed.get("title", ""),
-                                  "Title": listOfTags[0].replace("&#39;", "'"),
+                                  "Title": listOfTags[0],
                                   "Date": listOfTags[1], "Description": descriptionForDict,
                                   "Link [1]": listOfTags[2], "Link [2]": listOfTags[4]}
                     linkOfImg = listOfTags[4]
                 else:
-                    descriptionForDict = listOfTags[3].replace("&#39;", "'")
+                    descriptionForDict = listOfTags[3]
                     dictionary = {"Feed": thefeed.feed.get("title", ""),
-                                  "Title": listOfTags[0].replace("&#39;", "'"),
+                                  "Title": listOfTags[0],
                                   "Date": listOfTags[1],
                                   "Description": descriptionForDict, "Link [1]": listOfTags[2]}
                     linkOfImg = ""
