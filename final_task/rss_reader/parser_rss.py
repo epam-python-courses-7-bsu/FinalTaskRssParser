@@ -2,16 +2,13 @@ import json
 import re
 import signal
 import logging
-from contextlib import contextmanager, closing
+from contextlib import contextmanager
 from urllib.error import URLError
 import feedparser
 from dateutil import parser
-from final_task.rss_reader.scripts import News
+import News
 import html
-
-
-class TimeOutExeption(Exception): pass
-
+from exceptions import *
 
 module_logger = logging.getLogger("rss_reader.scripts.parser_rss")
 

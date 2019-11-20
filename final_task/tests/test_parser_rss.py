@@ -1,5 +1,8 @@
-from final_task.rss_reader.scripts.parser_rss import *
-from final_task.rss_reader.scripts.News import News
+import sys
+
+sys.path.insert(1, 'final_task/rss_reader')
+from parser_rss import *
+from News import News
 import unittest
 from io import StringIO
 from unittest.mock import patch
@@ -50,7 +53,40 @@ the Russian military intelligence service, according to a Western intelligence s
             print_news([self.item, ])
             self.assertEqual(fake_out_put.getvalue().strip(), self.result)
 
+    def test_print_news_in_json(self):
+        self.result = "[\n"
+        self.result += "    {\n"
+        self.result += '''        "Feed": "feed",\n'''
+        self.result += '''        "Title": "title",\n'''
+        self.result += '''        "Date": "2019-11-17 10:44:20-05:00",\n'''
+        self.result += '''        "Link": "link",\n'''
+        self.result += '''        "Info about image": "info_about_image",\n'''
+        self.result += '''        "Briefly about news": "briefly_about_news",\n'''
+        self.result += '''        "Links": [\n'''
+        self.result += '''            "link",\n'''
+        self.result += '''            "link_on_image"\n'''
+        self.result += "        ]\n"
+        self.result += "    }\n"
+        self.result+="]"
+        with patch('sys.stdout', new=StringIO()) as fake_out_put:
+            print_news_in_json([self.item, ])
+            self.assertEqual(fake_out_put.getvalue().strip(), self.result)
+
     if __name__ == '__main__':
         unittest.main()
 
     #  nosetests --with-coverage --cover-erase
+# [
+#     {
+#         "Feed": "feed",
+#         "Title": "title",
+#         "Date": "2019-11-17 10:44:20-05:00",
+#         "Link": "link",
+#         "Info about image": "info_about_image",
+#         "Briefly about news": "briefly_about_news",
+#         "Links": [
+#             "link",
+#             "link_on_image"
+#         ]
+#     }
+# ]

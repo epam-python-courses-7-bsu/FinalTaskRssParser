@@ -1,4 +1,7 @@
-from final_task.rss_reader.scripts.News import *
+import sys
+
+sys.path.insert(1, 'final_task/rss_reader')
+from News import News
 import unittest
 from dateutil import parser
 
@@ -35,3 +38,5 @@ class TestNews(unittest.TestCase):
         self.assertEqual(data['Info about image'], 'info_about_image')
         self.assertEqual(data['Briefly about news'], 'briefly_about_news')
         self.assertEqual(data['Links'], ['link', 'link_on_image'])
+
+
