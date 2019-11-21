@@ -11,7 +11,6 @@ optional arguments:
   --json         Print result as JSON in stdout
   --verbose      Outputs verbose status messages
   --limit LIMIT  Limit news topics if this parameter provided
-  --date DATE    to search in cache for news by date in the format in YYYYmmdd
 
 
 
@@ -30,15 +29,26 @@ with default parameters:
     database="postgres",
     user="postgres",
     password="1",
-    host="127.0.0.1",
+    host="localhost",
     port="5432"    
-If you do not follow these commands:    
+If you do not, follow these commands:    
 1)Open terminal
 2)sudo apt-get install postgresql
 3)sudo -u postgres psql
 4)\password
 5)1
 6)1
+7)\conninfo find out the port and if it is not equal 5432, change the config.txt port to your
+If after all you couldn’t connect postgresql, change 
+localhost in the config.txt file to your IP address,
+you can find it using the following commands:
+1)Open terminal
+2) Enter nslookup localhost
+You will need an address in a format similar to this:
+"127.0.0.1" in line "Address: 127.0.0.1"
+
+ 
+
 
 You can change the database connection parameters in the "config.txt" file in the project, 
 but then you need to update the utility, for this you need:

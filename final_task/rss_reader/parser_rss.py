@@ -138,6 +138,20 @@ def print_news_without_cashing():
         print_news(list_of_news)
 
 
+def print_news_without_cashing():
+    try:
+        args = get_args()
+        list_of_news = []
+        news_feed = get_news_feed(args.source)
+        init_list_of_news(list_of_news, news_feed, args.limit)
+        if args.json:
+            print_news_in_json(list_of_news)
+        else:
+            print_news(list_of_news)
+    except URLError as er:
+        print(er)
+
+
 def print_news_in_json(list_of_news: list):
     """
     This function print news in the console in json format
