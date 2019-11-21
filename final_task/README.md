@@ -122,9 +122,12 @@ $ python rss_reader.py --date 20191113 --json --verbose
 News is stored in local file cache.json as list of json objects
 # Iteration 4
 Option of conversation of news in htmlf format is available. 
+REQUIREMENTS:
+-- feedparser 5.2.1
+-- fpdf 1.7.2
 Example:
 ```
-$ python rss_reader.py "https://news.yahoo.com/rss/" --to-html "F:/Path/to/your/folder" 
+$ python rss_reader.py "https://news.yahoo.com/rss/" --to-html "F:/Path/to/your/folder" --to-pdf "F:/Path/to/your/folder"
 ```
 Option works with --limit and --date attributes
 ```
@@ -134,4 +137,8 @@ Option throws an exception when the path to the folder is incorrect
 ```
 $ python rss_reader.py "https://news.yahoo.com/rss/" --to-html "F:/incorrect/path"
 Error. No such folder. Check the correctness of the entered path
+```
+When you try to output the news to the opened file:
+```
+Error, close the file for output of news
 ```
