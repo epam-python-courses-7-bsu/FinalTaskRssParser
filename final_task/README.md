@@ -46,5 +46,5 @@ for example:
 ```
 ## Local news storage:
 When **--date** argument is not provided, the news that you received will be saved to the database, if it wasn’t there yet.
-cached data stored in rss_reder/cached_feeds.db file using **shelve**. Database storeы dictionary-like object, where the key is the publication date and the value is object of **Article** class.
+Cached data stored in rss_reder/cached_feeds.db file using **shelve**. Database stores dictionary-like object, where the key is the publication date and the value is object of **Article** class.
 
