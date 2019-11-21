@@ -20,6 +20,7 @@ def prepare_one_item(item_xml: defaultdict) -> OrderedDict:
     with title, date, description and media content"""
     title = item_xml['title']
     date = filters.pubdate(item_xml['pubDate'])
+    date = data_split(date)
     news_link = item_xml['link']
     description = split_string_by_lines(
         filters.description(item_xml['description']),
@@ -40,12 +41,10 @@ def prepare_one_item(item_xml: defaultdict) -> OrderedDict:
 
 
 def print_one_item(news_item: OrderedDict) -> None:
-    log.info('Start print news')
     print("===Wow! News!===")
     for key, value in news_item.items():
         print(key, value)
     print("===End, news!===")
-    log.info('End print news')
 
 
 def print_news(items: list) -> None:
@@ -60,17 +59,21 @@ def print_news(items: list) -> None:
 def make_json(items: list) -> dict:
     """convert article data in json format"""
     log.info('Start make json format')
-    for item in items:
-        item = prepare_one_item(item)
-        json = {
-            'images': item['Media content:\n'],
-            'link': item['Link: '],
-            'description': item['Description:\n'],
-            'date': item['Date:'],
-            'title': item['Title:'],
-        }
+    json = {}
+    jsons = {}
+    for idx, item in enumerate(items):
+        for item in items:
+            item = prepare_one_item(item)
+            json = {
+                'images': item['Media content:\n'],
+                'link': item['Link: '],
+                'description': item['Description:\n'],
+                'date': item['Date:'],
+                'title': item['Title:'],
+         }
+        jsons[idx] = json
     log.info('End make json format')
-    return json
+    return jsons
 
 
 def print_json(items: list) -> None:
@@ -81,15 +84,12 @@ def print_json(items: list) -> None:
         print('"' + item + '":' + "{ " + amount + "}")
     log.info('End print json')
 
-# link_1 = "https://news.yahoo.com/rss/"
-# link_2 = "https://news.tut.by/rss/s~173.rss"
-# link_3 = 'https://news.google.com/rss?hl=en-US&gl=US&ceid=US:en'
-#
-# all_items = filters.get_items(link_1)
-# print_news(all_items, 3)
-#
-# all_items = filters.get_items(link_2)
-# print_news(all_items, 3)
-#
-# all_items = filters.get_items(link_3)
-# print_news(all_items, 3)
+
+def data_split(date: str) -> str:
+    month = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06',
+             'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}
+    new_date = date
+    new_date = (new_date.split(' ')[1:4])
+    new_date[1] = month[new_date[1]]
+    new_date = '/'.join(new_date)
+    return new_date
