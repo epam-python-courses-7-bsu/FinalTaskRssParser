@@ -4,7 +4,7 @@ Python command line RSS-reader.
 ## Usage
 
 ```shell
-$ rss_reader [-h] [--version] [--json] [--verbose] [--limit LIMIT] source
+$ rss_reader.py [-h] [--version] [--json] [--verbose] [--limit LIMIT] [--date DATE] source
 
 Pure python command-line RSS reader
 
@@ -17,14 +17,21 @@ optional arguments:
   --json         Print result as JSON in stdout
   --verbose      Outputs verbose status messages
   --limit LIMIT  Limit news topics if this parameter provided
+  --date         Read cached news for provided URL. If "ALL" provided - prints all cached news for this date
 
 ```
 
 ## Installation
-* For installation you need setuptools
+Be sure that python version is 3.7+
+For installation you need setuptools
 
 ```shell
-python -m pip install source_name
+python -m pip install setup.py
+```
+
+To launch the app you need to type
+```shell
+$ rss_reader.py [-h] [--version] [--json] [--verbose] [--limit LIMIT] [--date DATE] source
 ```
 
 
@@ -40,3 +47,18 @@ python -m pip install source_name
     "img_src": "image link if exist",
 }
 ```
+
+### RSS reader works correctly at least with the next URLs: 
+
+https://news.yahoo.com/rss/
+https://news.tut.by/rss/
+https://www.rt.com/rss/
+https://www.theguardian.com/world/rss
+http://feeds.bbci.co.uk/news/world/europe/rss.xml
+https://rss.nytimes.com/services/xml/rss/nyt/World.xml
+https://naviny.by/rss/inter.xml
+https://eng.belta.by/rss
+https://news.rambler.ru/rss/world/
+https://lenta.ru/rss
+https://www.vesti.ru/vesti.rss
+  
