@@ -1,6 +1,5 @@
 import logging
 import time
-
 from Logging import logging_decorator
 import html
 
