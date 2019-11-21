@@ -1,0 +1,2178 @@
+INFO     [2019-11-21 00:03:58,844] Start script
+INFO     [2019-11-21 00:03:58,844] Start get items from url
+INFO     [2019-11-21 00:03:59,059] Connect to website is fine
+INFO     [2019-11-21 00:03:59,066] Successful parsing
+INFO     [2019-11-21 00:03:59,066] User choose some limits
+INFO     [2019-11-21 00:03:59,066] Start print news
+INFO     [2019-11-21 00:03:59,066] Try to delete all html in description
+INFO     [2019-11-21 00:03:59,066] Start print news
+INFO     [2019-11-21 00:03:59,066] End print news
+INFO     [2019-11-21 00:03:59,066] End print news
+INFO     [2019-11-21 00:05:45,091] Start script
+INFO     [2019-11-21 00:05:45,092] Start get items from url
+INFO     [2019-11-21 00:05:46,769] Connect to website is fine
+INFO     [2019-11-21 00:05:46,776] Successful parsing
+INFO     [2019-11-21 00:05:46,776] User choose some limits
+INFO     [2019-11-21 00:05:46,776] Start print news
+INFO     [2019-11-21 00:05:46,777] Try to delete all html in description
+INFO     [2019-11-21 00:05:46,777] Start print news
+INFO     [2019-11-21 00:05:46,777] End print news
+INFO     [2019-11-21 00:05:46,777] End print news
+INFO     [2019-11-21 00:06:40,692] Start script
+INFO     [2019-11-21 00:06:40,693] Start get items from url
+INFO     [2019-11-21 00:06:40,874] Connect to website is fine
+INFO     [2019-11-21 00:06:40,881] Successful parsing
+INFO     [2019-11-21 00:06:40,881] User choose some limits
+INFO     [2019-11-21 00:06:40,881] Start print news
+INFO     [2019-11-21 00:06:40,881] Try to delete all html in description
+INFO     [2019-11-21 00:06:40,882] Start print news
+INFO     [2019-11-21 00:06:40,882] End print news
+INFO     [2019-11-21 00:06:40,882] End print news
+INFO     [2019-11-21 00:06:49,113] Start script
+INFO     [2019-11-21 00:06:49,114] Start get items from url
+INFO     [2019-11-21 00:06:49,385] Connect to website is fine
+INFO     [2019-11-21 00:06:49,392] Successful parsing
+INFO     [2019-11-21 00:06:49,392] Start print news
+INFO     [2019-11-21 00:06:49,392] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,392] Start print news
+INFO     [2019-11-21 00:06:49,392] End print news
+INFO     [2019-11-21 00:06:49,392] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,393] Start print news
+INFO     [2019-11-21 00:06:49,393] End print news
+INFO     [2019-11-21 00:06:49,393] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,393] Start print news
+INFO     [2019-11-21 00:06:49,393] End print news
+INFO     [2019-11-21 00:06:49,393] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,393] Start print news
+INFO     [2019-11-21 00:06:49,393] End print news
+INFO     [2019-11-21 00:06:49,393] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,394] Start print news
+INFO     [2019-11-21 00:06:49,394] End print news
+INFO     [2019-11-21 00:06:49,394] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,394] Start print news
+INFO     [2019-11-21 00:06:49,394] End print news
+INFO     [2019-11-21 00:06:49,394] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,394] Start print news
+INFO     [2019-11-21 00:06:49,394] End print news
+INFO     [2019-11-21 00:06:49,394] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,395] Start print news
+INFO     [2019-11-21 00:06:49,395] End print news
+INFO     [2019-11-21 00:06:49,395] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,395] Start print news
+INFO     [2019-11-21 00:06:49,395] End print news
+INFO     [2019-11-21 00:06:49,395] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,395] Start print news
+INFO     [2019-11-21 00:06:49,395] End print news
+INFO     [2019-11-21 00:06:49,395] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,396] Start print news
+INFO     [2019-11-21 00:06:49,396] End print news
+INFO     [2019-11-21 00:06:49,396] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,396] Start print news
+INFO     [2019-11-21 00:06:49,396] End print news
+INFO     [2019-11-21 00:06:49,396] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,396] Start print news
+INFO     [2019-11-21 00:06:49,397] End print news
+INFO     [2019-11-21 00:06:49,397] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,397] Start print news
+INFO     [2019-11-21 00:06:49,397] End print news
+INFO     [2019-11-21 00:06:49,397] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,397] Start print news
+INFO     [2019-11-21 00:06:49,397] End print news
+INFO     [2019-11-21 00:06:49,397] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,398] Start print news
+INFO     [2019-11-21 00:06:49,398] End print news
+INFO     [2019-11-21 00:06:49,398] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,398] Start print news
+INFO     [2019-11-21 00:06:49,398] End print news
+INFO     [2019-11-21 00:06:49,398] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,398] Start print news
+INFO     [2019-11-21 00:06:49,398] End print news
+INFO     [2019-11-21 00:06:49,398] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,399] Start print news
+INFO     [2019-11-21 00:06:49,399] End print news
+INFO     [2019-11-21 00:06:49,399] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,399] Start print news
+INFO     [2019-11-21 00:06:49,399] End print news
+INFO     [2019-11-21 00:06:49,399] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,399] Start print news
+INFO     [2019-11-21 00:06:49,400] End print news
+INFO     [2019-11-21 00:06:49,400] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,400] Start print news
+INFO     [2019-11-21 00:06:49,400] End print news
+INFO     [2019-11-21 00:06:49,400] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,400] Start print news
+INFO     [2019-11-21 00:06:49,400] End print news
+INFO     [2019-11-21 00:06:49,400] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,400] Start print news
+INFO     [2019-11-21 00:06:49,401] End print news
+INFO     [2019-11-21 00:06:49,401] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,401] Start print news
+INFO     [2019-11-21 00:06:49,401] End print news
+INFO     [2019-11-21 00:06:49,401] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,401] Start print news
+INFO     [2019-11-21 00:06:49,401] End print news
+INFO     [2019-11-21 00:06:49,401] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,402] Start print news
+INFO     [2019-11-21 00:06:49,402] End print news
+INFO     [2019-11-21 00:06:49,402] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,402] Start print news
+INFO     [2019-11-21 00:06:49,402] End print news
+INFO     [2019-11-21 00:06:49,402] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,402] Start print news
+INFO     [2019-11-21 00:06:49,402] End print news
+INFO     [2019-11-21 00:06:49,402] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,403] Start print news
+INFO     [2019-11-21 00:06:49,403] End print news
+INFO     [2019-11-21 00:06:49,403] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,403] Start print news
+INFO     [2019-11-21 00:06:49,403] End print news
+INFO     [2019-11-21 00:06:49,403] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,403] Start print news
+INFO     [2019-11-21 00:06:49,403] End print news
+INFO     [2019-11-21 00:06:49,403] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,404] Start print news
+INFO     [2019-11-21 00:06:49,404] End print news
+INFO     [2019-11-21 00:06:49,404] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,404] Start print news
+INFO     [2019-11-21 00:06:49,404] End print news
+INFO     [2019-11-21 00:06:49,404] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,404] Start print news
+INFO     [2019-11-21 00:06:49,404] End print news
+INFO     [2019-11-21 00:06:49,404] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,405] Start print news
+INFO     [2019-11-21 00:06:49,405] End print news
+INFO     [2019-11-21 00:06:49,405] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,405] Start print news
+INFO     [2019-11-21 00:06:49,405] End print news
+INFO     [2019-11-21 00:06:49,405] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,405] Start print news
+INFO     [2019-11-21 00:06:49,405] End print news
+INFO     [2019-11-21 00:06:49,405] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,406] Start print news
+INFO     [2019-11-21 00:06:49,406] End print news
+INFO     [2019-11-21 00:06:49,406] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,406] Start print news
+INFO     [2019-11-21 00:06:49,406] End print news
+INFO     [2019-11-21 00:06:49,406] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,406] Start print news
+INFO     [2019-11-21 00:06:49,406] End print news
+INFO     [2019-11-21 00:06:49,406] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,407] Start print news
+INFO     [2019-11-21 00:06:49,407] End print news
+INFO     [2019-11-21 00:06:49,407] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,407] Start print news
+INFO     [2019-11-21 00:06:49,407] End print news
+INFO     [2019-11-21 00:06:49,407] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,407] Start print news
+INFO     [2019-11-21 00:06:49,407] End print news
+INFO     [2019-11-21 00:06:49,407] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,408] Start print news
+INFO     [2019-11-21 00:06:49,408] End print news
+INFO     [2019-11-21 00:06:49,408] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,408] Start print news
+INFO     [2019-11-21 00:06:49,408] End print news
+INFO     [2019-11-21 00:06:49,408] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,408] Start print news
+INFO     [2019-11-21 00:06:49,408] End print news
+INFO     [2019-11-21 00:06:49,408] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,409] Start print news
+INFO     [2019-11-21 00:06:49,409] End print news
+INFO     [2019-11-21 00:06:49,409] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,409] Start print news
+INFO     [2019-11-21 00:06:49,409] End print news
+INFO     [2019-11-21 00:06:49,409] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,409] Start print news
+INFO     [2019-11-21 00:06:49,409] End print news
+INFO     [2019-11-21 00:06:49,409] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,410] Start print news
+INFO     [2019-11-21 00:06:49,410] End print news
+INFO     [2019-11-21 00:06:49,410] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,410] Start print news
+INFO     [2019-11-21 00:06:49,410] End print news
+INFO     [2019-11-21 00:06:49,410] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,410] Start print news
+INFO     [2019-11-21 00:06:49,410] End print news
+INFO     [2019-11-21 00:06:49,410] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,411] Start print news
+INFO     [2019-11-21 00:06:49,411] End print news
+INFO     [2019-11-21 00:06:49,411] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,411] Start print news
+INFO     [2019-11-21 00:06:49,411] End print news
+INFO     [2019-11-21 00:06:49,411] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,411] Start print news
+INFO     [2019-11-21 00:06:49,411] End print news
+INFO     [2019-11-21 00:06:49,411] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,412] Start print news
+INFO     [2019-11-21 00:06:49,412] End print news
+INFO     [2019-11-21 00:06:49,412] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,412] Start print news
+INFO     [2019-11-21 00:06:49,412] End print news
+INFO     [2019-11-21 00:06:49,412] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,412] Start print news
+INFO     [2019-11-21 00:06:49,413] End print news
+INFO     [2019-11-21 00:06:49,413] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,413] Start print news
+INFO     [2019-11-21 00:06:49,413] End print news
+INFO     [2019-11-21 00:06:49,413] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,413] Start print news
+INFO     [2019-11-21 00:06:49,413] End print news
+INFO     [2019-11-21 00:06:49,413] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,414] Start print news
+INFO     [2019-11-21 00:06:49,414] End print news
+INFO     [2019-11-21 00:06:49,414] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,414] Start print news
+INFO     [2019-11-21 00:06:49,414] End print news
+INFO     [2019-11-21 00:06:49,414] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,414] Start print news
+INFO     [2019-11-21 00:06:49,414] End print news
+INFO     [2019-11-21 00:06:49,414] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,415] Start print news
+INFO     [2019-11-21 00:06:49,415] End print news
+INFO     [2019-11-21 00:06:49,415] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,415] Start print news
+INFO     [2019-11-21 00:06:49,415] End print news
+INFO     [2019-11-21 00:06:49,415] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,415] Start print news
+INFO     [2019-11-21 00:06:49,415] End print news
+INFO     [2019-11-21 00:06:49,416] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,417] Start print news
+INFO     [2019-11-21 00:06:49,417] End print news
+INFO     [2019-11-21 00:06:49,417] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,417] Start print news
+INFO     [2019-11-21 00:06:49,417] End print news
+INFO     [2019-11-21 00:06:49,418] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,418] Start print news
+INFO     [2019-11-21 00:06:49,418] End print news
+INFO     [2019-11-21 00:06:49,418] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,418] Start print news
+INFO     [2019-11-21 00:06:49,418] End print news
+INFO     [2019-11-21 00:06:49,418] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,419] Start print news
+INFO     [2019-11-21 00:06:49,419] End print news
+INFO     [2019-11-21 00:06:49,419] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,419] Start print news
+INFO     [2019-11-21 00:06:49,419] End print news
+INFO     [2019-11-21 00:06:49,419] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,419] Start print news
+INFO     [2019-11-21 00:06:49,419] End print news
+INFO     [2019-11-21 00:06:49,419] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,420] Start print news
+INFO     [2019-11-21 00:06:49,420] End print news
+INFO     [2019-11-21 00:06:49,420] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,420] Start print news
+INFO     [2019-11-21 00:06:49,420] End print news
+INFO     [2019-11-21 00:06:49,420] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,420] Start print news
+INFO     [2019-11-21 00:06:49,420] End print news
+INFO     [2019-11-21 00:06:49,421] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,421] Start print news
+INFO     [2019-11-21 00:06:49,421] End print news
+INFO     [2019-11-21 00:06:49,421] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,421] Start print news
+INFO     [2019-11-21 00:06:49,421] End print news
+INFO     [2019-11-21 00:06:49,421] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,421] Start print news
+INFO     [2019-11-21 00:06:49,422] End print news
+INFO     [2019-11-21 00:06:49,422] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,422] Start print news
+INFO     [2019-11-21 00:06:49,422] End print news
+INFO     [2019-11-21 00:06:49,422] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,422] Start print news
+INFO     [2019-11-21 00:06:49,422] End print news
+INFO     [2019-11-21 00:06:49,422] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,423] Start print news
+INFO     [2019-11-21 00:06:49,423] End print news
+INFO     [2019-11-21 00:06:49,423] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,423] Start print news
+INFO     [2019-11-21 00:06:49,423] End print news
+INFO     [2019-11-21 00:06:49,423] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,423] Start print news
+INFO     [2019-11-21 00:06:49,423] End print news
+INFO     [2019-11-21 00:06:49,423] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,424] Start print news
+INFO     [2019-11-21 00:06:49,424] End print news
+INFO     [2019-11-21 00:06:49,424] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,424] Start print news
+INFO     [2019-11-21 00:06:49,424] End print news
+INFO     [2019-11-21 00:06:49,424] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,424] Start print news
+INFO     [2019-11-21 00:06:49,424] End print news
+INFO     [2019-11-21 00:06:49,424] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,425] Start print news
+INFO     [2019-11-21 00:06:49,425] End print news
+INFO     [2019-11-21 00:06:49,425] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,425] Start print news
+INFO     [2019-11-21 00:06:49,425] End print news
+INFO     [2019-11-21 00:06:49,425] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,425] Start print news
+INFO     [2019-11-21 00:06:49,425] End print news
+INFO     [2019-11-21 00:06:49,425] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,426] Start print news
+INFO     [2019-11-21 00:06:49,426] End print news
+INFO     [2019-11-21 00:06:49,426] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,426] Start print news
+INFO     [2019-11-21 00:06:49,426] End print news
+INFO     [2019-11-21 00:06:49,426] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,426] Start print news
+INFO     [2019-11-21 00:06:49,426] End print news
+INFO     [2019-11-21 00:06:49,426] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,427] Start print news
+INFO     [2019-11-21 00:06:49,427] End print news
+INFO     [2019-11-21 00:06:49,427] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,427] Start print news
+INFO     [2019-11-21 00:06:49,427] End print news
+INFO     [2019-11-21 00:06:49,427] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,427] Start print news
+INFO     [2019-11-21 00:06:49,427] End print news
+INFO     [2019-11-21 00:06:49,427] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,428] Start print news
+INFO     [2019-11-21 00:06:49,428] End print news
+INFO     [2019-11-21 00:06:49,428] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,428] Start print news
+INFO     [2019-11-21 00:06:49,428] End print news
+INFO     [2019-11-21 00:06:49,428] Try to delete all html in description
+INFO     [2019-11-21 00:06:49,428] Start print news
+INFO     [2019-11-21 00:06:49,428] End print news
+INFO     [2019-11-21 00:06:49,429] End print news
+INFO     [2019-11-21 00:10:26,698] Start script
+INFO     [2019-11-21 00:10:26,699] Start get items from url
+INFO     [2019-11-21 00:10:27,015] Connect to website is fine
+INFO     [2019-11-21 00:10:27,023] Successful parsing
+INFO     [2019-11-21 00:10:27,023] User choose some limits
+INFO     [2019-11-21 00:10:27,023] Start print news
+INFO     [2019-11-21 00:10:27,023] Try to delete all html in description
+INFO     [2019-11-21 00:10:27,023] Start print news
+INFO     [2019-11-21 00:10:27,023] End print news
+INFO     [2019-11-21 00:10:27,023] End print news
+INFO     [2019-11-21 00:12:01,990] Start script
+INFO     [2019-11-21 00:12:01,991] Start get items from url
+INFO     [2019-11-21 00:12:03,846] Connect to website is fine
+INFO     [2019-11-21 00:12:03,853] Successful parsing
+INFO     [2019-11-21 00:12:03,853] User choose some limits
+INFO     [2019-11-21 00:12:03,853] Start print news
+INFO     [2019-11-21 00:12:03,853] Try to delete all html in description
+INFO     [2019-11-21 00:12:03,854] Start print news
+INFO     [2019-11-21 00:12:03,854] End print news
+INFO     [2019-11-21 00:12:03,854] End print news
+INFO     [2019-11-21 00:16:42,866] Start script
+INFO     [2019-11-21 00:16:42,867] Start get items from url
+INFO     [2019-11-21 00:16:43,073] Connect to website is fine
+INFO     [2019-11-21 00:16:43,080] Successful parsing
+INFO     [2019-11-21 00:16:43,080] User choose some limits
+INFO     [2019-11-21 00:16:43,080] Start print news
+INFO     [2019-11-21 00:16:43,080] Try to delete all html in description
+INFO     [2019-11-21 00:16:43,081] Start print news
+INFO     [2019-11-21 00:16:43,081] End print news
+INFO     [2019-11-21 00:16:43,081] End print news
+INFO     [2019-11-21 00:16:58,754] Start script
+INFO     [2019-11-21 00:16:58,755] Start get items from url
+INFO     [2019-11-21 00:16:58,910] Connect to website is fine
+INFO     [2019-11-21 00:16:58,918] Successful parsing
+INFO     [2019-11-21 00:16:58,918] User choose some limits
+INFO     [2019-11-21 00:16:58,918] Start print news
+INFO     [2019-11-21 00:16:58,918] Try to delete all html in description
+INFO     [2019-11-21 00:16:58,918] Start print news
+INFO     [2019-11-21 00:16:58,918] End print news
+INFO     [2019-11-21 00:16:58,918] End print news
+INFO     [2019-11-21 00:17:15,096] Start script
+INFO     [2019-11-21 00:17:15,097] Start get items from url
+INFO     [2019-11-21 00:17:16,805] Connect to website is fine
+INFO     [2019-11-21 00:17:16,812] Successful parsing
+INFO     [2019-11-21 00:17:16,812] User choose some limits
+INFO     [2019-11-21 00:17:16,812] Start print news
+INFO     [2019-11-21 00:17:16,813] Try to delete all html in description
+INFO     [2019-11-21 00:17:16,813] Start print news
+INFO     [2019-11-21 00:17:16,813] End print news
+INFO     [2019-11-21 00:17:16,813] End print news
+INFO     [2019-11-21 00:29:19,201] Start script
+INFO     [2019-11-21 00:29:19,202] Start get items from url
+INFO     [2019-11-21 00:29:19,748] Connect to website is fine
+INFO     [2019-11-21 00:29:19,755] Successful parsing
+INFO     [2019-11-21 00:29:19,755] User choose some limits
+INFO     [2019-11-21 00:29:19,755] Start print news
+INFO     [2019-11-21 00:29:19,755] Try to delete all html in description
+INFO     [2019-11-21 00:29:19,756] Start print news
+INFO     [2019-11-21 00:29:19,756] End print news
+INFO     [2019-11-21 00:29:19,756] End print news
+INFO     [2019-11-21 00:38:19,540] Start script
+INFO     [2019-11-21 00:38:19,541] Start get items from url
+INFO     [2019-11-21 00:38:21,199] Connect to website is fine
+INFO     [2019-11-21 00:38:21,208] Successful parsing
+INFO     [2019-11-21 00:38:21,208] User choose some limits
+INFO     [2019-11-21 00:38:21,209] Start print news
+INFO     [2019-11-21 00:38:21,209] Try to delete all html in description
+INFO     [2019-11-21 00:38:21,209] Start print news
+INFO     [2019-11-21 00:38:21,209] End print news
+INFO     [2019-11-21 00:38:21,209] End print news
+INFO     [2019-11-21 00:44:51,604] Start script
+INFO     [2019-11-21 00:44:51,605] Start get items from url
+INFO     [2019-11-21 00:45:59,392] Start script
+INFO     [2019-11-21 00:45:59,393] Start get items from url
+INFO     [2019-11-21 00:46:23,293] Start script
+INFO     [2019-11-21 00:46:23,294] Start get items from url
+INFO     [2019-11-21 00:52:56,891] Connect to website is fine
+INFO     [2019-11-21 00:52:56,899] Successful parsing
+INFO     [2019-11-21 00:52:56,899] User choose some limits
+INFO     [2019-11-21 00:52:56,899] Start print news
+INFO     [2019-11-21 00:52:56,899] Try to delete all html in description
+INFO     [2019-11-21 00:52:56,899] Start print news
+INFO     [2019-11-21 00:52:56,899] End print news
+INFO     [2019-11-21 00:52:56,900] End print news
+INFO     [2019-11-21 00:53:09,271] Start script
+INFO     [2019-11-21 00:53:09,272] Start get items from url
+INFO     [2019-11-21 00:53:09,479] Connect to website is fine
+INFO     [2019-11-21 00:53:09,486] Successful parsing
+INFO     [2019-11-21 00:53:09,486] User choose some limits
+INFO     [2019-11-21 00:53:09,486] Start print news
+INFO     [2019-11-21 00:53:09,486] Try to delete all html in description
+INFO     [2019-11-21 00:53:09,486] Start print news
+INFO     [2019-11-21 00:53:09,486] End print news
+INFO     [2019-11-21 00:53:09,486] End print news
+INFO     [2019-11-21 00:53:26,163] Start script
+INFO     [2019-11-21 00:53:26,164] Start get items from url
+INFO     [2019-11-21 00:53:26,560] Connect to website is fine
+INFO     [2019-11-21 00:53:26,568] Successful parsing
+INFO     [2019-11-21 00:53:26,568] User choose some limits
+INFO     [2019-11-21 00:53:26,568] Start print news
+INFO     [2019-11-21 00:54:11,036] Start script
+INFO     [2019-11-21 00:54:11,037] Start get items from url
+INFO     [2019-11-21 00:54:11,209] Connect to website is fine
+INFO     [2019-11-21 00:54:11,216] Successful parsing
+INFO     [2019-11-21 00:54:11,216] User choose some limits
+INFO     [2019-11-21 00:54:11,216] Start print news
+INFO     [2019-11-21 00:54:11,217] Try to delete all html in description
+INFO     [2019-11-21 00:54:11,217] Start print news
+INFO     [2019-11-21 00:54:11,217] End print news
+INFO     [2019-11-21 00:54:11,217] End print news
+INFO     [2019-11-21 00:54:21,448] Start script
+INFO     [2019-11-21 00:54:21,449] Start get items from url
+INFO     [2019-11-21 00:54:21,647] Connect to website is fine
+INFO     [2019-11-21 00:54:21,654] Successful parsing
+INFO     [2019-11-21 00:54:21,654] User choose some limits
+INFO     [2019-11-21 00:54:21,654] Start print news
+INFO     [2019-11-21 00:54:21,654] Try to delete all html in description
+INFO     [2019-11-21 00:54:21,654] Start print news
+INFO     [2019-11-21 00:54:21,654] End print news
+INFO     [2019-11-21 00:54:21,654] End print news
+INFO     [2019-11-21 00:54:29,377] Start script
+INFO     [2019-11-21 00:54:29,378] Start get items from url
+INFO     [2019-11-21 00:54:29,949] Connect to website is fine
+INFO     [2019-11-21 00:54:29,956] Successful parsing
+INFO     [2019-11-21 00:54:29,956] User choose some limits
+INFO     [2019-11-21 00:54:29,956] Start print news
+INFO     [2019-11-21 00:54:41,861] Start script
+INFO     [2019-11-21 00:54:41,862] Start get items from url
+INFO     [2019-11-21 00:54:42,048] Connect to website is fine
+INFO     [2019-11-21 00:54:42,056] Successful parsing
+INFO     [2019-11-21 00:54:42,056] User choose some limits
+INFO     [2019-11-21 00:54:42,056] Start print news
+INFO     [2019-11-21 00:54:42,056] Try to delete all html in description
+INFO     [2019-11-21 00:54:42,056] Start print news
+INFO     [2019-11-21 00:54:42,056] End print news
+INFO     [2019-11-21 00:54:42,056] End print news
+INFO     [2019-11-21 00:55:37,204] Start script
+INFO     [2019-11-21 00:55:37,205] Start get items from url
+INFO     [2019-11-21 00:55:37,402] Connect to website is fine
+INFO     [2019-11-21 00:55:37,409] Successful parsing
+INFO     [2019-11-21 00:55:37,410] User choose some limits
+INFO     [2019-11-21 00:55:37,410] Start print news
+INFO     [2019-11-21 00:55:37,410] Try to delete all html in description
+INFO     [2019-11-21 00:55:37,410] Start print news
+INFO     [2019-11-21 00:55:37,410] End print news
+INFO     [2019-11-21 00:55:37,410] End print news
+INFO     [2019-11-21 00:59:48,952] Start script
+INFO     [2019-11-21 00:59:48,953] Start get items from url
+INFO     [2019-11-21 00:59:50,613] Connect to website is fine
+INFO     [2019-11-21 00:59:50,620] Successful parsing
+INFO     [2019-11-21 00:59:50,620] User choose some limits
+INFO     [2019-11-21 00:59:50,620] Start print news
+INFO     [2019-11-21 01:00:31,112] Start script
+INFO     [2019-11-21 01:00:31,114] Start get items from url
+INFO     [2019-11-21 01:00:31,362] Connect to website is fine
+INFO     [2019-11-21 01:00:31,369] Successful parsing
+INFO     [2019-11-21 01:00:31,369] User choose some limits
+INFO     [2019-11-21 01:00:31,369] Start print news
+INFO     [2019-11-21 01:01:15,783] Start script
+INFO     [2019-11-21 01:01:15,784] Start get items from url
+INFO     [2019-11-21 01:01:16,038] Connect to website is fine
+INFO     [2019-11-21 01:01:16,045] Successful parsing
+INFO     [2019-11-21 01:01:16,045] User choose some limits
+INFO     [2019-11-21 01:01:16,045] Start print news
+INFO     [2019-11-21 01:01:43,910] Start script
+INFO     [2019-11-21 01:01:43,911] Start get items from url
+INFO     [2019-11-21 01:01:44,367] Connect to website is fine
+INFO     [2019-11-21 01:01:44,374] Successful parsing
+INFO     [2019-11-21 01:01:44,375] User choose some limits
+INFO     [2019-11-21 01:01:44,375] Start print news
+INFO     [2019-11-21 01:01:44,375] Try to delete all html in description
+INFO     [2019-11-21 01:01:44,375] Start print news
+INFO     [2019-11-21 01:01:44,375] End print news
+INFO     [2019-11-21 01:01:44,375] End print news
+INFO     [2019-11-21 02:28:25,808] Start script
+INFO     [2019-11-21 02:28:44,791] Start script
+INFO     [2019-11-21 02:28:44,792] Start get items from url
+INFO     [2019-11-21 02:28:46,454] Connect to website is fine
+INFO     [2019-11-21 02:28:46,461] Successful parsing
+INFO     [2019-11-21 02:28:46,461] User choose some limits
+INFO     [2019-11-21 02:28:46,461] Start print news
+INFO     [2019-11-21 02:28:46,461] Try to delete all html in description
+INFO     [2019-11-21 02:28:46,462] Start print news
+INFO     [2019-11-21 02:28:46,462] End print news
+INFO     [2019-11-21 02:28:46,462] End print news
+INFO     [2019-11-21 02:29:54,710] Start script
+INFO     [2019-11-21 02:29:54,711] Start get items from url
+INFO     [2019-11-21 02:29:54,939] Connect to website is fine
+INFO     [2019-11-21 02:29:54,946] Successful parsing
+INFO     [2019-11-21 02:29:54,946] User choose some limits
+INFO     [2019-11-21 02:29:54,946] Start print news
+INFO     [2019-11-21 02:29:54,946] Try to delete all html in description
+INFO     [2019-11-21 02:29:54,946] Start print news
+INFO     [2019-11-21 02:29:54,946] End print news
+INFO     [2019-11-21 02:29:54,946] End print news
+INFO     [2019-11-21 02:30:35,386] Start script
+INFO     [2019-11-21 02:30:35,387] Start get items from url
+INFO     [2019-11-21 02:30:35,593] Connect to website is fine
+INFO     [2019-11-21 02:30:35,600] Successful parsing
+INFO     [2019-11-21 02:30:35,600] User choose some limits
+INFO     [2019-11-21 02:30:35,600] Start print news
+INFO     [2019-11-21 02:30:35,600] Try to delete all html in description
+INFO     [2019-11-21 02:30:35,600] Start print news
+INFO     [2019-11-21 02:30:35,600] End print news
+INFO     [2019-11-21 02:30:35,600] End print news
+INFO     [2019-11-21 02:30:56,763] Start script
+INFO     [2019-11-21 02:30:56,764] Start get items from url
+INFO     [2019-11-21 02:30:56,986] Connect to website is fine
+INFO     [2019-11-21 02:30:56,994] Successful parsing
+INFO     [2019-11-21 02:30:56,994] User choose some limits
+INFO     [2019-11-21 02:30:56,994] Start print news
+INFO     [2019-11-21 02:30:56,994] Try to delete all html in description
+INFO     [2019-11-21 02:30:56,994] Start print news
+INFO     [2019-11-21 02:30:56,994] End print news
+INFO     [2019-11-21 02:30:56,994] End print news
+INFO     [2019-11-21 02:30:56,994] Successfull converting into html
+INFO     [2019-11-21 02:35:21,058] Start script
+INFO     [2019-11-21 02:35:21,059] Start get items from url
+INFO     [2019-11-21 02:35:22,987] Connect to website is fine
+INFO     [2019-11-21 02:35:22,995] Successful parsing
+INFO     [2019-11-21 02:35:22,995] User choose some limits
+INFO     [2019-11-21 02:35:22,995] Start print news
+INFO     [2019-11-21 02:35:22,995] Try to delete all html in description
+INFO     [2019-11-21 02:35:22,995] Start print news
+INFO     [2019-11-21 02:35:22,995] End print news
+INFO     [2019-11-21 02:35:22,995] End print news
+INFO     [2019-11-21 02:35:43,669] Start script
+INFO     [2019-11-21 02:35:43,670] Start get items from url
+INFO     [2019-11-21 02:35:44,056] Connect to website is fine
+INFO     [2019-11-21 02:35:44,063] Successful parsing
+INFO     [2019-11-21 02:35:44,063] User choose some limits
+INFO     [2019-11-21 02:35:44,063] Start print news
+INFO     [2019-11-21 02:35:44,063] Try to delete all html in description
+INFO     [2019-11-21 02:35:44,064] Start print news
+INFO     [2019-11-21 02:35:44,064] End print news
+INFO     [2019-11-21 02:35:44,064] End print news
+INFO     [2019-11-21 02:35:44,064] Successfull converting into html
+INFO     [2019-11-21 02:36:17,571] Start script
+INFO     [2019-11-21 02:36:17,572] Start get items from url
+INFO     [2019-11-21 02:36:17,830] Connect to website is fine
+INFO     [2019-11-21 02:36:17,837] Successful parsing
+INFO     [2019-11-21 02:36:17,837] User choose some limits
+INFO     [2019-11-21 02:36:17,838] Start print news
+INFO     [2019-11-21 02:36:17,838] Try to delete all html in description
+INFO     [2019-11-21 02:36:17,838] Start print news
+INFO     [2019-11-21 02:36:17,838] End print news
+INFO     [2019-11-21 02:36:17,838] End print news
+INFO     [2019-11-21 02:43:25,567] Start script
+INFO     [2019-11-21 02:43:25,568] Start get items from url
+INFO     [2019-11-21 02:43:27,045] Connect to website is fine
+INFO     [2019-11-21 02:43:27,052] Successful parsing
+INFO     [2019-11-21 02:43:27,052] User choose some limits
+INFO     [2019-11-21 02:43:27,052] Start print news
+INFO     [2019-11-21 02:43:27,052] Try to delete all html in description
+INFO     [2019-11-21 02:43:27,053] Start print news
+INFO     [2019-11-21 02:43:27,053] End print news
+INFO     [2019-11-21 02:43:27,053] End print news
+INFO     [2019-11-21 02:44:16,700] Start script
+INFO     [2019-11-21 02:44:16,701] Start get items from url
+INFO     [2019-11-21 02:44:16,893] Connect to website is fine
+INFO     [2019-11-21 02:44:16,900] Successful parsing
+INFO     [2019-11-21 02:44:16,900] User choose some limits
+INFO     [2019-11-21 02:44:16,900] Start print news
+INFO     [2019-11-21 02:44:16,900] Try to delete all html in description
+INFO     [2019-11-21 02:44:16,901] Start print news
+INFO     [2019-11-21 02:44:16,901] End print news
+INFO     [2019-11-21 02:44:16,901] End print news
+INFO     [2019-11-21 02:44:45,872] Start script
+INFO     [2019-11-21 02:44:45,873] Start get items from url
+INFO     [2019-11-21 02:44:46,009] Connect to website is fine
+INFO     [2019-11-21 02:44:46,017] Successful parsing
+INFO     [2019-11-21 02:44:46,017] User choose some limits
+INFO     [2019-11-21 02:44:46,017] Start print news
+INFO     [2019-11-21 02:44:46,017] Try to delete all html in description
+INFO     [2019-11-21 02:44:46,017] Start print news
+INFO     [2019-11-21 02:44:46,017] End print news
+INFO     [2019-11-21 02:44:46,017] End print news
+INFO     [2019-11-21 02:44:46,447] Successfull converting into html
+INFO     [2019-11-21 02:45:11,133] Start script
+INFO     [2019-11-21 02:45:11,134] Start get items from url
+INFO     [2019-11-21 02:45:11,474] Connect to website is fine
+INFO     [2019-11-21 02:45:11,482] Successful parsing
+INFO     [2019-11-21 02:45:11,482] User choose some limits
+INFO     [2019-11-21 02:45:11,482] Start print news
+INFO     [2019-11-21 02:45:11,482] Try to delete all html in description
+INFO     [2019-11-21 02:45:11,482] Start print news
+INFO     [2019-11-21 02:45:11,482] End print news
+INFO     [2019-11-21 02:45:11,482] End print news
+INFO     [2019-11-21 02:45:12,026] Successfull converting into html
+INFO     [2019-11-21 03:11:08,678] Start script
+INFO     [2019-11-21 03:11:08,679] Start get items from url
+INFO     [2019-11-21 03:11:10,241] Connect to website is fine
+INFO     [2019-11-21 03:11:10,248] Successful parsing
+INFO     [2019-11-21 03:11:10,249] User choose some limits
+INFO     [2019-11-21 03:11:10,249] Start print news
+INFO     [2019-11-21 03:11:10,249] Try to delete all html in description
+INFO     [2019-11-21 03:11:10,249] Start print news
+INFO     [2019-11-21 03:11:10,249] End print news
+INFO     [2019-11-21 03:11:10,249] End print news
+INFO     [2019-11-21 03:14:37,896] Start script
+INFO     [2019-11-21 03:14:37,897] Start get items from url
+INFO     [2019-11-21 03:14:38,088] Connect to website is fine
+INFO     [2019-11-21 03:14:38,095] Successful parsing
+INFO     [2019-11-21 03:14:38,095] User choose some limits
+INFO     [2019-11-21 03:14:38,095] Start print news
+INFO     [2019-11-21 03:14:38,096] Try to delete all html in description
+INFO     [2019-11-21 03:14:38,096] Start print news
+INFO     [2019-11-21 03:14:38,096] End print news
+INFO     [2019-11-21 03:14:38,096] End print news
+INFO     [2019-11-21 03:14:38,096] Start make html format
+INFO     [2019-11-21 03:14:38,096] Try to delete all html in description
+INFO     [2019-11-21 03:15:12,981] Start script
+INFO     [2019-11-21 03:15:12,983] Start get items from url
+INFO     [2019-11-21 03:15:13,172] Connect to website is fine
+INFO     [2019-11-21 03:15:13,179] Successful parsing
+INFO     [2019-11-21 03:15:13,179] User choose some limits
+INFO     [2019-11-21 03:15:13,179] Start print news
+INFO     [2019-11-21 03:15:13,179] Try to delete all html in description
+INFO     [2019-11-21 03:15:13,180] Start print news
+INFO     [2019-11-21 03:15:13,180] End print news
+INFO     [2019-11-21 03:15:13,180] End print news
+INFO     [2019-11-21 03:15:13,180] Start make html format
+INFO     [2019-11-21 03:15:13,180] Try to delete all html in description
+INFO     [2019-11-21 03:16:21,191] Start script
+INFO     [2019-11-21 03:16:21,192] Start get items from url
+INFO     [2019-11-21 03:16:22,779] Connect to website is fine
+INFO     [2019-11-21 03:16:22,787] Successful parsing
+INFO     [2019-11-21 03:16:22,787] User choose some limits
+INFO     [2019-11-21 03:16:22,787] Start print news
+INFO     [2019-11-21 03:16:22,787] Try to delete all html in description
+INFO     [2019-11-21 03:16:22,787] Start print news
+INFO     [2019-11-21 03:16:22,787] End print news
+INFO     [2019-11-21 03:16:22,788] End print news
+INFO     [2019-11-21 03:16:22,788] Start make html format
+INFO     [2019-11-21 03:16:22,788] Try to delete all html in description
+INFO     [2019-11-21 03:16:22,788] Successfull converting into html
+INFO     [2019-11-21 03:17:57,366] Start script
+INFO     [2019-11-21 03:17:57,367] Start get items from url
+INFO     [2019-11-21 03:17:57,576] Connect to website is fine
+INFO     [2019-11-21 03:17:57,583] Successful parsing
+INFO     [2019-11-21 03:17:57,583] User choose some limits
+INFO     [2019-11-21 03:17:57,583] Start print news
+INFO     [2019-11-21 03:17:57,583] Try to delete all html in description
+INFO     [2019-11-21 03:17:57,583] Start print news
+INFO     [2019-11-21 03:17:57,584] End print news
+INFO     [2019-11-21 03:17:57,584] End print news
+INFO     [2019-11-21 03:17:57,584] Start make html format
+INFO     [2019-11-21 03:17:57,584] Try to delete all html in description
+INFO     [2019-11-21 03:17:57,584] Successfull converting into html
+INFO     [2019-11-21 03:52:09,031] Start script
+INFO     [2019-11-21 03:52:23,837] Start script
+INFO     [2019-11-21 03:52:23,838] Start get items from url
+INFO     [2019-11-21 03:52:25,424] Connect to website is fine
+INFO     [2019-11-21 03:52:25,431] Successful parsing
+INFO     [2019-11-21 03:52:25,431] User choose some limits
+INFO     [2019-11-21 03:52:25,431] Start print news
+INFO     [2019-11-21 03:52:25,431] Try to delete all html in description
+INFO     [2019-11-21 03:52:25,431] End print news
+INFO     [2019-11-21 03:52:25,431] User choose pdf
+INFO     [2019-11-21 03:54:30,334] Start script
+INFO     [2019-11-21 03:54:30,335] Start get items from url
+INFO     [2019-11-21 03:54:30,624] Connect to website is fine
+INFO     [2019-11-21 03:54:30,631] Successful parsing
+INFO     [2019-11-21 03:54:30,631] User choose some limits
+INFO     [2019-11-21 03:54:30,631] Start print news
+INFO     [2019-11-21 03:54:30,631] Try to delete all html in description
+INFO     [2019-11-21 03:54:30,632] End print news
+INFO     [2019-11-21 03:54:30,632] User choose pdf
+INFO     [2019-11-21 03:56:25,116] Start script
+INFO     [2019-11-21 03:56:25,117] Start get items from url
+INFO     [2019-11-21 03:56:25,384] Connect to website is fine
+INFO     [2019-11-21 03:56:25,391] Successful parsing
+INFO     [2019-11-21 03:56:25,391] User choose some limits
+INFO     [2019-11-21 03:56:25,391] Start print news
+INFO     [2019-11-21 03:56:25,391] Try to delete all html in description
+INFO     [2019-11-21 03:56:25,392] End print news
+INFO     [2019-11-21 03:56:25,392] User choose pdf
+INFO     [2019-11-21 03:56:49,380] Start script
+INFO     [2019-11-21 03:56:49,381] Start get items from url
+INFO     [2019-11-21 03:56:49,639] Connect to website is fine
+INFO     [2019-11-21 03:56:49,646] Successful parsing
+INFO     [2019-11-21 03:56:49,646] User choose some limits
+INFO     [2019-11-21 03:56:49,646] Start print news
+INFO     [2019-11-21 03:56:49,646] Try to delete all html in description
+INFO     [2019-11-21 03:56:49,647] End print news
+INFO     [2019-11-21 03:56:49,647] User choose pdf
+INFO     [2019-11-21 03:56:49,647] Start make html format
+INFO     [2019-11-21 03:56:49,647] Try to delete all html in description
+INFO     [2019-11-21 03:57:19,008] Start script
+INFO     [2019-11-21 03:57:19,009] Start get items from url
+INFO     [2019-11-21 03:57:19,255] Connect to website is fine
+INFO     [2019-11-21 03:57:19,262] Successful parsing
+INFO     [2019-11-21 03:57:19,262] User choose some limits
+INFO     [2019-11-21 03:57:19,262] Start print news
+INFO     [2019-11-21 03:57:19,262] Try to delete all html in description
+INFO     [2019-11-21 03:57:19,262] End print news
+INFO     [2019-11-21 03:57:19,262] User choose pdf
+INFO     [2019-11-21 03:57:19,263] Start make html format
+INFO     [2019-11-21 03:57:19,263] Try to delete all html in description
+INFO     [2019-11-21 04:02:12,930] Start script
+INFO     [2019-11-21 04:02:12,931] Start get items from url
+INFO     [2019-11-21 04:02:13,411] Connect to website is fine
+INFO     [2019-11-21 04:02:13,418] Successful parsing
+INFO     [2019-11-21 04:02:13,418] User choose some limits
+INFO     [2019-11-21 04:02:13,418] Start print news
+INFO     [2019-11-21 04:02:13,418] Try to delete all html in description
+INFO     [2019-11-21 04:02:13,419] End print news
+INFO     [2019-11-21 04:02:13,419] User choose pdf
+INFO     [2019-11-21 04:02:13,419] Start make html format
+INFO     [2019-11-21 04:02:13,419] Try to delete all html in description
+INFO     [2019-11-21 04:11:57,791] Start script
+INFO     [2019-11-21 04:11:57,792] Start get items from url
+INFO     [2019-11-21 04:12:00,025] Connect to website is fine
+INFO     [2019-11-21 04:12:00,032] Successful parsing
+INFO     [2019-11-21 04:12:00,032] User choose some limits
+INFO     [2019-11-21 04:12:00,032] Start print news
+INFO     [2019-11-21 04:12:00,032] Try to delete all html in description
+INFO     [2019-11-21 04:12:00,033] End print news
+INFO     [2019-11-21 04:12:00,033] User choose pdf
+INFO     [2019-11-21 04:12:00,033] Start make html format
+INFO     [2019-11-21 04:12:00,033] Try to delete all html in description
+INFO     [2019-11-21 04:12:00,033] Try to delete all html in description
+INFO     [2019-11-21 04:16:32,455] Start script
+INFO     [2019-11-21 04:16:32,456] Start get items from url
+INFO     [2019-11-21 04:16:32,628] Connect to website is fine
+INFO     [2019-11-21 04:16:32,635] Successful parsing
+INFO     [2019-11-21 04:16:32,635] User choose some limits
+INFO     [2019-11-21 04:16:32,636] Start print news
+INFO     [2019-11-21 04:16:32,636] Try to delete all html in description
+INFO     [2019-11-21 04:16:32,636] End print news
+INFO     [2019-11-21 04:16:32,636] User choose pdf
+INFO     [2019-11-21 04:16:32,636] Start make html format
+INFO     [2019-11-21 04:16:32,636] Try to delete all html in description
+INFO     [2019-11-21 04:16:32,637] Try to delete all html in description
+INFO     [2019-11-21 04:21:23,383] Start script
+INFO     [2019-11-21 04:21:23,384] Start get items from url
+INFO     [2019-11-21 04:21:25,000] Connect to website is fine
+INFO     [2019-11-21 04:21:25,009] Successful parsing
+INFO     [2019-11-21 04:21:25,009] User choose some limits
+INFO     [2019-11-21 04:21:25,009] Start print news
+INFO     [2019-11-21 04:21:25,009] Try to delete all html in description
+INFO     [2019-11-21 04:21:25,009] End print news
+INFO     [2019-11-21 04:21:25,009] User choose pdf
+INFO     [2019-11-21 04:21:25,009] Start make html format
+INFO     [2019-11-21 04:21:25,009] Try to delete all html in description
+INFO     [2019-11-21 04:21:25,010] Try to delete all html in description
+INFO     [2019-11-21 04:21:52,375] Start script
+INFO     [2019-11-21 04:21:52,376] Start get items from url
+INFO     [2019-11-21 04:21:52,563] Connect to website is fine
+INFO     [2019-11-21 04:21:52,570] Successful parsing
+INFO     [2019-11-21 04:21:52,570] User choose some limits
+INFO     [2019-11-21 04:21:52,570] Start print news
+INFO     [2019-11-21 04:21:52,570] Try to delete all html in description
+INFO     [2019-11-21 04:21:52,571] End print news
+INFO     [2019-11-21 04:21:52,571] User choose pdf
+INFO     [2019-11-21 04:21:52,571] Start make html format
+INFO     [2019-11-21 04:21:52,571] Try to delete all html in description
+INFO     [2019-11-21 04:21:52,571] Try to delete all html in description
+INFO     [2019-11-21 04:25:13,041] Start script
+INFO     [2019-11-21 04:25:13,042] Start get items from url
+INFO     [2019-11-21 04:25:13,338] Connect to website is fine
+INFO     [2019-11-21 04:25:13,344] Successful parsing
+INFO     [2019-11-21 04:25:13,345] User choose some limits
+INFO     [2019-11-21 04:25:13,345] Start print news
+INFO     [2019-11-21 04:25:13,345] Try to delete all html in description
+INFO     [2019-11-21 04:25:13,345] End print news
+INFO     [2019-11-21 04:25:13,345] User choose pdf
+INFO     [2019-11-21 04:25:13,345] Start make html format
+INFO     [2019-11-21 04:25:13,345] Try to delete all html in description
+INFO     [2019-11-21 04:25:13,346] Try to delete all html in description
+INFO     [2019-11-21 12:57:57,842] Start script
+INFO     [2019-11-21 12:57:57,849] Start get items from url
+INFO     [2019-11-21 12:57:59,890] Connect to website is fine
+INFO     [2019-11-21 12:57:59,898] Successful parsing
+INFO     [2019-11-21 12:57:59,898] User choose some limits
+INFO     [2019-11-21 12:57:59,898] Start print news
+INFO     [2019-11-21 12:57:59,898] Try to delete all html in description
+INFO     [2019-11-21 12:57:59,898] End print news
+INFO     [2019-11-21 12:57:59,898] User choose pdf
+INFO     [2019-11-21 12:57:59,898] Start make html format
+INFO     [2019-11-21 12:57:59,898] Try to delete all html in description
+INFO     [2019-11-21 12:57:59,899] Try to delete all html in description
+INFO     [2019-11-21 12:58:18,573] Start script
+INFO     [2019-11-21 12:58:18,574] Start get items from url
+INFO     [2019-11-21 12:58:18,851] Connect to website is fine
+INFO     [2019-11-21 12:58:18,859] Successful parsing
+INFO     [2019-11-21 12:58:18,859] User choose some limits
+INFO     [2019-11-21 12:58:18,859] Start print news
+INFO     [2019-11-21 12:58:18,859] Try to delete all html in description
+INFO     [2019-11-21 12:58:18,859] End print news
+INFO     [2019-11-21 12:58:18,859] User choose pdf
+INFO     [2019-11-21 12:58:18,860] Start make html format
+INFO     [2019-11-21 12:58:18,860] Try to delete all html in description
+INFO     [2019-11-21 13:00:50,307] Start script
+INFO     [2019-11-21 13:00:50,308] Start get items from url
+INFO     [2019-11-21 13:00:50,500] Connect to website is fine
+INFO     [2019-11-21 13:00:50,507] Successful parsing
+INFO     [2019-11-21 13:00:50,507] User choose some limits
+INFO     [2019-11-21 13:00:50,507] Start print news
+INFO     [2019-11-21 13:00:50,507] Try to delete all html in description
+INFO     [2019-11-21 13:00:50,508] End print news
+INFO     [2019-11-21 13:00:50,508] User choose pdf
+INFO     [2019-11-21 13:01:04,239] Start script
+INFO     [2019-11-21 13:01:04,240] Start get items from url
+INFO     [2019-11-21 13:01:04,576] Connect to website is fine
+INFO     [2019-11-21 13:01:04,583] Successful parsing
+INFO     [2019-11-21 13:01:04,583] User choose some limits
+INFO     [2019-11-21 13:01:04,583] Start print news
+INFO     [2019-11-21 13:01:04,583] Try to delete all html in description
+INFO     [2019-11-21 13:01:04,584] End print news
+INFO     [2019-11-21 13:01:04,584] User choose pdf
+INFO     [2019-11-21 13:01:42,734] Start script
+INFO     [2019-11-21 13:01:42,735] Start get items from url
+INFO     [2019-11-21 13:01:43,238] Connect to website is fine
+INFO     [2019-11-21 13:01:43,245] Successful parsing
+INFO     [2019-11-21 13:01:43,245] User choose some limits
+INFO     [2019-11-21 13:01:43,245] Start print news
+INFO     [2019-11-21 13:01:43,245] Try to delete all html in description
+INFO     [2019-11-21 13:01:43,245] End print news
+INFO     [2019-11-21 13:01:43,245] User choose pdf
+INFO     [2019-11-21 13:02:42,045] Start script
+INFO     [2019-11-21 13:02:42,046] Start get items from url
+INFO     [2019-11-21 13:02:42,261] Connect to website is fine
+INFO     [2019-11-21 13:02:42,269] Successful parsing
+INFO     [2019-11-21 13:02:42,269] User choose some limits
+INFO     [2019-11-21 13:02:42,269] Start print news
+INFO     [2019-11-21 13:02:42,269] Try to delete all html in description
+INFO     [2019-11-21 13:02:42,269] End print news
+INFO     [2019-11-21 13:02:42,269] User choose pdf
+INFO     [2019-11-21 13:03:19,476] Start script
+INFO     [2019-11-21 13:03:19,477] Start get items from url
+INFO     [2019-11-21 13:03:21,202] Connect to website is fine
+INFO     [2019-11-21 13:03:21,209] Successful parsing
+INFO     [2019-11-21 13:03:21,209] User choose some limits
+INFO     [2019-11-21 13:03:21,209] Start print news
+INFO     [2019-11-21 13:03:21,209] Try to delete all html in description
+INFO     [2019-11-21 13:03:21,210] End print news
+INFO     [2019-11-21 13:03:21,210] User choose pdf
+INFO     [2019-11-21 13:03:34,111] Start script
+INFO     [2019-11-21 13:03:34,112] Start get items from url
+INFO     [2019-11-21 13:03:34,446] Connect to website is fine
+INFO     [2019-11-21 13:03:34,453] Successful parsing
+INFO     [2019-11-21 13:03:34,453] User choose some limits
+INFO     [2019-11-21 13:03:34,453] Start print news
+INFO     [2019-11-21 13:03:34,453] Try to delete all html in description
+INFO     [2019-11-21 13:03:34,453] End print news
+INFO     [2019-11-21 13:03:34,453] User choose pdf
+INFO     [2019-11-21 13:03:49,052] Start script
+INFO     [2019-11-21 13:03:49,052] Start get items from url
+INFO     [2019-11-21 13:03:49,327] Connect to website is fine
+INFO     [2019-11-21 13:03:49,333] Successful parsing
+INFO     [2019-11-21 13:03:49,334] User choose some limits
+INFO     [2019-11-21 13:03:49,334] Start print news
+INFO     [2019-11-21 13:03:49,334] Try to delete all html in description
+INFO     [2019-11-21 13:03:49,334] End print news
+INFO     [2019-11-21 13:03:49,334] User choose pdf
+INFO     [2019-11-21 13:16:52,445] Start script
+INFO     [2019-11-21 13:16:52,446] Start get items from url
+INFO     [2019-11-21 13:16:54,419] Connect to website is fine
+INFO     [2019-11-21 13:16:54,426] Successful parsing
+INFO     [2019-11-21 13:16:54,426] User choose some limits
+INFO     [2019-11-21 13:16:54,426] Start print news
+INFO     [2019-11-21 13:16:54,426] Try to delete all html in description
+INFO     [2019-11-21 13:16:54,426] End print news
+INFO     [2019-11-21 13:16:54,426] User choose pdf
+INFO     [2019-11-21 13:17:09,749] Start script
+INFO     [2019-11-21 13:17:09,750] Start get items from url
+INFO     [2019-11-21 13:17:09,957] Connect to website is fine
+INFO     [2019-11-21 13:17:09,964] Successful parsing
+INFO     [2019-11-21 13:17:09,964] User choose some limits
+INFO     [2019-11-21 13:17:09,964] Start print news
+INFO     [2019-11-21 13:17:09,964] Try to delete all html in description
+INFO     [2019-11-21 13:17:09,964] End print news
+INFO     [2019-11-21 13:17:09,964] User choose pdf
+INFO     [2019-11-21 13:17:09,965] Start print news
+INFO     [2019-11-21 13:17:09,965] Try to delete all html in description
+INFO     [2019-11-21 13:17:09,965] End print news
+INFO     [2019-11-21 13:17:42,943] Start script
+INFO     [2019-11-21 13:17:42,944] Start get items from url
+INFO     [2019-11-21 13:17:43,143] Connect to website is fine
+INFO     [2019-11-21 13:17:43,150] Successful parsing
+INFO     [2019-11-21 13:17:43,150] User choose some limits
+INFO     [2019-11-21 13:17:43,150] Start print news
+INFO     [2019-11-21 13:17:43,150] Try to delete all html in description
+INFO     [2019-11-21 13:17:43,151] End print news
+INFO     [2019-11-21 13:17:43,151] User choose pdf
+INFO     [2019-11-21 13:17:43,151] Start print news
+INFO     [2019-11-21 13:17:43,151] Try to delete all html in description
+INFO     [2019-11-21 13:17:43,151] End print news
+INFO     [2019-11-21 13:20:13,968] Start script
+INFO     [2019-11-21 13:20:13,969] Start get items from url
+INFO     [2019-11-21 13:20:14,159] Connect to website is fine
+INFO     [2019-11-21 13:20:14,166] Successful parsing
+INFO     [2019-11-21 13:20:14,166] User choose some limits
+INFO     [2019-11-21 13:20:14,166] Start print news
+INFO     [2019-11-21 13:20:14,166] Try to delete all html in description
+INFO     [2019-11-21 13:20:14,167] End print news
+INFO     [2019-11-21 13:20:14,167] User choose pdf
+INFO     [2019-11-21 13:20:14,167] Try to delete all html in description
+INFO     [2019-11-21 13:20:58,581] Start script
+INFO     [2019-11-21 13:20:58,581] Start get items from url
+INFO     [2019-11-21 13:20:58,777] Connect to website is fine
+INFO     [2019-11-21 13:20:58,784] Successful parsing
+INFO     [2019-11-21 13:20:58,784] User choose some limits
+INFO     [2019-11-21 13:20:58,784] Start print news
+INFO     [2019-11-21 13:20:58,784] Try to delete all html in description
+INFO     [2019-11-21 13:20:58,785] End print news
+INFO     [2019-11-21 13:20:58,785] User choose pdf
+INFO     [2019-11-21 13:20:58,785] Try to delete all html in description
+INFO     [2019-11-21 13:21:56,253] Start script
+INFO     [2019-11-21 13:21:56,254] Start get items from url
+INFO     [2019-11-21 13:21:58,147] Connect to website is fine
+INFO     [2019-11-21 13:21:58,153] Successful parsing
+INFO     [2019-11-21 13:21:58,153] User choose some limits
+INFO     [2019-11-21 13:21:58,154] Start print news
+INFO     [2019-11-21 13:21:58,154] Try to delete all html in description
+INFO     [2019-11-21 13:21:58,154] End print news
+INFO     [2019-11-21 13:21:58,154] User choose pdf
+INFO     [2019-11-21 13:21:58,154] Try to delete all html in description
+INFO     [2019-11-21 13:23:13,975] Start script
+INFO     [2019-11-21 13:23:13,976] Start get items from url
+INFO     [2019-11-21 13:23:14,267] Connect to website is fine
+INFO     [2019-11-21 13:23:14,274] Successful parsing
+INFO     [2019-11-21 13:23:14,274] User choose some limits
+INFO     [2019-11-21 13:23:14,274] Start print news
+INFO     [2019-11-21 13:23:14,274] Try to delete all html in description
+INFO     [2019-11-21 13:23:14,275] End print news
+INFO     [2019-11-21 13:23:14,275] User choose pdf
+INFO     [2019-11-21 13:23:14,275] Try to delete all html in description
+INFO     [2019-11-21 13:24:02,623] Start script
+INFO     [2019-11-21 13:24:02,624] Start get items from url
+INFO     [2019-11-21 13:24:03,047] Connect to website is fine
+INFO     [2019-11-21 13:24:03,054] Successful parsing
+INFO     [2019-11-21 13:24:03,054] User choose some limits
+INFO     [2019-11-21 13:24:03,054] Start print news
+INFO     [2019-11-21 13:24:03,054] Try to delete all html in description
+INFO     [2019-11-21 13:24:03,055] End print news
+INFO     [2019-11-21 13:24:03,055] User choose pdf
+INFO     [2019-11-21 13:24:03,055] Try to delete all html in description
+INFO     [2019-11-21 13:24:47,504] Start script
+INFO     [2019-11-21 13:24:47,505] Start get items from url
+INFO     [2019-11-21 13:24:47,785] Connect to website is fine
+INFO     [2019-11-21 13:24:47,792] Successful parsing
+INFO     [2019-11-21 13:24:47,792] User choose some limits
+INFO     [2019-11-21 13:24:47,792] Start print news
+INFO     [2019-11-21 13:24:47,792] Try to delete all html in description
+INFO     [2019-11-21 13:24:47,792] End print news
+INFO     [2019-11-21 13:24:47,792] User choose pdf
+INFO     [2019-11-21 13:24:47,792] Try to delete all html in description
+INFO     [2019-11-21 13:25:08,831] Start script
+INFO     [2019-11-21 13:25:08,832] Start get items from url
+INFO     [2019-11-21 13:25:09,300] Connect to website is fine
+INFO     [2019-11-21 13:25:09,307] Successful parsing
+INFO     [2019-11-21 13:25:09,307] User choose some limits
+INFO     [2019-11-21 13:25:09,307] Start print news
+INFO     [2019-11-21 13:25:09,307] Try to delete all html in description
+INFO     [2019-11-21 13:25:09,307] End print news
+INFO     [2019-11-21 13:25:09,307] User choose pdf
+INFO     [2019-11-21 13:25:09,307] Try to delete all html in description
+INFO     [2019-11-21 13:30:10,325] Start script
+INFO     [2019-11-21 13:30:10,326] Start get items from url
+INFO     [2019-11-21 13:30:12,306] Connect to website is fine
+INFO     [2019-11-21 13:30:12,313] Successful parsing
+INFO     [2019-11-21 13:30:12,313] User choose some limits
+INFO     [2019-11-21 13:30:12,313] Start print news
+INFO     [2019-11-21 13:30:12,313] Try to delete all html in description
+INFO     [2019-11-21 13:30:12,313] End print news
+INFO     [2019-11-21 13:30:12,313] User choose pdf
+INFO     [2019-11-21 13:31:25,583] Start script
+INFO     [2019-11-21 13:31:25,584] Start get items from url
+INFO     [2019-11-21 13:31:26,065] Connect to website is fine
+INFO     [2019-11-21 13:31:26,072] Successful parsing
+INFO     [2019-11-21 13:31:26,072] User choose some limits
+INFO     [2019-11-21 13:31:26,072] Start print news
+INFO     [2019-11-21 13:31:26,072] Try to delete all html in description
+INFO     [2019-11-21 13:31:26,072] End print news
+INFO     [2019-11-21 13:31:26,072] User choose pdf
+INFO     [2019-11-21 13:31:26,072] Try to delete all html in description
+INFO     [2019-11-21 13:31:59,954] Start script
+INFO     [2019-11-21 13:31:59,955] Start get items from url
+INFO     [2019-11-21 13:32:00,099] Connect to website is fine
+INFO     [2019-11-21 13:32:00,106] Successful parsing
+INFO     [2019-11-21 13:32:00,106] User choose some limits
+INFO     [2019-11-21 13:32:00,106] Start print news
+INFO     [2019-11-21 13:32:00,106] Try to delete all html in description
+INFO     [2019-11-21 13:32:00,107] End print news
+INFO     [2019-11-21 13:32:00,107] User choose pdf
+INFO     [2019-11-21 13:32:00,107] Try to delete all html in description
+INFO     [2019-11-21 13:38:18,851] Start script
+INFO     [2019-11-21 13:38:18,852] Start get items from url
+INFO     [2019-11-21 13:38:20,494] Connect to website is fine
+INFO     [2019-11-21 13:38:20,500] Successful parsing
+INFO     [2019-11-21 13:38:20,500] User choose some limits
+INFO     [2019-11-21 13:38:20,501] Start print news
+INFO     [2019-11-21 13:38:20,501] Try to delete all html in description
+INFO     [2019-11-21 13:38:20,501] End print news
+INFO     [2019-11-21 13:38:20,501] User choose pdf
+INFO     [2019-11-21 13:42:00,542] Start script
+INFO     [2019-11-21 13:42:00,543] Start get items from url
+INFO     [2019-11-21 13:42:00,801] Connect to website is fine
+INFO     [2019-11-21 13:42:00,808] Successful parsing
+INFO     [2019-11-21 13:42:00,808] User choose some limits
+INFO     [2019-11-21 13:42:00,808] Start print news
+INFO     [2019-11-21 13:42:00,808] Try to delete all html in description
+INFO     [2019-11-21 13:42:00,808] End print news
+INFO     [2019-11-21 13:42:00,808] User choose pdf
+INFO     [2019-11-21 13:47:48,965] Start script
+INFO     [2019-11-21 13:47:48,966] Start get items from url
+INFO     [2019-11-21 13:47:50,416] Connect to website is fine
+INFO     [2019-11-21 13:47:50,423] Successful parsing
+INFO     [2019-11-21 13:47:50,423] User choose some limits
+INFO     [2019-11-21 13:47:50,423] Start print news
+INFO     [2019-11-21 13:47:50,423] Try to delete all html in description
+INFO     [2019-11-21 13:47:50,424] End print news
+INFO     [2019-11-21 13:47:50,424] User choose pdf
+INFO     [2019-11-21 14:01:27,835] Start script
+INFO     [2019-11-21 14:01:27,836] Start get items from url
+INFO     [2019-11-21 14:01:28,014] Connect to website is fine
+INFO     [2019-11-21 14:01:28,020] Successful parsing
+INFO     [2019-11-21 14:01:28,021] User choose some limits
+INFO     [2019-11-21 14:01:28,021] Start print news
+INFO     [2019-11-21 14:01:28,021] Try to delete all html in description
+INFO     [2019-11-21 14:01:28,021] End print news
+INFO     [2019-11-21 14:01:28,021] User choose pdf
+INFO     [2019-11-21 14:02:09,813] Start script
+INFO     [2019-11-21 14:02:09,814] Start get items from url
+INFO     [2019-11-21 14:02:09,973] Connect to website is fine
+INFO     [2019-11-21 14:02:09,980] Successful parsing
+INFO     [2019-11-21 14:02:09,980] User choose some limits
+INFO     [2019-11-21 14:02:09,980] Start print news
+INFO     [2019-11-21 14:02:09,980] Try to delete all html in description
+INFO     [2019-11-21 14:02:09,981] End print news
+INFO     [2019-11-21 14:02:09,981] User choose pdf
+INFO     [2019-11-21 14:03:19,135] Start script
+INFO     [2019-11-21 14:03:19,136] Start get items from url
+INFO     [2019-11-21 14:03:20,671] Connect to website is fine
+INFO     [2019-11-21 14:03:20,678] Successful parsing
+INFO     [2019-11-21 14:03:20,678] User choose some limits
+INFO     [2019-11-21 14:03:20,678] Start print news
+INFO     [2019-11-21 14:03:20,678] Try to delete all html in description
+INFO     [2019-11-21 14:03:20,678] End print news
+INFO     [2019-11-21 14:03:20,678] User choose pdf
+INFO     [2019-11-21 14:05:12,332] Start script
+INFO     [2019-11-21 14:05:12,333] Start get items from url
+INFO     [2019-11-21 14:05:12,583] Connect to website is fine
+INFO     [2019-11-21 14:05:12,590] Successful parsing
+INFO     [2019-11-21 14:05:12,590] User choose some limits
+INFO     [2019-11-21 14:05:12,590] Start print news
+INFO     [2019-11-21 14:05:12,590] Try to delete all html in description
+INFO     [2019-11-21 14:05:12,590] End print news
+INFO     [2019-11-21 14:05:12,590] User choose pdf
+INFO     [2019-11-21 14:05:38,258] Start script
+INFO     [2019-11-21 14:05:38,259] Start get items from url
+INFO     [2019-11-21 14:05:38,680] Connect to website is fine
+INFO     [2019-11-21 14:05:38,687] Successful parsing
+INFO     [2019-11-21 14:05:38,687] User choose some limits
+INFO     [2019-11-21 14:05:38,687] Start print news
+INFO     [2019-11-21 14:05:38,687] Try to delete all html in description
+INFO     [2019-11-21 14:05:38,688] End print news
+INFO     [2019-11-21 14:05:38,688] User choose pdf
+INFO     [2019-11-21 14:05:38,699] Try to delete all html in description
+INFO     [2019-11-21 14:27:11,669] Start script
+INFO     [2019-11-21 14:27:11,670] Start get items from url
+INFO     [2019-11-21 14:27:13,790] Connect to website is fine
+INFO     [2019-11-21 14:27:13,797] Successful parsing
+INFO     [2019-11-21 14:27:13,797] User choose some limits
+INFO     [2019-11-21 14:27:13,797] Start print news
+INFO     [2019-11-21 14:28:02,553] Start script
+INFO     [2019-11-21 14:28:02,554] Start get items from url
+INFO     [2019-11-21 14:28:02,896] Connect to website is fine
+INFO     [2019-11-21 14:28:02,902] Successful parsing
+INFO     [2019-11-21 14:28:02,902] User choose some limits
+INFO     [2019-11-21 14:28:02,903] Start print news
+INFO     [2019-11-21 14:28:02,903] Try to delete all html in description
+INFO     [2019-11-21 14:28:02,903] End print news
+INFO     [2019-11-21 14:28:02,903] User choose pdf
+INFO     [2019-11-21 14:28:02,904] Try to delete all html in description
+INFO     [2019-11-21 14:33:53,471] Start script
+INFO     [2019-11-21 14:33:53,472] Start get items from url
+INFO     [2019-11-21 14:33:55,193] Connect to website is fine
+INFO     [2019-11-21 14:33:55,200] Successful parsing
+INFO     [2019-11-21 14:33:55,200] User choose some limits
+INFO     [2019-11-21 14:33:55,200] Start print news
+INFO     [2019-11-21 14:33:55,200] Try to delete all html in description
+INFO     [2019-11-21 14:33:55,200] End print news
+INFO     [2019-11-21 14:33:55,200] User choose pdf
+INFO     [2019-11-21 14:33:55,202] Try to delete all html in description
+INFO     [2019-11-21 14:34:21,254] Start script
+INFO     [2019-11-21 14:34:21,255] Start get items from url
+INFO     [2019-11-21 14:34:22,727] Connect to website is fine
+INFO     [2019-11-21 14:34:22,735] Successful parsing
+INFO     [2019-11-21 14:34:22,735] User choose some limits
+INFO     [2019-11-21 14:34:22,735] Start print news
+INFO     [2019-11-21 14:34:22,735] Try to delete all html in description
+INFO     [2019-11-21 14:34:22,735] End print news
+INFO     [2019-11-21 14:34:22,735] User choose pdf
+INFO     [2019-11-21 14:34:22,737] Try to delete all html in description
+INFO     [2019-11-21 14:38:06,177] Start script
+INFO     [2019-11-21 14:38:06,178] Start get items from url
+INFO     [2019-11-21 14:38:06,349] Connect to website is fine
+INFO     [2019-11-21 14:38:06,356] Successful parsing
+INFO     [2019-11-21 14:38:06,356] User choose some limits
+INFO     [2019-11-21 14:38:06,356] Start print news
+INFO     [2019-11-21 14:38:06,356] Try to delete all html in description
+INFO     [2019-11-21 14:38:06,357] End print news
+INFO     [2019-11-21 14:38:06,357] User choose pdf
+INFO     [2019-11-21 14:38:06,359] Try to delete all html in description
+INFO     [2019-11-21 14:38:22,044] Start script
+INFO     [2019-11-21 14:38:22,045] Start get items from url
+INFO     [2019-11-21 14:38:22,253] Connect to website is fine
+INFO     [2019-11-21 14:38:22,260] Successful parsing
+INFO     [2019-11-21 14:38:22,260] User choose some limits
+INFO     [2019-11-21 14:38:22,260] Start print news
+INFO     [2019-11-21 14:38:22,260] Try to delete all html in description
+INFO     [2019-11-21 14:38:22,261] End print news
+INFO     [2019-11-21 14:38:22,261] User choose pdf
+INFO     [2019-11-21 14:38:22,262] Try to delete all html in description
+INFO     [2019-11-21 14:38:52,349] Start script
+INFO     [2019-11-21 14:38:52,350] Start get items from url
+INFO     [2019-11-21 14:38:52,549] Connect to website is fine
+INFO     [2019-11-21 14:38:52,556] Successful parsing
+INFO     [2019-11-21 14:38:52,556] User choose some limits
+INFO     [2019-11-21 14:38:52,556] Start print news
+INFO     [2019-11-21 14:38:52,557] Try to delete all html in description
+INFO     [2019-11-21 14:38:52,557] End print news
+INFO     [2019-11-21 14:38:52,557] User choose pdf
+INFO     [2019-11-21 14:38:52,559] Try to delete all html in description
+INFO     [2019-11-21 14:40:13,127] Start script
+INFO     [2019-11-21 14:40:13,128] Start get items from url
+INFO     [2019-11-21 14:40:14,667] Connect to website is fine
+INFO     [2019-11-21 14:40:14,674] Successful parsing
+INFO     [2019-11-21 14:40:14,674] User choose some limits
+INFO     [2019-11-21 14:40:14,674] Start print news
+INFO     [2019-11-21 14:40:14,674] Try to delete all html in description
+INFO     [2019-11-21 14:40:14,675] End print news
+INFO     [2019-11-21 14:40:14,675] User choose pdf
+INFO     [2019-11-21 14:40:14,676] Try to delete all html in description
+INFO     [2019-11-21 14:40:35,465] Start script
+INFO     [2019-11-21 14:40:35,466] Start get items from url
+INFO     [2019-11-21 14:40:35,741] Connect to website is fine
+INFO     [2019-11-21 14:40:35,750] Successful parsing
+INFO     [2019-11-21 14:40:35,750] User choose some limits
+INFO     [2019-11-21 14:40:35,751] Start print news
+INFO     [2019-11-21 14:40:35,751] Try to delete all html in description
+INFO     [2019-11-21 14:40:35,751] End print news
+INFO     [2019-11-21 14:40:35,751] User choose pdf
+INFO     [2019-11-21 14:40:35,753] Try to delete all html in description
+INFO     [2019-11-21 14:42:34,820] Start script
+INFO     [2019-11-21 14:42:34,821] Start get items from url
+INFO     [2019-11-21 14:42:35,285] Connect to website is fine
+INFO     [2019-11-21 14:42:35,292] Successful parsing
+INFO     [2019-11-21 14:42:35,292] User choose some limits
+INFO     [2019-11-21 14:42:35,292] Start print news
+INFO     [2019-11-21 14:42:35,293] Try to delete all html in description
+INFO     [2019-11-21 14:42:35,293] End print news
+INFO     [2019-11-21 14:42:35,293] User choose pdf
+INFO     [2019-11-21 14:42:35,294] Try to delete all html in description
+INFO     [2019-11-21 14:43:08,417] Start script
+INFO     [2019-11-21 14:43:08,418] Start get items from url
+INFO     [2019-11-21 14:43:08,895] Connect to website is fine
+INFO     [2019-11-21 14:43:08,902] Successful parsing
+INFO     [2019-11-21 14:43:08,902] User choose some limits
+INFO     [2019-11-21 14:43:08,902] Start print news
+INFO     [2019-11-21 14:43:08,902] Try to delete all html in description
+INFO     [2019-11-21 14:43:08,902] End print news
+INFO     [2019-11-21 14:43:08,903] User choose pdf
+INFO     [2019-11-21 14:43:08,904] Try to delete all html in description
+INFO     [2019-11-21 14:45:11,584] Start script
+INFO     [2019-11-21 14:45:11,585] Start get items from url
+INFO     [2019-11-21 14:45:11,957] Connect to website is fine
+INFO     [2019-11-21 14:45:11,967] Successful parsing
+INFO     [2019-11-21 14:45:11,967] User choose some limits
+INFO     [2019-11-21 14:45:11,967] Start print news
+INFO     [2019-11-21 14:45:11,967] Try to delete all html in description
+INFO     [2019-11-21 14:45:11,968] End print news
+INFO     [2019-11-21 14:45:11,968] User choose pdf
+INFO     [2019-11-21 14:45:11,969] Try to delete all html in description
+INFO     [2019-11-21 14:45:36,964] Start script
+INFO     [2019-11-21 14:45:36,965] Start get items from url
+INFO     [2019-11-21 14:45:37,184] Connect to website is fine
+INFO     [2019-11-21 14:45:37,191] Successful parsing
+INFO     [2019-11-21 14:45:37,191] User choose some limits
+INFO     [2019-11-21 14:45:37,191] Start print news
+INFO     [2019-11-21 14:45:37,191] Try to delete all html in description
+INFO     [2019-11-21 14:45:37,191] End print news
+INFO     [2019-11-21 14:45:37,191] User choose pdf
+INFO     [2019-11-21 14:45:37,193] Try to delete all html in description
+INFO     [2019-11-21 14:46:00,802] Start script
+INFO     [2019-11-21 14:46:00,803] Start get items from url
+INFO     [2019-11-21 14:46:01,087] Connect to website is fine
+INFO     [2019-11-21 14:46:01,098] Successful parsing
+INFO     [2019-11-21 14:46:01,098] User choose some limits
+INFO     [2019-11-21 14:46:01,098] Start print news
+INFO     [2019-11-21 14:46:01,098] Try to delete all html in description
+INFO     [2019-11-21 14:46:01,099] End print news
+INFO     [2019-11-21 14:46:01,099] User choose pdf
+INFO     [2019-11-21 14:46:01,100] Try to delete all html in description
+INFO     [2019-11-21 14:46:26,126] Start script
+INFO     [2019-11-21 14:46:26,127] Start get items from url
+INFO     [2019-11-21 14:46:27,646] Connect to website is fine
+INFO     [2019-11-21 14:46:27,656] Successful parsing
+INFO     [2019-11-21 14:46:27,697] User choose some limits
+INFO     [2019-11-21 14:46:27,698] Start print news
+INFO     [2019-11-21 14:46:27,698] Try to delete all html in description
+INFO     [2019-11-21 14:46:27,699] Try to delete all html in description
+INFO     [2019-11-21 14:46:27,701] End print news
+INFO     [2019-11-21 14:46:27,702] User choose pdf
+INFO     [2019-11-21 14:46:27,709] Try to delete all html in description
+INFO     [2019-11-21 14:46:27,715] Try to delete all html in description
+INFO     [2019-11-21 14:48:10,376] Start script
+INFO     [2019-11-21 14:48:10,377] Start get items from url
+INFO     [2019-11-21 14:48:10,692] Connect to website is fine
+INFO     [2019-11-21 14:48:10,699] Successful parsing
+INFO     [2019-11-21 14:48:10,699] User choose some limits
+INFO     [2019-11-21 14:48:10,699] Start print news
+INFO     [2019-11-21 14:48:10,699] Try to delete all html in description
+INFO     [2019-11-21 14:48:10,700] Try to delete all html in description
+INFO     [2019-11-21 14:48:10,700] End print news
+INFO     [2019-11-21 14:48:10,700] User choose pdf
+INFO     [2019-11-21 14:48:10,701] Try to delete all html in description
+INFO     [2019-11-21 14:48:10,703] Try to delete all html in description
+INFO     [2019-11-21 14:49:09,247] Start script
+INFO     [2019-11-21 14:49:09,248] Start get items from url
+INFO     [2019-11-21 14:49:09,580] Connect to website is fine
+INFO     [2019-11-21 14:49:09,587] Successful parsing
+INFO     [2019-11-21 14:49:09,587] User choose some limits
+INFO     [2019-11-21 14:49:09,587] Start print news
+INFO     [2019-11-21 14:49:09,587] Try to delete all html in description
+INFO     [2019-11-21 14:49:09,588] Try to delete all html in description
+INFO     [2019-11-21 14:49:09,588] End print news
+INFO     [2019-11-21 14:49:09,588] User choose pdf
+INFO     [2019-11-21 14:49:09,589] Try to delete all html in description
+INFO     [2019-11-21 14:49:09,591] Try to delete all html in description
+INFO     [2019-11-21 14:51:59,005] Start script
+INFO     [2019-11-21 14:51:59,006] Start get items from url
+INFO     [2019-11-21 14:52:01,059] Connect to website is fine
+INFO     [2019-11-21 14:52:01,066] Successful parsing
+INFO     [2019-11-21 14:52:01,066] User choose some limits
+INFO     [2019-11-21 14:52:01,066] Start print news
+INFO     [2019-11-21 14:52:01,066] Try to delete all html in description
+INFO     [2019-11-21 14:52:01,066] Try to delete all html in description
+INFO     [2019-11-21 14:52:01,067] End print news
+INFO     [2019-11-21 14:52:01,067] User choose pdf
+INFO     [2019-11-21 14:52:01,068] Try to delete all html in description
+INFO     [2019-11-21 14:52:01,069] Try to delete all html in description
+INFO     [2019-11-21 14:52:22,584] Start script
+INFO     [2019-11-21 14:52:22,585] Start get items from url
+INFO     [2019-11-21 14:52:22,888] Connect to website is fine
+INFO     [2019-11-21 14:52:22,895] Successful parsing
+INFO     [2019-11-21 14:52:22,895] User choose some limits
+INFO     [2019-11-21 14:52:22,895] Start print news
+INFO     [2019-11-21 14:52:22,895] Try to delete all html in description
+INFO     [2019-11-21 14:52:22,896] Try to delete all html in description
+INFO     [2019-11-21 14:52:22,896] End print news
+INFO     [2019-11-21 14:52:22,896] User choose pdf
+INFO     [2019-11-21 14:52:22,897] Try to delete all html in description
+INFO     [2019-11-21 14:52:22,899] Try to delete all html in description
+INFO     [2019-11-21 15:15:13,249] Start script
+INFO     [2019-11-21 15:15:13,250] Start get items from url
+INFO     [2019-11-21 15:15:14,964] Connect to website is fine
+INFO     [2019-11-21 15:15:14,971] Successful parsing
+INFO     [2019-11-21 15:15:14,971] User choose some limits
+INFO     [2019-11-21 15:15:14,971] Start print news
+INFO     [2019-11-21 15:15:14,971] Try to delete all html in description
+INFO     [2019-11-21 15:15:14,971] End print news
+INFO     [2019-11-21 15:15:35,310] Start script
+INFO     [2019-11-21 15:15:35,311] Start get items from url
+INFO     [2019-11-21 15:15:35,655] Connect to website is fine
+INFO     [2019-11-21 15:15:35,662] Successful parsing
+INFO     [2019-11-21 15:15:35,662] User choose some limits
+INFO     [2019-11-21 15:15:35,662] Start print news
+INFO     [2019-11-21 15:15:35,662] Try to delete all html in description
+INFO     [2019-11-21 15:15:35,663] End print news
+INFO     [2019-11-21 15:15:45,136] Start script
+INFO     [2019-11-21 15:15:45,137] Start get items from url
+INFO     [2019-11-21 15:15:45,364] Connect to website is fine
+INFO     [2019-11-21 15:15:45,371] Successful parsing
+INFO     [2019-11-21 15:15:45,371] User choose some limits
+INFO     [2019-11-21 15:15:45,371] Start print news
+INFO     [2019-11-21 15:15:45,371] Try to delete all html in description
+INFO     [2019-11-21 15:15:45,372] End print news
+INFO     [2019-11-21 17:54:58,944] Start script
+INFO     [2019-11-21 17:54:58,945] Start get items from url
+INFO     [2019-11-21 17:55:01,042] Connect to website is fine
+INFO     [2019-11-21 17:55:01,049] Successful parsing
+INFO     [2019-11-21 17:55:01,049] User choose some limits
+INFO     [2019-11-21 17:55:01,049] Start print news
+INFO     [2019-11-21 17:55:01,049] Try to delete all html in description
+INFO     [2019-11-21 17:55:01,050] End print news
+INFO     [2019-11-21 17:55:01,050] Try to cash news from stdout
+INFO     [2019-11-21 18:30:59,155] Start script
+INFO     [2019-11-21 18:30:59,156] Start get items from url
+INFO     [2019-11-21 18:31:01,120] Connect to website is fine
+INFO     [2019-11-21 18:31:01,126] Successful parsing
+INFO     [2019-11-21 18:31:01,126] User choose some limits
+INFO     [2019-11-21 18:31:01,126] Start print news
+INFO     [2019-11-21 18:31:01,127] Try to delete all html in description
+INFO     [2019-11-21 18:31:01,127] End print news
+INFO     [2019-11-21 18:31:01,127] Try to cash news from stdout
+INFO     [2019-11-21 18:38:59,858] Start script
+INFO     [2019-11-21 18:38:59,859] Start get items from url
+INFO     [2019-11-21 18:39:01,828] Connect to website is fine
+INFO     [2019-11-21 18:39:01,835] Successful parsing
+INFO     [2019-11-21 18:39:01,835] User choose some limits
+INFO     [2019-11-21 18:39:01,835] Start print news
+INFO     [2019-11-21 18:39:01,835] Try to delete all html in description
+INFO     [2019-11-21 18:39:01,836] End print news
+INFO     [2019-11-21 18:39:01,836] Try to cash news from stdout
+INFO     [2019-11-21 18:39:20,000] Start script
+INFO     [2019-11-21 18:39:20,001] Start get items from url
+INFO     [2019-11-21 18:39:20,394] Connect to website is fine
+INFO     [2019-11-21 18:39:20,402] Successful parsing
+INFO     [2019-11-21 18:39:20,402] User choose some limits
+INFO     [2019-11-21 18:39:20,402] Start print news
+INFO     [2019-11-21 18:39:20,402] Try to delete all html in description
+INFO     [2019-11-21 18:39:20,402] End print news
+INFO     [2019-11-21 18:39:20,403] Try to cash news from stdout
+INFO     [2019-11-21 18:40:26,366] Start script
+INFO     [2019-11-21 18:40:26,367] Start get items from url
+INFO     [2019-11-21 18:40:26,917] Connect to website is fine
+INFO     [2019-11-21 18:40:26,923] Successful parsing
+INFO     [2019-11-21 18:40:26,923] User choose some limits
+INFO     [2019-11-21 18:40:26,924] Start print news
+INFO     [2019-11-21 18:40:26,924] Try to delete all html in description
+INFO     [2019-11-21 18:40:26,924] End print news
+INFO     [2019-11-21 18:40:26,924] Try to cash news from stdout
+INFO     [2019-11-21 18:41:00,466] Start script
+INFO     [2019-11-21 18:41:00,467] Start get items from url
+INFO     [2019-11-21 18:41:00,951] Connect to website is fine
+INFO     [2019-11-21 18:41:00,959] Successful parsing
+INFO     [2019-11-21 18:41:00,959] User choose some limits
+INFO     [2019-11-21 18:41:00,959] Start print news
+INFO     [2019-11-21 18:41:00,959] Try to delete all html in description
+INFO     [2019-11-21 18:41:00,960] End print news
+INFO     [2019-11-21 18:41:00,960] Try to cash news from stdout
+INFO     [2019-11-21 18:46:55,045] Start script
+INFO     [2019-11-21 18:46:55,046] Start get items from url
+INFO     [2019-11-21 18:46:56,612] Connect to website is fine
+INFO     [2019-11-21 18:46:56,619] Successful parsing
+INFO     [2019-11-21 18:46:56,619] User choose some limits
+INFO     [2019-11-21 18:46:56,620] Start print news
+INFO     [2019-11-21 18:46:56,620] Try to delete all html in description
+INFO     [2019-11-21 18:46:56,620] End print news
+INFO     [2019-11-21 18:46:56,620] Try to cash news from stdout
+INFO     [2019-11-21 18:50:49,037] Start script
+INFO     [2019-11-21 18:50:49,038] Start get items from url
+INFO     [2019-11-21 18:50:49,214] Connect to website is fine
+INFO     [2019-11-21 18:50:49,220] Successful parsing
+INFO     [2019-11-21 18:50:49,220] User choose some limits
+INFO     [2019-11-21 18:50:49,220] Start print news
+INFO     [2019-11-21 18:50:49,220] Try to delete all html in description
+INFO     [2019-11-21 18:50:49,221] End print news
+INFO     [2019-11-21 18:50:49,221] Try to cash news from stdout
+INFO     [2019-11-21 18:59:23,308] Start script
+INFO     [2019-11-21 18:59:23,309] Start get items from url
+INFO     [2019-11-21 18:59:25,244] Connect to website is fine
+INFO     [2019-11-21 18:59:25,251] Successful parsing
+INFO     [2019-11-21 18:59:25,252] User choose some limits
+INFO     [2019-11-21 18:59:25,252] Start print news
+INFO     [2019-11-21 18:59:25,252] Try to delete all html in description
+INFO     [2019-11-21 18:59:25,252] End print news
+INFO     [2019-11-21 18:59:25,252] Try to cash news from stdout
+INFO     [2019-11-21 19:02:19,659] Start script
+INFO     [2019-11-21 19:02:19,661] Start get items from url
+INFO     [2019-11-21 19:02:20,016] Connect to website is fine
+INFO     [2019-11-21 19:02:20,023] Successful parsing
+INFO     [2019-11-21 19:02:20,024] User choose some limits
+INFO     [2019-11-21 19:02:20,024] Start print news
+INFO     [2019-11-21 19:02:20,024] Try to delete all html in description
+INFO     [2019-11-21 19:02:20,025] End print news
+INFO     [2019-11-21 19:02:20,025] Try to cash news from stdout
+INFO     [2019-11-21 19:03:27,809] Start script
+INFO     [2019-11-21 19:03:27,810] Start get items from url
+INFO     [2019-11-21 19:03:28,055] Connect to website is fine
+INFO     [2019-11-21 19:03:28,063] Successful parsing
+INFO     [2019-11-21 19:03:28,063] User choose some limits
+INFO     [2019-11-21 19:03:28,063] Start print news
+INFO     [2019-11-21 19:03:28,063] Try to delete all html in description
+INFO     [2019-11-21 19:03:28,063] End print news
+INFO     [2019-11-21 19:03:28,063] Try to cash news from stdout
+INFO     [2019-11-21 19:03:28,063] Start print news
+INFO     [2019-11-21 19:03:28,063] Try to delete all html in description
+INFO     [2019-11-21 19:03:28,064] End print news
+INFO     [2019-11-21 19:03:47,893] Start script
+INFO     [2019-11-21 19:03:47,894] Start get items from url
+INFO     [2019-11-21 19:03:48,387] Connect to website is fine
+INFO     [2019-11-21 19:03:48,397] Successful parsing
+INFO     [2019-11-21 19:03:48,397] User choose some limits
+INFO     [2019-11-21 19:03:48,397] Start print news
+INFO     [2019-11-21 19:03:48,398] Try to delete all html in description
+INFO     [2019-11-21 19:03:48,398] End print news
+INFO     [2019-11-21 19:03:48,398] Try to cash news from stdout
+INFO     [2019-11-21 19:03:48,398] Start print news
+INFO     [2019-11-21 19:03:48,398] Try to delete all html in description
+INFO     [2019-11-21 19:03:48,399] End print news
+INFO     [2019-11-21 19:04:54,730] Start script
+INFO     [2019-11-21 19:04:54,731] Start get items from url
+INFO     [2019-11-21 19:04:56,534] Connect to website is fine
+INFO     [2019-11-21 19:04:56,541] Successful parsing
+INFO     [2019-11-21 19:04:56,541] User choose some limits
+INFO     [2019-11-21 19:04:56,541] Start print news
+INFO     [2019-11-21 19:04:56,541] Try to delete all html in description
+INFO     [2019-11-21 19:04:56,542] End print news
+INFO     [2019-11-21 19:04:56,542] Try to cash news from stdout
+INFO     [2019-11-21 19:04:56,542] Start print news
+INFO     [2019-11-21 19:04:56,542] Try to delete all html in description
+INFO     [2019-11-21 19:04:56,542] End print news
+INFO     [2019-11-21 19:10:59,152] Start script
+INFO     [2019-11-21 19:10:59,153] Start get items from url
+INFO     [2019-11-21 19:11:00,663] Connect to website is fine
+INFO     [2019-11-21 19:11:00,670] Successful parsing
+INFO     [2019-11-21 19:11:00,670] User choose some limits
+INFO     [2019-11-21 19:11:00,670] Start print news
+INFO     [2019-11-21 19:11:00,670] Try to delete all html in description
+INFO     [2019-11-21 19:11:00,670] End print news
+INFO     [2019-11-21 19:11:00,670] Try to cash news from stdout
+INFO     [2019-11-21 19:16:39,846] Start script
+INFO     [2019-11-21 19:16:39,847] Start get items from url
+INFO     [2019-11-21 19:16:41,549] Connect to website is fine
+INFO     [2019-11-21 19:16:41,556] Successful parsing
+INFO     [2019-11-21 19:16:41,557] User choose some limits
+INFO     [2019-11-21 19:16:41,557] Start print news
+INFO     [2019-11-21 19:16:41,557] Try to delete all html in description
+INFO     [2019-11-21 19:16:41,557] End print news
+INFO     [2019-11-21 19:16:41,557] Try to cash news from stdout
+INFO     [2019-11-21 19:16:41,557] Start print news
+INFO     [2019-11-21 19:16:41,557] Try to delete all html in description
+INFO     [2019-11-21 19:16:41,558] End print news
+INFO     [2019-11-21 19:18:28,266] Start script
+INFO     [2019-11-21 19:18:28,267] Start get items from url
+INFO     [2019-11-21 19:18:28,464] Connect to website is fine
+INFO     [2019-11-21 19:18:28,471] Successful parsing
+INFO     [2019-11-21 19:18:28,471] User choose some limits
+INFO     [2019-11-21 19:18:28,471] Start print news
+INFO     [2019-11-21 19:18:28,471] Try to delete all html in description
+INFO     [2019-11-21 19:18:28,471] End print news
+INFO     [2019-11-21 19:18:28,471] Try to cash news from stdout
+INFO     [2019-11-21 19:18:28,472] Start print news
+INFO     [2019-11-21 19:18:45,072] Start script
+INFO     [2019-11-21 19:18:45,073] Start get items from url
+INFO     [2019-11-21 19:18:45,317] Connect to website is fine
+INFO     [2019-11-21 19:18:45,323] Successful parsing
+INFO     [2019-11-21 19:18:45,324] User choose some limits
+INFO     [2019-11-21 19:18:45,324] Start print news
+INFO     [2019-11-21 19:18:45,324] Try to delete all html in description
+INFO     [2019-11-21 19:18:45,324] End print news
+INFO     [2019-11-21 19:18:45,324] Try to cash news from stdout
+INFO     [2019-11-21 19:18:45,324] Start print news
+INFO     [2019-11-21 19:18:45,324] Try to delete all html in description
+INFO     [2019-11-21 19:18:45,325] End print news
+INFO     [2019-11-21 19:21:33,553] Start script
+INFO     [2019-11-21 19:21:33,554] Start get items from url
+INFO     [2019-11-21 19:21:33,944] Connect to website is fine
+INFO     [2019-11-21 19:21:33,953] Successful parsing
+INFO     [2019-11-21 19:21:33,953] User choose some limits
+INFO     [2019-11-21 19:21:33,953] User choose json format
+INFO     [2019-11-21 19:21:33,953] Start make json format
+INFO     [2019-11-21 19:21:33,953] Try to delete all html in description
+INFO     [2019-11-21 19:21:33,953] End make json format
+INFO     [2019-11-21 19:21:33,953] Start print json
+INFO     [2019-11-21 19:21:33,954] End print json
+INFO     [2019-11-21 19:21:42,635] Start script
+INFO     [2019-11-21 19:21:42,636] Start get items from url
+INFO     [2019-11-21 19:21:42,853] Connect to website is fine
+INFO     [2019-11-21 19:21:42,860] Successful parsing
+INFO     [2019-11-21 19:21:42,860] Start print news
+INFO     [2019-11-21 19:21:42,860] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,861] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,861] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,861] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,862] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,862] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,862] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,862] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,863] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,863] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,863] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,863] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,864] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,864] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,864] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,865] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,865] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,865] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,865] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,866] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,866] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,866] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,867] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,867] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,867] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,867] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,868] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,868] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,868] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,868] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,869] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,869] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,869] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,870] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,870] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,870] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,871] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,871] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,872] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,873] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,874] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,875] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,875] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,876] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,876] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,876] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,876] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,877] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,877] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,877] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,878] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,878] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,878] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,879] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,879] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,879] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,879] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,880] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,880] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,880] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,881] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,881] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,881] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,881] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,882] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,882] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,882] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,882] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,883] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,883] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,883] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,884] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,884] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,884] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,884] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,886] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,887] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,889] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,891] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,892] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,898] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,898] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,899] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,899] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,900] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,900] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,900] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,901] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,901] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,901] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,901] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,902] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,902] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,906] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,906] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,907] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,907] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,908] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,908] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,909] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,909] End print news
+INFO     [2019-11-21 19:21:42,909] Try to cash news from stdout
+INFO     [2019-11-21 19:21:42,910] Start print news
+INFO     [2019-11-21 19:21:42,910] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,910] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,911] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,911] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,911] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,912] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,912] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,913] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,913] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,914] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,914] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,915] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,915] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,916] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,916] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,917] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,917] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,922] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,923] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,923] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,928] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,929] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,929] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,930] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,930] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,931] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,931] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,931] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,932] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,932] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,933] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,933] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,934] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,934] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,935] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,935] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,936] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,936] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,937] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,938] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,939] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,940] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,942] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,943] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,944] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,945] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,945] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,946] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,946] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,947] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,947] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,948] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,948] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,949] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,949] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,950] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,950] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,951] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,951] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,952] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,952] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,953] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,955] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,956] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,957] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,958] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,959] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,960] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,960] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,961] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,966] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,966] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,967] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,967] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,968] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,968] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,969] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,969] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,970] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,971] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,973] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,974] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,974] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,975] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,981] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,982] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,983] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,983] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,986] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,986] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,987] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,987] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,988] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,990] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,990] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,991] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,991] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,992] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,993] Try to delete all html in description
+INFO     [2019-11-21 19:21:42,999] Try to delete all html in description
+INFO     [2019-11-21 19:21:43,000] End print news
+INFO     [2019-11-21 19:21:51,295] Start script
+INFO     [2019-11-21 19:21:51,296] Start get items from url
+INFO     [2019-11-21 19:21:52,838] Connect to website is fine
+INFO     [2019-11-21 19:21:52,845] Successful parsing
+INFO     [2019-11-21 19:21:52,846] Start print news
+INFO     [2019-11-21 19:21:52,846] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,846] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,846] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,847] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,847] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,847] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,847] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,848] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,848] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,848] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,848] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,849] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,849] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,849] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,849] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,850] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,850] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,850] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,851] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,851] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,851] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,851] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,852] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,852] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,852] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,852] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,853] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,853] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,853] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,853] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,854] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,854] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,854] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,855] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,855] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,855] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,855] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,856] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,856] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,856] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,857] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,857] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,858] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,858] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,859] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,859] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,860] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,860] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,861] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,862] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,862] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,862] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,863] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,863] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,864] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,864] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,865] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,865] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,866] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,866] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,867] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,868] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,869] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,869] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,869] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,870] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,870] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,870] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,870] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,871] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,871] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,871] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,872] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,872] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,872] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,872] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,873] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,873] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,873] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,874] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,874] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,874] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,874] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,875] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,875] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,875] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,875] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,876] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,876] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,876] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,877] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,877] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,877] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,878] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,878] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,879] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,879] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,879] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,879] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,880] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,880] End print news
+INFO     [2019-11-21 19:21:52,880] Try to cash news from stdout
+INFO     [2019-11-21 19:21:52,880] Start print news
+INFO     [2019-11-21 19:21:52,880] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,881] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,881] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,881] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,882] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,882] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,882] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,883] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,883] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,884] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,884] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,884] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,885] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,887] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,888] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,889] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,890] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,891] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,891] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,892] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,892] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,893] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,893] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,893] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,894] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,894] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,894] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,895] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,895] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,895] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,897] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,897] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,898] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,899] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,899] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,900] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,900] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,902] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,904] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,905] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,905] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,906] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,906] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,907] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,907] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,908] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,908] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,909] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,909] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,910] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,910] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,910] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,911] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,911] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,912] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,912] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,913] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,913] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,914] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,914] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,914] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,915] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,915] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,915] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,916] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,916] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,918] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,919] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,920] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,920] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,921] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,921] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,921] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,922] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,922] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,923] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,923] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,924] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,924] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,925] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,925] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,926] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,926] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,926] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,926] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,927] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,927] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,927] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,927] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,928] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,928] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,928] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,929] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,929] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,929] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,929] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,930] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,930] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,930] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,930] Try to delete all html in description
+INFO     [2019-11-21 19:21:52,931] End print news
+INFO     [2019-11-21 19:22:38,252] Start script
+INFO     [2019-11-21 19:22:38,253] Start get items from url
+INFO     [2019-11-21 19:22:38,452] Connect to website is fine
+INFO     [2019-11-21 19:22:38,458] Successful parsing
+INFO     [2019-11-21 19:22:38,459] Start print news
+INFO     [2019-11-21 19:22:38,459] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,459] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,459] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,460] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,460] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,460] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,460] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,461] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,461] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,461] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,461] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,462] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,462] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,462] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,462] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,463] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,463] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,464] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,464] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,464] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,465] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,465] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,465] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,466] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,466] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,466] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,467] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,468] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,468] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,469] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,469] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,470] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,472] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,472] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,473] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,473] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,473] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,473] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,474] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,474] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,474] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,474] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,475] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,475] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,475] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,475] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,476] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,476] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,476] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,477] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,477] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,477] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,477] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,478] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,478] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,478] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,478] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,479] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,479] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,479] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,479] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,480] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,480] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,480] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,481] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,481] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,481] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,481] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,482] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,482] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,482] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,482] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,483] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,483] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,483] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,485] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,486] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,486] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,487] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,488] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,488] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,489] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,489] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,490] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,490] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,491] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,491] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,492] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,492] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,493] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,493] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,493] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,494] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,494] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,494] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,495] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,495] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,496] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,496] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,497] Try to delete all html in description
+INFO     [2019-11-21 19:22:38,497] End print news
+INFO     [2019-11-21 19:22:38,497] User choose verbose
+INFO     [2019-11-21 19:22:38,497] try to read log file
+INFO     [2019-11-21 19:23:00,089] Start script
+INFO     [2019-11-21 19:23:17,804] Start script
+INFO     [2019-11-21 19:23:24,625] Start script
+INFO     [2019-11-21 19:26:18,801] Start script
+INFO     [2019-11-21 19:26:30,071] Start script
+INFO     [2019-11-21 19:26:30,072] Start get items from url
+INFO     [2019-11-21 19:26:30,463] Connect to website is fine
+INFO     [2019-11-21 19:26:30,471] Successful parsing
+INFO     [2019-11-21 19:26:30,471] User choose some limits
+INFO     [2019-11-21 19:26:30,471] Start print news
+INFO     [2019-11-21 19:26:30,471] Try to delete all html in description
+INFO     [2019-11-21 19:26:30,471] End print news
+INFO     [2019-11-21 19:26:30,471] Try to cash news from stdout
+INFO     [2019-11-21 19:26:30,472] Start make json format
+INFO     [2019-11-21 19:26:30,472] Try to delete all html in description
+INFO     [2019-11-21 19:26:30,472] End make json format
+INFO     [2019-11-21 19:35:58,646] Start script
+INFO     [2019-11-21 19:35:58,647] Start get items from url
+INFO     [2019-11-21 19:36:00,587] Connect to website is fine
+INFO     [2019-11-21 19:36:00,594] Successful parsing
+INFO     [2019-11-21 19:36:00,594] User choose some limits
+INFO     [2019-11-21 19:36:00,594] Start print news
+INFO     [2019-11-21 19:36:00,594] Try to delete all html in description
+INFO     [2019-11-21 19:36:00,594] End print news
+INFO     [2019-11-21 19:36:00,594] Try to cash news from stdout
+INFO     [2019-11-21 19:36:00,594] Start make json format
+INFO     [2019-11-21 19:36:00,594] Try to delete all html in description
+INFO     [2019-11-21 19:36:00,595] End make json format
+INFO     [2019-11-21 19:36:29,345] Start script
+INFO     [2019-11-21 19:36:29,346] Start get items from url
+INFO     [2019-11-21 19:36:30,217] Connect to website is fine
+INFO     [2019-11-21 19:36:30,224] Successful parsing
+INFO     [2019-11-21 19:36:30,224] User choose some limits
+INFO     [2019-11-21 19:36:30,224] Start print news
+INFO     [2019-11-21 19:36:30,224] Try to delete all html in description
+INFO     [2019-11-21 19:36:30,224] End print news
+INFO     [2019-11-21 19:36:30,224] Try to cash news from stdout
+INFO     [2019-11-21 19:36:30,225] Start print news
+INFO     [2019-11-21 19:36:30,225] Try to delete all html in description
+INFO     [2019-11-21 19:36:30,225] End print news
+INFO     [2019-11-21 19:39:23,274] Start script
+INFO     [2019-11-21 19:39:23,275] Start get items from url
+INFO     [2019-11-21 19:39:23,571] Connect to website is fine
+INFO     [2019-11-21 19:39:23,578] Successful parsing
+INFO     [2019-11-21 19:39:23,578] User choose some limits
+INFO     [2019-11-21 19:39:23,578] Start print news
+INFO     [2019-11-21 19:39:23,578] Try to delete all html in description
+INFO     [2019-11-21 19:39:23,578] End print news
+INFO     [2019-11-21 19:39:23,578] Try to cash news from stdout
+INFO     [2019-11-21 19:43:59,936] Start script
+INFO     [2019-11-21 19:43:59,937] Start get items from url
+INFO     [2019-11-21 19:44:01,613] Connect to website is fine
+INFO     [2019-11-21 19:44:01,620] Successful parsing
+INFO     [2019-11-21 19:44:01,620] User choose some limits
+INFO     [2019-11-21 19:44:01,620] Start print news
+INFO     [2019-11-21 19:44:01,621] Try to delete all html in description
+INFO     [2019-11-21 19:44:01,621] End print news
+INFO     [2019-11-21 19:44:01,621] Try to cash news from stdout
+INFO     [2019-11-21 20:02:41,285] Start script
+INFO     [2019-11-21 20:02:41,286] Start get items from url
+INFO     [2019-11-21 20:02:43,321] Connect to website is fine
+INFO     [2019-11-21 20:02:43,329] Successful parsing
+INFO     [2019-11-21 20:02:43,329] User choose some limits
+INFO     [2019-11-21 20:02:43,329] Start print news
+INFO     [2019-11-21 20:02:43,329] Try to delete all html in description
+INFO     [2019-11-21 20:02:43,329] End print news
+INFO     [2019-11-21 20:02:43,330] Try to cash news from stdout
+INFO     [2019-11-21 20:03:07,723] Start script
+INFO     [2019-11-21 20:03:07,724] Start get items from url
+INFO     [2019-11-21 20:03:08,333] Connect to website is fine
+INFO     [2019-11-21 20:03:08,340] Successful parsing
+INFO     [2019-11-21 20:03:08,340] User choose some limits
+INFO     [2019-11-21 20:03:08,340] Start print news
+INFO     [2019-11-21 20:03:08,340] Try to delete all html in description
+INFO     [2019-11-21 20:03:08,341] End print news
+INFO     [2019-11-21 20:03:08,341] Try to cash news from stdout
+INFO     [2019-11-21 20:16:14,598] Start script
+INFO     [2019-11-21 20:16:14,599] Start get items from url
+INFO     [2019-11-21 20:16:16,441] Connect to website is fine
+INFO     [2019-11-21 20:16:16,448] Successful parsing
+INFO     [2019-11-21 20:16:16,449] User choose some limits
+INFO     [2019-11-21 20:16:16,449] User choose json format
+INFO     [2019-11-21 20:16:16,449] Start make json format
+INFO     [2019-11-21 20:16:16,449] Try to delete all html in description
+INFO     [2019-11-21 20:16:16,449] End make json format
+INFO     [2019-11-21 20:16:16,449] Start print json
+INFO     [2019-11-21 20:16:16,449] End print json
+INFO     [2019-11-21 20:16:58,114] Start script
+INFO     [2019-11-21 20:16:58,115] Start get items from url
+INFO     [2019-11-21 20:16:58,660] Connect to website is fine
+INFO     [2019-11-21 20:16:58,667] Successful parsing
+INFO     [2019-11-21 20:16:58,667] User choose some limits
+INFO     [2019-11-21 20:16:58,667] User choose json format
+INFO     [2019-11-21 20:16:58,667] Start make json format
+INFO     [2019-11-21 20:16:58,667] Try to delete all html in description
+INFO     [2019-11-21 20:16:58,668] Try to delete all html in description
+INFO     [2019-11-21 20:16:58,668] Try to delete all html in description
+INFO     [2019-11-21 20:16:58,668] End make json format
+INFO     [2019-11-21 20:16:58,668] Start print json
+INFO     [2019-11-21 20:16:58,668] End print json
+INFO     [2019-11-21 20:25:48,258] Start script
+INFO     [2019-11-21 20:25:48,259] Start get items from url
+INFO     [2019-11-21 20:25:49,986] Connect to website is fine
+INFO     [2019-11-21 20:25:49,993] Successful parsing
+INFO     [2019-11-21 20:25:49,993] User choose some limits
+INFO     [2019-11-21 20:25:49,993] User choose json format
+INFO     [2019-11-21 20:25:49,993] Start make json format
+INFO     [2019-11-21 20:25:49,993] Try to delete all html in description
+INFO     [2019-11-21 20:25:49,993] Try to delete all html in description
+INFO     [2019-11-21 20:25:49,993] Try to delete all html in description
+INFO     [2019-11-21 20:25:49,993] Try to delete all html in description
+INFO     [2019-11-21 20:25:49,994] Try to delete all html in description
+INFO     [2019-11-21 20:25:49,994] Try to delete all html in description
+INFO     [2019-11-21 20:25:49,994] Try to delete all html in description
+INFO     [2019-11-21 20:25:49,994] Try to delete all html in description
+INFO     [2019-11-21 20:25:49,995] Try to delete all html in description
+INFO     [2019-11-21 20:25:49,995] End make json format
+INFO     [2019-11-21 20:25:49,995] Start print json
+INFO     [2019-11-21 20:32:42,148] Start script
+INFO     [2019-11-21 20:32:42,149] Start get items from url
+INFO     [2019-11-21 20:32:43,695] Connect to website is fine
+INFO     [2019-11-21 20:32:43,701] Successful parsing
+INFO     [2019-11-21 20:32:43,701] User choose some limits
+INFO     [2019-11-21 20:32:43,702] User choose json format
+INFO     [2019-11-21 20:32:43,702] Start make json format
+INFO     [2019-11-21 20:32:43,702] Try to delete all html in description
+INFO     [2019-11-21 20:32:43,702] Try to delete all html in description
+INFO     [2019-11-21 20:32:43,702] Try to delete all html in description
+INFO     [2019-11-21 20:32:43,702] Try to delete all html in description
+INFO     [2019-11-21 20:32:43,703] Try to delete all html in description
+INFO     [2019-11-21 20:32:43,703] Try to delete all html in description
+INFO     [2019-11-21 20:32:43,703] Try to delete all html in description
+INFO     [2019-11-21 20:32:43,703] Try to delete all html in description
+INFO     [2019-11-21 20:32:43,704] Try to delete all html in description
+INFO     [2019-11-21 20:32:43,704] End make json format
+INFO     [2019-11-21 20:32:43,704] Start print json
+INFO     [2019-11-21 20:34:54,759] Start script
+INFO     [2019-11-21 20:34:54,760] Start get items from url
+INFO     [2019-11-21 20:34:55,014] Connect to website is fine
+INFO     [2019-11-21 20:34:55,021] Successful parsing
+INFO     [2019-11-21 20:34:55,021] User choose some limits
+INFO     [2019-11-21 20:34:55,021] User choose json format
+INFO     [2019-11-21 20:34:55,021] Start make json format
+INFO     [2019-11-21 20:34:55,021] Try to delete all html in description
+INFO     [2019-11-21 20:34:55,021] Try to delete all html in description
+INFO     [2019-11-21 20:34:55,022] Try to delete all html in description
+INFO     [2019-11-21 20:34:55,022] Try to delete all html in description
+INFO     [2019-11-21 20:34:55,022] Try to delete all html in description
+INFO     [2019-11-21 20:34:55,022] Try to delete all html in description
+INFO     [2019-11-21 20:34:55,022] Try to delete all html in description
+INFO     [2019-11-21 20:34:55,023] Try to delete all html in description
+INFO     [2019-11-21 20:34:55,023] Try to delete all html in description
+INFO     [2019-11-21 20:34:55,023] End make json format
+INFO     [2019-11-21 20:34:55,023] Start print json
+INFO     [2019-11-21 20:34:55,023] End print json

@@ -1,13 +1,11 @@
 import argparse
 
-
 version = '4.0'
 
 """ Add argument commands for script """
 
 
 def command_line():
-
     parser = argparse.ArgumentParser(
         description='Pure Python command-line RSS reader.',
         prog='rss-reader')
@@ -41,17 +39,17 @@ def command_line():
 
     parser.add_argument(
         '-date',
-        action='store',
+        type=str,
         help='print news from the specified day')
 
     parser.add_argument(
         '-html',
-        action='store',
+        action='store_true',
         help='convert news in html format')
 
     parser.add_argument(
         '-pdf',
-        action='store',
+        action='store_true',
         help='convert news in pdf format')
 
     return parser.parse_args()
