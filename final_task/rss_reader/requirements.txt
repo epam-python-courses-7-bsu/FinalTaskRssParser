@@ -1,0 +1,4 @@
+feedparser == 5.2.1
+psycopg2-binary == 2.8.4
+doc == 0.1.0
+yattag == 1.12.2

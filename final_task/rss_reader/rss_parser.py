@@ -2,6 +2,7 @@ import feedparser
 import json
 import logging
 import psycopg2
+from yattag import Doc
 from database_functions import checkExistance
 from database_functions import createTable
 from database_functions import putIntoDB
@@ -14,14 +15,19 @@ class RssParser():
     limit = 0
     date = None
     jsonFormat = False
+    path = None
+    to_html = False
 
-    def __init__(self, parametrUrl, parametrLimit, parametrJsonFormat = False, parametrDate = None):
+    def __init__(self, parametrUrl, parametrLimit, parametrJsonFormat = False, parametrDate = None, parametrPath = None,
+                 parametrHtml = False):
         """ Inits arguments"""
 
         self.url = parametrUrl
         self.limit = parametrLimit
         self.jsonFormat = parametrJsonFormat
         self.date = parametrDate
+        self.to_html = parametrHtml
+        self.path = parametrPath
         logging.debug("Check in parser")
 
         if self.date != None:
@@ -29,10 +35,67 @@ class RssParser():
         else:
             self.parse()
 
+    def jsonFromCashe(self, rows):
+        """ Convets news from cache in json format"""
+
+        listToJsonFormat = []
+        for row in rows:
+            if len(row[4]) > 1:
+                dictionary = {"Title": row[1],
+                              "Date": row[2],
+                              "Description": row[3],
+                              "Link [1]": row[4][0],
+                              "Link [2]": row[4][1]}
+            else:
+                dictionary = {"Title": row[1],
+                              "Date": row[2],
+                              "Description": row[3],
+                              "Link [1]": row[4][0]}
+            listToJsonFormat.append(dictionary)
+        jsonData = json.dumps(listToJsonFormat, indent=5, ensure_ascii=False)
+        print(jsonData)
+        return None
+
+    def htmlFromCashe(self, rows):
+        """ Converts news from cache in html format"""
+
+        filename = self.path + r"\news.html"
+        try:
+            f = open(filename, 'w')
+        except OSError:
+            logging.error("File can't be opened")
+            print("Could not open file ", filename)
+            return None
+        logging.debug("File was opened successfully")
+        doc, tag, text, line = Doc().ttl()
+        line('h1', 'News from ' + self.url)
+        for row in rows:
+            with tag('item'):
+                with tag('h2'):
+                    text(row[1])
+                with tag('link'):
+                    text(row[4][0])
+                with tag('h3'):
+                    if len(row[4]) > 1:
+                        with tag('img', src=row[4][1], border="0", align="left", hspace="5"):
+                            pass
+                    text(row[3])
+                with tag('br'):
+                    pass
+        try:
+            f.write(doc.getvalue())
+            print("News were written in html file")
+            logging.debug("News were written in html file")
+        except Exception:
+            logging.error(Exception)
+        finally:
+            f.close()
+        return None
 
     def printCashe(self):
         """ Prints news from database from the specified day."""
 
+        logging.debug("Check in printCashe")
         con = None
         exists = checkExistance()
         if not exists:
@@ -42,7 +105,7 @@ class RssParser():
                 database="postgres",
                 user="postgres",
                 password=readingPasswordFromFile(),
-                host="localhost",
+                host="127.0.0.1",
                 port="5432"
             )
             logging.debug("Database opened successfully")
@@ -56,42 +119,84 @@ class RssParser():
             rows = cur.fetchall()
             if not rows:
                 print("No results\nTry to enter another date or url")
+                return None
             if self.jsonFormat:
-                listToJsonFormat = []
-                for row in rows:
-                    if row[4][1]:
-                        dictionary = {"Title": row[1],
-                                      "Date": row[2],
-                                      "Description": row[3],
-                                      "Link [1]": row[4][0],
-                                      "Link [2]": row[4][1]}
-                    else:
-                        dictionary = {"Title": row[1],
-                                      "Date": row[2],
-                                      "Description": row[3],
-                                      "Link [1]": row[4][0]}
-                    listToJsonFormat.append(dictionary)
-                jsonData = json.dumps(listToJsonFormat, indent=5, ensure_ascii=False)
-                print(jsonData)
+                self.jsonFromCashe(rows)
+            elif self.to_html:
+                self.htmlFromCashe(rows)
             else:
                 for row in rows:
                     print("Title: ", row[1])
                     print("Date: ", row[2])
                     print("Link: ", row[4][0])
-
                     print()
                     print("Description: " + row[3])
-
                     print("\nLinks:")
                     print("[1]:", row[4][0])
-                    if row[4][1]:
+                    if len(row[4]) > 1:
                         print("[2]:", row[4][1])
                     print("__________________________________________________________________")
-        except (Exception, psycopg2.DatabaseError) as error:
+        except (psycopg2.DatabaseError) as error:
+            logging.error(error)
+        except Exception as error:
             logging.error(error)
         finally:
             if con is not None:
                 con.close()
+        return None
+
+    def convertIntoHtmlFormat(self, thefeed):
+        """ Creates html file in specified directory and puts information in database"""
+
+        # openning html-file to write
+        filename = self.path + r"\news.html"
+        try:
+            f = open(filename, 'w')
+        except OSError:
+            logging.error("File can't be opened")
+            print("Could not open file ", filename)
+            return None
+        logging.debug("File was opened successfully")
+
+        doc, tag, text, line = Doc().ttl()
+        line('h1', 'News from ' + thefeed.feed.get("title", ""))
+
+        for index, thefeedentry in enumerate(thefeed.entries):
+            if (index < self.limit) | (self.limit == -1):
+                # getting list of tags
+                listOfTags = self.takingInformationFromFeedparser(thefeedentry)
+                linkOfImg = ""
+                with tag('item'):
+                    with tag('h2'):
+                        text(listOfTags[0])
+                    with tag('link'):
+                        text(listOfTags[2])
+                    with tag('p'):
+                        text(listOfTags[1])
+                    with tag('h3'):
+                        if len(listOfTags) > 4:
+                            linkOfImg = listOfTags[4]
+                            with tag('img', src=linkOfImg, alt=listOfTags[5], border="0", align="left", hspace="5"):
+                                pass
+                        text(listOfTags[3])
+                    with tag('br'):
+                        pass
+                    with tag('br'):
+                        pass
+
+                # putting news in database
+                putIntoDB(listOfTags[2], listOfTags[0],
+                          thefeedentry.get("published_parsed", thefeed.feed.published_parsed),
+                          listOfTags[3], listOfTags[2], linkOfImg)
+        try:
+            f.write(doc.getvalue())
+            print("News were written in html file")
+            logging.debug("News were written in html file")
+        except Exception:
+            logging.error(Exception)
+            print("Can't write information in html file")
+        finally:
+            f.close()
         return None
 
     def findDescription(self, description) -> str:
@@ -100,10 +205,11 @@ class RssParser():
         text = description
         indexOfTextBeginning = description.find(">")
         while indexOfTextBeginning != -1:
-            if (description[indexOfTextBeginning + 1] != "<") & (indexOfTextBeginning != len(description)):
-                text = description[indexOfTextBeginning + 1:]
-                text = text[: text.find('<')]
-                break
+            if indexOfTextBeginning != len(description):
+                if description[indexOfTextBeginning + 1] != "<":
+                    text = description[indexOfTextBeginning + 1:]
+                    text = text[: text.find('<')]
+                    break
             description = description[indexOfTextBeginning + 1:]
             indexOfTextBeginning = description.find(">")
         return text
@@ -123,7 +229,7 @@ class RssParser():
                 print("Link: " + listOfTags[2])
 
                 print()
-                if len(listOfTags) > 3:
+                if len(listOfTags) > 4:
                     print("[image: ", listOfTags[5], "][2]", listOfTags[3])
                 else:
                     print(listOfTags[3])
@@ -131,7 +237,7 @@ class RssParser():
                 print("\nLinks:")
                 print("[1]:", listOfTags[2])
                 linkOfImg = ""
-                if len(listOfTags) > 3:
+                if len(listOfTags) > 4:
                     print("[2]:", listOfTags[4])
                     linkOfImg = listOfTags[4]
                 print("__________________________________________________________________")
@@ -176,7 +282,7 @@ class RssParser():
             if (index < self.limit) | (self.limit == -1):
                 listOfTags = self.takingInformationFromFeedparser(thefeedentry)
 
-                if (len(listOfTags) > 3):
+                if len(listOfTags) > 4:
                     descriptionForDict = "[image: " + listOfTags[5] + "][2]" + listOfTags[3]
                     dictionary = {"Feed": thefeed.feed.get("title", ""),
                                   "Title": listOfTags[0],
@@ -212,6 +318,8 @@ class RssParser():
         logging.debug("Parsing from website was successful")
         if self.jsonFormat:
             self.parseToJsonFormat(thefeed)
+        elif self.to_html:
+            self.convertIntoHtmlFormat(thefeed)
         else:
             self.printingNews(thefeed)
         return None

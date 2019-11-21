@@ -6,11 +6,12 @@ class ConsoleInterface():
 
     source = None
     limit = -1
-    version = "Version 1.3"
+    version = "Version 1.4.1"
     json = False
     verbose = False
     date = None
-
+    to_html = False
+    path = None
     def __init__(self):
         """ Gets parametres from console"""
 
@@ -21,6 +22,8 @@ class ConsoleInterface():
         parser.add_argument("--json", action="store_true", help="Print result as JSON in stdout")
         parser.add_argument("--verbose", action="store_true", help="Outputs verbose status messages")
         parser.add_argument("--date", type=str, help="Print the new from the specified day, YYYYMMDD format")
+        parser.add_argument("--to-html", type=str,
+                            help="Convert news in html format, need path, where the file will be saved")
         args = parser.parse_args()
 
 
@@ -39,3 +42,6 @@ class ConsoleInterface():
         if args.date:
             self.date = args.date
         logging.debug("Check in interface")
+        if args.to_html:
+            self.to_html = True
+            self.path = args.to_html

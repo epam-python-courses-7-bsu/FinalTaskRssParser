@@ -6,15 +6,15 @@ INSTALLATION
 ------------
 First of all open command line and install setuptools, just write 'pip install -u setuptools'.
 After that you can install our app, enter 'python setup.py install' in command line to do this.
-By this point if you want to launch the application, enter 'python rss-reader [arguments]'.
+By this point if you want to launch the application, enter 'rss-reader [arguments]'.
 
 For working with cache you have to install PostgreSQL, you can do this from the website
-https://www.postgresql.org/download/. During installation you need to enter password, use 1234 or your own,
-but in this case write it in file 'password.txt', others options leave default.
+https://www.postgresql.org/download/. During installation you need to enter password, use 1234,
+others options leave default.
 
 USING
 ------------
-rss_reader.py [--help] [--source SOURCE] [--version] [--json] [--verbose] [--limit LIMIT] [--date DATE]
+rss_reader.py [--help] [--source SOURCE] [--version] [--json] [--verbose] [--limit LIMIT] [--date DATE] [--to-html PATH]
 
 
 positional arguments:
@@ -34,6 +34,9 @@ optional arguments:
   --verbose      Outputs verbose status messages
 
   --date         Print the new from the specified day, YYYYMMDD format
+
+  --to-html TO_HTML  Convert news in html format, need path, where the file
+                     will be saved
 
 FORMAT OF PRESENTING NEWS
 ------------
