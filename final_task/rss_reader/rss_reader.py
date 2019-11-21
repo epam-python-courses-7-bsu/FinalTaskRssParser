@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 import CustomException
 from datetime import datetime
 import converter
+import colorizer
 LOG = logging.getLogger("LOG")
 
 
@@ -55,7 +56,7 @@ def collect_news(items, limit) -> list:
     """Sorts the components of the news into dictionaries and adds them into a list"""
     LOG.info("Collecting news...")
     news = []
-    for item in items:
+    for item in items[slice(None, limit)]:
         try:
             news_item = {}
             images = []
@@ -99,48 +100,54 @@ def collect_news(items, limit) -> list:
             LOG.error("Probably no description")
             news_item['description'] = "No description"
         news.append(news_item)
-        if len(news) == limit:
-            LOG.info(f'The limit of {limit} pieces of news reached')
-            break
+    LOG.info(f'The limit of {limit} pieces of news reached')
     return news
 
 
-def print_one(item):
-    print("Title: " + item['title'])
-    print("Date: " + item['date'])
-    print("Description: " + item['description'])
+def print_one(item, color):
+    colorizer.print_blink('-------------------------------------------------------------', color)
+    print("Title: ", end='')
+    colorizer.printc(item['title'], color)
+    print("Date: ", end='')
+    colorizer.printc(item['date'], color)
+    print("Description: ", end='')
+    colorizer.printc(item['description'], color)
     if item['image'] and len(item['image']) > 1:
         for ind, image in enumerate(item['image']):
             print(f'Image {ind + 1}: ' + image)
     elif item['image'] and item['image'][0]:
-        print("Image:" + item['image'][0])
+        print("Image:", end='')
+        colorizer.print_link(item['image'][0], color)
     if not item['image']:
-        print("Alt: " + item['title'])
+        print("Alt: ", end='')
+        colorizer.printc(item['title'], color)
     elif item['alt'] and len(item['alt']) > 1 and len(item['image']) > 1:
         for ind, alt in enumerate(item['alt']):
-            print(f'Alt {ind + 1}:' + alt)
+            print(f'Alt {ind + 1}:', end='')
+            colorizer.printc(alt, color)
             if ind + 1 == len(item['image']):
                 break
     elif item['alt'] and item['alt'][0]:
-        print("Alt: " + item['alt'][0])
-    print("Link: " + item['link'])
-    print('------------------')
+        print("Alt: ", end='')
+        colorizer.printc(item['alt'][0], color)
+    print("Link: ", end='')
+    colorizer.print_link(item['link'], color)
 
 
-def print_news(list_of_news, channel):
+def print_news(list_of_news, channel, color):
     try:
         if channel:
             print("Feed: " + channel.title.text + '\n\n')
         for item in list_of_news:
-            print_one(item)
+            print_one(item, color)
     except AttributeError:
         raise CustomException.UrlUnreachable
 
 
-def json_convert(news):
+def json_convert(news, color):
     """Converts the news into JSON format"""
     LOG.info("Converting to JSON...")
-    print(json.dumps(news, sort_keys=False, indent=4, ensure_ascii=False, separators=(',', ': ')))
+    colorizer.printc(json.dumps(news, sort_keys=False, indent=4, ensure_ascii=False, separators=(',', ': ')), color)
 
 
 def args_parse() -> argparse.Namespace:
@@ -154,6 +161,7 @@ def args_parse() -> argparse.Namespace:
     parser.add_argument('--date', type=str, help='Specifies the date of news')
     parser.add_argument('--topdf', type=str, help='Converts news into PDF')
     parser.add_argument('--tohtml', type=str, help='Converts news into HTML')
+    parser.add_argument('--colorize', action='store_true', help='Colorizes the output')
     return parser.parse_args()
 
 
@@ -181,58 +189,56 @@ def write_cache(news):
             json.dump(news, file, indent=2, ensure_ascii=False)
 
 
-def get_by_date(datestr, source, limit, html_flag, pdf_flag, path_html, path_pdf):
+def get_by_date(datestr, source, limit, path_html, path_pdf, color, json_flag):
     if limit > 0:
         news = []
-        flag = False
         date = datetime.strptime(datestr, '%Y%m%d').strftime("%d %b %Y")
         date = str(date)
         try:
             with open('cache.json') as file:
                 json_list = json.load(file)
         except FileNotFoundError:
-            print('No news in cache yet')
+            colorizer.printerr('No news in cache yet', color)
         else:
             if source:
                 source = source[8:source.find('/', 8)]
                 for ind, item in enumerate(json_list):
                     if date in item['date'] and source in item['link']:
-                        flag = True
                         news.append(item)
                         if len(news) > limit - 1:
                             break
             else:
                 for ind, item in enumerate(json_list):
                     if date in item['date']:
-                        flag = True
                         news.append(item)
                         if len(news) > limit - 1:
                             break
 
-            if not flag:
+            if not news:
                 LOG.error('No news on ' + date + ' have been found')
-                print('No news on ' + date + ' have been found')
+                colorizer.printerr('No news on ' + date + ' have been found', color)
             else:
-                if not html_flag and not pdf_flag:
-                    print('------------------- FROM CACHE ------------------------------\n\n')
-                    print(date + ':\n')
-                    print_news(news, None)
-                if html_flag:
-                    converter.html_convert(news, limit, path_html)
-                if pdf_flag:
-                    converter.pdf_convert(news, limit, path_pdf)
+                if not path_pdf and not path_html:
+                    colorizer.print_blink('------------------- FROM CACHE ------------------------------\n\n', color)
+                    colorizer.printc(date + ':\n', color)
+                    if json_flag:
+                        json_convert(news, color)
+                    else:
+                        print_news(news, None, color)
+                if path_html:
+                    converter.html_convert(news, limit, path_html, color)
+                if path_pdf:
+                    converter.pdf_convert(news, limit, path_pdf, color)
 
 
 if __name__ == '__main__':
     flag = True
-    html_flag = False
-    pdf_flag = False
     try:
         LOG.info("Main")
         args = args_parse()
         if args.version:
             LOG.info(f'Version {args.version}')
-            print('Version is 1.2')
+            colorizer.printc('Version is 1.2', args.colorize)
 
         if args.verbose:
             logging.basicConfig(level=logging.INFO)
@@ -245,44 +251,34 @@ if __name__ == '__main__':
                     raise CustomException.WrongLimit
 
             if args.source:
-                if 'www' in args.source:
-                    args.source = args.source[:8] + args.source[12:]
                 channel = find_channel(args.source)
                 items = find_news(args.source)
                 news = collect_news(items, limit)
 
-                if args.json and not args.topfd and not args.tohtml:
+                if args.json:
                     flag = False
-                    json_convert(news)
+                    json_convert(news, args.colorize)
 
-                if args.tohtml:
+                if args.tohtml and not args.date:
                     flag = False
-                    converter.html_convert(news, limit, args.tohtml)
+                    converter.html_convert(news, limit, args.tohtml, args.colorize)
 
-                if args.topdf:
+                if args.topdf and not args.date:
                     flag = False
-                    converter.pdf_convert(news, limit, args.topdf)
+                    converter.pdf_convert(news, limit, args.topdf, args.colorize)
 
-                if flag:
-                    print_news(news, channel)
-
+                if flag and not args.date:
+                    print_news(news, channel, args.colorize)
                 write_cache(news)
-
-                if args.date:
-                    print('\n\n\n\n')
-
     except CustomException.ConnectionError:
-        print('Can not connect to the internet. Check your connection')
+        colorizer.printerr('Can not connect to the internet. Check your connection', args.colorize)
     except CustomException.WrongLimit:
         LOG.error('Wrong limit')
-        print('Wrong limit')
+        colorizer.printerr('Wrong limit', args.colorize)
     except CustomException.WrongUrl:
-        print('Wrong url ' + args.source)
+        colorizer.printerr('Wrong url ' + args.source, args.colorize)
     except CustomException.UrlUnreachable:
-        print('Can not make the connection with the site')
+        colorizer.printerr('Can not make the connection with the site', args.colorize)
     if args.date:
-        if args.tohtml:
-            html_flag = True
-        if args.topdf:
-            pdf_flag = True
-        get_by_date(args.date, args.source, args.limit, html_flag, pdf_flag, args.tohtml, args.topdf)
+        get_by_date(args.date, args.source, args.limit, args.tohtml, args.topdf, args.colorize, args.json)
+

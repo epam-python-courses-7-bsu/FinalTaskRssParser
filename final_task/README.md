@@ -11,7 +11,11 @@ Example of JSON format:
 "image": "http://l.yimg.com/uu/api/res/1.2/vV6YKXA7Yw.7FkwDMVwC1g--/YXBwaWQ9eXRhY2h5b247aD04Njt3PTEzMDs-/https://media.zenfs.com/en/ap.org/bfc75d01189b241cdb49d85b07c1122f",
 "alt": "Lebanese banks urge calm amid financial crisis, protests"
 }
+
 Convertion:
 Dominate lib is used to create html files.
 FPDF lib is used to create pdf files.
 When loading images for pdf, caching is used to fasten loading(httplib2)
+To let  cyrillic be encoded in the right way to see it in pdf, please open FreeSans.ttf
+
+When colorizing output, application uses cprint from termcolor library
