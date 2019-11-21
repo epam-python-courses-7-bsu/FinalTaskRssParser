@@ -2,7 +2,7 @@ from dataclasses import dataclass
 import datetime
 import logging
 
-module_logger = logging.getLogger("rss_reader.scripts.News")
+MODULE_LOGGER = logging.getLogger("rss_reader.News")
 
 
 @dataclass
@@ -19,7 +19,7 @@ class News:
         """
             returns news in json format
         """
-        logger = logging.getLogger("rss_reader.scripts.News.get_json")
+        logger = logging.getLogger("rss_reader.News.get_json")
         logger.info("return news in json format")
         data = {
             "Feed": self.feed,
@@ -37,22 +37,18 @@ class News:
         """
            Return a string representation of the news for print in stdout.
         """
-        logger = logging.getLogger("rss_reader.scripts.News.__str__")
+        logger = logging.getLogger("rss_reader.News.__str__")
         logger.info("return str")
         links = ""
         for index, link in enumerate(self.links_from_news or []):
             links += "[" + str(index) + "] " + link + "\n"
 
-        return "Feed: {feed}\n" \
-               "Title: {title} \n" \
-               "Date: {date} \n" \
-               "Link: {link}\n" \
-               "Info about image: {info_about_image}\n" \
-               "Briefly about news: {briefly_about_news}\n" \
-               "Links: \n{links}".format(feed=self.feed,
-                                         title=self.title,
-                                         date=self.date,
-                                         link=self.link,
-                                         info_about_image=self.info_about_image,
-                                         briefly_about_news=self.briefly_about_news,
-                                         links=links)
+        return "Feed: %s\n" \
+               "Title: %s \n" \
+               "Date: %s \n" \
+               "Link: %s\n" \
+               "Info about image: %s\n" \
+               "Briefly about news: %s\n" \
+               "Links: \n%s" % (self.feed, self.title, self.date,
+                                self.link, self.info_about_image,
+                                self.briefly_about_news, links)

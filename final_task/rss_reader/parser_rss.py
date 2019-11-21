@@ -1,3 +1,4 @@
+import datetime
 import json
 import re
 import signal
@@ -8,9 +9,10 @@ import feedparser
 from dateutil import parser
 import News
 import html
-from exceptions import *
+from exceptions import TimeOutExeption
+from pars_args import get_args
 
-module_logger = logging.getLogger("rss_reader.scripts.parser_rss")
+MODULE_LOGGER = logging.getLogger("rss_reader.parser_rss")
 
 
 @contextmanager
@@ -31,17 +33,25 @@ def timeout_sec(seconds):
         signal.alarm(0)
 
 
+def valid_date(date_text):
+    try:
+        a = datetime.datetime.strptime(date_text, '%Y%m%d')
+    except ValueError:
+        raise ValueError("Incorrect data format, should be YYYYMMDD")
+    return a
+
+
 def clear_text(text: str) -> str:
     """
      cleans text from problems that occurred when decoding formats
     """
-    logger = logging.getLogger("rss_reader.scripts.parser_rss.clear_text")
+    logger = logging.getLogger("rss_reader.parser_rss.clear_text")
     logger.info("clear text from news")
     return html.unescape(text)
 
 
 def get_info_about_image(summary: str) -> str:
-    logger = logging.getLogger("rss_reader.scripts.parser_rss.get_info_about_image")
+    logger = logging.getLogger("rss_reader.parser_rss.get_info_about_image")
     logger.info("return info about image")
     tag = 'alt='
     begin_position_info_about_image = summary.find(tag) + len(tag) + 1
@@ -51,7 +61,7 @@ def get_info_about_image(summary: str) -> str:
 
 
 def get_briefly_about_news(summary: str) -> str:
-    logger = logging.getLogger("rss_reader.scripts.parser_rss.get_briefly_about_news")
+    logger = logging.getLogger("rss_reader.parser_rss.get_briefly_about_news")
     logger.info("return briefly info about news")
     p = re.compile(r'<.*?>')
     text = p.sub('', summary)
@@ -59,7 +69,7 @@ def get_briefly_about_news(summary: str) -> str:
 
 
 def get_news_feed(sourse_url: str) -> feedparser.parse:
-    logger = logging.getLogger("rss_reader.scripts.parser_rss.get_news_feed")
+    logger = logging.getLogger("rss_reader.parser_rss.get_news_feed")
     logger.info("return news Feed")
     with timeout_sec(10):
         news_feed = feedparser.parse(sourse_url)
@@ -75,7 +85,7 @@ def init_list_of_news(
     """
     Fills the list with news
     """
-    logger = logging.getLogger("rss_reader.scripts.parser_rss.init_list_of_news")
+    logger = logging.getLogger("rss_reader.parser_rss.init_list_of_news")
     logger.info("Fills the list with news")
     feed_title = news_feed['feed'].get('title', 'NO TITLE')
     feed_title = clear_text(feed_title)
@@ -109,12 +119,23 @@ def print_news(list_of_news: list):
     :param list_of_news:
     :return:
     """
-    logger = logging.getLogger("rss_reader.scripts.parser_rss.print_news")
+    logger = logging.getLogger("rss_reader.parser_rss.print_news")
     logger.info("print news in the console")
     for number, news in enumerate(list_of_news):
         print(number + 1)  # because number starts at 0
         print(news)
-        print('-' * 100)
+        print('-'*100)
+
+
+def print_news_without_cashing():
+    args = get_args()
+    list_of_news = []
+    news_feed = get_news_feed(args.source)
+    init_list_of_news(list_of_news, news_feed, args.limit)
+    if args.json:
+        print_news_in_json(list_of_news)
+    else:
+        print_news(list_of_news)
 
 
 def print_news_in_json(list_of_news: list):
@@ -123,7 +144,7 @@ def print_news_in_json(list_of_news: list):
     :param list_of_news:
     :return:
     """
-    logger = logging.getLogger("rss_reader.scripts.parser_rss.print_news_in_json")
+    logger = logging.getLogger("rss_reader.parser_rss.print_news_in_json")
     logger.info("print news in the console in json format")
     list_of_news_in_json = []
     for news in list_of_news:
