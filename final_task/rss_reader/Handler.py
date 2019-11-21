@@ -50,8 +50,8 @@ class Handler:
     @logging_decorator
     def option_json(self) -> None:
         for entry in self.entries:
-            self.print_to_json(self.convert_Entry_to_dict(entry))
             self.write_cache(self.convert_Entry_to_dict(entry))
+            self.print_to_json(self.convert_Entry_to_dict(entry))
 
     @logging_decorator
     def option_default(self) -> None:
@@ -117,7 +117,8 @@ class Handler:
         elif do_html:
             self.write_entries_to_html(html_path, daily_news[:self.limit])
         elif do_json:
-            self.print_to_json(daily_news[:self.limit])
+            for news_json in daily_news[:self.limit]:
+                self.print_to_json(news_json)
         # default case
         else:
             for news in daily_news[:self.limit]:
@@ -139,9 +140,8 @@ class Handler:
                      entry_dict["Summary"], entry_dict["Links"])
 
     @logging_decorator
-    def print_to_json(self, json_list: list) -> None:
-        for json_item in json_list:
-            print(json.dumps(json_item, indent=2))
+    def print_to_json(self, obj: dict) -> None:
+        print(json.dumps(obj, indent=2))
 
     @logging_decorator
     def convert_Entry_to_dict(self, entry: Entry) -> dict:
@@ -259,7 +259,10 @@ class Handler:
             pdf.set_font_size(14)
             pdf.write(10, f"Date: {entry.date}\n")
             if len(entry.links) > 1:
-                pdf.image(f'{this_dir}/images/{self.correct_title(entry.title)}.jpg', w=60, h=50)
+                try:
+                    pdf.image(f'{this_dir}/images/{self.correct_title(entry.title)}.jpg', w=60, h=50)
+                except RuntimeError:
+                    pass
             pdf.write(10, "\n")
             pdf.write(10, text + "\n\n\n\n")
         pdf.output(path, 'F')
