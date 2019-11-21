@@ -3,20 +3,17 @@ import re
 from termcolor import colored
 import os
 import colorama
-from database_functions import *
+import logging
+from database_functions import get_news_list_by_date, write_news_to_database
 from parse_rss_functions import get_news_list
-from personal_exceptions import *
-from print_functions import *
+from personal_exceptions import NoInternet, IncorrectURL, IncorrectFilePath, DatabaseConnectionError
+from print_functions import print_news_colorize, print_news_JSON_colorize, print_news, print_news_JSON
 from save_in_format_functions import save_in_fb2, save_in_html
 
 VERSION = 5
 
 
-def main():
-    """
-    The main entry point of the application
-    """
-    colorama.init()
+def get_arguments():
     argument_parser = argparse.ArgumentParser()
     argument_parser.add_argument('-v', '--verbose', action='store_true', help='increase output verbosity')
     argument_parser.add_argument('--json', action='store_true', help='print result as JSON in stdout')
@@ -26,19 +23,32 @@ def main():
     argument_parser.add_argument('--to-html', help='save news in html format')
     argument_parser.add_argument('--to-fb2', help='save news in fb2 format')
     argument_parser.add_argument('--colorize', action='store_true', help='print news in colorized mode')
-    argument_parser.add_argument('source')
-    arguments = argument_parser.parse_args()
+    argument_parser.add_argument('source', nargs='?')
+    return argument_parser.parse_args()
+
+
+def main():
+    """
+    The main entry point of the application
+    """
+    colorama.init()
+    arguments = get_arguments()
+    if arguments.version:
+        print(f'Program version - {VERSION}')
+        return
     if arguments.verbose:
         logging.basicConfig(level=logging.INFO)
     else:
         logging.basicConfig(filename='sample.log', filemode='w', level=logging.INFO)
     logging.info('Program started')
     if arguments.to_html:
-        if not os.path.exists(arguments.to_html):
+        if not '.html' in arguments.to_html or \
+                not os.access(os.path.dirname(arguments.to_html), os.W_OK) and '\\' in arguments.to_html:
             logging.error('Inrorrect html filepath')
             raise IncorrectFilePath('Inrorrect html filepath')
     if arguments.to_fb2:
-        if not os.path.exists(arguments.to_html):
+        if not '.fb2' in arguments.to_fb2 or \
+                not os.access(os.path.dirname(arguments.to_fb2), os.W_OK) and '\\' in arguments.to_fb2:
             logging.error('Inrorrect fb2 filepath')
             raise IncorrectFilePath('Inrorrect fb2 filepath')
     if arguments.limit:
@@ -71,8 +81,6 @@ def main():
             else:
                 print('No news by this date')
         return
-    if arguments.version:
-        print(f'Program version - {VERSION}')
     news_list = get_news_list(arguments.source, arguments.limit)
     if arguments.to_html or arguments.to_fb2:
         if arguments.to_html:
@@ -106,6 +114,9 @@ if __name__ == '__main__':
         print(colored(e, 'red'))
         logging.error(e)
     except IncorrectFilePath as e:
+        print(colored(e, 'red'))
+        logging.error(e)
+    except DatabaseConnectionError as e:
         print(colored(e, 'red'))
         logging.error(e)
     finally:

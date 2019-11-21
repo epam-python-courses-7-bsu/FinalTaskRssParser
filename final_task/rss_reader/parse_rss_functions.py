@@ -4,7 +4,7 @@ import socket
 import logging
 from dateutil import parser as date_parser
 import html
-from personal_exceptions import *
+from personal_exceptions import IncorrectURL, NoInternet
 
 
 def ckeck_internet():
@@ -15,8 +15,8 @@ def ckeck_internet():
         logging.info("checking Internet connection")
         socket.setdefaulttimeout(5)
         host = socket.gethostbyname("www.google.com")
-        s = socket.create_connection((host, 80), 2)
-        s.close()
+        sock = socket.create_connection((host, 80), 2)
+        sock.close()
         logging.info('Internet on.')
         return True
     except Exception as e:
@@ -53,11 +53,11 @@ def get_news_list(source, limit):
     """
     logging.info('Creating news list')
     if not ckeck_internet():
-        raise NoInternet
+        raise NoInternet("Internet off, please check your connection")
     logging.info('Getting and parsing RSS')
     parsed_rss = feedparser.parse(source)
-    if parsed_rss['bozo'] == 1:
-        raise IncorrectURL
+    if parsed_rss['bozo']:
+        raise IncorrectURL('The entered URL is incorrect')
     if limit:
         limit = min(limit, len(parsed_rss['entries']))
     else:
@@ -69,7 +69,7 @@ def get_news_list(source, limit):
                           'Title':
                               html.unescape(parsed_rss['entries'][index]['title']),
                           'Date':
-                              str(date_parser.parse(parsed_rss['entries'][index]['published'])),
+                              str(date_parser.parse(parsed_rss['entries'][index]['published'])).split(" ")[0],
                           'Link':
                               parsed_rss['entries'][index]['link'],
                           'Image description':

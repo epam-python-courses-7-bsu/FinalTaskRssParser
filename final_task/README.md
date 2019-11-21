@@ -38,7 +38,7 @@ Json structure
 
 Local storage
 All read news is saved in database by using Mysql. You should have database final_task_database with table news_cache
-new-cache structure:
+news_cache structure:
     feed:longtext
     title:longtext
     date:date
@@ -47,6 +47,18 @@ new-cache structure:
     new_description:longtext
     image_links:longtext
 When using the --date argument, news is searched by date in database
+
+Saving in format feature
+You can save getted news in 2 formats: html, fb2
+If news are got from Internet and Internet on news images are downloaded from website
+and converted in base64 string. After saved html or fb2 format files can show them without connecting
+to Internet. If Internet  off images aren't downloaded, in html instead of images utility writes links of images.
+When using the --date argument, news are got from database. Image are downloaded the same way depending on whether 
+the Internet is on
+
+Colorize mode
+When using the --colorize argument the output news in console will be colorized. If using --json at the same time
+the output news will be printed in colorized json format
 
 How to install application
 To install application you should have setuptools. Open cmd and enter 'pip install -U setuptools'.

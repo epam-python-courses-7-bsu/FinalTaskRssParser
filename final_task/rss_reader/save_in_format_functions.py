@@ -16,10 +16,10 @@ def get_new_content_html(new):
     images_content = ""
     if not ckeck_internet():
         for image_link in new['Image links']:
-            images_content+=f"<a href=\"{image_link}\">{image_link}</a>"
+            images_content += f"<a href=\"{image_link}\">{image_link}</a>"
     else:
         for image_link in new['Image links']:
-            if image_link=="":
+            if image_link == "":
                 continue
             response = requests.get(image_link)
             encoded_string = str(base64.b64encode(response.content))
@@ -63,11 +63,11 @@ def get_new_content_fb2(new):
         images_content += f"<image xlink:href=\"#{image_link}\" />"
     return f"""
 <section>
-    <p>{new['Feed'].replace('&','and')}</p>
-    <p>{new['Title'].replace('&','and')}</p>
+    <p>{new['Feed'].replace('&', 'and')}</p>
+    <p>{new['Title'].replace('&', 'and')}</p>
     <p>{new['Date']}</p>
     <p>{images_content}</p>
-    <p>{new['New description'].replace('&','and')}</p>
+    <p>{new['New description'].replace('&', 'and')}</p>
 </section>
     """
 
@@ -83,12 +83,12 @@ def get_images_content(news_list):
     images_content = ""
     for new in news_list:
         for image_link in new['Image links']:
-            if image_link=="":
+            if image_link == "":
                 continue
             response = requests.get(image_link)
             img = Image.open(BytesIO(response.content))
             img = img.resize((100, 100))
-            img=img.convert('RGB')
+            img = img.convert('RGB')
             img.save('tmp.jpg', 'JPEG')
             with open('tmp.jpg', 'rb') as f:
                 encoded_string = str(base64.b64encode(f.read()))
@@ -115,4 +115,3 @@ def save_in_fb2(path, news_list):
     with open(path, 'w', encoding="utf-8") as fb2_file:
         fb2_file.write(fb2_content)
     logging.info('Fb2 format file created')
-
