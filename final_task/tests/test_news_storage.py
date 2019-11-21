@@ -1,7 +1,9 @@
 import unittest
 import news_storage
 from datetime import datetime
-from items import Item, ItemGroup
+from item import Item
+from item_group import ItemGroup
+from exceptions import StorageNotFoundError
 
 
 class TestNewsStorage(unittest.TestCase):
@@ -12,16 +14,20 @@ class TestNewsStorage(unittest.TestCase):
         self.item4 = Item('title4', 'Fri, 15 Nov 2019 10:18:08 -0500', 'link4', 'text4', [])
         self.date = datetime(2019, 11, 16)
 
+    def test_get_news_by_date(self):
+        with self.assertRaises(StorageNotFoundError):
+            news_storage.get_news_by_date(None, 'nonexistent____________________file_.data')
+
     def test_retrieve_news_by_date(self):
         feed = 'feed'
         item_group = ItemGroup(feed, [self.item1, self.item2, self.item3, self.item4])
 
-        extended_item_group = ItemGroup(feed, [self.item1, self.item3])
-        extended_limited_item_group = ItemGroup(feed, [self.item1])
+        expected_item_group = ItemGroup(feed, [self.item1, self.item3])
+        expected_limited_item_group = ItemGroup(feed, [self.item1])
 
-        self.assertEqual(news_storage.retrieve_news_by_date(self.date, item_group), extended_item_group)
+        self.assertEqual(news_storage.retrieve_news_by_date(self.date, item_group), expected_item_group)
         self.assertEqual(news_storage
-                         .retrieve_news_by_date(self.date, item_group, 1), extended_limited_item_group)
+                         .retrieve_news_by_date(self.date, item_group, 1), expected_limited_item_group)
 
     def test_retrieve_news_by_date_from_list(self):
         feed1 = 'feed1'

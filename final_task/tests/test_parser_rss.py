@@ -16,9 +16,6 @@ class TestParserRss(unittest.TestCase):
         self.assertEqual(parser_rss.format_description(descr1), ('[image 1: name of image][1]text', ['source']))
         self.assertEqual(parser_rss.format_description(descr2), ('text', []))
 
-        with self.assertRaises(TypeError):
-            parser_rss.format_description(123)
-
 
 if __name__ == '__main__':
     unittest.main()

@@ -8,7 +8,7 @@ def create_feedparser(rss_url, limit=None):
     """ Create feedparser with limited number of items or all items.
 
     If limit value is not set or =0 or =None created feedparser with all items.
-    Otherwise created feedparser with limit value items.
+    Otherwise created feedparser with limited count of items.
 
     :param rss_url: url of RSS
     :type rss_url: str
@@ -24,7 +24,7 @@ def create_feedparser(rss_url, limit=None):
     parser = feedparser.parse(rss_url)
 
     if parser.bozo:
-        raise GettingRSSException(str(parser.bozo_exception))
+        raise GettingRSSException('Problems with getting RSS: ' + str(parser.bozo_exception))
 
     logging.debug('limit = ' + str(limit))
     if limit:
@@ -42,13 +42,9 @@ def format_description(description):
     :param description: description tag with his content
     :type description: str
 
-    :raise TypeError: if type of description is not str
-
     :return: content of formatted description and list of image links
     :rtype: tuple of: str and list of str
     """
-    if isinstance(description, str.__class__):
-        raise TypeError(f'Wrong type: {type(description)}. Expected type of description: {str}')
 
     logging.info('Creating description soup.')
     description_soup = BeautifulSoup(description, 'html.parser')

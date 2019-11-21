@@ -1,7 +1,7 @@
-from tools import merge_lists
 from exceptions import StorageNotFoundError, NewsNotFoundError
 from datetime import datetime
-from items import ItemGroup
+from item_group import ItemGroup
+from tools import merge_lists
 import pickle
 import logging
 
@@ -14,15 +14,15 @@ def save_news(news_source, items_group, file_name):
     :param news_source: url of RSS
     :type news_source: str
 
-    :type items_group: 'items.ItemGroup'
+    :type items_group: 'item_group.ItemGroup'
 
     :param file_name: storage file
     :type file_name: str
     """
     logging.info('Reading news from file named ' + file_name)
     try:
-        with open(file_name, 'rb') as f:
-            news = dict(pickle.load(f))
+        with open(file_name, 'rb') as file:
+            news = dict(pickle.load(file))
     except FileNotFoundError:
         news = dict()
 
@@ -34,8 +34,8 @@ def save_news(news_source, items_group, file_name):
         news[news_source] = items_group
 
     logging.info('Writing news in file named ' + file_name)
-    with open(file_name, 'wb') as f:
-        pickle.dump(news, f)
+    with open(file_name, 'wb') as file:
+        pickle.dump(news, file)
 
 
 def get_news_by_date(date, file_name, source=None, limit=None):
@@ -56,14 +56,14 @@ def get_news_by_date(date, file_name, source=None, limit=None):
     :param limit: limited count of returned news
     :type limit: int
 
-    :rtype: list of 'items.ItemGroup'
+    :rtype: list of 'item_group.ItemGroup'
     """
     logging.info('Reading news from file named ' + file_name)
     try:
-        with open(file_name, 'rb') as f:
-            news = dict(pickle.load(f))
+        with open(file_name, 'rb') as file:
+            news = dict(pickle.load(file))
     except FileNotFoundError:
-        raise StorageNotFoundError(file_name)
+        raise StorageNotFoundError('Storage ' + file_name + ' not found.')
 
     logging.debug('source = ' + (source or 'None'))
     logging.debug('limit = ' + (str(limit) or 'None'))
@@ -95,12 +95,12 @@ def retrieve_news_by_date(date, item_group, limit=None):
     :param date: date of news publishing
     :type date: 'datetime.datetime'
 
-    :type item_group: 'items.ItemGroup'
+    :type item_group: 'item_group.ItemGroup'
 
     :param limit: limited count of returned news
     :type limit: int
 
-    :rtype: 'items.ItemGroup'
+    :rtype: 'item_group.ItemGroup'
     """
     items_by_date = list()
 
@@ -124,28 +124,24 @@ def retrieve_news_by_date_from_list(date, item_groups, limit=None):
     :param date: date of news publishing
     :type date: 'datetime.datetime'
 
-    :type item_groups: list of 'items.ItemGroup'
+    :type item_groups: list of 'item_group.ItemGroup'
 
     :param limit: limited count of returned news
     :type limit: int
 
-    :rtype: list of 'items.ItemGroup'
+    :rtype: list of 'item_group.ItemGroup'
     """
     item_groups_by_date = list()
     count = 0
 
     for item_gr in item_groups:
-        if limit:
-            left_to_add = limit - count
-            if not left_to_add:
-                break
+        item_group_by_date = retrieve_news_by_date(date, item_gr)
 
-            item_group_by_date = retrieve_news_by_date(date, item_gr, left_to_add)
-            count += len(item_group_by_date.items)
-        else:
-            item_group_by_date = retrieve_news_by_date(date, item_gr)
+        if limit:
+            item_group_by_date.items = item_group_by_date.items[:limit-count]
 
         if item_group_by_date.items:
             item_groups_by_date.append(item_group_by_date)
+            count += len(item_group_by_date.items)
 
     return item_groups_by_date

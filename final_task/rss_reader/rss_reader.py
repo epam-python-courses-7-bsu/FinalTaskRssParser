@@ -1,16 +1,17 @@
 import argparse
 import logging
-import items as itms
 import parser_rss
 import exceptions
 import news_converter
+from item_group import get_item_group_from_feedparser
 from log import turn_on_logging
 from news_storage import save_news, get_news_by_date
 from datetime import datetime
+from xhtml2pdf import pisa
 
 
 STORAGE_FILE = 'news.data'
-VERSION = '3.0'
+VERSION = '4.0'
 
 
 def create_arg_parser():
@@ -21,13 +22,15 @@ def create_arg_parser():
     """
     arg_parser_ = argparse.ArgumentParser(description='Pure Python command-line RSS reader.')
 
-    arg_parser_.add_argument('--source', type=str, help='RSS URL')
+    arg_parser_.add_argument('source', type=str, help='RSS URL', nargs='?')
     arg_parser_.add_argument('--version', action='version', help='Print version info', version='%(prog)s v' + VERSION)
     arg_parser_.add_argument('--json', action='store_true', help='Print result as JSON in stdout')
     arg_parser_.add_argument('--verbose', action='store_true', help='Outputs verbose status messages')
     arg_parser_.add_argument('--limit', type=int, default=0, help='Limit news topics if this parameter provided')
     arg_parser_.add_argument('--date', type=lambda d: datetime.strptime(d, '%Y%m%d'),
                              help='News from the specified day will be printed out. Format: YYYYMMDD')
+    arg_parser_.add_argument('--to-pdf', type=str, help='Create PDF file with news', metavar='PATH')
+    arg_parser_.add_argument('--to-html', type=str, help='Create HTML file with news', metavar='PATH')
 
     return arg_parser_
 
@@ -37,7 +40,7 @@ def print_news(json_arg, item_group):
 
     :param json_arg: if True news print as json
     :type json_arg: bool
-    :type item_group: 'items.ItemGroup'
+    :type item_group: 'item_group.ItemGroup'
     """
     if json_arg:
         logging.info('Converting item group to json string.')
@@ -47,7 +50,7 @@ def print_news(json_arg, item_group):
         print(json_str)
     else:
         logging.info('Printing news.')
-        itms.print_item_group(item_group)
+        print(item_group)
 
 
 def print_news_from_list(json_arg, news):
@@ -55,7 +58,7 @@ def print_news_from_list(json_arg, news):
 
     :param json_arg: if True news print as json
     :type json_arg: bool
-    :type news: list of 'items.ItemGroup'
+    :type news: list of 'item_group.ItemGroup'
     """
     if json_arg:
         logging.info('Converting list of item group to json string.')
@@ -66,7 +69,35 @@ def print_news_from_list(json_arg, news):
     else:
         for news_group in news:
             print_news(json_arg, news_group)
-            print('\n-------------------------------------------------------------------------------------\n')
+            print('-------------------------------------------------------------------------------------\n')
+
+
+def write_in_file(html_path, pdf_path, html_code):
+    """ Write news as HTML or/and PDF in file
+
+    :param html_path: path to HTML file for writing
+    :type html_path: str
+    :param pdf_path: path to PDF file for writing
+    :type pdf_path: str
+
+    :param html_code: news in HTML format
+    :type html_code: str
+    """
+    if html_path:
+        if not html_path.endswith('.html'):
+            html_path += '.html'
+
+        logging.info('Writing news in ' + html_path)
+        with open(html_path, 'w', encoding='utf-8') as file:
+            file.write(html_code)
+
+    if pdf_path:
+        if not pdf_path.endswith('.pdf'):
+            pdf_path += '.pdf'
+
+        logging.info('Writing news in ' + pdf_path)
+        with open(pdf_path, "wb") as file:
+            pisa.CreatePDF(html_code.encode('utf-8'), dest=file, encoding='utf-8')
 
 
 def main():
@@ -81,40 +112,53 @@ def main():
         logging.error('Source or/and date must be specified.')
         arg_parser.print_help()
     elif not args.limit or args.limit > 0:
-        main_working(args)
+        if args.date:
+            work_with_local_storage(args)
+        else:
+            work_with_internet(args)
     else:
         logging.error('Incorrect limit value!')
 
 
-def main_working(args):
-    if args.date:
-        try:
-            logging.info('Getting news by date ' + str(args.date) + ' from storage ' + STORAGE_FILE)
-            news_by_date = get_news_by_date(args.date, STORAGE_FILE, args.source, args.limit)
-        except exceptions.StorageNotFoundError as exc:
-            logging.error(exc)
-        except exceptions.NewsNotFoundError as err:
-            logging.error(err)
+def work_with_local_storage(args):
+    try:
+        logging.info('Getting news by date ' + str(args.date) + ' from storage ' + STORAGE_FILE)
+        news_by_date = get_news_by_date(args.date, STORAGE_FILE, args.source, args.limit)
+    except exceptions.StorageNotFoundError as exc:
+        logging.error(exc)
+    except exceptions.NewsNotFoundError as err:
+        logging.error(err)
+    else:
+        if args.to_html or args.to_pdf:
+            logging.info('Getting HTML code.')
+            html_code = news_converter.news2html(news_by_date)
+            write_in_file(args.to_html, args.to_pdf, html_code)
         else:
             print_news_from_list(args.json, news_by_date)
+
+
+def work_with_internet(args):
+    try:
+        logging.info('Creating feedparser.')
+        rss_feedparser = parser_rss.create_feedparser(args.source, args.limit)
+
+        logging.info('Getting items.')
+        item_group = get_item_group_from_feedparser(rss_feedparser)
+
+    except exceptions.GettingRSSException as exc:
+        logging.error(exc)
     else:
-        try:
-            logging.info('Creating feedparser.')
-            rss_feedparser = parser_rss.create_feedparser(args.source, args.limit)
+        logging.info('Saving news in ' + STORAGE_FILE)
+        save_news(args.source, item_group, STORAGE_FILE)
 
-            logging.info('Getting items.')
-            item_group = itms.get_item_group_from_feedparser(rss_feedparser)
+        if args.to_html or args.to_pdf:
+            lst = list()
+            lst.append(item_group)
 
-        except ValueError as err:
-            logging.error(err)
-        except exceptions.GettingRSSException as exc:
-            logging.error(exc)
-        except TypeError as err:
-            logging.error(err)
+            logging.info('Getting HTML code.')
+            html_code = news_converter.news2html(lst)
+            write_in_file(args.to_html, args.to_pdf, html_code)
         else:
-            logging.info('Saving news in ' + STORAGE_FILE)
-            save_news(args.source, item_group, STORAGE_FILE)
-
             print_news(args.json, item_group)
 
 

@@ -2,13 +2,11 @@ from datetime import datetime
 
 
 class GettingRSSException(Exception):
-    def __init__(self, msg):
-        super().__init__('Problems with getting RSS: ' + msg)
+    pass
 
 
 class StorageNotFoundError(Exception):
-    def __init__(self, storage_name):
-        super().__init__('Storage ' + storage_name + ' not found.')
+    pass
 
 
 class NewsNotFoundError(Exception):
