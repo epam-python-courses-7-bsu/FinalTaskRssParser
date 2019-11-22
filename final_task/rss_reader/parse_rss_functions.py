@@ -4,7 +4,7 @@ import socket
 import logging
 from dateutil import parser as date_parser
 import html
-from personal_exceptions import IncorrectURL, NoInternet
+from custom_exceptions import IncorrectURL, NoInternet
 
 
 def ckeck_internet():

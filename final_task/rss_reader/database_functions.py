@@ -1,7 +1,7 @@
 from contextlib import closing
 import logging
 import pymysql
-from personal_exceptions import DatabaseConnectionError
+from custom_exceptions import DatabaseConnectionError
 
 
 def get_news_list_by_date(date, limit):
@@ -33,7 +33,7 @@ def get_news_list_by_date(date, limit):
                 for index in range(limit):
                     news_list.append({'Feed': database_response[index][0],
                                       'Title': database_response[index][1],
-                                      'Date': database_response[index][2],
+                                      'Date': str(database_response[index][2]),
                                       'Link': database_response[index][3],
                                       'Image description': database_response[index][4],
                                       'New description': database_response[index][5],
@@ -62,6 +62,7 @@ def write_news_to_database(news_list):
                     if cursor.fetchall():
                         continue
                     insert_values = [value for value in new.values()]
+                    #converting list of image links into string to store in database
                     insert_values[6] = '|||'.join(insert_values[6])
                     insert_values = [tuple(insert_values), ]
                     cursor.executemany('Insert into news_cache values(%s,%s,%s,%s,%s,%s,%s)', insert_values)

@@ -6,7 +6,7 @@ import colorama
 import logging
 from database_functions import get_news_list_by_date, write_news_to_database
 from parse_rss_functions import get_news_list
-from personal_exceptions import NoInternet, IncorrectURL, IncorrectFilePath, DatabaseConnectionError
+from custom_exceptions import NoInternet, IncorrectURL, IncorrectFilePath, DatabaseConnectionError
 from print_functions import print_news_colorize, print_news_JSON_colorize, print_news, print_news_JSON
 from save_in_format_functions import save_in_fb2, save_in_html
 
@@ -42,13 +42,11 @@ def main():
         logging.basicConfig(filename='sample.log', filemode='w', level=logging.INFO)
     logging.info('Program started')
     if arguments.to_html:
-        if not '.html' in arguments.to_html or \
-                not os.access(os.path.dirname(arguments.to_html), os.W_OK) and '\\' in arguments.to_html:
+        if not os.path.exists(arguments.to_html):
             logging.error('Inrorrect html filepath')
             raise IncorrectFilePath('Inrorrect html filepath')
     if arguments.to_fb2:
-        if not '.fb2' in arguments.to_fb2 or \
-                not os.access(os.path.dirname(arguments.to_fb2), os.W_OK) and '\\' in arguments.to_fb2:
+        if not os.path.exists(arguments.to_fb2):
             logging.error('Inrorrect fb2 filepath')
             raise IncorrectFilePath('Inrorrect fb2 filepath')
     if arguments.limit:

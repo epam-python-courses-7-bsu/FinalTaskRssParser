@@ -17,7 +17,7 @@ setup(
     author_email='Lospawel@yandex.ru',
     license='MIT',
     zip_safe=False,
-    scripts=['rss_reader/personal_exceptions.py',
+    scripts=['rss_reader/custom_exceptions.py',
              'rss_reader/database_functions.py',
              'rss_reader/parse_rss_functions.py',
              'rss_reader/print_functions.py',
