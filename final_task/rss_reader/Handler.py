@@ -159,20 +159,15 @@ class Handler:
     def write_entries_to_html(self, path: str, entries=[]) -> None:
         # in case of reading news from cache list of entries are got as dict
         # and in case of online reading news only the path is passed to the method without list of entries
+        if os.path.isdir(path) is False:
+            raise RSSReaderException("Error. It isn't a folder")
+        path = os.path.join(path, "RSS_News.html")
+
         if not entries:
             entries = self.entries
 
-        if path[-1] == '\\':
-            path = path[:-1]
-        if path[-1] != '/':
-            path += '/'
-
-        if path.find(".html") == -1:
-            path += "index.html"
-        else:
-            raise RSSReaderException("Error. It isn't a folder")
-
-        html = "<html>\n<body>\n"
+        html = '<!DOCTYPE html>' \
+               '\n<head>\n\t<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">\n</head>\n<body>'
         # in case of reading news from cache, entries is the list of dicts and they are converted to Entry-object
         if type(entries[0]) == dict:
             entries = [self.get_entry_from_dict(entry) for entry in entries]
@@ -192,7 +187,7 @@ class Handler:
                 if text[0] == ' ':
                     text = text[1:]
                 html += f'<div style="width: 850px">\n<img alt="{alt}" ' \
-                        f'src="{this_dir}/images/{self.correct_title(entry.title)}.jpg" ' \
+                        f'src="file:///{this_dir}/images/{self.correct_title(entry.title)}.jpg" ' \
                         f'style="width: 250px; height: 130px; padding: 0"><p>' + text + '</p>\n</div>\n'
             else:
                 # formatting news to more readable format: deleting extra spaces and brackets
@@ -215,18 +210,12 @@ class Handler:
     def write_to_pdf(self, path: str, entries=[]) -> None:
         # in case of reading news from cache list of entries are got as dict
         # and in case of online reading news only the path is passed to the method without list of entries
+        if os.path.isdir(path) is False:
+            raise RSSReaderException("Error. It isn't a folder")
+        path = os.path.join(path, "RSS_News.pdf")
+
         if not entries:
             entries = self.entries
-
-        if path[-1] == '\\':
-            path = path[:-1]
-        if path[-1] != '/':
-            path += '/'
-
-        if path.find(".pdf") == -1:
-            path += "news.pdf"
-        else:
-            raise RSSReaderException("Error. It isn't a folder")
 
         pdf = PDF()
         pdf.add_font('DejaVuSans', '', 'DejaVuSans.ttf', uni=True)
