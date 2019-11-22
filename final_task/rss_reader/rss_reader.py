@@ -1,11 +1,14 @@
+import logging
+import sqlite3
+import sys
 from contextlib import closing
 from urllib.error import URLError
-import psycopg2
+
+import converter
 import database
 import pars_args
 import parser_rss
-import logging
-import sys
+from exceptions import DataBaseEmpty
 
 
 def main():
@@ -32,35 +35,41 @@ def main():
         # add handler to logger object
 
         logger.info("Program started")
-        with closing( database.connect_to_database()) as con:
-            with con.cursor() as cursor:
-                database.create_table(con, cursor)
-                args = pars_args.get_args()
-                list_of_news = []
-                if args.date:
-                    date = parser_rss.valid_date(args.date)
-                    database.read_news(list_of_news, args.limit, args.source, date, cursor)
-                else:
-                    news_feed = parser_rss.get_news_feed(args.source)
-                    parser_rss.init_list_of_news(list_of_news, news_feed, args.limit)
-                    database.write_to(list_of_news, args.source, cursor)
-                if args.json:
-                    parser_rss.print_news_in_json(list_of_news)
-                else:
-                    parser_rss.print_news(list_of_news)
+        with closing(database.connect_to_database()) as con:
+            cursor = con.cursor()
+            database.create_table(con, cursor)
+            args = pars_args.get_args()
+            list_of_news = []
+            if args.date:
+                date = parser_rss.valid_date(args.date)
+                database.read_news(list_of_news, args.limit, args.source, date, cursor)
+            else:
+                news_feed = parser_rss.get_news_feed(args.source)
+                parser_rss.init_list_of_news(list_of_news, news_feed, args.limit)
+                database.write_to(list_of_news, args.source, cursor)
+            if args.json:
+                parser_rss.print_news_in_json(list_of_news)
+            else:
+                parser_rss.print_news(list_of_news)
+            if args.to_html:
+                converter.conversion_of_news_in_html(args.to_html, list_of_news)
+            if args.to_pdf:
+                converter.conversion_of_news_in_pdf(args.to_pdf, list_of_news)
+            con.commit()
 
-                con.commit()
-
-    except psycopg2.OperationalError:
+    except sqlite3.OperationalError as er:
         parser_rss.print_news_without_cashing()
         print("Check your database,"
               "news is not saved "
               "you cannot use --date\n"
               "Please read README.md")
+        print(er)
     except parser_rss.TimeOutExeption as e:
         print(e)
     except URLError as er:
         print(er)
+    except DataBaseEmpty as d:
+        print(d)
     except ValueError as v:
         print(v)
     except FileNotFoundError as e:

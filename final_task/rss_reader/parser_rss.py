@@ -35,10 +35,10 @@ def timeout_sec(seconds):
 
 def valid_date(date_text):
     try:
-        a = datetime.datetime.strptime(date_text, '%Y%m%d')
+        date = datetime.datetime.strptime(date_text, '%Y%m%d')
     except ValueError:
         raise ValueError("Incorrect data format, should be YYYYMMDD")
-    return a
+    return date
 
 
 def clear_text(text: str) -> str:
@@ -63,8 +63,8 @@ def get_info_about_image(summary: str) -> str:
 def get_briefly_about_news(summary: str) -> str:
     logger = logging.getLogger("rss_reader.parser_rss.get_briefly_about_news")
     logger.info("return briefly info about news")
-    p = re.compile(r'<.*?>')
-    text = p.sub('', summary)
+    result = re.compile(r'<.*?>')
+    text = result.sub('', summary)
     return clear_text(text)
 
 
@@ -125,17 +125,6 @@ def print_news(list_of_news: list):
         print(number + 1)  # because number starts at 0
         print(news)
         print('-'*100)
-
-
-def print_news_without_cashing():
-    args = get_args()
-    list_of_news = []
-    news_feed = get_news_feed(args.source)
-    init_list_of_news(list_of_news, news_feed, args.limit)
-    if args.json:
-        print_news_in_json(list_of_news)
-    else:
-        print_news(list_of_news)
 
 
 def print_news_without_cashing():

@@ -41,7 +41,8 @@ class News:
         logger.info("return str")
         links = ""
         for index, link in enumerate(self.links_from_news or []):
-            links += "[" + str(index) + "] " + link + "\n"
+            if link:
+                links += "[" + str(index) + "] " + link + "\n"
 
         return "Feed: %s\n" \
                "Title: %s \n" \
