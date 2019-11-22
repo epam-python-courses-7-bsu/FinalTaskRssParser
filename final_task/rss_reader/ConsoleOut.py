@@ -19,3 +19,15 @@ def print_array_of_news(news):
         print("Links: ")
         for item_link in item_news.links:
             print(item_link + "\n")
+
+
+@log_decore
+def print_array_of_dict(news):
+    for item_news in news:
+        print("Title: " + item_news["title"])
+        print("Date:  " + item_news["date"])
+        print("Link:  " + item_news["link"])
+        print("\n" + item_news["news"] + '\n')
+        print("Links: ")
+        for item_link in item_news["links"]:
+            print(item_link + "\n")
