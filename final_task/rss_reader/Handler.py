@@ -12,6 +12,9 @@ from RSSReaderException import RSSReaderException
 from RSS_PDF import PDF
 import urllib.request
 
+import dominate
+from dominate.tags import *
+
 
 class Handler:
     """class for handling different options: --version, --json, --limit Limit, --date"""
@@ -166,43 +169,39 @@ class Handler:
         if not entries:
             entries = self.entries
 
-        html = '<!DOCTYPE html>' \
-               '\n<head>\n\t<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">\n</head>\n<body>'
-        # in case of reading news from cache, entries is the list of dicts and they are converted to Entry-object
         if type(entries[0]) == dict:
             entries = [self.get_entry_from_dict(entry) for entry in entries]
 
-        for entry in entries:
-            html += '<div style="font-family: Calibri; margin: 5px; padding: 10px;">\n'
-            html += '<h1>' + entry.title + '</h1>\n'
-            html += '<p>\n<b>Feed:</b> ' + entry.feed + '</p>\n'
-            html += '<p>\n<b>Date:</b> ' + entry.date + '</p>\n'
+        _html = html()
+        _html.add(head(meta(charset='utf-8')))
+        _body = _html.add(body())
+        with _body:
+            for entry in entries:
+                _div = _body.add(div())
+                _div += h1(entry.title)
+                _div += p(b("Feed: "), a(entry.feed))
+                _div += p(b("Date: "), a(entry.date))
 
-            text = entry.summary
-            # adding of an image if the entry has image
-            if len(entry.links) > 1:
-                alt = text[text.find("image 1: ") + len("image 1: "):text.find(']')]
-                while text.count('['):
-                    text = text[:text.find('[')] + text[text.find(']') + 1:]
-                if text[0] == ' ':
-                    text = text[1:]
-                html += f'<div style="width: 850px">\n<img alt="{alt}" ' \
-                        f'src="file:///{this_dir}/images/{self.correct_title(entry.title)}.jpg" ' \
-                        f'style="width: 250px; height: 130px; padding: 0"><p>' + text + '</p>\n</div>\n'
-            else:
-                # formatting news to more readable format: deleting extra spaces and brackets
-                while text.count('['):
-                    text = text[:text.find('[')] + text[text.find(']') + 1:]
-                if text[0] == ' ':
-                    text = text[1:]
-
-                html += '<div style="width: 850px">\n<p>' + text + '</p>\n</div>\n'
-            html += '\n</div>'
-        html += "</body>\n</html>"
-
+                text = entry.summary
+                # adding of an image if the entry has image
+                if len(entry.links) > 1:
+                    alt = text[text.find("image 1: ") + len("image 1: "):text.find(']')]
+                    while text.count('['):
+                        text = text[:text.find('[')] + text[text.find(']') + 1:]
+                    if text[0] == ' ':
+                        text = text[1:]
+                    _div += img(src=f"file:///{this_dir}/images/{self.correct_title(entry.title)}.jpg")
+                else:
+                    # formatting news to more readable format: deleting extra spaces and brackets
+                    while text.count('['):
+                        text = text[:text.find('[')] + text[text.find(']') + 1:]
+                    if text[0] == ' ':
+                        text = text[1:]
+                _div += p(text.encode("utf-8").decode("utf-8"), br(), br())
+        
         try:
-            with open(path, 'w', encoding='utf-8') as f:
-                f.write(html)
+            with open(path, 'w', encoding='utf-8') as rss_html:
+                rss_html.write(str(_html))
         except FileNotFoundError:
             raise RSSReaderException('Error. No such folder. Check the correctness of the entered path \n')
 
