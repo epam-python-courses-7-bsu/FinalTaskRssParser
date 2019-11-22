@@ -12,5 +12,4 @@ def parse():
 
     """Arguments - dict of arguments parsed from command line"""
     arguments = vars(parser.parse_args())   # Get arguments from command line and puts them into dict self.arguments
-
     return arguments

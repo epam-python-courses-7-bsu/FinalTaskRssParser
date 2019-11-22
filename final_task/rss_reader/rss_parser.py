@@ -5,7 +5,7 @@ from feedparser import parse
 
 def rss_handler(url: str) -> tuple or None:
     """Download RSS from the web"""
-    logger = Logger().get_logger(__name__)
+    logger = Logger().get_logger("rss_parser")
     logger.info("Attempt to follow the link...")
 
     try:
