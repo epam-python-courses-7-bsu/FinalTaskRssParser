@@ -1,6 +1,5 @@
 """ Data models module """
-
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 
 @dataclass
@@ -10,15 +9,41 @@ class NewsEntry:
         Methods:
         print_entry(self) - print entry in stdout """
 
+    feed_title: str = ""
+    feed_language: str = ""
+
     title: str = ""
     summary: str = ""
     date: str = ""
     link: str = ""
+    image_links: list = field(default_factory=list)
+    source: str = ""
+    id: str = ""
 
     def print_entry(self):
         print("-------------------------------------------------------------",
-              "Title: " + self.title + '\n',
+              "News title: " + self.title + '\n',
               "Summary: " + self.summary + '\n',
               "Publication date: " + self.date + '\n',
+              "Source: " + self.source + '\n',
               "Link: " + self.link + '\n',
               sep='\n')
+        if self.image_links:
+            print("Images links: ")
+            for num, img_link in enumerate(self.image_links):
+                print(f"[{num+1}] {img_link}")
+
+    def print_cache_entry(self):
+        print("-------------------------------------------------------------",
+              "Feed title: " + self.feed_title + '\n',
+              "Feed language: " + self.feed_language + '\n' + '\n',
+              "News title: " + self.title + '\n',
+              "Summary: " + self.summary + '\n',
+              "Publication date: " + self.date + '\n',
+              "Source: " + self.source + '\n',
+              "Link: " + self.link + '\n',
+              sep='\n')
+        if self.image_links:
+            print("Images links: ")
+            for num, img_link in enumerate(self.image_links):
+                print(f"[{num+1}] {img_link}")

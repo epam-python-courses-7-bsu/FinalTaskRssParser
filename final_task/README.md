@@ -7,3 +7,9 @@ format.
 
 ### Installation
 $ pip install rss-reader-Anna-Gonchar
+
+### Storage
+All the pieces of news received from the source are saved to the binary file.
+Shelve module is used for this. It saves object with the specific key to the file.
+The key is the rss news publication date, the value is the news.
+

@@ -7,7 +7,7 @@ with open(path.join(directory, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name="rss_reader_Anna_Gonchar",
-    version="2.4",
+    version="3.0",
     description="RSS reader - simple command-line utility.",
     long_description=long_description,
     long_description_content_type="text/markdown",
