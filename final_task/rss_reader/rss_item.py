@@ -1,6 +1,8 @@
 import html
-import json
-from dataclasses import dataclass
+import re
+from dataclasses import asdict, dataclass
+
+import jsonpickle
 
 
 @dataclass
@@ -10,27 +12,43 @@ class RssItem:
 
     source: stores link to rss channel of the news
     date: stores date on YYYY%MM%DD format
+    media: contains link to an image
+    img: contains base64 representation of an image
     '''
     title: str
     published: str
+    description: str
     link: str
     media: str
     source: str
     date: str
+    img: str
+
+    def __post_init__(self):
+        self.title = html.unescape(self.title)
+        self.published = html.unescape(self.published)
+        self.description = html.unescape(self.description)
 
     @classmethod
     def from_dict(cls, item_dict) -> 'RssItem':
-        return cls(
-            title=item_dict['title'],
-            published=item_dict['published'],
-            link=item_dict['link'],
-            media=item_dict['media'],
-            source=item_dict['source'],
-            date=item_dict['date']
-            )
+        return cls(**item_dict)
 
     def __str__(self):
-        return f'TITLE: {html.unescape(self.title)}\
-            \n\t|| PUBLISHED: {html.unescape(self.published)} \
-            \n\t|| LINK: {html.unescape(self.link)}\
-            \n\t|| MEDIA: {html.unescape(self.media)}'
+        return f'TITLE: {self.title}\
+            \n\t|| DESCRIPTION: {self.description}\
+            \n\t|| PUBLISHED: {self.published}\
+            \n\t|| LINK: {self.link}\
+            \n\t|| MEDIA: {self.media}'
+
+    def to_json(self):
+        jsonpickle.load_backend('json', 'dumps', 'loads')
+        jsonpickle.set_preferred_backend('json')
+        # ensure_ascii = False to solve encoding problems
+        jsonpickle.set_encoder_options('json', indent=4, sort_keys=False, ensure_ascii=False)
+        json_string = jsonpickle.encode(self, make_refs=False, unpicklable=False)
+        # Regex finds base64 string and replaces it
+        json_string = re.sub(r'(\"img\":\ )\"b\'.*?\'', r'\1"base64 image', json_string)
+        print(json_string)
+
+    def asdict(self):
+        return asdict(self)

@@ -13,11 +13,11 @@ class TestRssReader(unittest.TestCase):
     def test_init_feed(self):
         news_feed = init_feed('final_task/tests/test_feed.xml', 2)
         rss_items = [
-            RssItem('ITEM1 TITLE', '2003-12-31', 'ITEM1 LINK',
-                    'http://www.foo.com/bar.jpg', 'final_task/tests/test_feed.xml', '20031231'),
+            RssItem('ITEM1 TITLE', '2003-12-31', 'unknown', 'ITEM1 LINK',
+                    'http://www.foo.com/bar.jpg', 'final_task/tests/test_feed.xml', '20031231', 'b\'bm90IGZvdW5k\''),
 
-            RssItem('ITEM2 TITLE', '2003-12-31', 'ITEM2 LINK',
-                    'http://www.foo.com/bar.jpg', 'final_task/tests/test_feed.xml', '20031231')
+            RssItem('ITEM2 TITLE', '2003-12-31', 'unknown', 'ITEM2 LINK',
+                    'http://www.foo.com/bar.jpg', 'final_task/tests/test_feed.xml', '20031231', 'b\'bm90IGZvdW5k\'')
             ]
         self.assertEqual(news_feed.title, 'CHANNEL TITLE')
         self.assertEqual(news_feed.description, 'CHANNEL DESCRIPTION')

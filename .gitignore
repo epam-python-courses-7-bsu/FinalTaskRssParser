@@ -1,11 +1,15 @@
 .vscode/
 __pycache__/
 jsonout.txt
-.coverage
 *.pyc
-.coveragerc
 .mypy_cache
 build/
 dist/
 rss_reader.egg-info/
 *.json
+*.pkl
+*.pdf
+*.html
+temp-img-2250147051588681835.jpg
+final_task/tests/xml/no_items_feed.xml
+final_task/tests/xml/no_items_fields.xml

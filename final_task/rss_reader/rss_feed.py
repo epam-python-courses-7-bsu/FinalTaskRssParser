@@ -1,10 +1,11 @@
 import json
 import logging
+import re
 import sys
 
 import jsonpickle
-from tinydb import TinyDB, Query, where
-
+import requests
+from tinydb import Query, TinyDB, where
 
 LOGGER = logging.getLogger('rss_logger')
 
@@ -43,8 +44,11 @@ class RssFeed:
         LOGGER.debug('FORMATTING FEED TO JSON')
         jsonpickle.load_backend('json', 'dumps', 'loads')
         jsonpickle.set_preferred_backend('json')
-        jsonpickle.set_encoder_options('json', indent=4, sort_keys=False)
+        # ensure_ascii = False to solve encoding problems
+        jsonpickle.set_encoder_options('json', indent=4, sort_keys=False, ensure_ascii=False)
         json_string = jsonpickle.encode(self, make_refs=False, unpicklable=False)
+        # Regex finds base64 string and replaces it for shorter output
+        json_string = re.sub(r'(\"img\":\ )\"b\'.*?\'', r'\1"base64 image', json_string)
         LOGGER.debug('PRINTING JSON')
         print(json_string)
 
@@ -54,10 +58,20 @@ class RssFeed:
         json format.
         '''
         LOGGER.debug('INIT DATABASE')
-        database = TinyDB(cache_store, sort_keys=True, indent=4, separators=(',', ': '))
+        database = TinyDB(cache_store, sort_keys=True, indent=4, separators=(',', ': '), ensure_ascii=False)
         LOGGER.debug('CACHING...')
         for _, news_item in enumerate(self.news_list):
             current_news = Query()
             # Checking if the news is already stored in database
             if not database.contains(current_news.link == news_item.link):
                 database.insert(news_item.__dict__)
+        LOGGER.debug('DONE!')
+
+    def get_news_as_dicts(self, limit):
+        news_list_dicts = []
+        if limit is None or limit > len(self.news_list) or limit < 0:
+            limit = len(self.news_list)
+        self.news_list = self.news_list[:limit]
+        for news_item in self.news_list:
+            news_list_dicts.append(news_item.asdict())
+        return news_list_dicts
