@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from dataclasses import field
 
 
 @dataclass
@@ -7,8 +6,8 @@ class Item:
     """Contains data from articles from RSS-page"""
     title: str          # title of the the info linked in item element
     link: str           # link to the article that described in item element
-    image_links: tuple  # link or links to images contained in article
-    description: str    # describe of the info linked in item element
+    image_links: list   # link or links to images contained in article
+    description: str    # description of the info linked in item element
     pub_date: str       # Date when article was published
 
     # Implemented for debugging

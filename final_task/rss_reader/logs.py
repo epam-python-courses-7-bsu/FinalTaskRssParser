@@ -21,8 +21,8 @@ class Logger:
             stream_handler.setFormatter(formatter)
             self.logger.addHandler(stream_handler)
 
-        file_handler = log.FileHandler(rf"{str(os.getcwd())}\rss_reader\logs\rss_reader.log", 'w')
-        file_handler.setFormatter(formatter)
-        self.logger.addHandler(file_handler)
+        #file_handler = log.FileHandler(rf"{str(os.getcwd())}\rss_reader\logs\rss_reader.log", 'w')
+        #file_handler.setFormatter(formatter)
+        #self.logger.addHandler(file_handler)
 
         return self.logger
