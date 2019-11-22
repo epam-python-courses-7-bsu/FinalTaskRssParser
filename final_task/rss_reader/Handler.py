@@ -1,24 +1,21 @@
 import feedparser
-from dataclasses import dataclass, asdict
+from dataclasses import asdict
 import html
 
 from Log import log_decore
+from WorkWithCache import write_json_to_cache
+from News import News
+''' convert from News class to json'''
 
 
-# convert from News class to json
 @log_decore
 def parse_to_json(news):
     return asdict(news)
 
 
-# news kept
-@dataclass
-class News:
-    news: str
-    link: str
-    title: str
-    date: str
-    links: []
+
+''' In this class, we do all the news processing. 
+Here we translate the format required by the user'''
 
 
 class Handler:
@@ -33,14 +30,19 @@ class Handler:
         if limit == -1:
             limit = len(self.article.entries)
         self.create_news(url, limit)
+
     @log_decore
     def create_news(self, url, limit):
         # for every news, which user will see we create object
         while self.numb_news < limit:
             tmp_img_link = self.get_img_links(self.get_news(self.numb_news))
+            tmp_link=self.get_link(url)
             tmp_news = self.parse_html(self.get_news(self.numb_news))
-            t = News(tmp_news, url, self.get_title(self.numb_news), self.get_date(self.numb_news), tmp_img_link)
-            self.parsers.append(t)
+            tmp_title = self.get_title(self.numb_news)
+            tmp_date = self.get_date(self.numb_news)
+            tmp_date_str_date = self.get_str_date(self.numb_news)
+            item_of_list_news = News(tmp_news, tmp_link, tmp_title, tmp_date, tmp_img_link, tmp_date_str_date)
+            self.parsers.append(item_of_list_news)
             self.numb_news += 1
 
     @log_decore
@@ -51,13 +53,27 @@ class Handler:
             pass
 
     @log_decore
-    def get_title(self, index):
+    def get_link(self, url):
+        return url[:-5]
 
+
+    @log_decore
+    def get_title(self, index):
         return html.unescape(self.article.entries[index].title)
 
     @log_decore
     def get_date(self, index):
         return self.article.entries[index].published
+
+    @log_decore
+    def get_str_date(self, index):
+        str_date = ""
+        str_date += str(self.article.entries[index]['published_parsed'].tm_year)
+        str_date += str(self.article.entries[index]['published_parsed'].tm_mon)
+        str_date += str(self.article.entries[index]['published_parsed'].tm_mday)
+        # str_date += str(self.article.entries[index].published_parsed.time.struct_time.tm_mon)
+        # str_date += str(self.article.entries[index].published_parsed.time.struct_time.tm_day)
+        return str_date
 
     @log_decore
     def get_img_links(self, text):
@@ -91,7 +107,7 @@ class Handler:
         img_alt = self.get_img_alt(text)
         # add imgLinks to article
         for id, item in enumerate(img_alt):
-            news += ("[img " + str(id)+" ")
+            news += ("[img " + str(id) + " ")
             news += (item + "]")
 
         # clean the news from
@@ -104,4 +120,9 @@ class Handler:
     @log_decore
     def get_all(self):
         # return all news which user want see
+        print("LENGHT PARSARS)")
+        print(len(self.parsers))
+        for item_news in self.parsers:
+            write_json_to_cache(parse_to_json(item_news))
+
         return self.parsers

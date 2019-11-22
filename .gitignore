@@ -1,6 +1,7 @@
 .idea/
 final_task/dist
 *.pyc
+*.json
 *.idea'.idea'
 *.pyc
 *.idea'.idea'
