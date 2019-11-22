@@ -12,3 +12,6 @@ class EmptyDataBase(Exception):
 
 class DateNotInDatabase(Exception):
     pass
+
+class PathError(Exception):
+    pass

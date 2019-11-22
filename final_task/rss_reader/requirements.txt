@@ -1,2 +1,4 @@
 feedparser==5.2.1
 requests==2.22.0
+dominate==2.4.0
+fpdf==1.7.2

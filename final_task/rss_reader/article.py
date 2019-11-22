@@ -2,6 +2,7 @@ from string_operations import *
 import logging
 import datetime
 
+
 class Article:
     """single article class"""
 
@@ -11,7 +12,6 @@ class Article:
         self.link = parsed.link
         self.feed_link = source
         self.published = extract_date(parsed)
-
         summary_ = extract_topic_info_from_summary(parsed.summary)
         self.summary = make_string_readable(summary_)
         self.media = parsed.media_content

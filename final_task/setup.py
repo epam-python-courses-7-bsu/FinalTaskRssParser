@@ -14,5 +14,5 @@ setuptools.setup(
     url="https://github.com/kirill-stp/FinalTaskRssParser",
     packages=['rss_reader'],
     python_requires='>=3.8',
-    install_requires=['feedparser','requests']
+    install_requires=['feedparser','requests','dominate','fpdf']
 )

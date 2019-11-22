@@ -1,12 +1,14 @@
 import requests
 import exceptions as ex
-import shelve
 
 
 def internet_connection_check():
-    url='http://www.google.com/'
-    timeout=5
+    url = 'http://www.google.com/'
+    timeout = 5
+    is_internet = True
     try:
-        requests.get(url, timeout = timeout)
+        requests.get(url, timeout=timeout)
     except requests.ConnectionError:
-        raise ex.NoInternetConnection("No internet connection")
+        is_internet = False
+    finally:
+        return is_internet

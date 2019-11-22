@@ -23,7 +23,8 @@ def main():
         logging.info('Started')
 
         if not args.date:
-            check.internet_connection_check()
+            if not check.internet_connection_check():
+                raise ex.NoInternetConnection("No internet connection")
             parsed = feedparser.parse(rss)
             if parsed.bozo > 0:
                 raise ex.InvalidURLAddress("Invalid RSS URL address")
@@ -36,6 +37,10 @@ def main():
 
         if args.json:
             feed_obj.print_json_feed()
+        elif args.to_html:
+            feed_obj.save_feed_to_html()
+        elif args.to_pdf:
+            feed_obj.save_feed_to_pdf()
         else:
             feed_obj.print_readable_feed()
     except (
