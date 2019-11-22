@@ -9,22 +9,10 @@ from parse_rss_functions import get_news_list
 from custom_exceptions import NoInternet, IncorrectURL, IncorrectFilePath, DatabaseConnectionError
 from print_functions import print_news_colorize, print_news_JSON_colorize, print_news, print_news_JSON
 from save_in_format_functions import save_in_fb2, save_in_html
+from arguments_functions import check_date_argument, check_fb2_argument, check_html_argument, \
+    check_limit_argument, get_arguments
 
 VERSION = 5
-
-
-def get_arguments():
-    argument_parser = argparse.ArgumentParser()
-    argument_parser.add_argument('-v', '--verbose', action='store_true', help='increase output verbosity')
-    argument_parser.add_argument('--json', action='store_true', help='print result as JSON in stdout')
-    argument_parser.add_argument('--version', action='store_true', help='print version info')
-    argument_parser.add_argument('--limit', help='limit news topics if this parameter provided')
-    argument_parser.add_argument('--date', help='represent news from local storage by date')
-    argument_parser.add_argument('--to-html', help='save news in html format')
-    argument_parser.add_argument('--to-fb2', help='save news in fb2 format')
-    argument_parser.add_argument('--colorize', action='store_true', help='print news in colorized mode')
-    argument_parser.add_argument('source', nargs='?')
-    return argument_parser.parse_args()
 
 
 def main():
@@ -42,28 +30,20 @@ def main():
         logging.basicConfig(filename='sample.log', filemode='w', level=logging.INFO)
     logging.info('Program started')
     if arguments.to_html:
-        if not os.path.exists(arguments.to_html):
-            logging.error('Inrorrect html filepath')
-            raise IncorrectFilePath('Inrorrect html filepath')
+        check_html_argument(arguments.to_html)
     if arguments.to_fb2:
-        if not os.path.exists(arguments.to_fb2):
-            logging.error('Inrorrect fb2 filepath')
-            raise IncorrectFilePath('Inrorrect fb2 filepath')
+        check_fb2_argument(arguments.to_fb2)
     if arguments.limit:
-        if not re.match('\\d+', arguments.limit):
-            logging.error('Input value of --limit is incorrect')
-            raise ValueError('Input value of --limit is incorrect')
+        check_limit_argument(arguments.limit)
         arguments.limit = int(arguments.limit)
     if arguments.date:
-        if not re.match('\\d+', arguments.date) or len(arguments.date) != 8:
-            logging.error('Input value of --date is incorrect')
-            raise ValueError('Input value of --date is incorrect')
+        check_date_argument(arguments.date)
         news_list = get_news_list_by_date(arguments.date, arguments.limit)
         if arguments.to_html or arguments.to_fb2:
             if arguments.to_html:
-                save_in_html(arguments.to_html, news_list)
+                save_in_html(arguments.to_html, news_list, f"news_by_date-{arguments.date}.html")
             if arguments.to_fb2:
-                save_in_fb2(arguments.to_fb2, news_list)
+                save_in_fb2(arguments.to_fb2, news_list, f"news_by_date-{arguments.date}.fb2")
         else:
             if news_list:
                 if arguments.colorize:
@@ -82,9 +62,9 @@ def main():
     news_list = get_news_list(arguments.source, arguments.limit)
     if arguments.to_html or arguments.to_fb2:
         if arguments.to_html:
-            save_in_html(arguments.to_html, news_list)
+            save_in_html(arguments.to_html, news_list, f"news_from-{arguments.source[8:-4]}.html")
         if arguments.to_fb2:
-            save_in_fb2(arguments.to_fb2, news_list)
+            save_in_fb2(arguments.to_fb2, news_list, f"news_from-{arguments.source[8:-4]}.fb2")
     else:
         if arguments.colorize:
             if arguments.json:

@@ -36,7 +36,7 @@ def get_new_content_html(new):
     """
 
 
-def save_in_html(path, news_list):
+def save_in_html(path, news_list, filename):
     """
     :param path: The path of html format file
     :param news_list: The list of news
@@ -47,7 +47,7 @@ def save_in_html(path, news_list):
     for new in news_list:
         html_content += get_new_content_html(new)
     html_content += "</body>\n</html>"
-    with open(os.path.join(path, "news.html"), 'w', encoding="utf-8") as html_file:
+    with open(os.path.join(path, filename), 'w', encoding="utf-8") as html_file:
         html_file.write(html_content)
     logging.info('Html format file created')
 
@@ -98,7 +98,7 @@ def get_images_content(news_list):
     return images_content
 
 
-def save_in_fb2(path, news_list):
+def save_in_fb2(path, news_list, filename):
     """
      :param path: The path of fb2 format file
      :param news_list: The list of news
@@ -112,6 +112,6 @@ def save_in_fb2(path, news_list):
         fb2_content += get_new_content_fb2(new)
     fb2_content += "\n</body>\n"
     fb2_content += get_images_content(news_list) + "</FictionBook>"
-    with open(os.path.join(path, "news.fb2"), 'w', encoding="utf-8") as fb2_file:
+    with open(os.path.join(path, filename), 'w', encoding="utf-8") as fb2_file:
         fb2_file.write(fb2_content)
     logging.info('Fb2 format file created')
