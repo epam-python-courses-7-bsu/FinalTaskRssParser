@@ -15,7 +15,7 @@ setup(
     url='https://github.com/IlyaTorch/FinalTaskRssParser',
     author='Ilya Torch',
     author_email='itorch2001@gmail.com',
-    install_requires=['feedparser==5.2.1'],
+    install_requires=['feedparser==5.2.1', 'fpdf==1.7.2', 'dominate==2.4.0'],
     entry_points={
         'console_scripts': [
             'rss-reader = rss_reader.rss_reader:main',
