@@ -4,5 +4,9 @@ final_task/dist
 *.json
 *.idea'.idea'
 *.pyc
+*.html
+*.pdf
+*.pkl
 *.idea'.idea'
 final_task/FinalTaskRssParser.egg-inf
+final_task/rss_reader/images/
