@@ -1,5 +1,9 @@
 from json import dumps as jdumps
 from dataclasses import asdict
+from fpdf import FPDF
+from os import remove
+import imghdr
+import requests
 
 
 def news_as_json_str(item_group):
@@ -84,16 +88,8 @@ def item_text_with_imgs2html(text, img_links):
     """
     text_and_imgs = ''
 
-    for i, link in enumerate(img_links):
-        img_num = i + 1
-        img_begin = text.find(f'[image {img_num}:')
-        img_end = text.find(f'[{img_num}]', img_begin) + len(str(img_num)) + 2
-
-        len_num = len(str(img_num))
-        alt = text[img_begin+len_num+9:img_end-len_num-3]
-
-        before_picture = text[:img_begin]
-        text = text[img_end:]
+    for ind, link in enumerate(img_links):
+        alt, before_picture, text = parse_item_text(text, ind + 1)
 
         if before_picture:
             text_and_imgs += before_picture
@@ -103,3 +99,100 @@ def item_text_with_imgs2html(text, img_links):
 
     text_and_imgs += text
     return text_and_imgs
+
+
+def news2pdf(item_groups, file_path):
+    """ Write news in PDF file
+
+    :type item_groups: list of 'item_group.ItemGroup'
+    :type file_path: str
+    """
+    width = 180
+
+    pdf = FPDF()
+    pdf.add_page()
+
+    pdf.add_font('DejaVu', '', 'fonts/DejaVuSansCondensed.ttf', uni=True)
+    pdf.add_font('DejaVuBold', '', 'fonts/DejaVuSansCondensed-Bold.ttf', uni=True)
+    pdf.add_font('DejaVuOblique', '', 'fonts/DejaVuSansCondensed-Oblique.ttf', uni=True)
+
+    num = 0
+
+    for item_gr in item_groups:
+        pdf.set_font('DejaVuBold', size=24)
+        pdf.set_text_color(0, 10, 180)
+        pdf.multi_cell(width, 260, item_gr.feed, align='C')
+
+        for item in item_gr.items:
+            pdf.add_page()
+
+            pdf.set_font('DejaVuBold', size=18)
+            pdf.set_text_color(0, 0, 0)
+            pdf.multi_cell(width, 16, item.title, align='C')
+
+            pdf.set_font('DejaVu', size=16)
+
+            text = item.text
+            for ind, link in enumerate(item.img_links):
+                alt, before_picture, text = parse_item_text(text, ind+1)
+
+                if before_picture:
+                    pdf.multi_cell(width, 16, before_picture)
+
+                try:
+                    img = requests.get(link)
+                    if img.status_code != 200 or imghdr.what(None, img.content) != 'jpeg':
+                        raise requests.exceptions.ConnectionError
+
+                except requests.exceptions.ConnectionError:
+                    pdf.set_font('DejaVuOblique', size=14)
+                    pdf.set_text_color(80, 80, 80)
+
+                    pdf.multi_cell(width, 14, f'[image: {alt}][{link}]')
+
+                    pdf.set_font('DejaVu', size=16)
+                    pdf.set_text_color(0, 0, 0)
+                else:
+                    file_image_name = str(num) + 'tmp_img.jpg'
+
+                    with open(file_image_name, 'wb') as img_file:
+                        img_file.write(img.content)
+
+                    pdf.multi_cell(width, 16, '')
+                    pdf.image(file_image_name, x=75)
+                    pdf.multi_cell(width, 16, '')
+
+                    remove(file_image_name)
+                    num += 1
+
+            pdf.multi_cell(width, 16, text)
+
+            pdf.set_font('DejaVuOblique', size=11)
+            pdf.set_text_color(0, 0, 255)
+            pdf.multi_cell(width, 11, '')
+            pdf.cell(width, 11, 'Go to source...', link=item.link)
+
+            pdf.set_text_color(0, 0, 0)
+            pdf.multi_cell(width, 11, '')
+            pdf.multi_cell(width, 11, str(item.date))
+
+        pdf.multi_cell(width, 16, '')
+
+    pdf.output(file_path)
+
+
+def parse_item_text(text, img_num):
+    """ Return alternative text of image, text before image and text after image
+
+    :rtype: tuple of str
+    """
+    img_begin = text.find(f'[image {img_num}:')
+    img_end = text.find(f'[{img_num}]', img_begin) + len(str(img_num)) + 2
+
+    len_num = len(str(img_num))
+    alt = text[img_begin + len_num + 9:img_end - len_num - 3]
+
+    before_picture = text[:img_begin]
+    after_picture = text[img_end:]
+
+    return alt, before_picture, after_picture

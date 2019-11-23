@@ -7,7 +7,6 @@ from item_group import get_item_group_from_feedparser
 from log import turn_on_logging
 from news_storage import save_news, get_news_by_date
 from datetime import datetime
-from xhtml2pdf import pisa
 
 
 STORAGE_FILE = 'news.data'
@@ -20,19 +19,19 @@ def create_arg_parser():
     :return: argument parser
     :rtype: 'argparse.ArgumentParser'
     """
-    arg_parser_ = argparse.ArgumentParser(description='Pure Python command-line RSS reader.')
+    arg_parser = argparse.ArgumentParser(description='Pure Python command-line RSS reader.')
 
-    arg_parser_.add_argument('source', type=str, help='RSS URL', nargs='?')
-    arg_parser_.add_argument('--version', action='version', help='Print version info', version='%(prog)s v' + VERSION)
-    arg_parser_.add_argument('--json', action='store_true', help='Print result as JSON in stdout')
-    arg_parser_.add_argument('--verbose', action='store_true', help='Outputs verbose status messages')
-    arg_parser_.add_argument('--limit', type=int, default=0, help='Limit news topics if this parameter provided')
-    arg_parser_.add_argument('--date', type=lambda d: datetime.strptime(d, '%Y%m%d'),
-                             help='News from the specified day will be printed out. Format: YYYYMMDD')
-    arg_parser_.add_argument('--to-pdf', type=str, help='Create PDF file with news', metavar='PATH')
-    arg_parser_.add_argument('--to-html', type=str, help='Create HTML file with news', metavar='PATH')
+    arg_parser.add_argument('source', type=str, help='RSS URL', nargs='?')
+    arg_parser.add_argument('--version', action='version', help='Print version info', version='%(prog)s v' + VERSION)
+    arg_parser.add_argument('--json', action='store_true', help='Print result as JSON in stdout')
+    arg_parser.add_argument('--verbose', action='store_true', help='Outputs verbose status messages')
+    arg_parser.add_argument('--limit', type=int, default=0, help='Limit news topics if this parameter provided')
+    arg_parser.add_argument('--date', type=lambda d: datetime.strptime(d, '%Y%m%d'),
+                            help='News from the specified day will be printed out. Format: YYYYMMDD')
+    arg_parser.add_argument('--to-pdf', type=str, help='Create PDF file with news', metavar='PATH')
+    arg_parser.add_argument('--to-html', type=str, help='Create HTML file with news', metavar='PATH')
 
-    return arg_parser_
+    return arg_parser
 
 
 def print_news(json_arg, item_group):
@@ -72,7 +71,7 @@ def print_news_from_list(json_arg, news):
             print('-------------------------------------------------------------------------------------\n')
 
 
-def write_in_file(html_path, pdf_path, html_code):
+def write_in_file(html_path, pdf_path, item_groups):
     """ Write news as HTML or/and PDF in file
 
     :param html_path: path to HTML file for writing
@@ -80,12 +79,15 @@ def write_in_file(html_path, pdf_path, html_code):
     :param pdf_path: path to PDF file for writing
     :type pdf_path: str
 
-    :param html_code: news in HTML format
-    :type html_code: str
+    :param item_groups: news for writing
+    :type item_groups: list of 'item_group.ItemGroup'
     """
     if html_path:
         if not html_path.endswith('.html'):
             html_path += '.html'
+
+        logging.info('Getting HTML code.')
+        html_code = news_converter.news2html(item_groups)
 
         logging.info('Writing news in ' + html_path)
         with open(html_path, 'w', encoding='utf-8') as file:
@@ -96,8 +98,7 @@ def write_in_file(html_path, pdf_path, html_code):
             pdf_path += '.pdf'
 
         logging.info('Writing news in ' + pdf_path)
-        with open(pdf_path, "wb") as file:
-            pisa.CreatePDF(html_code.encode('utf-8'), dest=file, encoding='utf-8')
+        news_converter.news2pdf(item_groups, pdf_path)
 
 
 def main():
@@ -130,9 +131,7 @@ def work_with_local_storage(args):
         logging.error(err)
     else:
         if args.to_html or args.to_pdf:
-            logging.info('Getting HTML code.')
-            html_code = news_converter.news2html(news_by_date)
-            write_in_file(args.to_html, args.to_pdf, html_code)
+            write_in_file(args.to_html, args.to_pdf, news_by_date)
         else:
             print_news_from_list(args.json, news_by_date)
 
@@ -142,7 +141,7 @@ def work_with_internet(args):
         logging.info('Creating feedparser.')
         rss_feedparser = parser_rss.create_feedparser(args.source, args.limit)
 
-        logging.info('Getting items.')
+        logging.info('Getting item group.')
         item_group = get_item_group_from_feedparser(rss_feedparser)
 
     except exceptions.GettingRSSException as exc:
@@ -155,9 +154,7 @@ def work_with_internet(args):
             lst = list()
             lst.append(item_group)
 
-            logging.info('Getting HTML code.')
-            html_code = news_converter.news2html(lst)
-            write_in_file(args.to_html, args.to_pdf, html_code)
+            write_in_file(args.to_html, args.to_pdf, lst)
         else:
             print_news(args.json, item_group)
 

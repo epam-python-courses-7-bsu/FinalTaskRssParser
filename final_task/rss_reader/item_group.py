@@ -33,17 +33,15 @@ def get_item_group_from_feedparser(parser):
     for item in parser.entries:
         text, img_links = format_description(item.description)
 
-        if not text:
-            continue
+        if text:
+            new_item = Item(
+                title=html_unescape(item.title),
+                date=item.published,
+                link=item.link,
+                text=text,
+                img_links=img_links
+            )
 
-        new_item = Item(
-            title=html_unescape(item.title),
-            date=item.published,
-            link=item.link,
-            text=text,
-            img_links=img_links
-        )
-
-        items.append(new_item)
+            items.append(new_item)
 
     return ItemGroup(feed=parser.feed.title, items=items)
