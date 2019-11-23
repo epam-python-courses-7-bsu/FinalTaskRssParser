@@ -11,6 +11,10 @@ import datetime
 import dominate
 import dominate.tags as dtags
 from fpdf import FPDF
+<<<<<<< HEAD
+from termcolor import colored
+=======
+>>>>>>> ee7ddc5f3897764b3da12847a678a2487a76a762
 
 
 
@@ -59,17 +63,28 @@ class Feed:
             self.link = parsed.feed.link
         self.articles = articles_list
 
+<<<<<<< HEAD
+    def print_readable_feed(self, is_colored):
+=======
     def print_readable_feed(self):
+>>>>>>> ee7ddc5f3897764b3da12847a678a2487a76a762
         """print feed to stdout in readable format"""
         logging.info('Started printing feed')
         print('.' * 79)
         print(f'\n\n{self.feed_name}\n\n')
         print(self.link)
         for article_ in self.articles:
+<<<<<<< HEAD
+            article_.print_readable_article(is_colored)
+        logging.info('Finished printing feed')
+
+    def print_json_feed(self, is_colored):
+=======
             article_.print_readable_article()
         logging.info('Finished printing feed')
 
     def print_json_feed(self):
+>>>>>>> ee7ddc5f3897764b3da12847a678a2487a76a762
         """print feed to stdout in json"""
         json = {}
         for i, article_ in enumerate(self.articles):
@@ -77,7 +92,13 @@ class Feed:
             json[name] = article_.make_article_json()
         json['Feed'] = self.feed_name
         json['Link'] = self.link
+<<<<<<< HEAD
+        if is_colored: print('\033[96m')
         pprint(json)
+        if is_colored: print('\033[0m')
+=======
+        pprint(json)
+>>>>>>> ee7ddc5f3897764b3da12847a678a2487a76a762
 
     def save_feed_to_database(self):
         logging.info('Saving feed to database')
@@ -95,7 +116,12 @@ class Feed:
         logging.info('feed saved')
 
     def save_feed_to_html(self):
+<<<<<<< HEAD
+        time_now = str(datetime.datetime.now())
+        time_for_path = time_now[:-16] + '_' + time_now[-15:-13] + '-' + time_now[-12:-10] + '-' + time_now[-9:-7]
+=======
         todays_date = str(datetime.datetime.now())[:-7] + ' '
+>>>>>>> ee7ddc5f3897764b3da12847a678a2487a76a762
         html = dominate.document(title="HTML RSS feed")
         with html.head:
             dtags.meta(charset='utf-8')
@@ -123,9 +149,14 @@ class Feed:
                         dtags.a(f'{link_number + 1}. {img_url}', href=link)
             html += dtags.p(article.summary)
             html += dtags.br()
+<<<<<<< HEAD
+        with open('html_feeds/' + time_for_path + ' RSS_feeds.html', 'w') as html_file:
+            html_file.write(str(html))
+=======
         with open('html_feeds/' + todays_date + ' RSS_feeds.html', 'w') as html_file:
             html_file.write(str(html))
         return html
+>>>>>>> ee7ddc5f3897764b3da12847a678a2487a76a762
 
     def save_feed_to_pdf(self):
         time_now = str(datetime.datetime.now())
@@ -158,18 +189,29 @@ class Feed:
                     if img_url != '':
                         image = r.get(img_url)
                         img_path = str(article_number + 1) + '_' + str(img_number + 1) + '_img.jpg'
+<<<<<<< HEAD
+=======
                         print(img_path)
+>>>>>>> ee7ddc5f3897764b3da12847a678a2487a76a762
                         with open(img_path, 'wb') as file:
                             file.write(image.content)
                         try:
                             pdf.image(img_path,w = 50, h = 50)
                         except (SyntaxError, RuntimeError):
+<<<<<<< HEAD
+                            pdf.write(15, 'Media link(clickable)' + '\n\n', link=img['url'])
+=======
                             pdf.write(15, img['url'], link=img['url'])
+>>>>>>> ee7ddc5f3897764b3da12847a678a2487a76a762
                         os.remove(img_path)
             else:
                 pdf.write(15, "Image links (clickable):\n")
                 for img_number, img in enumerate(article.media):
+<<<<<<< HEAD
+                    pdf.write(15,str(img_number + 1) + '. ' + article.media_description, link=img['url'])
+=======
                     pdf.write(15,str(img_number + 1) + '.\n', link=img['url'])
+>>>>>>> ee7ddc5f3897764b3da12847a678a2487a76a762
 
             pdf.write(10, article.summary)
 

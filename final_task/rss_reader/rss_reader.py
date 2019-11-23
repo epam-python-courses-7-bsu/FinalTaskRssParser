@@ -32,9 +32,27 @@ def main():
         else:
             parsed = {}
         feed_obj = feed.Feed(parsed, args)
+
         if not args.date:
             feed_obj.save_feed_to_database()
 
+<<<<<<< HEAD
+        to_print = True
+
+        if args.to_html:
+            feed_obj.save_feed_to_html()
+            to_print = False
+        if args.to_pdf:
+            feed_obj.save_feed_to_pdf()
+            to_print = False
+            
+        if to_print:
+            if args.json:
+                feed_obj.print_json_feed(args.colorize)
+            else:
+                feed_obj.print_readable_feed(args.colorize)
+
+=======
         if args.json:
             feed_obj.print_json_feed()
         elif args.to_html:
@@ -43,6 +61,7 @@ def main():
             feed_obj.save_feed_to_pdf()
         else:
             feed_obj.print_readable_feed()
+>>>>>>> ee7ddc5f3897764b3da12847a678a2487a76a762
     except (
         ex.InvalidURLAddress,
         ex.NoInternetConnection,
