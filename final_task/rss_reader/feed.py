@@ -21,7 +21,7 @@ class IncorrectRSSError(Exception):
 
 class Feed:
 
-    def __init__(self, link, limit=0, *, date=None, to_json=False):
+    def __init__(self, link, limit=0, *, date=None):
         self.link = self._try_fix_url(link)
         self.title = None
         self.items = []
