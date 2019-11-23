@@ -1,5 +1,6 @@
 import urllib.parse
 import html
+import json
 
 import feedparser
 
@@ -54,7 +55,6 @@ class Feed:
         if "published_parsed" not in entry:
             return None
         item["date"] = entry.published
-        # item["date_str"] = self._create_date_str(entry.published_parsed)
 
         if "title" in entry:
             item["title"] = html.unescape(entry.title)
@@ -73,6 +73,44 @@ class Feed:
         else:
             item["description"] = None
         return item
+
+    def render_text(self):
+        s = []
+
+        title = self.title or "no title"
+        s.append(title)
+        s.append("\n")
+
+        for item in self.items:
+            s.append("\n\n")
+
+            item_title = item["title"] or "no title"
+            s.append("Title: " + item_title + "\n")
+
+            s.append("Date: " + item["date"] + "\n")
+
+            item_link = item["link"] or "no link"
+            s.append("Link: " + item_link + "\n")
+
+            s.append("\n")
+            if "enclosure" in item:
+                s.append("Enclosure: " + item["enclosure"]+"\n")
+                s.append("\n")
+
+            s.append("Description: ")
+            if "description_parsed" in item:
+                s.append(item["description_parsed"])
+            else:
+                description = item["description"] or "no description"
+                s.append(description)
+
+        s = "".join(s)
+        return s
+
+    def render_json(self):
+        feed_dict = {"title": self.title, "items": self.items}
+        s = json.dumps(feed_dict, indent="\t")
+        return s
 
     @staticmethod
     def _try_fix_url(url):
