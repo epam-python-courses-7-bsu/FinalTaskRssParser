@@ -41,4 +41,9 @@ optional arguments:
 --date - view news from cache with specified date
 ```
 
+### Iteration 4
+``python rss_reader.py --date 20191122 --to_html "D:\EpamFINAL\FinalTaskRssParser\final_task\rss_reader"``
+
+``python rss_reader.py "https://news.yahoo.com/rss/" --to_pdf  "D:\EpamFINAL\FinalTaskRssParser\final_task\rss_reader"
+
     
