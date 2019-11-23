@@ -22,16 +22,15 @@ def to_dict(data) -> dict:
     result = {'title': '', 'items': []}
     links_on_image = []
     if isinstance(data, FeedParserDict):
-        for feed_element in structure['feed']:
-            result[feed_element] = work_with_text.text_processing(data['feed'][feed_element])
+        result['title'] = work_with_text.text_processing(data['feed']['title'])
 
         for item in data['entries']:
-            temp = {}
-            for items_element in structure['entries']:
-                if items_element == 'summary':
-                    temp[items_element] = work_with_text.text_processing(item[items_element], links_on_image)
-                else:
-                    temp[items_element] = work_with_text.text_processing(item[items_element])
+            temp = {
+                'title': work_with_text.text_processing(item['title']),
+                'published': work_with_text.text_processing(item['published']),
+                'link': work_with_text.text_processing(item['link']),
+                'summary': work_with_text.text_processing(item['summary'], links_on_image)
+            }
             result['items'].append(temp)
         for index_link, link in enumerate(links_on_image):
             if link:

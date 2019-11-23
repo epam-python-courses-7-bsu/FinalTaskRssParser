@@ -1,0 +1,29 @@
+<rss version="2.0">
+    <channel>
+        <title>Head title</title>
+        <item>
+            <title>
+                Title item1
+            </title>
+            <description>
+                &lt;p&gt;&lt;a href="link_A"&gt;&lt;img src="link_img" alt="alt_text"&gt;&lt;/a&gt;des1&lt;/p&lt;&lt;br clear="all"&gt;
+            </description>
+            <link>
+                link1
+            </link>
+            <pubDate>Thu, 1 Nov 2019 16:12:24 -0500</pubDate>
+        </item>
+        <item>
+            <title>
+                Title item2
+            </title>
+            <description>
+                des2
+            </description>
+            <link>
+                link2
+            </link>
+            <pubDate>Thu, 2 Nov 2019 16:12:24 -0500</pubDate>
+        </item>
+    </channel>
+</rss>

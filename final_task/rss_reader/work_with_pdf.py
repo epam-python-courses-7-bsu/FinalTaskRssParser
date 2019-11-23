@@ -34,7 +34,7 @@ def write_to_pdf(data: dict, filename: str):
         if news_dict['contain_image']:
             download_image_and_paste_in_pdf(pdf, news_dict, index_news)
         pdf.multi_cell(effective_page_width, 10, news_dict['published'])
-        pdf.multi_cell(effective_page_width, 10, news_dict['summary'][news_dict['summary'].rfind(']') + 2:])
+        pdf.multi_cell(effective_page_width, 10, news_dict['summary'][news_dict['summary'].rfind(']') + 1:])
         pdf.set_font("TimesNewRoman", size=15)
         pdf.ln(5)
         pdf.multi_cell(effective_page_width, 10, 'Link on news:\n' + news_dict['link'])

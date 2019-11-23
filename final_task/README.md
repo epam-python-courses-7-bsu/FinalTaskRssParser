@@ -44,6 +44,39 @@ optional arguments:
   --colorize         Colorize text
 ```
 
+##How using?
+
+Open command line(terminal) and enter command: `rss-reader https://news.yahoo.com/rss --limit 2`.
+You will see something like this:
+
+```
+Yahoo News - Latest News & Headlines
+
+Title: After Sondland bombshell, Democrats look to expand Trump probe to Pompeo, others
+Date: Thu, 21 Nov 2019 16:12:24 -0500
+Link: https://news.yahoo.com/after-sondland-bombshell-democrats-look-to-expand-trump-probe-to-pompeo-others-211224656.html
+Description: [image: After Sondland bombshell, Democrats look to expand Trump probe to Pompeo, others] House Democrats, emboldened after Ambassador Gordon Sondland provided stunning testimony Wednesday, are debating whether to expand the investigation to other Trump administration officials.
+Link on image: http://l1.yimg.com/uu/api/res/1.2/audgsHkjxGCXTuCGEgaejw--/YXBwaWQ9eXRhY2h5b247aD04Njt3PTEzMDs-/https://media-mbst-pub-ue1.s3.amazonaws.com/creatr-uploaded-images/2019-11/eb56ad70-0c98-11ea-955d-14c81854d8a0
+
+Title: Exclusive: Acting Homeland Security chief Chad Wolf makes unannounced visit to privately funded border wall
+Date: Thu, 21 Nov 2019 17:38:03 -0500
+Link: https://news.yahoo.com/acting-homeland-security-chief-chad-wolf-makes-unannounced-visit-to-privately-funded-border-wall-223803492.html
+Description: [image: Exclusive: Acting Homeland Security chief Chad Wolf makes unannounced visit to privately funded border wall] Acting Homeland Security Secretary Chad Wolf made an unpublicized visit Wednesday to the site of a privately constructed border wall during his first official trip to the southern border, Yahoo News has confirmed.
+Link on image: http://l2.yimg.com/uu/api/res/1.2/QqpSY1ue.EJVLS1afFZDkg--/YXBwaWQ9eXRhY2h5b247aD04Njt3PTEzMDs-/https://media-mbst-pub-ue1.s3.amazonaws.com/creatr-uploaded-images/2019-11/4dcbf870-0cad-11ea-bb6a-0080c3ca4a87
+```
+
+In this example, you entered the url from which you wanted to see the news.
+
+You can also view the news on a specific date with the command `rss-reader --date 20190123` `20190123` is January 23, 2019.
+
+You can save any kind of news(selected by date or from the site) into two types of PDF or HTML file by `--to-pdf` and `--to-html` commands with a path argument (the path can be both local and global). 
+Example: `rss-reader --date 20190123 --to-pdf D:\` after executing the program, a message with the path to the pdf file will be displayed.
+
+```
+The recording has been completed in the file:
+D:\20191123_Yahoo.pdf
+```
+
 ##JSON format
 
 ```

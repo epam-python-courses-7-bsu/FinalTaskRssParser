@@ -16,25 +16,8 @@ import work_with_html
 import work_with_pdf
 import work_with_colorize
 import RssReaderException
-import decorators
+import work_with_feedparser
 import __init__
-
-
-@decorators.functions_log
-def get_object_feed(url: str) -> Union[str, feedparser.FeedParserDict]:
-    try:
-        data = feedparser.parse(url)
-        if data.status == 200:
-            if data['version']:
-                return data
-            else:
-                raise RssReaderException.ConnectException(f'There is no rss feed at this url: {url}')
-        else:
-            raise RssReaderException.ConnectException(f'HTTP Status Code {data.status}')
-    except AttributeError:
-        raise RssReaderException.ConnectException(f'{url} - is not url(example url "https://google.com")')
-    except Exception as exc:
-        raise RssReaderException.ConnectException(exc)
 
 
 def set_start_setting():
@@ -74,7 +57,7 @@ def run():
         elif args.date:
             data = work_with_file.read_feed_form_file(args.date)
         elif args.source:
-            data = get_object_feed(args.source)
+            data = work_with_feedparser.get_object_feed(args.source)
             data = work_with_dict.to_dict(data)
             work_with_file.add_feed_to_file(data)
         else:

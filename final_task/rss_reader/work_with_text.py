@@ -22,7 +22,7 @@ def text_processing(string: str, array_links=None):
     if 'img' in string:
         image_link_and_alt_text = get_img(string)
         array_links.append(image_link_and_alt_text[0])
-        image = '[image: ' + image_link_and_alt_text[1] + ']'
+        image = '[image: ' + image_link_and_alt_text[1] + '] '
     string = string[string.find('<') + 1:]
     while string.find('<') - string.find('>') == 1:
         string = string[string.find('<') + 2:]
