@@ -28,7 +28,7 @@ def print_verbose() -> None:
 
 if __name__ == '__main__':
 
-    log.info('Start script')
+    log.info("Start script")
 
     database = DatabaseEmulation.DatabaseEmulation(
         '_database/dates.txt', '_database/data'
@@ -46,31 +46,32 @@ if __name__ == '__main__':
             idx = database.get_id(date)
             all_items = database.get_items(idx)
         else:
-            print('Nothing by this date')
+            print("Nothing by this date")
+            sys.exit()
     else:
         all_items = rss_get_items.get_items(link)
 
     items = deepcopy(all_items)
 
     if limit is not None:
-        log.info('User choose some limits')
+        log.info("User choose some limits")
         items = all_items[:limit]
 
     if received_args.json:
-        log.info('User choose json format')
+        log.info("User choose json format")
         printers.print_json(items)
     else:
         printers.print_news(items)
         database.write_items(all_items)
 
     if received_args.verbose:
-        log.info('User choose verbose')
+        log.info("User choose verbose")
         print_verbose()
 
     if received_args.html:
-        log.info('User choose html')
+        log.info("User choose html")
         converting.write_to_file(items)
 
     if received_args.pdf:
-        log.info('User choose pdf')
+        log.info("User choose pdf")
         converting.create_pdf(items)

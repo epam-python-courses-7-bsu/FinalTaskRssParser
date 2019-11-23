@@ -26,7 +26,7 @@ def create_html(items: list) -> document:
 
 def write_to_file(items: list) -> None:
     result = create_html(items)
-    with open('html_file', 'w', encoding='utf-8') as f:
+    with open("html_file", "w", encoding="utf-8") as f:
         f.write(str(result))
         log.info("Successful converting into html")
 
@@ -35,21 +35,21 @@ def create_pdf(items: list) -> None:
     pdf = FPDF()
     try:
         pdf.add_page()
-        pdf.add_font('DejaVu', '', 'DejaVuSans.ttf', uni=True)
-        pdf.set_font('DejaVu', '', 14)
+        pdf.add_font("DejaVu", "", "DejaVuSans.ttf", uni=True)
+        pdf.set_font("DejaVu", "", 14)
     except RuntimeError:
         log.info("There isn't DejaVuSans.ttf in your rep")
-    pdf.write(8, 'RSS feed')
+    pdf.write(8, "RSS feed")
     pdf.ln(20)
     for item in items:
         b = 0
         b = b + 1
         item = printers.prepare_one_item(item)
-        pdf.write(8, '===Wow! News!===')
+        pdf.write(8, "===Wow! News!===")
         pdf.ln(10)
-        pdf.write(8, 'Title: ' + str(item['Title:']))
+        pdf.write(8, "Title: " + str(item['Title:']))
         pdf.ln(10)
-        pdf.write(8, 'Link: ' + str(item['Link: ']))
+        pdf.write(8, "Link: " + str(item['Link: ']))
         pdf.ln(15)
         if check.internet_on:
             img_url = str(item['Media content:\n'])
@@ -61,10 +61,10 @@ def create_pdf(items: list) -> None:
                     pdf.image(img_path, w=70, h=50)
                 os.remove(img_path)
         else:
-            pdf.write(8, 'Media content: ' + str(item['Media content:\n']))
+            pdf.write(8, "Media content: " + str(item['Media content:\n']))
         pdf.ln(15)
-        pdf.write(8, 'Description: ' + str(item['Description: ']))
+        pdf.write(8, "Description: " + str(item['Description: ']))
         pdf.ln(10)
         pdf.write(8, "===End, news!===")
         pdf.ln(10)
-    pdf.output('news.pdf', 'F')
+    pdf.output("news.pdf", "F")

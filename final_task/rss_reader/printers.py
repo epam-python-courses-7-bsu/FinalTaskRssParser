@@ -5,6 +5,7 @@ import json
 import rss_get_items as filters
 import pprint
 from colorama import Fore
+from colorama import Style
 
 
 def split_string_by_lines(input_string: str, word_number: int) -> str:
@@ -18,8 +19,12 @@ def split_string_by_lines(input_string: str, word_number: int) -> str:
 
 
 def prepare_one_item(item_xml: defaultdict) -> OrderedDict:
-    """" Take one rss item as dictionary and make ordered dict
-    with title, date, description and media content"""
+    """"
+
+    Take one rss item as dictionary and make ordered dict
+    with title, date, description and media content
+
+    """
     title = item_xml['title']
     date = filters.pubdate(item_xml['pubDate'])
     date = data_split(date)
@@ -47,19 +52,24 @@ def print_one_item(news_item: OrderedDict) -> None:
     for key, value in news_item.items():
         print(Fore.LIGHTGREEN_EX + key, value)
     print(Fore.RED + "===End, news!===")
+    print(Style.RESET_ALL)
 
 
 def print_news(items: list) -> None:
-    """" Take list of rss items and print all this news"""
-    log.info('Start print news')
+    """"
+         Take list of rss items and print all this news
+    """
+    log.info("Start print news")
     for item in items:
         item = prepare_one_item(item)
         print_one_item(item)
-    log.info('End print news')
+    log.info("End print news")
 
 
 def make_json(items: list) -> dict:
-    """convert article data in json format"""
+    """
+        Convert article data in json format
+    """
     log.info('Start make json format')
     jsons = {}
     for idx, item in enumerate(items):
@@ -72,7 +82,7 @@ def make_json(items: list) -> dict:
             'title': item['Title:'],
         }
         jsons[idx] = json_item
-    log.info('End make json format')
+    log.info("End make json format")
     return jsons
 
 
@@ -80,10 +90,10 @@ def print_json(items: list) -> None:
     json_representation = make_json(items)
     json_representation = json.dumps(json_representation)
     parsed = json.loads(json_representation)
-    log.info('Start print json')
+    log.info("Start print json")
     pp = pprint.PrettyPrinter(indent=4)
     pp.pprint(parsed)
-    log.info('End print json')
+    log.info("End print json")
 
 
 def data_split(date: str) -> str:

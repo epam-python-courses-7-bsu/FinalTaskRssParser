@@ -1,0 +1,290 @@
+INFO     [2019-11-23 12:04:20,051] Start script
+INFO     [2019-11-23 12:04:20,052] Start get items from url
+DEBUG    [2019-11-23 12:04:21,761] IBM855 confidence = 0.03394543806116659, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-23 12:04:21,789] ISO-8859-7 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-23 12:04:21,817] windows-1253 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-23 12:04:21,882] windows-1251 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-23 12:04:22,053] windows-1255 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-23 12:04:22,079] windows-1255 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-23 12:04:22,177] utf-8  confidence = 0.99
+DEBUG    [2019-11-23 12:04:22,177] SHIFT_JIS Japanese confidence = 0.01
+DEBUG    [2019-11-23 12:04:22,177] EUC-JP Japanese confidence = 0.01
+DEBUG    [2019-11-23 12:04:22,177] GB2312 Chinese confidence = 0.01
+DEBUG    [2019-11-23 12:04:22,177] EUC-KR Korean confidence = 0.01
+DEBUG    [2019-11-23 12:04:22,177] CP949 Korean confidence = 0.01
+DEBUG    [2019-11-23 12:04:22,177] Big5 Chinese confidence = 0.01
+DEBUG    [2019-11-23 12:04:22,177] EUC-TW Taiwan confidence = 0.01
+DEBUG    [2019-11-23 12:04:22,177] windows-1251 Russian confidence = 0.01
+DEBUG    [2019-11-23 12:04:22,177] KOI8-R Russian confidence = 0.01
+DEBUG    [2019-11-23 12:04:22,177] ISO-8859-5 Russian confidence = 0.07942577285027826
+DEBUG    [2019-11-23 12:04:22,177] MacCyrillic Russian confidence = 0.0
+DEBUG    [2019-11-23 12:04:22,178] IBM866 Russian confidence = 0.0
+DEBUG    [2019-11-23 12:04:22,178] IBM855 not active
+DEBUG    [2019-11-23 12:04:22,178] ISO-8859-7 not active
+DEBUG    [2019-11-23 12:04:22,178] windows-1253 not active
+DEBUG    [2019-11-23 12:04:22,178] ISO-8859-5 Bulgairan confidence = 0.11449729657180824
+DEBUG    [2019-11-23 12:04:22,178] windows-1251 not active
+DEBUG    [2019-11-23 12:04:22,178] TIS-620 Thai confidence = 0.1836986903258925
+DEBUG    [2019-11-23 12:04:22,178] ISO-8859-9 Turkish confidence = 0.40806812519958
+DEBUG    [2019-11-23 12:04:22,178] windows-1255 Hebrew confidence = 0.0
+DEBUG    [2019-11-23 12:04:22,178] windows-1255 not active
+DEBUG    [2019-11-23 12:04:22,178] windows-1255 not active
+DEBUG    [2019-11-23 12:04:22,178] utf-8  confidence = 0.99
+DEBUG    [2019-11-23 12:04:22,178] SHIFT_JIS Japanese confidence = 0.01
+DEBUG    [2019-11-23 12:04:22,178] EUC-JP Japanese confidence = 0.01
+DEBUG    [2019-11-23 12:04:22,178] GB2312 Chinese confidence = 0.01
+DEBUG    [2019-11-23 12:04:22,178] EUC-KR Korean confidence = 0.01
+DEBUG    [2019-11-23 12:04:22,178] CP949 Korean confidence = 0.01
+DEBUG    [2019-11-23 12:04:22,178] Big5 Chinese confidence = 0.01
+DEBUG    [2019-11-23 12:04:22,178] EUC-TW Taiwan confidence = 0.01
+INFO     [2019-11-23 12:04:22,229] Connect to website is fine
+INFO     [2019-11-23 12:04:22,236] Successful parsing
+INFO     [2019-11-23 12:04:22,238] Start print news
+INFO     [2019-11-23 12:04:22,238] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,238] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,239] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,239] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,240] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,240] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,240] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,241] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,242] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,242] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,243] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,243] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,243] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,244] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,245] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,245] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,245] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,246] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,246] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,247] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,247] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,248] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,248] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,249] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,250] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,250] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,250] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,251] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,251] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,251] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,252] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,252] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,252] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,253] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,253] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,253] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,254] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,254] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,254] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,255] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,255] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,255] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,256] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,256] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,256] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,257] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,257] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,257] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,257] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,258] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,258] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,258] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,259] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,259] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,259] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,260] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,260] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,260] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,261] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,261] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,285] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,285] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,286] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,286] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,286] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,287] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,287] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,288] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,288] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,289] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,289] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,290] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,290] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,291] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,291] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,291] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,292] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,292] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,292] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,293] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,293] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,293] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,294] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,294] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,294] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,295] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,295] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,295] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,295] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,296] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,296] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,296] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,296] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,297] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,297] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,297] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,298] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,298] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,298] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,299] Try to delete all html in description
+INFO     [2019-11-23 12:04:22,299] End print news
+INFO     [2019-11-23 12:09:35,163] Start script
+INFO     [2019-11-23 12:14:55,894] Start script
+INFO     [2019-11-23 12:15:01,064] Start script
+INFO     [2019-11-23 12:50:34,007] Start script
+INFO     [2019-11-23 12:52:09,600] Start script
+INFO     [2019-11-23 12:52:09,601] Start get items from url
+DEBUG    [2019-11-23 12:52:11,272] IBM855 confidence = 0.03394543806116659, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-23 12:52:11,300] ISO-8859-7 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-23 12:52:11,328] windows-1253 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-23 12:52:11,392] windows-1251 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-23 12:52:11,564] windows-1255 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-23 12:52:11,590] windows-1255 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-23 12:52:11,687] utf-8  confidence = 0.99
+DEBUG    [2019-11-23 12:52:11,688] SHIFT_JIS Japanese confidence = 0.01
+DEBUG    [2019-11-23 12:52:11,688] EUC-JP Japanese confidence = 0.01
+DEBUG    [2019-11-23 12:52:11,688] GB2312 Chinese confidence = 0.01
+DEBUG    [2019-11-23 12:52:11,688] EUC-KR Korean confidence = 0.01
+DEBUG    [2019-11-23 12:52:11,688] CP949 Korean confidence = 0.01
+DEBUG    [2019-11-23 12:52:11,688] Big5 Chinese confidence = 0.01
+DEBUG    [2019-11-23 12:52:11,688] EUC-TW Taiwan confidence = 0.01
+DEBUG    [2019-11-23 12:52:11,688] windows-1251 Russian confidence = 0.01
+DEBUG    [2019-11-23 12:52:11,688] KOI8-R Russian confidence = 0.01
+DEBUG    [2019-11-23 12:52:11,688] ISO-8859-5 Russian confidence = 0.07942577285027826
+DEBUG    [2019-11-23 12:52:11,688] MacCyrillic Russian confidence = 0.0
+DEBUG    [2019-11-23 12:52:11,688] IBM866 Russian confidence = 0.0
+DEBUG    [2019-11-23 12:52:11,688] IBM855 not active
+DEBUG    [2019-11-23 12:52:11,688] ISO-8859-7 not active
+DEBUG    [2019-11-23 12:52:11,688] windows-1253 not active
+DEBUG    [2019-11-23 12:52:11,688] ISO-8859-5 Bulgairan confidence = 0.11449729657180824
+DEBUG    [2019-11-23 12:52:11,688] windows-1251 not active
+DEBUG    [2019-11-23 12:52:11,688] TIS-620 Thai confidence = 0.1836986903258925
+DEBUG    [2019-11-23 12:52:11,688] ISO-8859-9 Turkish confidence = 0.40806812519958
+DEBUG    [2019-11-23 12:52:11,689] windows-1255 Hebrew confidence = 0.0
+DEBUG    [2019-11-23 12:52:11,689] windows-1255 not active
+DEBUG    [2019-11-23 12:52:11,689] windows-1255 not active
+DEBUG    [2019-11-23 12:52:11,689] utf-8  confidence = 0.99
+DEBUG    [2019-11-23 12:52:11,689] SHIFT_JIS Japanese confidence = 0.01
+DEBUG    [2019-11-23 12:52:11,689] EUC-JP Japanese confidence = 0.01
+DEBUG    [2019-11-23 12:52:11,689] GB2312 Chinese confidence = 0.01
+DEBUG    [2019-11-23 12:52:11,689] EUC-KR Korean confidence = 0.01
+DEBUG    [2019-11-23 12:52:11,689] CP949 Korean confidence = 0.01
+DEBUG    [2019-11-23 12:52:11,689] Big5 Chinese confidence = 0.01
+DEBUG    [2019-11-23 12:52:11,689] EUC-TW Taiwan confidence = 0.01
+INFO     [2019-11-23 12:52:11,740] Connect to website is fine
+INFO     [2019-11-23 12:52:11,746] Successful parsing
+INFO     [2019-11-23 12:52:11,748] Start print news
+INFO     [2019-11-23 12:52:11,748] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,749] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,749] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,749] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,750] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,750] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,750] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,751] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,751] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,751] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,751] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,752] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,752] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,752] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,753] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,753] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,753] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,753] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,754] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,754] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,754] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,755] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,755] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,755] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,756] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,756] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,756] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,757] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,757] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,757] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,757] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,758] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,758] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,758] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,758] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,759] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,759] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,759] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,760] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,760] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,760] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,760] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,761] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,761] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,762] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,762] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,762] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,762] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,763] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,763] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,763] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,763] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,764] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,764] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,764] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,765] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,765] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,765] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,766] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,766] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,767] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,767] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,767] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,768] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,768] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,768] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,769] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,769] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,769] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,770] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,770] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,770] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,771] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,771] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,772] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,772] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,772] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,773] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,773] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,773] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,774] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,774] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,774] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,775] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,775] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,775] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,776] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,776] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,776] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,777] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,777] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,777] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,777] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,778] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,778] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,778] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,779] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,779] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,779] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,779] Try to delete all html in description
+INFO     [2019-11-23 12:52:11,780] End print news
