@@ -45,7 +45,7 @@ class Handler:
     def option_pdf(self, path: str) -> None:
         for entry in self.entries:
             self.write_cache(self.convert_Entry_to_dict(entry))
-        self.write_to_pdf(path)
+        self.write_entries_to_pdf(path)
 
     @logging_decorator
     def option_json(self) -> None:
@@ -56,12 +56,12 @@ class Handler:
     @logging_decorator
     def option_default(self) -> None:
         for entry in self.entries:
-            self.print_entry(entry)
             self.write_cache(self.convert_Entry_to_dict(entry))
+            self.print_entry(entry)
 
     @logging_decorator
     def correct_title(self, title: str) -> str:
-        return title.replace('"', "_").replace("?", "_").replace(":", "_").replace("'", "_").replace(" ", "_")[:15]
+        return title.replace('"', "_").replace("?", "_").replace(":", "_").replace("'", "_").replace(" ", "_")[:30]
 
     @logging_decorator
     def write_cache(self, entry_dict: dict) -> None:
@@ -79,7 +79,8 @@ class Handler:
         if not [entry for entry in entries if entry["Title"] == entry_dict["Title"]]:
             entries.append(entry_dict)
             if len(entry_dict["Links"]) > 1:
-                self.save_image(entry_dict["Links"][1], self.correct_title(entry_dict["Title"]))
+                for num_img_l, img_l in enumerate(entry_dict["Links"][1:]):
+                    self.save_image(img_l, self.correct_title(entry_dict["Title"]) + str(num_img_l))
 
         with open("cache.json", "w") as cache:
             json.dump(entries, cache, indent=2)
@@ -114,7 +115,7 @@ class Handler:
             raise RSSReaderException("Error. News aren't found")
         # different cases of command line arguments
         if pdf_path:
-            self.write_to_pdf(pdf_path, daily_news[:self.limit])
+            self.write_entries_to_pdf(pdf_path, daily_news[:self.limit])
         if html_path:
             self.write_entries_to_html(html_path, daily_news[:self.limit])
         if do_json:
@@ -186,7 +187,10 @@ class Handler:
                         text = text[:text.find('[')] + text[text.find(']') + 1:]
                     if text[0] == ' ':
                         text = text[1:]
-                    _div += img(src=f"file:///{this_dir}/images/{self.correct_title(entry.title)}.jpg")
+                    for num_img_l in range(len(entry.links[1:])):
+                        _div += img(src=f"file:///{this_dir}/images/"
+                                        f"{self.correct_title(entry.title)+str(num_img_l)}.jpg")
+                        _div += br(), br()
                 else:
                     # formatting news to more readable format: deleting extra spaces and brackets
                     while text.count('['):
@@ -205,7 +209,7 @@ class Handler:
             raise RSSReaderException('Error. No such folder. Check the correctness of the entered path \n')
 
     @logging_decorator
-    def write_to_pdf(self, path: str, entries=()) -> None:
+    def write_entries_to_pdf(self, path: str, entries=()) -> None:
         # in case of reading news from cache list of entries are got as dict
         # and in case of online reading news only the path is passed to the method without list of entries
         if os.path.isdir(path) is False:
@@ -245,7 +249,9 @@ class Handler:
             pdf.write(10, f"Date: {entry.date}\n")
             if len(entry.links) > 1:
                 try:
-                    pdf.image(f'{this_dir}/images/{self.correct_title(entry.title)}.jpg', w=60, h=50)
+                    for num_img_l in range(len(entry.links[1:])):
+                        pdf.image(f'{this_dir}/images/{self.correct_title(entry.title)+str(num_img_l)}.jpg', w=60, h=50)
+                        pdf.write(10, "\n")
                 except RuntimeError:
                     pass
             pdf.write(10, "\n")
