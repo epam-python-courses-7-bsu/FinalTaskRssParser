@@ -1,325 +1,274 @@
+import sys
 import feedparser
 import json
 import logging
-import psycopg2
+import requests
 from yattag import Doc
-from database_functions import checkExistance
-from database_functions import createTable
-from database_functions import putIntoDB
-from database_functions import readingPasswordFromFile
+from fpdf import FPDF
+import os
+from database_functions import put_into_db, check_existance, json_from_cashe
+from database_functions import open_database, printing
 
 class RssParser():
     """ Parses news from website"""
-
-    url = ""
-    limit = 0
-    date = None
-    jsonFormat = False
-    path = None
-    to_html = False
-
-    def __init__(self, parametrUrl, parametrLimit, parametrJsonFormat = False, parametrDate = None, parametrPath = None,
-                 parametrHtml = False):
+    def __init__(self, *args):
         """ Inits arguments"""
 
-        self.url = parametrUrl
-        self.limit = parametrLimit
-        self.jsonFormat = parametrJsonFormat
-        self.date = parametrDate
-        self.to_html = parametrHtml
-        self.path = parametrPath
+        self.url = args[0]
+        self.limit = args[1]
+        self.jsonFormat = args[2]
+        self.date = args[3]
+        self.to_html = args[5]
+        self.path = args[4]
+        self.to_pdf = args[6]
         logging.debug("Check in parser")
-
-        if self.date != None:
-            self.printCashe()
+        if self.date:
+            self.print_cashe()
         else:
             self.parse()
 
-    def jsonFromCashe(self, rows):
-        """ Convets news from cache in json format"""
-
-        listToJsonFormat = []
-        for row in rows:
-            if len(row[4]) > 1:
-                dictionary = {"Title": row[1],
-                              "Date": row[2],
-                              "Description": row[3],
-                              "Link [1]": row[4][0],
-                              "Link [2]": row[4][1]}
-            else:
-                dictionary = {"Title": row[1],
-                              "Date": row[2],
-                              "Description": row[3],
-                              "Link [1]": row[4][0]}
-            listToJsonFormat.append(dictionary)
-        jsonData = json.dumps(listToJsonFormat, indent=5, ensure_ascii=False)
-        print(jsonData)
-        return None
-
-    def htmlFromCashe(self, rows):
-        """ Converts news from cache in html format"""
-
-        filename = self.path + r"\news.html"
-        try:
-            f = open(filename, 'w')
-        except OSError:
-            logging.error("File can't be opened")
-            print("Could not open file ", filename)
-            return None
-        logging.debug("File was opened successfully")
-        doc, tag, text, line = Doc().ttl()
-        line('h1', 'News from ' + self.url)
-        for row in rows:
-            with tag('item'):
-                with tag('h2'):
-                    text(row[1])
-                with tag('link'):
-                    text(row[4][0])
-                with tag('h3'):
-                    if len(row[4]) > 1:
-                        with tag('img', src=row[4][1], border="0", align="left", hspace="5"):
-                            pass
-                    text(row[3])
-                with tag('br'):
-                    pass
-        try:
-            f.write(doc.getvalue())
-            print("News were written in html file")
-            logging.debug("News were written in html file")
-        except Exception:
-            logging.error(Exception)
-        finally:
-            f.close()
-        return None
-
-    def printCashe(self):
+    def print_cashe(self):
         """ Prints news from database from the specified day."""
-
-        logging.debug("Check in printCashe")
-        con = None
-        exists = checkExistance()
+        exists = check_existance()
         if not exists:
-            createTable()
-        try:
-            con = psycopg2.connect(
-                database="postgres",
-                user="postgres",
-                password=readingPasswordFromFile(),
-                host="127.0.0.1",
-                port="5432"
-            )
-            logging.debug("Database opened successfully")
+            print("There is no cache soon")
+            return None
+        con = open_database()
+
+        if con:
             cur = con.cursor()
             if self.limit > 0:
-                cur.execute("SELECT * from cache WHERE feed = %s AND date = %s LIMIT %s",
+                cur.execute("SELECT * from cache WHERE feed = ? AND date = ? LIMIT ?",
                             (self.url, self.date, str(self.limit)))
             else:
-                cur.execute("SELECT * from cache WHERE feed = %s AND date = %s", (self.url, self.date))
+                cur.execute("SELECT * from cache WHERE feed = ? AND date = ?", (self.url, self.date))
 
             rows = cur.fetchall()
             if not rows:
                 print("No results\nTry to enter another date or url")
                 return None
             if self.jsonFormat:
-                self.jsonFromCashe(rows)
+                json_from_cashe(rows)
             elif self.to_html:
-                self.htmlFromCashe(rows)
+                self.convert_into_html_format(rows)
+            elif self.to_pdf:
+                self.convert_into_pdf_format(rows)
             else:
                 for row in rows:
-                    print("Title: ", row[1])
-                    print("Date: ", row[2])
-                    print("Link: ", row[4][0])
-                    print()
-                    print("Description: " + row[3])
-                    print("\nLinks:")
-                    print("[1]:", row[4][0])
-                    if len(row[4]) > 1:
-                        print("[2]:", row[4][1])
-                    print("__________________________________________________________________")
-        except (psycopg2.DatabaseError) as error:
-            logging.error(error)
-        except Exception as error:
-            logging.error(error)
-        finally:
-            if con is not None:
-                con.close()
-        return None
+                    printing(row)
+            con.close()
+        else:
+            print("Can't connect to database")
 
-    def convertIntoHtmlFormat(self, thefeed):
-        """ Creates html file in specified directory and puts information in database"""
+    def convert_into_html_format(self, thefeed):
+        """ Creates html file in specified directory and puts information in database, if it was read from website"""
 
         # openning html-file to write
-        filename = self.path + r"\news.html"
-        try:
-            f = open(filename, 'w')
-        except OSError:
-            logging.error("File can't be opened")
-            print("Could not open file ", filename)
+        if not os.path.exists(self.path):
+            print("Invalid directory")
             return None
+        filename = os.path.join(self.path, "news.html")
+        file = open(filename, 'w')
         logging.debug("File was opened successfully")
 
         doc, tag, text, line = Doc().ttl()
-        line('h1', 'News from ' + thefeed.feed.get("title", ""))
+        line('h1', 'News from ' + self.url)
 
-        for index, thefeedentry in enumerate(thefeed.entries):
-            if (index < self.limit) | (self.limit == -1):
-                # getting list of tags
-                listOfTags = self.takingInformationFromFeedparser(thefeedentry)
-                linkOfImg = ""
-                with tag('item'):
-                    with tag('h2'):
-                        text(listOfTags[0])
-                    with tag('link'):
-                        text(listOfTags[2])
-                    with tag('p'):
-                        text(listOfTags[1])
-                    with tag('h3'):
-                        if len(listOfTags) > 4:
-                            linkOfImg = listOfTags[4]
-                            with tag('img', src=linkOfImg, alt=listOfTags[5], border="0", align="left", hspace="5"):
-                                pass
-                        text(listOfTags[3])
+        for thefeedentry in thefeed:
+            # getting list of tags
+            if self.date == None:
+                list_of_tags = self.taking_information_from_feedparser(thefeedentry)
+            else:
+                list_of_tags = thefeedentry
+            link_of_img = ""
+            with tag('item'):
+                with tag('h2'):
+                    text(list_of_tags[1])
+                with tag('link'):
+                    text(list_of_tags[4])
+                with tag('p'):
+                    text(list_of_tags[2])
+                with tag('h3'):
+                    if list_of_tags[5]:
+                        with tag('img', src=list_of_tags[5], alt=list_of_tags[5], border="0", align="left", hspace="5"):
+                            pass
+                    text(list_of_tags[3])
+                with tag('br'):
                     with tag('br'):
                         pass
-                    with tag('br'):
-                        pass
 
-                # putting news in database
-                putIntoDB(listOfTags[2], listOfTags[0],
-                          thefeedentry.get("published_parsed", thefeed.feed.published_parsed),
-                          listOfTags[3], listOfTags[2], linkOfImg)
+            # putting news in database
+            if self.date == None:
+                put_into_db(list_of_tags[0], list_of_tags[1],
+                          thefeedentry.get("published_parsed", thefeedentry.published_parsed),
+                          list_of_tags[3], list_of_tags[4], list_of_tags[5])
         try:
-            f.write(doc.getvalue())
+            file.write(doc.getvalue())
             print("News were written in html file")
-            logging.debug("News were written in html file")
         except Exception:
             logging.error(Exception)
             print("Can't write information in html file")
         finally:
-            f.close()
-        return None
+            file.close()
 
-    def findDescription(self, description) -> str:
+    def convert_into_pdf_format(self, thefeed):
+        """ Creates pdf file in specified directory and puts information in database, if it was read from website"""
+
+        if not os.path.exists(self.path):
+            print("Invalid directory")
+            return None
+        filename = os.path.join(self.path, "news.pdf")
+        logging.debug("File was opened successfully")
+
+        if sys.platform == 'win32':
+            font_path = r'C:\Windows\Fonts\arial.ttf'
+            if not os.path.isfile(font_path):
+                font_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'ARIALUNI.TTF')
+        if sys.platform == 'linux':
+            font_path = r'/usr/share/fonts/dejavu/DejaVuSansCondensed.ttf'
+            if not os.path.isfile(font_path):
+                font_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'ARIALUNI.TTF')
+
+        pdf = FPDF()
+        pdf.add_page(('P', 'A4'))
+        pdf.add_font('arial_uni', '', font_path, True)
+        pdf.set_margins(10, 10, 10)
+        count = 0
+
+        for thefeedentry in thefeed:
+            if self.date == None:
+                list_of_tags = self.taking_information_from_feedparser(thefeedentry)
+            else:
+                list_of_tags = thefeedentry
+
+            pdf.set_font("arial_uni", size=14)
+            pdf.multi_cell(200, 10, txt=(list_of_tags[1] + "\n"), align="C")
+            pdf.set_font("arial_uni", size=10)
+            pdf.multi_cell(200, 8, txt=list_of_tags[2], align="C")
+            pdf.set_font("arial_uni", size=8)
+            pdf.multi_cell(0, 8, txt=list_of_tags[4], align="C")
+
+            if list_of_tags[5]:
+                try:
+                    img = requests.get(list_of_tags[5])
+                    out = open("img" + str(count) + ".jpg", "wb")
+                    out.write(img.content)
+                    out.close()
+                    pdf.image("img" + str(count) + ".jpg", x=100, w=20)
+                    count += 1
+                except requests.exceptions.ConnectionError:
+                    print("Can't download image, because of connection to the Internet")
+                    pdf.multi_cell(0, 8, txt=list_of_tags[5], align="C")
+                    logging.error(requests.exceptions.ConnectionError)
+            pdf.set_font("arial_uni", size=10)
+            pdf.multi_cell(0, 6, txt=list_of_tags[3], align="C")
+            pdf.multi_cell(200, 10, txt="_________________\n", align="C")
+
+            # putting news in database
+            if self.date == None:
+                put_into_db(list_of_tags[0], list_of_tags[1],
+                          thefeedentry.get("published_parsed", thefeedentry.published_parsed),
+                          list_of_tags[3], list_of_tags[4], list_of_tags[5])
+        try:
+            pdf.output(filename)
+            print("News were written in pdf file")
+
+            for i in range(count):
+                os.remove("img" + str(i) + ".jpg")
+        except Exception:
+            logging.error(Exception)
+            print("Can't write information in pdf file")
+
+    def find_description(self, description) -> str:
         """ Parses description in readable format, return description"""
 
         text = description
-        indexOfTextBeginning = description.find(">")
-        while indexOfTextBeginning != -1:
-            if indexOfTextBeginning != len(description):
-                if description[indexOfTextBeginning + 1] != "<":
-                    text = description[indexOfTextBeginning + 1:]
+        index_of_text_beginning = description.find(">")
+        while index_of_text_beginning != -1:
+            if index_of_text_beginning != len(description) - 1:
+                if description[index_of_text_beginning + 1] != "<":
+                    text = description[index_of_text_beginning + 1:]
                     text = text[: text.find('<')]
                     break
-            description = description[indexOfTextBeginning + 1:]
-            indexOfTextBeginning = description.find(">")
+            description = description[index_of_text_beginning + 1:]
+            index_of_text_beginning = description.find(">")
         return text
 
-    def printingNews(self, thefeed):
+    def printing_news(self, thefeed):
         """ Prints news"""
 
         print("Feed: " + thefeed.feed.get("title", ""))
         print("__________________________________________________________________")
-
         for index, thefeedentry in enumerate(thefeed.entries):
-            if (index < self.limit) | (self.limit == -1):
-                listOfTags = self.takingInformationFromFeedparser(thefeedentry)
+            list_of_tags = self.taking_information_from_feedparser(thefeedentry)
+            printing(list_of_tags)
+            put_into_db(list_of_tags[0], list_of_tags[1],
+                        thefeedentry.get("published_parsed", thefeed.feed.published_parsed),
+                        list_of_tags[3], list_of_tags[4], list_of_tags[5])
 
-                print("Title: " + listOfTags[0])
-                print("Date: " + listOfTags[1])
-                print("Link: " + listOfTags[2])
+    def taking_information_from_feedparser(self, thefeedentry) -> list:
+        """ Creates a list with arguments: title, date, link, description, link of image and description of image, if
+        they exist for each news"""
 
-                print()
-                if len(listOfTags) > 4:
-                    print("[image: ", listOfTags[5], "][2]", listOfTags[3])
-                else:
-                    print(listOfTags[3])
-
-                print("\nLinks:")
-                print("[1]:", listOfTags[2])
-                linkOfImg = ""
-                if len(listOfTags) > 4:
-                    print("[2]:", listOfTags[4])
-                    linkOfImg = listOfTags[4]
-                print("__________________________________________________________________")
-                putIntoDB(self.url, listOfTags[0], thefeedentry.get("published_parsed", thefeed.feed.published_parsed),
-                          listOfTags[3], listOfTags[2], linkOfImg)
-        return None
-
-    def takingInformationFromFeedparser(self, thefeedentry) -> list:
-        """ Creates a list with arguments: title, date, link, description, link of image and description of image, if they exist
-            for each news"""
-
-        listOfArgs = []
-        listOfArgs.append(thefeedentry.get("title", ""))
-        listOfArgs.append(thefeedentry.get("published", ""))
-        listOfArgs.append(thefeedentry.get("link", ""))
+        list_of_args = [self.url, thefeedentry.get("title", ""), thefeedentry.get("published", "")]
         description = thefeedentry.get("description", "")
-        text = self.findDescription(description)
-        listOfArgs.append(text)
+        description_to_put = self.find_description(description)
 
         # trying to get link of image and description of image
-        indexOfLink = description.find("img src")
-        linkOfImg = ""
-        if indexOfLink != -1:
-            linkOfImg = description[indexOfLink + 9:]
-            linkOfImg = linkOfImg[: linkOfImg.find('"')]
+        index_of_link = description.find("src")
+        link_of_img = ""
+        if index_of_link != -1:
+            link_of_img = description[index_of_link + 5:]
+            link_of_img = link_of_img[: link_of_img.find('"')]
 
-            indexOfLink = description.find("alt")
-            altOfImg = description[indexOfLink + 5:]
-            altOfImg = altOfImg[: altOfImg.find('"')]
+            index_of_link = description.find("alt")
+            alt_of_img = description[index_of_link + 5:]
+            alt_of_img = alt_of_img[: alt_of_img.find('"')]
 
-        # if link of image and description of image exists, puts them into list
-        if (linkOfImg != "") | (indexOfLink != -1):
-            listOfArgs.append(linkOfImg)
-            listOfArgs.append(altOfImg)
-        return listOfArgs
+            description_to_put = "[image: " + alt_of_img + "][2]" + description_to_put
+        list_of_args.append(description_to_put)
+        list_of_args.append(thefeedentry.get("link", ""))
+        list_of_args.append(link_of_img)
+        return list_of_args
 
-    def parseToJsonFormat(self, thefeed):
+    def parse_to_json_format(self, thefeed):
         """ Converts to json format and prints"""
 
-        listToJson = []
+        list_to_json = []
         for index, thefeedentry in enumerate(thefeed.entries):
-            if (index < self.limit) | (self.limit == -1):
-                listOfTags = self.takingInformationFromFeedparser(thefeedentry)
-
-                if len(listOfTags) > 4:
-                    descriptionForDict = "[image: " + listOfTags[5] + "][2]" + listOfTags[3]
-                    dictionary = {"Feed": thefeed.feed.get("title", ""),
-                                  "Title": listOfTags[0],
-                                  "Date": listOfTags[1], "Description": descriptionForDict,
-                                  "Link [1]": listOfTags[2], "Link [2]": listOfTags[4]}
-                    linkOfImg = listOfTags[4]
-                else:
-                    descriptionForDict = listOfTags[3]
-                    dictionary = {"Feed": thefeed.feed.get("title", ""),
-                                  "Title": listOfTags[0],
-                                  "Date": listOfTags[1],
-                                  "Description": descriptionForDict, "Link [1]": listOfTags[2]}
-                    linkOfImg = ""
-                listToJson.append(dictionary)
-                putIntoDB(self.url, listOfTags[0], thefeedentry.get("published_parsed", thefeed.feed.published_parsed),
-                          listOfTags[3], listOfTags[2], linkOfImg)
+            list_of_tags = self.taking_information_from_feedparser(thefeedentry)
+            dictionary = {"Feed": thefeed.feed.get("title", ""), "Title": list_of_tags[0],
+                          "Date": list_of_tags[1], "Description": list_of_tags[3], "Link [1]": list_of_tags[4]}
+            if list_of_tags[5] != "":
+                dictionary.update({"Link [2]": list_of_tags[5]})
+            list_of_tags.append(dictionary)
+            put_into_db(list_of_tags[0], list_of_tags[1],
+                        thefeedentry.get("published_parsed", thefeed.feed.published_parsed),
+                        list_of_tags[3], list_of_tags[4], list_of_tags[5])
 
         # converts to json
-        jsonData = json.dumps(listToJson, indent=5, ensure_ascii=False)
-        print(jsonData)
-        return None
+        json_data = json.dumps(list_to_json, indent=5, ensure_ascii=False)
+        print(json_data)
 
     def parse(self):
         """ Parses news"""
 
         thefeed = feedparser.parse(self.url)
         if thefeed.get('bozo') == 1:
-            stringException = thefeed.get('bozo_exception')
-            logging.error(stringException)
-            print(stringException)
+            string_exception = thefeed.get('bozo_exception')
+            logging.error(string_exception)
+            print(string_exception)
             return None
 
         logging.debug("Parsing from website was successful")
+        if self.limit > -1:
+            thefeed.entries = thefeed.entries[:self.limit]
         if self.jsonFormat:
-            self.parseToJsonFormat(thefeed)
+            self.parse_to_json_format(thefeed)
         elif self.to_html:
-            self.convertIntoHtmlFormat(thefeed)
+            self.convert_into_html_format(thefeed.entries)
+        elif self.to_pdf:
+            self.convert_into_pdf_format(thefeed.entries)
         else:
-            self.printingNews(thefeed)
+            self.printing_news(thefeed)
         return None

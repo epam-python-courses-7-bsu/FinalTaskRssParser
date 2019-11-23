@@ -1,11 +1,11 @@
 from setuptools import setup
 
 setup(name='Rss reader',
-      version='1.4.1',
+      version='1.4.2',
       description='Pure Python command-line RSS reader.',
       author='Marina Romanchuk',
       author_email='marina-romanchuk-2015@mail.ru',
-      install_requires=['feedparser', 'psycopg2-binary', 'doc', 'yattag'],
+      install_requires=['feedparser', 'doc', 'yattag', 'requests', 'fpdf'],
       zip_safe=False,
       scripts=[r'rss_reader\rss_parser.py',
                'rss_reader\console_interface.py',
