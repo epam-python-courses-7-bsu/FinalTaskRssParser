@@ -1,5 +1,6 @@
 import argparse
 
+from feed import Feed, URLFormatError, FeedNotFoundError, IncorrectRSSError
 
 # temp
 __version__ = "0.1"
@@ -22,3 +23,13 @@ if __name__ == '__main__':
         print("verbosity turned on")
 
     limit = args.limit if args.limit is not None else 0
+
+    try:
+        feed = Feed(rss_url, limit)
+    except (URLFormatError, FeedNotFoundError, IncorrectRSSError) as e:
+        print("Error: " + str(e))
+    else:
+        if not args.json:
+            print(feed.render_text())
+        else:
+            print(feed.render_json())
