@@ -39,6 +39,7 @@ optional arguments:
 
 ## Installation
 ```
+
 pip install -r requirements.txt
 pip install rss-reader
 ```
