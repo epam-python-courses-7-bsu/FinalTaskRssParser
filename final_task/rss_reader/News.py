@@ -12,4 +12,8 @@ class News:
     title: str
     date: str
     links: []
+<<<<<<< HEAD
     strDate: str
+=======
+    strDate: str
+>>>>>>> 89c4f8b1295f477501cad9f19c1d2b63db6309a7

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .idea/
 final_task/dist
 *.pyc
@@ -10,3 +11,6 @@ final_task/dist
 *.idea'.idea'
 final_task/FinalTaskRssParser.egg-inf
 final_task/rss_reader/images/
+=======
+.idea/
+>>>>>>> 89c4f8b1295f477501cad9f19c1d2b63db6309a7

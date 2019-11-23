@@ -71,6 +71,11 @@ class Handler:
         str_date += str(self.article.entries[index]['published_parsed'].tm_year)
         str_date += str(self.article.entries[index]['published_parsed'].tm_mon)
         str_date += str(self.article.entries[index]['published_parsed'].tm_mday)
+<<<<<<< HEAD
+=======
+        # str_date += str(self.article.entries[index].published_parsed.time.struct_time.tm_mon)
+        # str_date += str(self.article.entries[index].published_parsed.time.struct_time.tm_day)
+>>>>>>> 89c4f8b1295f477501cad9f19c1d2b63db6309a7
         return str_date
 
     @log_decore
@@ -118,6 +123,11 @@ class Handler:
     @log_decore
     def get_all(self):
         # return all news which user want see
+<<<<<<< HEAD
+=======
+        print("LENGHT PARSARS)")
+        print(len(self.parsers))
+>>>>>>> 89c4f8b1295f477501cad9f19c1d2b63db6309a7
         for item_news in self.parsers:
             write_json_to_cache(parse_to_json(item_news))
 
