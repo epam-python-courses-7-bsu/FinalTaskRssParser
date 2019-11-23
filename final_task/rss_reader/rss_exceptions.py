@@ -6,8 +6,8 @@ class Error(Exception):
     pass
 
 
-class InvalidURL(Error):
-    """Exception is raised for invalid URL"""
+class LimitSignError(Error):
+    """Exception is raised negative limit value"""
     pass
 
 
@@ -16,8 +16,23 @@ class FeedError(Error):
     pass
 
 
-class InvalidDateFormat(Error):
-    """Exception is raised for date not in %%Y%%m%%d format"""
+class InternetConnectionError(Error):
+    """Exception is raised if no Internet connection."""
+    pass
+
+
+class UnreachableURLError(Error):
+    """Exception is raised if URL is unreachable"""
+    pass
+
+
+class URLResponseError(Error):
+    """Exception occurs while retrieving status code from the URL other than 200"""
+    pass
+
+
+class FormatDateError(Error):
+    """Exception is raised if date was setted in invalid format"""
     pass
 
 
@@ -26,11 +41,11 @@ class SpecifiedDayNewsError(Error):
     pass
 
 
-class PATHError(Error):
-    """Exception is raised if the wrong PATH was specified."""
+class EmptyCacheError(Error):
+    """Exception is raised if retrieving data from empty cache."""
     pass
 
 
-class EmptyCacheError(Error):
-    """Exception is raised if retrieving data from empty cache."""
+class PATHError(Error):
+    """Exception is raised if the wrong PATH was specified."""
     pass

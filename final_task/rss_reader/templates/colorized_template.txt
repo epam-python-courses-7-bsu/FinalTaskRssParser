@@ -1,0 +1,24 @@
+
+{% for item in all_news -%}
+
+Feed: {{ item['feed_title'] | colorizetext('red') }}
+
+Title: {{item['title'] | colorizetext('yellow')}}
+
+Date: {{item['date'] | colorizetext('magenta')}}
+Link: {{item['link'] | colorizetext('blue')}}
+
+{% if item['img_title'] %}{% for title in item['img_title'] -%}
+{% if title %}[image {{loop.index+1}}: {{title | colorizetext('cyan')}}]
+{% endif -%}{% endfor %}{% endif -%}
+{{item['text'] | colorizetext('green')}}
+
+Links:
+[1]: {{item['link'] | colorizetext('blue')}} (link to the article)
+
+{% if item['img_link'] %}{% for link in item['img_link'] -%}
+{% if link|length %}[{{loop.index+1}}]: {{link | colorizetext('blue')}}{% else %}[{{loop.index+1}}]: Missed link
+{% endif %}
+{% endfor %}
+{% endif -%}
+{% endfor %}

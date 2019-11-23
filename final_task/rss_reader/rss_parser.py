@@ -6,12 +6,11 @@ from bs4 import BeautifulSoup
 import feedparser
 
 from validator import check_limit_value, check_news_collection
-from rss_exceptions import InvalidURL
 
 
 class RSSparser:
     """
-    Parsed the RSS news from received link, extracts required amount of news and 
+    Parsed the RSS news from received link, extracts required amount of news
 
     Parameters:
         cmd_args: dict: parsed arguments out of sys.argv;
@@ -44,14 +43,9 @@ class RSSparser:
         """
         Get the response from the url.
         """
-        try:
-            response = feedparser.parse(self.url)
-            self.logger.info(f'Getting the response from the URL: {self.url}.')
-        except AttributeError:
-            raise InvalidURL("Please, check the URL.")
-        else:
-            self.logger.info('Valid URL')
-            return response
+        response = feedparser.parse(self.url)
+        self.logger.info(f'Getting the response from the URL: {self.url}.')
+        return response
 
     def parse_feed(self):
         """
@@ -79,7 +73,7 @@ class RSSparser:
                     img_link.append(link.get('src'))
                     img_title.append(html.unescape(link.get('title', '')))
 
-            info_text = html.unescape(soup.text)
+            info_text = html.unescape(soup.text).rstrip()
 
             all_news.append({
                 "feed_title": self.feed_name,

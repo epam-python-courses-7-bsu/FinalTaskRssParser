@@ -36,16 +36,13 @@ def get_cached_news(cmd_args, logger):
             raise EmptyCacheError('Cache is empty. Please, retrieve data from internet.')
 
         limit = cmd_args.limit or len(cache)
-        all_news = []
+        all_news = list(itertools.islice(make_news_collection(cmd_args, cache), 0, limit))
 
-        for new in itertools.islice(make_news_collection(cmd_args, cache), 0, limit):
-            all_news.append(new)
-
-    if not all_news or all_news == [None]:
-        logger.info('No entries on the specified day (and url, if assigned) in the cache.')
+    if not all_news:
         raise SpecifiedDayNewsError('On the specified day there are no entries in the cache.')
 
     logger.info('News was extracted from the cache successfully.')
+
     return all_news
 
 
@@ -53,9 +50,8 @@ def make_news_collection(cmd_args, cache):
     """
     Iterate the cache with required key 'data' and 'url', if specified.
     """
-    for key_date in cache:
+    for key_date, news_date in cache.items():
         if cmd_args.date in key_date:
-            news_date = cache[key_date]
             if cmd_args.source == news_date['feed_url']:
                 yield news_date
             elif not cmd_args.source:
