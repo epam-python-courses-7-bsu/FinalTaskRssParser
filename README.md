@@ -6,13 +6,13 @@ Command-line utility to receive RSS feeds, save it and convert to common formats
 
 Input:
 ```
-python3 rss_reader.py --lim 1 "https://news.yahoo.com/rss"
+python3 rss_reader.py "https://news.yahoo.com/rss" -lim 1
 ```
 Output:
 ```
 Title : Rep. Justin Amash turned on Trump. Will his Michigan district follow him — or turn on him?
 
-Date : Sun, 17 Nov 2019 06:00:35 -0500
+Date : 17/11/2019
 
 Link : https://news.yahoo.com/rep-justin-amash-turned-on-trump-will-his-michigan-district-follow-him-or-turn-on-him-110017880.html
 
@@ -39,7 +39,8 @@ optional arguments:
 
 ## Installation
 ```
-
+git clone https://github.com/Clonder/FinalTaskRssParser.git
+cd/final_task/rss_reader
 pip install -r requirements.txt
 pip install rss-reader
 ```
