@@ -16,7 +16,7 @@ class TestEntry(unittest.TestCase):
         self.assertIsInstance(entry, Entry)
         self.assertNotIsInstance("entry", Entry)
 
-    def setUp(self) -> None:
+    def setUp(self):
         self.entry = Entry(feed="feed", title="title", date="Wed, 20 Nov 2019", article_link="link",
                            summary="some_text", links=("article_link", "img_link"))
 

@@ -14,12 +14,10 @@ class TestHandler(unittest.TestCase):
         self.assertIsInstance(handler, Handler)
         self.assertNotIsInstance("handler", Handler)
 
-    def test_gen_entries(self):
-        handler = Handler("https://news.yahoo.com/rss/", 1, 1.0)
-        self.assertIsInstance(next(handler.gen_entries()), Entry)
+    def setUp(self):
+        self.handler = Handler("https://news.yahoo.com/rss/", 1, 1.0)
 
     def test_convert_to_dict(self):
-        handler = Handler("https://news.yahoo.com/rss/", 1, 1.0)
         entry = Entry("Yahoo News - Latest News & Headlines", "Title 1", "Wed, 06 Nov 2019 14:22:10 +0500",
                       "https://link1.com", "summary", ("https://link1.com",))
         entry.publish_year = 2019
@@ -29,15 +27,31 @@ class TestHandler(unittest.TestCase):
             "Feed": "Yahoo News - Latest News & Headlines",
             "Title": "Title 1",
             "DateInt": "20191211",
-            "Date": "Wed, 06 Nov 2019 14:22:10 +0500",
+            "Date": "Wed, 06 Nov 2019",
             "Link": "https://link1.com",
             "Summary": "summary",
             "Links": ("https://link1.com",)
         }
-        self.assertEqual(handler.convert_to_dict(entry), entry_dict)
+        self.assertEqual(self.handler.convert_Entry_to_dict(entry), entry_dict)
 
-    def test_get_entry_from_dict(self):
-        handler = Handler("https://news.yahoo.com/rss/", 1, 1.0)
+    def test_convert_to_dict_fail(self):
+        entry = Entry("Yahoo News - Latest News & Headlines", "Title 15", "Wed, 06 Nov 2019 14:22:10 +0500",
+                      "https://link1.com", "summary", ("https://link1.com",))
+        entry.publish_year = 2019
+        entry.publish_month = 12
+        entry.publish_day = 11
+        entry_dict = {
+            "Feed": "Yahoo News - Latest News & Headlines",
+            "Title": "Title 1",
+            "DateInt": "20191211",
+            "Date": "Wed, 06 Nov 2019",
+            "Link": "https://link1.com",
+            "Summary": "summary",
+            "Links": ("https://link1.com",)
+        }
+        self.assertNotEqual(self.handler.convert_Entry_to_dict(entry), entry_dict)
+
+    def test_get_entry_from_dict_instance(self):
         entry_dict = {
             "Feed": "Yahoo News - Latest News & Headlines",
             "Title": "Title 1",
@@ -47,21 +61,22 @@ class TestHandler(unittest.TestCase):
             "Summary": "summary",
             "Links": ("https://link1.com",)
         }
-        self.assertIsInstance(handler.get_entry_from_dict(entry_dict), Entry)
+        self.assertIsInstance(self.handler.get_entry_from_dict(entry_dict), Entry)
+
+    def test_get_entry_from_dict_not_instance(self):
+        entry_dict = {
+            "Feed": "Yahoo News - Latest News & Headlines",
+            "Title": "Title 1",
+            "DateInt": "20191211",
+            "Date": "Wed, 06 Nov 2019 14:22:10 +0500",
+            "Link": "https://link1.com",
+            "Summary": "summary",
+            "Links": ("https://link1.com",)
+        }
+        self.assertNotIsInstance(self.handler.get_entry_from_dict(entry_dict), Handler)
 
     def test_option_date(self):
-        handler = Handler("https://news.yahoo.com/rss/", 1, 1.0)
-        self.assertRaises(RSSReaderException, lambda: handler.option_date("19950514", False, False, ""))
-
-    def test_write_to_html_ind_err(self):
-        handler = Handler("https://news.yahoo.com/rss/", 1, 1.0)
-        entry = Entry()
-        self.assertRaises(IndexError, lambda: handler.write_to_html(entry, ""))
-
-    def test_write_to_html_rss_err(self):
-        handler = Handler("https://news.yahoo.com/rss/", 1, 1.0)
-        entry = Entry()
-        self.assertRaises(RSSReaderException, lambda: handler.write_to_html(entry, " "))
+        self.assertRaises(RSSReaderException, lambda: self.handler.option_date("19950514", False, False, ""))
 
 
 if __name__ == '__main__':

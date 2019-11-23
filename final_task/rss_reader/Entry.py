@@ -2,6 +2,7 @@ import logging
 import time
 from Logging import logging_decorator
 import html
+from html import parser
 
 
 class Entry:

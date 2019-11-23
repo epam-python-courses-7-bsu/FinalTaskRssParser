@@ -14,7 +14,9 @@ from RSSReaderException import RSSReaderException
 def main():
     arg_parser_args = get_arguments_from_console()
     version = 4.0
-
+    if not (arg_parser_args.source or arg_parser_args.version or arg_parser_args.date or arg_parser_args.json
+            or arg_parser_args.to_html or arg_parser_args.to_pdf):
+        return
     handler = Handler(arg_parser_args.source, arg_parser_args.limit, version)
     if not arg_parser_args.limit:
         arg_parser_args.limit = len(handler.parsed.entries)
