@@ -18,29 +18,28 @@ def main():
     handler = Handler(arg_parser_args.source, arg_parser_args.limit, version)
     if not arg_parser_args.limit:
         arg_parser_args.limit = len(handler.parsed.entries)
+        handler.limit = arg_parser_args.limit
+    if arg_parser_args.limit <= 0:
+        raise RSSReaderException("Error. Incorrect value of argument limit")
 
     if arg_parser_args.verbose:
         logging.getLogger().setLevel(logging.INFO)
-    if arg_parser_args.limit <= 0 and arg_parser_args.date is False:
-        raise RSSReaderException("Error. Incorrect value of argument limit")
 
     if arg_parser_args.version:
         handler.option_version()
     elif arg_parser_args.date:
         handler.option_date(str(arg_parser_args.date), arg_parser_args.json,
-                            arg_parser_args.to_html, arg_parser_args.to_html,
-                            arg_parser_args.to_pdf, arg_parser_args.to_pdf
+                            arg_parser_args.to_html, arg_parser_args.to_pdf
                             )
     elif arg_parser_args.json:
         handler.option_json()
-    elif arg_parser_args.to_html and arg_parser_args.to_pdf:
-        handler.option_html(arg_parser_args.to_html)
-        handler.option_pdf(arg_parser_args.to_pdf)
-    elif arg_parser_args.to_html:
-        handler.option_html(arg_parser_args.to_html)
-    elif arg_parser_args.to_pdf:
-        handler.option_pdf(arg_parser_args.to_pdf)
     else:
+        if arg_parser_args.to_html:
+            handler.option_html(arg_parser_args.to_html)
+        if arg_parser_args.to_pdf:
+            handler.option_pdf(arg_parser_args.to_pdf)
+    if not (arg_parser_args.version or arg_parser_args.date or arg_parser_args.json
+            or arg_parser_args.to_html or arg_parser_args.to_pdf):
         handler.option_default()
 
 
@@ -49,9 +48,7 @@ if __name__ == "__main__":
         main()
     except AttributeError:
         print("Error, failed to get an attribute.")
-    except RSSReaderException as rss_exc:
-        print(rss_exc)
-    except IndexError:
-        print("Error, enter the correct path")
     except PermissionError:
         print("Error, close the file for output of news")
+    except RSSReaderException as rss_exc:
+        print(rss_exc)

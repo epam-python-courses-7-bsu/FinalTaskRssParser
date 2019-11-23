@@ -2,7 +2,6 @@ import json
 import logging
 import os
 import sys
-
 this_dir = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(this_dir)
 import feedparser
@@ -11,9 +10,7 @@ from Logging import logging_decorator
 from RSSReaderException import RSSReaderException
 from RSS_PDF import PDF
 import urllib.request
-
-import dominate
-from dominate.tags import *
+from dominate.tags import html, head, meta, body, div, img, p, b, br, h1, a
 
 
 class Handler:
@@ -64,16 +61,18 @@ class Handler:
 
     @logging_decorator
     def correct_title(self, title: str) -> str:
-        return title.replace('"', "_").replace("?", "_").replace(":", "_").replace("'", "_")[:30].replace(" ", "_")
+        return title.replace('"', "_").replace("?", "_").replace(":", "_").replace("'", "_").replace(" ", "_")[:15]
 
     @logging_decorator
-    def write_cache(self, entry_dict: dict):
+    def write_cache(self, entry_dict: dict) -> None:
         """write new news to cache in json format"""
-        try:
-            entries = json.load(open("cache.json"))
-        except json.JSONDecodeError:
-            entries = []
-        except FileNotFoundError:
+        if os.path.exists("cache.json"):
+            try:
+                with open("cache.json") as cache:
+                    entries = json.load(cache)
+            except json.JSONDecodeError:
+                entries = []
+        else:
             entries = []
         # writing entries and saving images of entries to cache if list of entries with this title is empty
         # else this entry already is the cache
@@ -86,25 +85,27 @@ class Handler:
             json.dump(entries, cache, indent=2)
 
     @logging_decorator
-    def save_image(self, img_url: str, img_name: str):
-        try:
+    def save_image(self, img_url: str, img_name: str) -> None:
+        if os.path.exists("images"):
             if img_name.find(".jpg") == -1:
                 urllib.request.urlretrieve(img_url, f"images/{img_name}.jpg")
             else:
                 urllib.request.urlretrieve(img_url, f"images/{img_name}")
-        except FileNotFoundError:
+        else:
             os.makedirs("images")
             urllib.request.urlretrieve(img_url, f"images/{img_name}.jpg")
 
     @logging_decorator
-    def option_date(self, date: str, do_json: bool, do_html: bool, html_path: str, do_pdf: bool, pdf_path: str):
+    def option_date(self, date: str, do_json: bool, html_path: str = "", pdf_path: str = ""):
         """add entries from cache.json into daily_news: list if they have date that is equal to user's --date DATE
             and then raise an exception or print to console or to outputs to html"""
-        try:
-            entries = json.load(open("cache.json"))
-        except json.JSONDecodeError:
-            entries = []
-        except FileNotFoundError:
+        if os.path.exists("cache.json"):
+            try:
+                with open("cache.json") as cache:
+                    entries = json.load(cache)
+            except json.JSONDecodeError:
+                entries = []
+        else:
             raise RSSReaderException("Error. You have no cache. Try to run app with internet-connection")
 
         # list of entries with the same date as user's --date DATE
@@ -112,18 +113,15 @@ class Handler:
         if not daily_news:
             raise RSSReaderException("Error. News aren't found")
         # different cases of command line arguments
-        elif do_pdf and do_html:
+        if pdf_path:
             self.write_to_pdf(pdf_path, daily_news[:self.limit])
+        if html_path:
             self.write_entries_to_html(html_path, daily_news[:self.limit])
-        elif do_pdf:
-            self.write_to_pdf(pdf_path, daily_news[:self.limit])
-        elif do_html:
-            self.write_entries_to_html(html_path, daily_news[:self.limit])
-        elif do_json:
+        if do_json:
             for news_json in daily_news[:self.limit]:
                 self.print_to_json(news_json)
         # default case
-        else:
+        if not (pdf_path or html_path or do_json):
             for news in daily_news[:self.limit]:
                 entry = self.get_entry_from_dict(news)
                 self.print_entry(entry)
@@ -159,17 +157,16 @@ class Handler:
         }
 
     @logging_decorator
-    def write_entries_to_html(self, path: str, entries=[]) -> None:
+    def write_entries_to_html(self, path: str, entries=()) -> None:
         # in case of reading news from cache list of entries are got as dict
         # and in case of online reading news only the path is passed to the method without list of entries
         if os.path.isdir(path) is False:
             raise RSSReaderException("Error. It isn't a folder")
-        path = os.path.join(path, "RSS_News.html")
 
         if not entries:
             entries = self.entries
 
-        if type(entries[0]) == dict:
+        if isinstance(entries[0], dict):
             entries = [self.get_entry_from_dict(entry) for entry in entries]
 
         _html = html()
@@ -185,7 +182,6 @@ class Handler:
                 text = entry.summary
                 # adding of an image if the entry has image
                 if len(entry.links) > 1:
-                    alt = text[text.find("image 1: ") + len("image 1: "):text.find(']')]
                     while text.count('['):
                         text = text[:text.find('[')] + text[text.find(']') + 1:]
                     if text[0] == ' ':
@@ -197,21 +193,23 @@ class Handler:
                         text = text[:text.find('[')] + text[text.find(']') + 1:]
                     if text[0] == ' ':
                         text = text[1:]
-                _div += p(text.encode("utf-8").decode("utf-8"), br(), br())
-        
-        try:
+
+                import html.parser as html_parser
+                _div += p(html_parser.unescape(text), br(), br())
+
+        if os.path.exists(path):
+            path = os.path.join(path, "RSS_News.html")
             with open(path, 'w', encoding='utf-8') as rss_html:
                 rss_html.write(str(_html))
-        except FileNotFoundError:
+        else:
             raise RSSReaderException('Error. No such folder. Check the correctness of the entered path \n')
 
     @logging_decorator
-    def write_to_pdf(self, path: str, entries=[]) -> None:
+    def write_to_pdf(self, path: str, entries=()) -> None:
         # in case of reading news from cache list of entries are got as dict
         # and in case of online reading news only the path is passed to the method without list of entries
         if os.path.isdir(path) is False:
             raise RSSReaderException("Error. It isn't a folder")
-        path = os.path.join(path, "RSS_News.pdf")
 
         if not entries:
             entries = self.entries
@@ -223,7 +221,7 @@ class Handler:
         pdf.add_page()
 
         # in case of reading news from cache, entries is the list of dicts and they are converted to Entry-object
-        if type(entries[0]) == dict:
+        if isinstance(entries[0], dict):
             entries = [self.get_entry_from_dict(entry) for entry in entries]
         for entry in entries:
             text = entry.summary
@@ -244,7 +242,6 @@ class Handler:
             pdf.write(10, entry.title + '\n\n')
             pdf.set_font_size(14)
             pdf.write(10, f"Feed: {entry.feed}\n")
-            pdf.set_font_size(14)
             pdf.write(10, f"Date: {entry.date}\n")
             if len(entry.links) > 1:
                 try:
@@ -253,8 +250,9 @@ class Handler:
                     pass
             pdf.write(10, "\n")
             pdf.write(10, text + "\n\n\n\n")
-        pdf.output(path, 'F')
-        try:
+
+        if os.path.exists(path):
+            path = os.path.join(path, "RSS_News.pdf")
             pdf.output(path, 'F')
-        except FileNotFoundError:
+        else:
             raise RSSReaderException('Error. No such folder. Check the correctness of the entered path \n')
