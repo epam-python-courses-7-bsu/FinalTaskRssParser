@@ -128,8 +128,9 @@ class Feed:
         return html
 
     def save_feed_to_pdf(self):
-        todays_date = str(datetime.datetime.now())[:-7] + ' '
-        pdf_path = 'pdf_feeds/' + todays_date + ' RSS_feeds.pdf'
+        time_now = str(datetime.datetime.now())
+        time_for_path = time_now[:-16] + '_' + time_now[-15:-13] + '-' + time_now[-12:-10] + '-' + time_now[-9:-7]
+        pdf_path = 'pdf_feeds/' + time_for_path + ' RSS_feeds.pdf'
         pdf = FPDF()
         pdf.add_font('DejaVu', '', 'DejaVuSansCondensed.ttf', uni=True)
         pdf.add_font('DejaVu', 'B', 'DejaVuSansCondensed-Bold.ttf', uni=True)
@@ -141,33 +142,29 @@ class Feed:
         pdf.set_text_color(0,0,0)
         pdf.set_font('DejaVu', '', 14)
         for article_number, article in enumerate(self.articles):
-            pdf.write(5,'\n\n' + str(article_number + 1) + '. ' + article.title)
+            pdf.write(5,'\n\n' + str(article_number + 1) + '. ' + article.title, link=article.link)
         for article_number, article in enumerate(self.articles):
             pdf.add_page()
             pdf.set_font('DejaVu', 'B', 18)
-            pdf.write(5,'\n' + article.title + '\n', link=article.link)
+            pdf.write(5,'\n' + str(article_number + 1) + '. ' + article.title + '\n', link=article.link)
             pdf.set_font('DejaVu', 'I', 18)
             date = article.published
             str_date = f'{date.tm_year}/{date.tm_mon}/{date.tm_mday} {date.tm_hour}:{date.tm_min}'
             pdf.write(5,'\n' + str_date + '\n\n\n')
-            pdf.set_font('Times','',12)
+            pdf.set_font('DejaVu','',12)
             if check.internet_connection_check():
                 for img_number, img in enumerate(article.media):
                     img_url = img['url']
                     if img_url != '':
                         image = r.get(img_url)
-                        img_path = str(img_number+ 1) + '_' + str(article_number) + '_img.' + str(img_url[-3:])
-                        try:   
-                            with open(img_path, 'wb') as file:
-                                file.write(image.content)
+                        img_path = str(article_number + 1) + '_' + str(img_number + 1) + '_img.jpg'
+                        print(img_path)
+                        with open(img_path, 'wb') as file:
+                            file.write(image.content)
+                        try:
                             pdf.image(img_path,w = 50, h = 50)
-                        except RuntimeError:
-                            os.remove(img_path)
-                            img_path = str(img_number+ 1) + '_' + str(article_number) + '_img.jpg'
-                            with open(img_path, 'wb') as file:
-                                file.write(image.content)
-                            pdf.image(img_path,w = 50, h = 50)
-
+                        except (SyntaxError, RuntimeError):
+                            pdf.write(15, img['url'], link=img['url'])
                         os.remove(img_path)
             else:
                 pdf.write(15, "Image links (clickable):\n")
