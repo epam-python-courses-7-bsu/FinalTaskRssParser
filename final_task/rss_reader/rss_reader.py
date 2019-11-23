@@ -72,15 +72,6 @@ def main():
     else:
         # standart value -1, in handler we  will process and get all the value
 
-=======
-
-    if arg.date:
-        news = read_from_file(arg.date)
-        print_array_of_dict(news)
-    else:
-        # standart value -1, in handler we  will process and get all the value
-        lim = -1
-
         if arg.version:
             print("version:  1.0")
             return
@@ -106,8 +97,6 @@ def main():
 if __name__ == "__main__":
     try:
         main()
-    except AttributeError:
-         print("Error no have attribute")
     except AttributeError:
          print("Error no have attribute")
     except RssException as exc:
