@@ -41,10 +41,4 @@ def description(description_element: str) -> str:
 
 def pubdate(pub_date: str) -> str:
     """reformat publication date"""
-    if pubdate:
-        # pub_date = datetime.datetime(*map(int, pub_date.split(' ')[1:5]))
-        # new_pub_date = datetime.datetime.strftime(pub_date, '%Y-%m-%d')
-        return pub_date
     return pub_date
-
-

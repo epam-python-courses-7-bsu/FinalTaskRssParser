@@ -3,7 +3,10 @@ import dominate
 from fpdf import FPDF
 from dominate import document
 from dominate.tags import div, h2, img, p
+import requests as r
 import printers
+import check
+import os
 
 
 def create_html(items: list) -> document:
@@ -39,6 +42,8 @@ def create_pdf(items: list) -> None:
     pdf.write(8, 'RSS feed')
     pdf.ln(20)
     for item in items:
+        b = 0
+        b = b + 1
         item = printers.prepare_one_item(item)
         pdf.write(8, '===Wow! News!===')
         pdf.ln(10)
@@ -46,9 +51,19 @@ def create_pdf(items: list) -> None:
         pdf.ln(10)
         pdf.write(8, 'Link: ' + str(item['Link: ']))
         pdf.ln(15)
-        pdf.write(8, 'Media content: ' + str(item['Media content:\n']))
+        if check.internet_on:
+            img_url = str(item['Media content:\n'])
+            if img_url != '':
+                image = r.get(img_url)
+                img_path = str(b) + '.' + str(img_url[-3:])
+                with open(img_path, 'wb') as file:
+                    file.write(image.content)
+                    pdf.image(img_path, w=70, h=50)
+                os.remove(img_path)
+        else:
+            pdf.write(8, 'Media content: ' + str(item['Media content:\n']))
         pdf.ln(15)
-        pdf.write(8, 'Description: ' + str(item['Description:\n']))
+        pdf.write(8, 'Description: ' + str(item['Description: ']))
         pdf.ln(10)
         pdf.write(8, "===End, news!===")
         pdf.ln(10)
