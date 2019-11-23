@@ -7,7 +7,7 @@ import arguments
 import printers
 import rss_get_items
 import converting
-import json
+
 
 now = datetime.datetime.now()
 
@@ -25,9 +25,8 @@ def print_verbose() -> None:
         print(f.read())
 
 
-def get_txt_date(data, items) -> None:
+def get_txt_date(data) -> None:
     date_id = {}
-    # today = now.strftime("%d/%m/%Y")
     with open('dates.txt', 'r', encoding="utf-8") as f:
         for line in f:
             key, *value = line.split()
@@ -39,14 +38,12 @@ def get_txt_date(data, items) -> None:
             print(f.read())
     else:
         print("There isn't any news from this day")
-    # example format {'22/12/2000': ['45']}
 
 
-def cash_news(items: list):
+def cash_news() -> None:
     log.info('Try to cash news from stdout')
     data_id = {}
     data = now.strftime("%d/%m/%Y")
-    b = None
     with open('dates.txt', 'r', encoding="utf-8") as f:
         for line in f:
             key, *value = line.split()
@@ -56,8 +53,8 @@ def cash_news(items: list):
     with open('dates.txt', 'w', encoding='utf-8') as f:
         remembered_data[data] = len_txt_date
         f.write(str(remembered_data))
-    #with open('{}.txt'.format(remembered_data[data]), 'w', encoding='utf-8') as f:
-
+    # with open('{}.txt'.format(remembered_data[data]),
+    # 'w', encoding='utf-8') as f:
 
 
 if __name__ == '__main__':
@@ -77,7 +74,7 @@ if __name__ == '__main__':
         printers.print_json(items)
     else:
         printers.print_news(items)
-        cash_news(items)
+        #cash_news()
 
     if received_args.verbose:
         log.info('User choose verbose')
@@ -92,4 +89,4 @@ if __name__ == '__main__':
         converting.create_pdf(items)
 
     if date is not None:
-        get_txt_date(date, items)
+        get_txt_date(date)
