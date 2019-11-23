@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-from .links_collection import LinksCollection
+from links_collection import LinksCollection
 
 
 def _handle_image(tag, refs):
