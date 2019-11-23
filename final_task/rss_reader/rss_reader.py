@@ -1,4 +1,5 @@
 import argparse
+import logging
 
 from feed import Feed, URLFormatError, FeedNotFoundError, IncorrectRSSError
 
@@ -20,16 +21,23 @@ if __name__ == '__main__':
     rss_url = args.source
 
     if args.verbose:
-        print("verbosity turned on")
+        log_level = logging.INFO
+    else:
+        log_level = logging.WARNING
 
     limit = args.limit if args.limit is not None else 0
+    logging.basicConfig(format="%(levelname)s:%(message)s", level=log_level)
+
+    logging.info("Program starts")
 
     try:
         feed = Feed(rss_url, limit)
     except (URLFormatError, FeedNotFoundError, IncorrectRSSError) as e:
-        print("Error: " + str(e))
+        logging.error(str(e))
     else:
         if not args.json:
             print(feed.render_text())
         else:
             print(feed.render_json())
+
+    logging.info("Program finishes")

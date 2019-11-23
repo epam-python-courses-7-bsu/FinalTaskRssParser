@@ -1,7 +1,7 @@
 import urllib.parse
 import html
 import json
-
+import logging
 import feedparser
 
 import html_to_text
@@ -23,6 +23,7 @@ class Feed:
 
     def __init__(self, link, limit=0, *, date=None):
         self.link = self._try_fix_url(link)
+        logging.info(f'The link to the rss feed is "{self.link}"')
         self.title = None
         self.items = []
 
@@ -38,17 +39,23 @@ class Feed:
         if "title" not in parsed_rss.feed and "link" not in parsed_rss and len(parsed_rss.entries) < 0:
             raise IncorrectRSSError("URL is not a correct RSS feed")
 
+        logging.info("Feed successfully received")
         self.title = parsed_rss.feed.get("title") or parsed_rss.feed.get("link")
 
         if self.limit < 1 or self.limit > len(parsed_rss.entries):
             limit = len(parsed_rss.entries)
+            logging.info("Parsing items without limit")
         else:
             limit = self.limit
+            logging.info(f"Items limit is {limit}")
         self.items = []
-        for entry in parsed_rss.entries[:limit]:
+        for i, entry in enumerate(parsed_rss.entries[:limit]):
+            logging.info(f"Parsing item {(i+1)}")
             item = self.parse_remote_item(entry)
             if item is not None:
                 self.items.append(item)
+            else:
+                logging.info("Skipping invalid item")
 
     def parse_remote_item(self, entry):
         item = dict()
@@ -70,11 +77,14 @@ class Feed:
             item["description"] = entry.description
             if self._is_html(entry.description_detail.type):
                 item["description_parsed"] = html_to_text.parse(item["description"], skip_link=item.get("link"))
+                logging.info("Item description is html and therefore converted to plain text")
         else:
             item["description"] = None
         return item
 
     def render_text(self):
+        logging.info("Generating plain text representation of feed")
+
         s = []
 
         title = self.title or "no title"
@@ -108,6 +118,7 @@ class Feed:
         return s
 
     def render_json(self):
+        logging.info("Generating json representation of feed")
         feed_dict = {"title": self.title, "items": self.items}
         s = json.dumps(feed_dict, indent="\t")
         return s
