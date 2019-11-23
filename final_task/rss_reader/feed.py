@@ -3,6 +3,8 @@ import html
 
 import feedparser
 
+from . import html_to_text
+
 
 class URLFormatError(ValueError):
     pass
@@ -64,8 +66,12 @@ class Feed:
         if len(entry.enclosures) > 0:
             item["enclosure"] = entry.enclosures[0]
 
-        item["description"] = entry.get("description")
-
+        if "description" in entry:
+            item["description"] = entry.description
+            if self._is_html(entry.description_detail.type):
+                item["description_parsed"] = html_to_text.parse(item["description"], skip_link=item.get("link"))
+        else:
+            item["description"] = None
         return item
 
     @staticmethod
@@ -81,3 +87,7 @@ class Feed:
         else:
             result_url = urllib.parse.urlunsplit(parsed_url)
             return result_url if not result_url.endswith('/') else result_url[:-1]
+
+    @staticmethod
+    def _is_html(element_type):
+        return element_type in ["text/html", "application/xhtml+xml"]
