@@ -2,14 +2,15 @@ import argparse
 import base64
 import html
 import logging
-import re
-import sys
+import os, sys
 
 import feedparser
 import requests
 from bs4 import BeautifulSoup
 from tinydb import TinyDB, where
 
+current_dir = os.path.abspath(os.path.dirname(__file__))
+sys.path.append(current_dir)
 from converters import to_html, to_pdf
 from exceptions_ import FeedError, InvalidArgs, ConvertionError
 from rss_feed import RssFeed
@@ -20,6 +21,7 @@ LOGGER = logging.getLogger('rss_logger')
 
 
 def init_parser():
+    # I really dunno how to test this
     parser = argparse.ArgumentParser(description='RRS feed receiver')
     parser.add_argument('source', help='URL for RSS feed', nargs='?')
     parser.add_argument('--version', help='prints version', action='store_true')
@@ -148,7 +150,7 @@ def get_news_by_date(args):
     else:
         LOGGER.debug('ONLY DATE IS SPECIFIED')
         news_list = database.search((where('date') == args.date))
-
+    database.close()
     if len(news_list) == 0:
         raise FeedError('No news found')
     limit = args.limit

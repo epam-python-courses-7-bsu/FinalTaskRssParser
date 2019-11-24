@@ -12,6 +12,7 @@ from rss_feed import RssFeed
 from exceptions_ import ConvertionError
 from rss_reader import init_feed
 
+
 class TestConverters(unittest.TestCase):
 
     def test_get_image_url(self):
@@ -58,3 +59,5 @@ class TestConverters(unittest.TestCase):
     def test_path_validation(self):
         with self.assertRaises(ConvertionError):
             path_validation('asdasdas', True)
+        with self.assertRaises(ConvertionError):
+            path_validation('asdasdas', False)

@@ -13,3 +13,5 @@ rss_reader.egg-info/
 temp-img-2250147051588681835.jpg
 final_task/tests/xml/no_items_feed.xml
 final_task/tests/xml/no_items_fields.xml
+.coverage
+.coveragerc

@@ -1,5 +1,6 @@
 import html
 import re
+from codecs import encode, decode
 from dataclasses import asdict, dataclass
 
 import jsonpickle
@@ -48,6 +49,8 @@ class RssItem:
         json_string = jsonpickle.encode(self, make_refs=False, unpicklable=False)
         # Regex finds base64 string and replaces it
         json_string = re.sub(r'(\"img\":\ )\"b\'.*?\'', r'\1"base64 image', json_string)
+        # Unescaping
+        json_string = decode(encode(json_string, 'latin-1', 'backslashreplace'), 'unicode-escape')
         print(json_string)
 
     def asdict(self):

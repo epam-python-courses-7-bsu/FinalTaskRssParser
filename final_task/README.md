@@ -36,7 +36,9 @@ If there are no news found while using both `--date` and `--to_pdf` or `--to_htm
 4. Go to `FinalTaskRssParser-master/final_task`
 5. In terminal execute:
     
-        python setup.py install
+        python setup.py sdist
+6. Go to `/dist` directory
+7. Execute `pip install rss_reader-1.4.tar.gz`
 
 Done!
 To see help use

@@ -2,6 +2,7 @@ import json
 import logging
 import re
 import sys
+from codecs import encode, decode
 
 import jsonpickle
 import requests
@@ -49,6 +50,8 @@ class RssFeed:
         json_string = jsonpickle.encode(self, make_refs=False, unpicklable=False)
         # Regex finds base64 string and replaces it for shorter output
         json_string = re.sub(r'(\"img\":\ )\"b\'.*?\'', r'\1"base64 image', json_string)
+        # Unescaping
+        json_string = decode(encode(json_string, 'latin-1', 'backslashreplace'), 'unicode-escape')
         LOGGER.debug('PRINTING JSON')
         print(json_string)
 
@@ -66,6 +69,7 @@ class RssFeed:
             if not database.contains(current_news.link == news_item.link):
                 database.insert(news_item.__dict__)
         LOGGER.debug('DONE!')
+        database.close()
 
     def get_news_as_dicts(self, limit):
         news_list_dicts = []

@@ -1,9 +1,10 @@
-from setuptools import setup, find_namespace_packages
+from setuptools import setup, find_packages
 
 try:
     from pip._internal.req import parse_requirements
 except ImportError:
     from pip.req import parse_requirements
+
 
 setup(
    name='rss_reader',
@@ -11,14 +12,8 @@ setup(
    description='RSS reader',
    author='Roman Shagun',
    author_email='rshag17@gmail.com',
-   package_dir={'rss_reader': 'rss_reader'},
-   packages=find_namespace_packages(),
-   scripts=[
-       'rss_reader/rss_feed.py',
-       'rss_reader/rss_item.py',
-       'rss_reader/exceptions_.py',
-       'rss_reader/converters.py'
-       ],
+   packages=find_packages(),
+   data_files=[('rss_reader', ['rss_reader/Arial-Unicode-Regular.ttf'])],
    entry_points={
         'console_scripts': ['rss-reader=rss_reader.rss_reader:main'],
    },
@@ -33,5 +28,6 @@ setup(
        'fpdf==1.7.2'],
    license="none",
    platforms="Linux, Windows (not tested)",
-   long_description="Yet another RSS reader"
+   long_description="Yet another RSS reader",
+   include_package_data=True
 )

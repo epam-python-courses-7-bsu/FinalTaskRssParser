@@ -1,39 +1,37 @@
+from pkg_resources import resource_filename
 import datetime
 import logging
 import os
+import warnings
 
 import requests
 from dominate import document
-from dominate.tags import *
+from dominate.tags import h1, h3, h5, p, a, div, img
 from fpdf import FPDF
 
 from exceptions_ import ConvertionError
 
+FONT_BLACK = resource_filename(__name__, 'Arial-Unicode-Regular.ttf')
 LOGGER = logging.getLogger('rss_logger')
 
 
 def path_validation(path, mode):
     '''
     Raises an exception if the path is not valid
-    Otherwise returns path
+    Otherwise returns correct path with filename
 
     Mode is boolean to determine file extention
     True - .html
     False - .pdf
     '''
     get_extention = (lambda mode: '.html' if mode else '.pdf')
-    LOGGER.debug('CHECKING PATH')
-    if path.endswith('/'):
-        path += 'feed-' + str(datetime.datetime.now()) + get_extention(mode)
-    else:
-        path += '/feed-' + str(datetime.datetime.now()) + get_extention(mode)
-    try:
-        LOGGER.debug('TRYING TO CREATE FILE...')
-        export_file = open(path, 'w', encoding='utf-8')
-        export_file.close()
+    path = os.path.abspath(path)
+    LOGGER.debug('CHECKING PATH...')
+    if os.path.exists(path):
         LOGGER.debug('PATH IS OK')
+        path += '/feed-' + str(datetime.datetime.now()) + get_extention(mode)
         return path
-    except FileNotFoundError as exc:
+    else:
         raise ConvertionError('Wrong path')
 
 
@@ -60,7 +58,10 @@ def get_html_doc(news_list):
                     img(src='data:image/png;base64, ' + str(news_item['img'])[2:-1])
                 LOGGER.debug('DONE')
                 h5('DESCRIPTION: ')
-                p(news_item['description'])
+                if not news_item['description']:
+                    p('NO DESCRIPTION')
+                else:
+                    p(news_item['description'])
                 p(news_item['published'])
                 p('SOURCE: ' + news_item['source'])
                 a('LINK', href=news_item['link'])
@@ -105,27 +106,27 @@ def get_pdf_doc(news_list):
     LOGGER.debug('CONVERTING TO PDF')
     pdf = FPDF(format='A4')
     LOGGER.debug('SETIING FONTS')
-    pdf.add_font("NotoSans", style="", fname="NotoSans-Black.ttf", uni=True)
-    pdf.add_font("NotoSans", style='B', fname="NotoSans-Bold.ttf", uni=True)
-    pdf.set_font("NotoSans", 'B', size=24)
+    pdf.add_font("ArialUni", style="", fname=FONT_BLACK, uni=True)
+    pdf.add_font("ArialUni", style='B', fname=FONT_BLACK, uni=True)
+    pdf.set_font("ArialUni", 'B', size=24)
     pdf.add_page()
     pdf.set_xy(0, 0)
     pdf.cell(50, 30, txt='News Feed:', ln=1, align='L')
     for news_item in news_list:
-        pdf.set_font("NotoSans", '', size=12)
+        pdf.set_font("ArialUni", '', size=12)
         pdf.set_x(4)
         pdf.cell(20, 6, 'Title:', ln=1)
-        pdf.set_font("NotoSans", '', size=12)
+        pdf.set_font("ArialUni", '', size=12)
         pdf.set_x(20)
         pdf.multi_cell(150, 5, news_item['title'])
         pdf.set_x(4)
-        pdf.set_font("NotoSans", '', size=12)
+        pdf.set_font("ArialUni", '', size=12)
         pdf.cell(20, 6, 'Image:', ln=1)
         # Image adding
         LOGGER.debug('IMAGE ADDING')
         if news_item['img'] is None:
             LOGGER.debug('IMAGE IS NONE')
-            pdf.set_font("NotoSans", '', size=12)
+            pdf.set_font("ArialUni", '', size=12)
             pdf.set_x(20)
             pdf.cell(20, 6, 'No image', ln=1)
             pdf.set_x(4)
@@ -147,7 +148,7 @@ def get_pdf_doc(news_list):
         pdf.set_x(4)
         pdf.cell(20, 6, 'Description:', ln=1)
         pdf.set_x(20)
-        if len(news_item['description']) == 0:
+        if not news_item['description']:
             pdf.multi_cell(150, 5, news_item['title'])
         else:
             pdf.multi_cell(150, 5, news_item['description'])
@@ -166,5 +167,13 @@ def to_pdf(path, news_list):
         raise exc
     pdf = get_pdf_doc(news_list)
     LOGGER.debug('SAVING .pdf')
-    pdf.output(path)
+    print(path)
+    try:
+        with warnings.catch_warnings():
+            warnings.simplefilter('ignore')
+            pdf.output(path)
+    except OSError as exc:
+        raise ConvertionError('Wrong path')
+    except Exception:
+        raise ConvertionError('News contain unsupported characters. Stop exporting')
     LOGGER.debug('DONE!')
