@@ -4,10 +4,11 @@ from fpdf import FPDF
 from dominate import document
 from dominate.tags import div, h2, img, p
 import requests as r
-import printers
 import check
 import os
 import random
+
+import printers
 
 
 def create_html(items: list) -> document:
@@ -50,10 +51,11 @@ def create_pdf(items: list) -> None:
         pdf.ln(10)
         pdf.write(8, "Link: " + str(item['Link: ']))
         pdf.ln(15)
-        pdf.write(8, "Date: " + str(item['']))
+        pdf.write(8, "Date: " + str(item["Date:"]))
+        pdf.ln(10)
         img_url = str(item['Media content:\n'])
         url_list = img_url.split("\n")
-                if check.internet_on and img_url != '':
+        if check.internet_on and img_url != '':
             for element in url_list:
                 if element.endswith(".png") or element.endswith(".jpg"):
                     image = r.get(element)
@@ -90,4 +92,5 @@ def create_pdf(items: list) -> None:
         pdf.ln(10)
         pdf.write(8, "===End, news!===")
         pdf.ln(10)
-    pdf.output("news.pdf", "F")
+    foo = str(item["Date:"]) + "_" + str(random.randint(1, 128)) + '.pdf'
+    pdf.output(foo, "F")

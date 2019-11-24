@@ -791,3 +791,360 @@ DEBUG    [2019-11-24 21:51:55,458] Starting new HTTPS connection (1): img.tyt.by
 DEBUG    [2019-11-24 21:51:55,501] https://img.tyt.by:443 "GET /n/politika/04/d/snimok_ekrana_2019-11-24_v_20.39.31.png HTTP/1.1" 200 76779
 DEBUG    [2019-11-24 21:51:55,854] Starting new HTTPS connection (1): img.tyt.by:443
 DEBUG    [2019-11-24 21:51:55,882] https://img.tyt.by:443 "GET /n/politika/02/d/snimok_ekrana_2019-11-24_v_20.39.43.png HTTP/1.1" 200 65811
+INFO     [2019-11-24 22:06:53,895] Start script
+INFO     [2019-11-24 22:06:53,896] Start get items from url
+DEBUG    [2019-11-24 22:06:54,581] IBM855 confidence = 0.03485988896076786, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 22:06:54,609] ISO-8859-7 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 22:06:54,637] windows-1253 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 22:06:54,702] windows-1251 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 22:06:54,871] windows-1255 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 22:06:54,897] windows-1255 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 22:06:54,992] utf-8  confidence = 0.99
+DEBUG    [2019-11-24 22:06:54,992] SHIFT_JIS Japanese confidence = 0.01
+DEBUG    [2019-11-24 22:06:54,992] EUC-JP Japanese confidence = 0.01
+DEBUG    [2019-11-24 22:06:54,992] GB2312 Chinese confidence = 0.01
+DEBUG    [2019-11-24 22:06:54,992] EUC-KR Korean confidence = 0.01
+DEBUG    [2019-11-24 22:06:54,992] CP949 Korean confidence = 0.01
+DEBUG    [2019-11-24 22:06:54,992] Big5 Chinese confidence = 0.01
+DEBUG    [2019-11-24 22:06:54,992] EUC-TW Taiwan confidence = 0.01
+DEBUG    [2019-11-24 22:06:54,992] windows-1251 Russian confidence = 0.01
+DEBUG    [2019-11-24 22:06:54,992] KOI8-R Russian confidence = 0.01
+DEBUG    [2019-11-24 22:06:54,992] ISO-8859-5 Russian confidence = 0.0802824290268472
+DEBUG    [2019-11-24 22:06:54,992] MacCyrillic Russian confidence = 0.0
+DEBUG    [2019-11-24 22:06:54,992] IBM866 Russian confidence = 0.0
+DEBUG    [2019-11-24 22:06:54,992] IBM855 not active
+DEBUG    [2019-11-24 22:06:54,992] ISO-8859-7 not active
+DEBUG    [2019-11-24 22:06:54,992] windows-1253 not active
+DEBUG    [2019-11-24 22:06:54,993] ISO-8859-5 Bulgairan confidence = 0.11550586823766912
+DEBUG    [2019-11-24 22:06:54,993] windows-1251 not active
+DEBUG    [2019-11-24 22:06:54,993] TIS-620 Thai confidence = 0.18229596210880317
+DEBUG    [2019-11-24 22:06:54,993] ISO-8859-9 Turkish confidence = 0.3972519079234812
+DEBUG    [2019-11-24 22:06:54,993] windows-1255 Hebrew confidence = 0.0
+DEBUG    [2019-11-24 22:06:54,993] windows-1255 not active
+DEBUG    [2019-11-24 22:06:54,993] windows-1255 not active
+DEBUG    [2019-11-24 22:06:54,993] utf-8  confidence = 0.99
+DEBUG    [2019-11-24 22:06:54,993] SHIFT_JIS Japanese confidence = 0.01
+DEBUG    [2019-11-24 22:06:54,993] EUC-JP Japanese confidence = 0.01
+DEBUG    [2019-11-24 22:06:54,993] GB2312 Chinese confidence = 0.01
+DEBUG    [2019-11-24 22:06:54,993] EUC-KR Korean confidence = 0.01
+DEBUG    [2019-11-24 22:06:54,993] CP949 Korean confidence = 0.01
+DEBUG    [2019-11-24 22:06:54,993] Big5 Chinese confidence = 0.01
+DEBUG    [2019-11-24 22:06:54,993] EUC-TW Taiwan confidence = 0.01
+INFO     [2019-11-24 22:06:55,046] Connect to website is fine
+INFO     [2019-11-24 22:06:55,052] Successful parsing
+INFO     [2019-11-24 22:06:55,054] User choose some limits
+INFO     [2019-11-24 22:06:55,054] Start print news
+INFO     [2019-11-24 22:06:55,054] Try to delete all html in description
+INFO     [2019-11-24 22:06:55,055] Try to delete all html in description
+INFO     [2019-11-24 22:06:55,055] Try to delete all html in description
+INFO     [2019-11-24 22:06:55,055] End print news
+INFO     [2019-11-24 22:06:55,056] User choose pdf
+INFO     [2019-11-24 22:06:55,057] Try to delete all html in description
+INFO     [2019-11-24 22:07:16,733] Start script
+INFO     [2019-11-24 22:07:16,735] Start get items from url
+DEBUG    [2019-11-24 22:07:17,541] IBM855 confidence = 0.035054702941797425, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 22:07:17,569] ISO-8859-7 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 22:07:17,596] windows-1253 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 22:07:17,661] windows-1251 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 22:07:17,827] windows-1255 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 22:07:17,853] windows-1255 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 22:07:17,948] utf-8  confidence = 0.99
+DEBUG    [2019-11-24 22:07:17,948] SHIFT_JIS Japanese confidence = 0.01
+DEBUG    [2019-11-24 22:07:17,948] EUC-JP Japanese confidence = 0.01
+DEBUG    [2019-11-24 22:07:17,948] GB2312 Chinese confidence = 0.01
+DEBUG    [2019-11-24 22:07:17,948] EUC-KR Korean confidence = 0.01
+DEBUG    [2019-11-24 22:07:17,948] CP949 Korean confidence = 0.01
+DEBUG    [2019-11-24 22:07:17,948] Big5 Chinese confidence = 0.01
+DEBUG    [2019-11-24 22:07:17,949] EUC-TW Taiwan confidence = 0.01
+DEBUG    [2019-11-24 22:07:17,949] windows-1251 Russian confidence = 0.01
+DEBUG    [2019-11-24 22:07:17,949] KOI8-R Russian confidence = 0.01
+DEBUG    [2019-11-24 22:07:17,949] ISO-8859-5 Russian confidence = 0.08029780268640313
+DEBUG    [2019-11-24 22:07:17,949] MacCyrillic Russian confidence = 0.0
+DEBUG    [2019-11-24 22:07:17,949] IBM866 Russian confidence = 0.0
+DEBUG    [2019-11-24 22:07:17,949] IBM855 not active
+DEBUG    [2019-11-24 22:07:17,949] ISO-8859-7 not active
+DEBUG    [2019-11-24 22:07:17,949] windows-1253 not active
+DEBUG    [2019-11-24 22:07:17,949] ISO-8859-5 Bulgairan confidence = 0.11556088702547702
+DEBUG    [2019-11-24 22:07:17,949] windows-1251 not active
+DEBUG    [2019-11-24 22:07:17,949] TIS-620 Thai confidence = 0.18228379532476804
+DEBUG    [2019-11-24 22:07:17,949] ISO-8859-9 Turkish confidence = 0.3972593949784851
+DEBUG    [2019-11-24 22:07:17,949] windows-1255 Hebrew confidence = 0.0
+DEBUG    [2019-11-24 22:07:17,949] windows-1255 not active
+DEBUG    [2019-11-24 22:07:17,949] windows-1255 not active
+DEBUG    [2019-11-24 22:07:17,949] utf-8  confidence = 0.99
+DEBUG    [2019-11-24 22:07:17,949] SHIFT_JIS Japanese confidence = 0.01
+DEBUG    [2019-11-24 22:07:17,949] EUC-JP Japanese confidence = 0.01
+DEBUG    [2019-11-24 22:07:17,949] GB2312 Chinese confidence = 0.01
+DEBUG    [2019-11-24 22:07:17,949] EUC-KR Korean confidence = 0.01
+DEBUG    [2019-11-24 22:07:17,950] CP949 Korean confidence = 0.01
+DEBUG    [2019-11-24 22:07:17,950] Big5 Chinese confidence = 0.01
+DEBUG    [2019-11-24 22:07:17,950] EUC-TW Taiwan confidence = 0.01
+INFO     [2019-11-24 22:07:17,999] Connect to website is fine
+INFO     [2019-11-24 22:07:18,005] Successful parsing
+INFO     [2019-11-24 22:07:18,007] User choose some limits
+INFO     [2019-11-24 22:07:18,007] Start print news
+INFO     [2019-11-24 22:07:18,008] Try to delete all html in description
+INFO     [2019-11-24 22:07:18,008] Try to delete all html in description
+INFO     [2019-11-24 22:07:18,008] Try to delete all html in description
+INFO     [2019-11-24 22:07:18,008] End print news
+INFO     [2019-11-24 22:07:18,009] User choose pdf
+INFO     [2019-11-24 22:07:18,010] Try to delete all html in description
+INFO     [2019-11-24 22:07:38,386] Start script
+INFO     [2019-11-24 22:07:38,387] Start get items from url
+DEBUG    [2019-11-24 22:07:38,975] IBM855 confidence = 0.03485988896076786, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 22:07:39,003] ISO-8859-7 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 22:07:39,030] windows-1253 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 22:07:39,094] windows-1251 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 22:07:39,263] windows-1255 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 22:07:39,290] windows-1255 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 22:07:39,386] utf-8  confidence = 0.99
+DEBUG    [2019-11-24 22:07:39,386] SHIFT_JIS Japanese confidence = 0.01
+DEBUG    [2019-11-24 22:07:39,386] EUC-JP Japanese confidence = 0.01
+DEBUG    [2019-11-24 22:07:39,386] GB2312 Chinese confidence = 0.01
+DEBUG    [2019-11-24 22:07:39,386] EUC-KR Korean confidence = 0.01
+DEBUG    [2019-11-24 22:07:39,386] CP949 Korean confidence = 0.01
+DEBUG    [2019-11-24 22:07:39,386] Big5 Chinese confidence = 0.01
+DEBUG    [2019-11-24 22:07:39,386] EUC-TW Taiwan confidence = 0.01
+DEBUG    [2019-11-24 22:07:39,386] windows-1251 Russian confidence = 0.01
+DEBUG    [2019-11-24 22:07:39,386] KOI8-R Russian confidence = 0.01
+DEBUG    [2019-11-24 22:07:39,386] ISO-8859-5 Russian confidence = 0.0802824290268472
+DEBUG    [2019-11-24 22:07:39,386] MacCyrillic Russian confidence = 0.0
+DEBUG    [2019-11-24 22:07:39,386] IBM866 Russian confidence = 0.0
+DEBUG    [2019-11-24 22:07:39,386] IBM855 not active
+DEBUG    [2019-11-24 22:07:39,386] ISO-8859-7 not active
+DEBUG    [2019-11-24 22:07:39,387] windows-1253 not active
+DEBUG    [2019-11-24 22:07:39,387] ISO-8859-5 Bulgairan confidence = 0.11550586823766912
+DEBUG    [2019-11-24 22:07:39,387] windows-1251 not active
+DEBUG    [2019-11-24 22:07:39,387] TIS-620 Thai confidence = 0.18229596210880317
+DEBUG    [2019-11-24 22:07:39,387] ISO-8859-9 Turkish confidence = 0.3972519079234812
+DEBUG    [2019-11-24 22:07:39,387] windows-1255 Hebrew confidence = 0.0
+DEBUG    [2019-11-24 22:07:39,387] windows-1255 not active
+DEBUG    [2019-11-24 22:07:39,387] windows-1255 not active
+DEBUG    [2019-11-24 22:07:39,387] utf-8  confidence = 0.99
+DEBUG    [2019-11-24 22:07:39,387] SHIFT_JIS Japanese confidence = 0.01
+DEBUG    [2019-11-24 22:07:39,387] EUC-JP Japanese confidence = 0.01
+DEBUG    [2019-11-24 22:07:39,387] GB2312 Chinese confidence = 0.01
+DEBUG    [2019-11-24 22:07:39,387] EUC-KR Korean confidence = 0.01
+DEBUG    [2019-11-24 22:07:39,387] CP949 Korean confidence = 0.01
+DEBUG    [2019-11-24 22:07:39,387] Big5 Chinese confidence = 0.01
+DEBUG    [2019-11-24 22:07:39,387] EUC-TW Taiwan confidence = 0.01
+INFO     [2019-11-24 22:07:39,438] Connect to website is fine
+INFO     [2019-11-24 22:07:39,444] Successful parsing
+INFO     [2019-11-24 22:07:39,446] User choose some limits
+INFO     [2019-11-24 22:07:39,446] Start print news
+INFO     [2019-11-24 22:07:39,446] Try to delete all html in description
+INFO     [2019-11-24 22:07:39,447] Try to delete all html in description
+INFO     [2019-11-24 22:07:39,447] Try to delete all html in description
+INFO     [2019-11-24 22:07:39,447] End print news
+INFO     [2019-11-24 22:07:39,448] User choose pdf
+INFO     [2019-11-24 22:07:39,450] Try to delete all html in description
+INFO     [2019-11-24 22:09:16,599] Start script
+INFO     [2019-11-24 22:09:16,600] Start get items from url
+DEBUG    [2019-11-24 22:09:17,393] IBM855 confidence = 0.035054702941797425, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 22:09:17,422] ISO-8859-7 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 22:09:17,450] windows-1253 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 22:09:17,515] windows-1251 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 22:09:17,681] windows-1255 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 22:09:17,708] windows-1255 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 22:09:17,806] utf-8  confidence = 0.99
+DEBUG    [2019-11-24 22:09:17,806] SHIFT_JIS Japanese confidence = 0.01
+DEBUG    [2019-11-24 22:09:17,806] EUC-JP Japanese confidence = 0.01
+DEBUG    [2019-11-24 22:09:17,806] GB2312 Chinese confidence = 0.01
+DEBUG    [2019-11-24 22:09:17,806] EUC-KR Korean confidence = 0.01
+DEBUG    [2019-11-24 22:09:17,806] CP949 Korean confidence = 0.01
+DEBUG    [2019-11-24 22:09:17,806] Big5 Chinese confidence = 0.01
+DEBUG    [2019-11-24 22:09:17,806] EUC-TW Taiwan confidence = 0.01
+DEBUG    [2019-11-24 22:09:17,807] windows-1251 Russian confidence = 0.01
+DEBUG    [2019-11-24 22:09:17,807] KOI8-R Russian confidence = 0.01
+DEBUG    [2019-11-24 22:09:17,807] ISO-8859-5 Russian confidence = 0.08029780268640313
+DEBUG    [2019-11-24 22:09:17,807] MacCyrillic Russian confidence = 0.0
+DEBUG    [2019-11-24 22:09:17,807] IBM866 Russian confidence = 0.0
+DEBUG    [2019-11-24 22:09:17,807] IBM855 not active
+DEBUG    [2019-11-24 22:09:17,807] ISO-8859-7 not active
+DEBUG    [2019-11-24 22:09:17,807] windows-1253 not active
+DEBUG    [2019-11-24 22:09:17,807] ISO-8859-5 Bulgairan confidence = 0.11556088702547702
+DEBUG    [2019-11-24 22:09:17,807] windows-1251 not active
+DEBUG    [2019-11-24 22:09:17,807] TIS-620 Thai confidence = 0.18228379532476804
+DEBUG    [2019-11-24 22:09:17,807] ISO-8859-9 Turkish confidence = 0.3972593949784851
+DEBUG    [2019-11-24 22:09:17,807] windows-1255 Hebrew confidence = 0.0
+DEBUG    [2019-11-24 22:09:17,807] windows-1255 not active
+DEBUG    [2019-11-24 22:09:17,807] windows-1255 not active
+DEBUG    [2019-11-24 22:09:17,807] utf-8  confidence = 0.99
+DEBUG    [2019-11-24 22:09:17,807] SHIFT_JIS Japanese confidence = 0.01
+DEBUG    [2019-11-24 22:09:17,807] EUC-JP Japanese confidence = 0.01
+DEBUG    [2019-11-24 22:09:17,807] GB2312 Chinese confidence = 0.01
+DEBUG    [2019-11-24 22:09:17,807] EUC-KR Korean confidence = 0.01
+DEBUG    [2019-11-24 22:09:17,807] CP949 Korean confidence = 0.01
+DEBUG    [2019-11-24 22:09:17,807] Big5 Chinese confidence = 0.01
+DEBUG    [2019-11-24 22:09:17,808] EUC-TW Taiwan confidence = 0.01
+INFO     [2019-11-24 22:09:17,858] Connect to website is fine
+INFO     [2019-11-24 22:09:17,864] Successful parsing
+INFO     [2019-11-24 22:09:17,866] User choose some limits
+INFO     [2019-11-24 22:09:17,866] Start print news
+INFO     [2019-11-24 22:09:17,866] Try to delete all html in description
+INFO     [2019-11-24 22:09:17,867] Try to delete all html in description
+INFO     [2019-11-24 22:09:17,867] Try to delete all html in description
+INFO     [2019-11-24 22:09:17,867] End print news
+INFO     [2019-11-24 22:09:17,868] User choose pdf
+INFO     [2019-11-24 22:09:17,869] Try to delete all html in description
+DEBUG    [2019-11-24 22:09:17,872] Starting new HTTPS connection (1): img.tyt.by:443
+DEBUG    [2019-11-24 22:09:22,928] https://img.tyt.by:443 "GET /n/buryakina/05/2/dinamo_brest_chempionstvo_20191117_bur_tutby_phsl-6049.jpg HTTP/1.1" 200 881638
+INFO     [2019-11-24 22:09:23,193] Try to delete all html in description
+DEBUG    [2019-11-24 22:09:23,203] Starting new HTTPS connection (1): img.tyt.by:443
+DEBUG    [2019-11-24 22:09:23,253] https://img.tyt.by:443 "GET /n/zamirovskiy/02/f/09_ermoshina_18112019_zam_tutby_phsl.jpg HTTP/1.1" 200 555781
+DEBUG    [2019-11-24 22:09:23,413] Starting new HTTPS connection (1): img.tyt.by:443
+DEBUG    [2019-11-24 22:09:23,469] https://img.tyt.by:443 "GET /n/shukaylo/01/c/reportazh_vybory_17112019_shuk_tutby_phsl_5468.jpg HTTP/1.1" 200 411973
+DEBUG    [2019-11-24 22:09:23,630] Starting new HTTPS connection (1): img.tyt.by:443
+DEBUG    [2019-11-24 22:09:23,676] https://img.tyt.by:443 "GET /n/buryakina/0a/9/reportazh_vybory_20191117_bur_tutby_phsl-5027.jpg HTTP/1.1" 200 442563
+INFO     [2019-11-24 22:09:23,777] Try to delete all html in description
+DEBUG    [2019-11-24 22:09:23,787] Starting new HTTPS connection (1): img.tyt.by:443
+DEBUG    [2019-11-24 22:09:23,840] https://img.tyt.by:443 "GET /n/lady.tut.by/0b/c/razvod_semya_rasstavanie_3_.jpg HTTP/1.1" 200 388598
+DEBUG    [2019-11-24 22:09:23,922] Starting new HTTPS connection (1): img.tyt.by:443
+DEBUG    [2019-11-24 22:09:23,972] https://img.tyt.by:443 "GET /n/buryakina/0b/0/zaglushki_finansy_20171018_bur_tutby_phsl_-6919.jpg HTTP/1.1" 200 121061
+INFO     [2019-11-24 23:07:23,000] Start script
+INFO     [2019-11-24 23:07:23,001] Start get items from url
+DEBUG    [2019-11-24 23:07:23,455] IBM855 confidence = 0.03611406726575886, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 23:07:23,483] ISO-8859-7 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 23:07:23,510] windows-1253 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 23:07:23,574] windows-1251 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 23:07:23,737] windows-1255 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 23:07:23,762] windows-1255 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 23:07:23,855] utf-8  confidence = 0.99
+DEBUG    [2019-11-24 23:07:23,855] SHIFT_JIS Japanese confidence = 0.01
+DEBUG    [2019-11-24 23:07:23,855] EUC-JP Japanese confidence = 0.01
+DEBUG    [2019-11-24 23:07:23,855] GB2312 Chinese confidence = 0.01
+DEBUG    [2019-11-24 23:07:23,855] EUC-KR Korean confidence = 0.01
+DEBUG    [2019-11-24 23:07:23,855] CP949 Korean confidence = 0.01
+DEBUG    [2019-11-24 23:07:23,855] Big5 Chinese confidence = 0.01
+DEBUG    [2019-11-24 23:07:23,855] EUC-TW Taiwan confidence = 0.01
+DEBUG    [2019-11-24 23:07:23,855] windows-1251 Russian confidence = 0.01
+DEBUG    [2019-11-24 23:07:23,855] KOI8-R Russian confidence = 0.01
+DEBUG    [2019-11-24 23:07:23,855] ISO-8859-5 Russian confidence = 0.08139367733994451
+DEBUG    [2019-11-24 23:07:23,855] MacCyrillic Russian confidence = 0.0
+DEBUG    [2019-11-24 23:07:23,855] IBM866 Russian confidence = 0.0
+DEBUG    [2019-11-24 23:07:23,855] IBM855 not active
+DEBUG    [2019-11-24 23:07:23,855] ISO-8859-7 not active
+DEBUG    [2019-11-24 23:07:23,855] windows-1253 not active
+DEBUG    [2019-11-24 23:07:23,856] ISO-8859-5 Bulgairan confidence = 0.11671369702480443
+DEBUG    [2019-11-24 23:07:23,856] windows-1251 not active
+DEBUG    [2019-11-24 23:07:23,856] TIS-620 Thai confidence = 0.1827593957200274
+DEBUG    [2019-11-24 23:07:23,856] ISO-8859-9 Turkish confidence = 0.39609561480544636
+DEBUG    [2019-11-24 23:07:23,856] windows-1255 Hebrew confidence = 0.0
+DEBUG    [2019-11-24 23:07:23,856] windows-1255 not active
+DEBUG    [2019-11-24 23:07:23,856] windows-1255 not active
+DEBUG    [2019-11-24 23:07:23,856] utf-8  confidence = 0.99
+DEBUG    [2019-11-24 23:07:23,856] SHIFT_JIS Japanese confidence = 0.01
+DEBUG    [2019-11-24 23:07:23,856] EUC-JP Japanese confidence = 0.01
+DEBUG    [2019-11-24 23:07:23,856] GB2312 Chinese confidence = 0.01
+DEBUG    [2019-11-24 23:07:23,856] EUC-KR Korean confidence = 0.01
+DEBUG    [2019-11-24 23:07:23,856] CP949 Korean confidence = 0.01
+DEBUG    [2019-11-24 23:07:23,856] Big5 Chinese confidence = 0.01
+DEBUG    [2019-11-24 23:07:23,856] EUC-TW Taiwan confidence = 0.01
+INFO     [2019-11-24 23:07:23,905] Connect to website is fine
+INFO     [2019-11-24 23:07:23,911] Successful parsing
+INFO     [2019-11-24 23:07:23,913] User choose some limits
+INFO     [2019-11-24 23:07:23,913] Start print news
+INFO     [2019-11-24 23:07:23,914] Try to delete all html in description
+INFO     [2019-11-24 23:07:23,914] End print news
+INFO     [2019-11-24 23:07:23,915] User choose pdf
+INFO     [2019-11-24 23:07:23,916] Try to delete all html in description
+DEBUG    [2019-11-24 23:07:23,919] Starting new HTTPS connection (1): img.tyt.by:443
+DEBUG    [2019-11-24 23:07:23,954] https://img.tyt.by:443 "GET /n/0b/1/k-pop_gu_khara_1.jpg HTTP/1.1" 200 76095
+INFO     [2019-11-24 23:07:41,821] Start script
+INFO     [2019-11-24 23:07:41,822] Start get items from url
+DEBUG    [2019-11-24 23:07:42,330] IBM855 confidence = 0.03611406726575886, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 23:07:42,357] ISO-8859-7 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 23:07:42,384] windows-1253 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 23:07:42,447] windows-1251 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 23:07:42,610] windows-1255 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 23:07:42,637] windows-1255 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 23:07:42,731] utf-8  confidence = 0.99
+DEBUG    [2019-11-24 23:07:42,731] SHIFT_JIS Japanese confidence = 0.01
+DEBUG    [2019-11-24 23:07:42,731] EUC-JP Japanese confidence = 0.01
+DEBUG    [2019-11-24 23:07:42,731] GB2312 Chinese confidence = 0.01
+DEBUG    [2019-11-24 23:07:42,731] EUC-KR Korean confidence = 0.01
+DEBUG    [2019-11-24 23:07:42,731] CP949 Korean confidence = 0.01
+DEBUG    [2019-11-24 23:07:42,731] Big5 Chinese confidence = 0.01
+DEBUG    [2019-11-24 23:07:42,731] EUC-TW Taiwan confidence = 0.01
+DEBUG    [2019-11-24 23:07:42,731] windows-1251 Russian confidence = 0.01
+DEBUG    [2019-11-24 23:07:42,731] KOI8-R Russian confidence = 0.01
+DEBUG    [2019-11-24 23:07:42,731] ISO-8859-5 Russian confidence = 0.08139367733994451
+DEBUG    [2019-11-24 23:07:42,731] MacCyrillic Russian confidence = 0.0
+DEBUG    [2019-11-24 23:07:42,731] IBM866 Russian confidence = 0.0
+DEBUG    [2019-11-24 23:07:42,731] IBM855 not active
+DEBUG    [2019-11-24 23:07:42,731] ISO-8859-7 not active
+DEBUG    [2019-11-24 23:07:42,731] windows-1253 not active
+DEBUG    [2019-11-24 23:07:42,732] ISO-8859-5 Bulgairan confidence = 0.11671369702480443
+DEBUG    [2019-11-24 23:07:42,732] windows-1251 not active
+DEBUG    [2019-11-24 23:07:42,732] TIS-620 Thai confidence = 0.1827593957200274
+DEBUG    [2019-11-24 23:07:42,732] ISO-8859-9 Turkish confidence = 0.39609561480544636
+DEBUG    [2019-11-24 23:07:42,732] windows-1255 Hebrew confidence = 0.0
+DEBUG    [2019-11-24 23:07:42,732] windows-1255 not active
+DEBUG    [2019-11-24 23:07:42,732] windows-1255 not active
+DEBUG    [2019-11-24 23:07:42,732] utf-8  confidence = 0.99
+DEBUG    [2019-11-24 23:07:42,732] SHIFT_JIS Japanese confidence = 0.01
+DEBUG    [2019-11-24 23:07:42,732] EUC-JP Japanese confidence = 0.01
+DEBUG    [2019-11-24 23:07:42,732] GB2312 Chinese confidence = 0.01
+DEBUG    [2019-11-24 23:07:42,732] EUC-KR Korean confidence = 0.01
+DEBUG    [2019-11-24 23:07:42,732] CP949 Korean confidence = 0.01
+DEBUG    [2019-11-24 23:07:42,732] Big5 Chinese confidence = 0.01
+DEBUG    [2019-11-24 23:07:42,732] EUC-TW Taiwan confidence = 0.01
+INFO     [2019-11-24 23:07:42,780] Connect to website is fine
+INFO     [2019-11-24 23:07:42,786] Successful parsing
+INFO     [2019-11-24 23:07:42,788] User choose some limits
+INFO     [2019-11-24 23:07:42,788] Start print news
+INFO     [2019-11-24 23:07:42,789] Try to delete all html in description
+INFO     [2019-11-24 23:07:42,789] End print news
+INFO     [2019-11-24 23:07:42,790] User choose pdf
+INFO     [2019-11-24 23:07:42,791] Try to delete all html in description
+DEBUG    [2019-11-24 23:07:42,794] Starting new HTTPS connection (1): img.tyt.by:443
+DEBUG    [2019-11-24 23:07:43,048] https://img.tyt.by:443 "GET /n/0b/1/k-pop_gu_khara_1.jpg HTTP/1.1" 200 76095
+INFO     [2019-11-24 23:08:23,759] Start script
+INFO     [2019-11-24 23:08:23,760] Start get items from url
+DEBUG    [2019-11-24 23:08:24,295] IBM855 confidence = 0.03611406726575886, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 23:08:24,323] ISO-8859-7 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 23:08:24,351] windows-1253 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 23:08:24,416] windows-1251 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 23:08:24,584] windows-1255 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 23:08:24,610] windows-1255 confidence = 0.0, below negative shortcut threshhold 0.05
+DEBUG    [2019-11-24 23:08:24,704] utf-8  confidence = 0.99
+DEBUG    [2019-11-24 23:08:24,704] SHIFT_JIS Japanese confidence = 0.01
+DEBUG    [2019-11-24 23:08:24,704] EUC-JP Japanese confidence = 0.01
+DEBUG    [2019-11-24 23:08:24,704] GB2312 Chinese confidence = 0.01
+DEBUG    [2019-11-24 23:08:24,704] EUC-KR Korean confidence = 0.01
+DEBUG    [2019-11-24 23:08:24,704] CP949 Korean confidence = 0.01
+DEBUG    [2019-11-24 23:08:24,704] Big5 Chinese confidence = 0.01
+DEBUG    [2019-11-24 23:08:24,704] EUC-TW Taiwan confidence = 0.01
+DEBUG    [2019-11-24 23:08:24,704] windows-1251 Russian confidence = 0.01
+DEBUG    [2019-11-24 23:08:24,704] KOI8-R Russian confidence = 0.01
+DEBUG    [2019-11-24 23:08:24,704] ISO-8859-5 Russian confidence = 0.08139367733994451
+DEBUG    [2019-11-24 23:08:24,704] MacCyrillic Russian confidence = 0.0
+DEBUG    [2019-11-24 23:08:24,704] IBM866 Russian confidence = 0.0
+DEBUG    [2019-11-24 23:08:24,704] IBM855 not active
+DEBUG    [2019-11-24 23:08:24,705] ISO-8859-7 not active
+DEBUG    [2019-11-24 23:08:24,705] windows-1253 not active
+DEBUG    [2019-11-24 23:08:24,705] ISO-8859-5 Bulgairan confidence = 0.11671369702480443
+DEBUG    [2019-11-24 23:08:24,705] windows-1251 not active
+DEBUG    [2019-11-24 23:08:24,705] TIS-620 Thai confidence = 0.1827593957200274
+DEBUG    [2019-11-24 23:08:24,705] ISO-8859-9 Turkish confidence = 0.39609561480544636
+DEBUG    [2019-11-24 23:08:24,705] windows-1255 Hebrew confidence = 0.0
+DEBUG    [2019-11-24 23:08:24,705] windows-1255 not active
+DEBUG    [2019-11-24 23:08:24,705] windows-1255 not active
+DEBUG    [2019-11-24 23:08:24,705] utf-8  confidence = 0.99
+DEBUG    [2019-11-24 23:08:24,705] SHIFT_JIS Japanese confidence = 0.01
+DEBUG    [2019-11-24 23:08:24,705] EUC-JP Japanese confidence = 0.01
+DEBUG    [2019-11-24 23:08:24,705] GB2312 Chinese confidence = 0.01
+DEBUG    [2019-11-24 23:08:24,705] EUC-KR Korean confidence = 0.01
+DEBUG    [2019-11-24 23:08:24,705] CP949 Korean confidence = 0.01
+DEBUG    [2019-11-24 23:08:24,705] Big5 Chinese confidence = 0.01
+DEBUG    [2019-11-24 23:08:24,705] EUC-TW Taiwan confidence = 0.01
+INFO     [2019-11-24 23:08:24,756] Connect to website is fine
+INFO     [2019-11-24 23:08:24,763] Successful parsing
+INFO     [2019-11-24 23:08:24,765] User choose some limits
+INFO     [2019-11-24 23:08:24,765] Start print news
+INFO     [2019-11-24 23:08:24,765] Try to delete all html in description
+INFO     [2019-11-24 23:08:24,765] End print news
+INFO     [2019-11-24 23:08:24,766] User choose pdf
+INFO     [2019-11-24 23:08:24,767] Try to delete all html in description
+DEBUG    [2019-11-24 23:08:24,770] Starting new HTTPS connection (1): img.tyt.by:443
+DEBUG    [2019-11-24 23:08:24,802] https://img.tyt.by:443 "GET /n/0b/1/k-pop_gu_khara_1.jpg HTTP/1.1" 200 76095
