@@ -1,8 +1,0 @@
-INFO     [2019-11-24 19:08:31,387] Start script
-INFO     [2019-11-24 19:08:31,388] Start get items from url
-INFO     [2019-11-24 19:08:32,237] Connect to website is fine
-INFO     [2019-11-24 19:08:32,239] Successful parsing
-INFO     [2019-11-24 19:08:32,240] User choose some limits
-INFO     [2019-11-24 19:08:32,240] Start print news
-INFO     [2019-11-24 19:08:32,240] Try to delete all html in description
-INFO     [2019-11-24 19:08:32,241] End print news

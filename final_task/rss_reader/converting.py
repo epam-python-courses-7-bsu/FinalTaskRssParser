@@ -7,7 +7,6 @@ import requests as r
 import printers
 import check
 import os
-import sys
 import re
 import random
 
@@ -62,8 +61,18 @@ def create_pdf(items: list) -> None:
                     with open(img_path, 'wb') as file:
                         file.write(image.content)
                         pdf.image(img_path, w=70, h=50)
+                elif element.endswith(".gif"):
+                    pdf.write(8, "I can't display, but there's your link")
+                    pdf.write(8, str(element))
+                else:
+                    index_new_element = element.rfind('http')
+                    new_element = element[index_new_element:]
+                    image = r.get(new_element)
+                    img_path = str(len(new_element)) + str(random.randint(1, 128)) + '.jpg'
+                    with open(img_path, 'wb') as file:
+                        file.write(image.content)
+                        pdf.image(img_path, w=70, h=50)
                 os.remove(img_path)
-
         else:
             pdf.write(8, "Media content: " + str(item['Media content:\n']))
         pdf.ln(15)
