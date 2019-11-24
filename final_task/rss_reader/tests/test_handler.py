@@ -162,17 +162,8 @@ class TestHandler(unittest.TestCase):
 
         open_mock.assert_called_with(f"{os.path.abspath(os.path.dirname(__file__))}\\RSS_News.html", "w", encoding='utf-8')
         open_mock.return_value.write.assert_called_once()
-<<<<<<< HEAD
         open_mock.return_value.write.assert_called_once_with('<html>\n  <head>\n    <meta charset="utf-8">\n  </head>\n  <body>\n    <div>\n      <h1>title</h1>\n      <p>\n        <b>Feed: </b>\n        <a>feed</a>\n      </p>\n      <p>\n        <b>Date: </b>\n        <a>Wed, 20 Nov 2019</a>\n      </p>\n      <img src="file:///F:\\Introduction to Python\\Final Task\\FinalTaskRssParser\\final_task\\rss_reader/images/title0.jpg"><br><br>\n      <p>some_text<br><br></p>\n    </div>\n  </body>\n</html>')
-=======
-        open_mock.return_value.write.assert_called_once_with(
-            '<html>\n  <head>\n    <meta charset="utf-8">\n  </head>\n  <body>\n    <div>\n      <h1>title</h1>'
-            '\n      <p>\n        <b>Feed: </b>\n        <a>feed</a>\n      </p>\n      <p>\n        <b>Date: </b>\n'
-            '        <a>Wed, 20 Nov 2019</a>\n      </p>\n      <img src="file:///F:\\Introduction to Python'
-            '\\Final Task\\FinalTaskRssParser\\final_task\\rss_reader\\tests/images/title0.jpg"><br><br>\n      '
-            '<p>some_text<br><br></p>\n    </div>\n  </body>\n</html>')
->>>>>>> 763216c9b9ea8b1a8352ac22a614fd9c0bee5d82
-
+                                                             
     def test_write_entries_to_html_without_img(self):
         open_mock = mock_open()
         entry = Entry(feed="feed", title="title", date="Wed, 20 Nov 2019", article_link="link",
