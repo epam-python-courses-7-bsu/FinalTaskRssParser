@@ -6,7 +6,8 @@ from feed import Feed, URLFormatError, FeedNotFoundError, IncorrectRSSError
 # temp
 __version__ = "0.1"
 
-if __name__ == '__main__':
+
+def main():
     parser = argparse.ArgumentParser(description="Pure Python command-line RSS reader.")
 
     parser.add_argument("source", help="RSS URL")
@@ -41,3 +42,7 @@ if __name__ == '__main__':
             print(feed.render_json())
 
     logging.info("Program finishes")
+
+
+if __name__ == '__main__':
+    main()
