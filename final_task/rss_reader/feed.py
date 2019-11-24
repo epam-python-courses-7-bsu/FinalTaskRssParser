@@ -28,9 +28,9 @@ class Feed:
         self.items = []
 
         self.limit = int(limit)
-        self.parse_remote()
+        self._parse_remote()
 
-    def parse_remote(self):
+    def _parse_remote(self):
         parsed_rss = feedparser.parse(self.link)
         # Did Feedparser access feed as remote and is the HTTP status ok
         if "status" not in parsed_rss or parsed_rss.status >= 400:
@@ -51,13 +51,13 @@ class Feed:
         self.items = []
         for i, entry in enumerate(parsed_rss.entries[:limit]):
             logging.info(f"Parsing item {(i+1)}")
-            item = self.parse_remote_item(entry)
+            item = self._parse_remote_item(entry)
             if item is not None:
                 self.items.append(item)
             else:
                 logging.info("Skipping invalid item")
 
-    def parse_remote_item(self, entry):
+    def _parse_remote_item(self, entry):
         item = dict()
         if "published_parsed" not in entry:
             return None
@@ -125,10 +125,6 @@ class Feed:
 
     @staticmethod
     def _try_fix_url(url):
-        """
-        Attempts to fix and uniform url
-        :type url: str
-        """
         try:
             parsed_url = urllib.parse.urlsplit(url, "https")
         except ValueError:
