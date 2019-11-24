@@ -64,7 +64,7 @@ def run():
             raise RssReaderException.RssReaderException('How work with application?\nEnter in command line: rss-reader -h')
 
         if args.version:
-            result = f'RSS reader version {__init__.VERSION}'
+            result = f'RSS reader version {open("VERSION.txt").readline()}'
         else:
             if args.limit:
                 data = work_with_dict.limited_dict(data, args.limit)

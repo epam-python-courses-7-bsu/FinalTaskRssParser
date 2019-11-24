@@ -1,4 +1,4 @@
 feedparser==5.2.1
-colored
-fpdf
-requests
+colored==1.4.0
+fpdf=1.7.2
+requests==2.22.0

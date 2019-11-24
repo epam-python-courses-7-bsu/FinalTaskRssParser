@@ -51,9 +51,8 @@ class TestTextFunctions(unittest.TestCase):
         self.assertEqual(work_with_text.text_processing(entering, links), output)
 
         entering = '<img src="link" alt="text">test<>'
-        output = '[image 1: text][1] test'
+        output = '[image: text] test'
         self.assertEqual(work_with_text.text_processing(entering, links), output)
-        self.assertEqual(links, ['link'])
 
     def test_edit_key(self):
         entering = 'key'
@@ -76,22 +75,20 @@ class TestTextFunctions(unittest.TestCase):
                     'published': 'date1',
                     'link': 'link1',
                     'summary': 'des1',
+                    'contain_image': False,
                 },
                 {
                     'title': 't2',
                     'published': 'date2',
                     'link': 'link2',
-                    'summary': 'des2'
+                    'summary': 'des2',
+                    'contain_image': True,
+                    'link_on_image': 'linkOnImg'
                 }
             ],
-            'links': [
-                'first',
-                'second'
-            ]
         }
         output = '\ntitl\n\nTitle: t1\nDate: date1\nLink: link1\nDescription: des1\n\n' + \
-                 'Title: t2\nDate: date2\nLink: link2\nDescription: des2\n\n' + \
-                 '\nLinks:\n[1] - first\n[2] - second\n'
+                 'Title: t2\nDate: date2\nLink: link2\nDescription: des2\nLink on image: linkOnImg\n\n'
         self.assertEqual(work_with_text.get_string_with_result(entering_dict, 2), output)
 
 
