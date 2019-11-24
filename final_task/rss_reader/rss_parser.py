@@ -12,7 +12,7 @@ import urllib.error
 import http.client
 
 
-server_answer = http.client.responses
+SERVER_ANSWER = http.client.responses
 
 
 def get_rss(url: str) -> dict:
@@ -58,6 +58,18 @@ def process_rss(rss: dict, limit: int) -> dict:
     data['description'] = re.sub('<br.+clear="all">', '', data['description'])
     data['description'] = re.sub('<img.+/>', '',  data['description'])
     data['description'] = html2text.html2text(data['description'])
+
+    if '&#39;' in data['title']:
+        data['title'] = re.sub('&#39;', "'", data['title'])
+
+    if '&quot;' in data['title']:
+        data['title'] = re.sub('&quot;', "'", data['title'])
+
+    if '&#39;' in data['description']:
+        data['description'] = re.sub('&#39;', "'", data['description'])
+
+    if '&quot;' in data['description']:
+        data['description'] = re.sub('&quot;', "'", data['description'])
 
     img_raw = re.search('><img src=".+"', data['image'])
 
@@ -120,8 +132,8 @@ def connect_rss(url: str) -> bool:
                 print('')
 
             # If server answer is a common code or something is not a common code
-            elif http_err.code in server_answer.keys():
-                print('The server can not be reached: Reason: %s' % server_answer[http_err.code])
+            elif http_err.code in SERVER_ANSWER.keys():
+                print('The server can not be reached: Reason: %s' % SERVER_ANSWER[http_err.code])
                 return False
             else:
                 print('Unknown error: %s' % http_err.code)

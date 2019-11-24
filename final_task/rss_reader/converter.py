@@ -5,31 +5,34 @@ import urllib.request as url
 import os
 import sys
 import datetime
+import re
 
-this_directory = os.path.abspath(os.path.dirname(__file__))
-font = 'ARIALUNI.TTF'
+THIS_DIRECTORY = os.path.abspath(os.path.dirname(__file__))
+FONT = 'ARIALUNI.TTF'
 
-win_font = r'C:\Windows\Fonts\arial.ttf'
-lin_font = r'/usr/share/fonts/dejavu/DejaVuSansCondensed.ttf'
+WIN_FONT = r'C:\Windows\Fonts\arial.ttf'
+LIN_FONT = r'/usr/share/fonts/dejavu/DejaVuSansCondensed.ttf'
 
 if sys.platform == 'win32':
-    if os.path.isfile(win_font):
-        fontpath = win_font
+    if os.path.isfile(WIN_FONT):
+        FONTPATH = WIN_FONT
     else:
-        fontpath = os.path.join(this_directory, font)
+        FONTPATH = os.path.join(THIS_DIRECTORY, FONT)
 
 if sys.platform == 'linux':
-    if os.path.isfile(lin_font):
-        fontpath = lin_font
+    if os.path.isfile(LIN_FONT):
+        FONTPATH = LIN_FONT
     else:
-        fontpath = os.path.join(this_directory, font)
+        FONTPATH = os.path.join(THIS_DIRECTORY, FONT)
 
 
 def convert_pdf(rss_news_clean: dict, path: str):
     """This function creates pdf"""
 
+    date_time = datetime.datetime.now()
+
     pdf = FPDF()
-    pdf.add_font('arial_uni', '', fontpath, True)
+    pdf.add_font('arial_uni', '', FONTPATH, True)
     pdf.set_margins(10, 10, 10)
     counter = 1
 
@@ -43,50 +46,56 @@ def convert_pdf(rss_news_clean: dict, path: str):
                 os.remove(str(counter)+'imageTemp.jpg')
                 counter += 1
             except RuntimeError:
-                pdf.set_line_width(1)
-                pdf.rect(120, 12, 50, 50)
-                pdf.set_xy(120, 12)
-                pdf.set_font("Arial", "B", size=14)
+                create_image_template(pdf)
                 pdf.multi_cell(w=50, h=12, align='C', txt=' \n IMAGE IS CORRUPTED')
             except url.HTTPError:
-                pdf.set_line_width(1)
-                pdf.rect(120, 12, 50, 50)
-                pdf.set_xy(120, 12)
-                pdf.set_font("Arial", "B", size=14)
+                create_image_template(pdf)
                 pdf.multi_cell(w=50, h=12, align='C', txt=' \n IMAGE IS CORRUPTED')
             except url.URLError:
-                pdf.set_line_width(1)
-                pdf.rect(120, 12, 50, 50)
-                pdf.set_xy(120, 12)
-                pdf.set_font("Arial", "B", size=14)
+                create_image_template(pdf)
                 pdf.multi_cell(w=50, h=12, align='C', txt=' \n NO INTERNET CONNECTION')
             except ValueError:
-                pdf.set_line_width(1)
-                pdf.rect(120, 12, 50, 50)
-                pdf.set_xy(120, 12)
-                pdf.set_font("Arial", "B", size=14)
+                create_image_template(pdf)
                 pdf.multi_cell(w=50, h=12, align='C', txt=' \n NO PICTURE AVAILABLE')
 
         else:
-            pdf.set_line_width(1)
-            pdf.rect(120, 12, 50, 50)
-            pdf.set_xy(120, 12)
-            pdf.set_font("Arial", "B", size=14)
+            create_image_template(pdf)
             pdf.multi_cell(w=50, h=12, align='C', txt=' \n NO PICTURE AVAILABLE')
 
         pdf.set_font("arial_uni", size=12)
-        string = 'Feed: ' + rss_news['feed'] + '\n' + '   ' + '\n' 'Title: ' + rss_news['title'] + '\n' + '   ' + '\n'
+
+        title_string = str(rss_news['title'].encode('utf-8', 'ignore').decode('utf-8'))
+        feed_string = str(rss_news['feed'].encode('utf-8', 'ignore').decode('utf-8'))
+        news_string = str(rss_news['description'].encode('utf-8', 'ignore').decode('utf-8'))
+
+        # The most common problematic character of unicode
+        if '&#39;' in title_string:
+            title_string = re.sub('&#39;', "'", title_string)
+
+        if '&quot;' in title_string:
+            title_string = re.sub('&quot;', "'", title_string)
+
+        if '&#39;' in feed_string:
+            feed_string = re.sub('&#39;', "'", feed_string)
+
+        if '&#39;' in news_string:
+            news_string = re.sub('&#39;', "'", news_string)
+
+        if '&quot;' in news_string:
+            news_string = re.sub('&quot;', "'", news_string)
+
+        string = 'Feed: ' + feed_string + '\n' + '   ' + '\n' 'Title: ' + title_string + '\n' + '   ' + '\n'
         string += 'Date: ' + rss_news['date'] + '\n' + '   ' + '\n'
         pdf.multi_cell(w=100, h=6, txt=string)
 
         pdf.set_font("arial_uni", size=12)
-        string = 'News: ' + '\n' + '   \n' + str(rss_news['description'].encode('utf-8', 'ignore').decode('utf-8'))
+        string = 'News: ' + '\n' + '   \n\n' + news_string
         pdf.write(h=6, txt=string)
 
         pdf.set_font("Arial", "B", size=12)
-        pdf.write(h=6, txt= 'Link: ' + rss_news['link'],link=rss_news['link'])
+        pdf.write(h=6, txt='Link: ' + rss_news['link'], link=rss_news['link'])
 
-    pdf.output(path + 'news.pdf', 'F')
+    pdf.output(path + 'news' + date_time.strftime("%Y%m%d-%H-%M-%S") + '.pdf', 'F')
 
 
 def convert_log_pdf(log_journal: dict, path: str):
@@ -112,7 +121,7 @@ def convert_html(rss_news_clean: dict, path: str):
 
     date_time = datetime.datetime.now()
 
-    with open(path+'news' + date_time.strftime("%Y%m%d-%H-%M-%S")+'.html', 'w+', encoding='utf-8') as file:
+    with open(path+'news' + date_time.strftime("%Y%m%d-%H-%M-%S") + '.html', 'w+', encoding='utf-8') as file:
         file.write('<html>')
         file.write('<head>')
         file.write('<title> News for ' + date_time.strftime("%Y.%m.%d - %H:%M:%S") + '</title>')
@@ -120,13 +129,30 @@ def convert_html(rss_news_clean: dict, path: str):
         file.write('<body>')
 
         for rss_news in rss_news_clean.values():
+
+            title_string = str(rss_news['title'].encode('utf-8', 'ignore').decode('utf-8'))
+            news_string = str(rss_news['description'].encode('utf-8', 'ignore').decode('utf-8'))
+
+            # The most common problematic character of unicode
+            if '&#39;' in title_string:
+                title_string = re.sub('&#39;', "'", title_string)
+
+            if '&quot;' in title_string:
+                title_string = re.sub('&quot;', "'", title_string)
+
+            if '&#39;' in news_string:
+                news_string = re.sub('&#39;', "'", news_string)
+
+            if '&quot;' in news_string:
+                news_string = re.sub('&quot;', "'", news_string)
+
             file.write('<div <h1><b> ')
-            file.write(rss_news['title'] + ' </b></h1></br></br>')
+            file.write(title_string + ' </b></h1></br></br>')
             file.write('<div<p><b>' + rss_news['date'] + '</b></p></div>')
-            file.write(' <div <p>' + rss_news['description'] + ' </p> </div>')
+            file.write(' <div <p>' + news_string + ' </p> </div>')
 
             if rss_news['image'] is not None:
-                file.write('<div> ' + '<img src=' + rss_news['image'] + '> </div>')
+                file.write('<div> ' + '<img src=' + rss_news['image'] + ' width="200" height="120"> </div>')
             else:
                 file.write('<div<p><b> Image is not available</b></p></div>')
 
@@ -151,3 +177,12 @@ def convert_log_html(log_journal: dict, path: str):
             file.write('<h1><b>' + line + '</b></h1>')
 
         file.write('</body> </html>')
+
+
+def create_image_template(pdf):
+    """This function creates image template"""
+
+    pdf.set_line_width(1)
+    pdf.rect(120, 12, 50, 50)
+    pdf.set_xy(120, 12)
+    pdf.set_font("Arial", "B", size=14)

@@ -1,7 +1,6 @@
 """This module provides conversion of news to JSON format"""
 
 import json
-from typing import Any
 
 
 def convert_json(data: dict) -> dict:

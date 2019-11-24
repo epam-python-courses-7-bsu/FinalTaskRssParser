@@ -4,15 +4,15 @@ This module process the news cashing and storing
 
 import os
 
-this_directory = os.path.abspath(os.path.dirname(__file__))
-newsLog = 'news.log'
-directory = os.path.join(this_directory, newsLog)
+THIS_DIRECTORY = os.path.abspath(os.path.dirname(__file__))
+NEWS_LOG = 'news.log'
+DIRECTORY = os.path.join(THIS_DIRECTORY, NEWS_LOG)
 
 
 def news_check(rss_news: dict) -> bool:
     """This function checks, if the news is inside the local storage"""
     try:
-        with open(directory, encoding='utf-8') as file:
+        with open(DIRECTORY, encoding='utf-8') as file:
             for line in file:
                 if rss_news['link'] in line:
                     return False
@@ -23,7 +23,7 @@ def news_check(rss_news: dict) -> bool:
 
 def news_store(rss_news: dict):
     """This function stores the news to the dictionary"""
-    with open(directory, 'a+', encoding='utf-8') as file:
+    with open(DIRECTORY, 'a+', encoding='utf-8') as file:
         file.write('!!!#####STARTOFNEWS#####!!!' + rss_news['news_date'] + '\n')
         file.write('Feed: ' + rss_news['feed'] + '\n')
         file.write('Title: ' + rss_news['title'] + '\n')
@@ -47,7 +47,7 @@ def news_print(date: str, limit: int) -> int:
     empty = True
     counter = 0
     try:
-        with open(directory, 'r', encoding='utf-8') as file:
+        with open(DIRECTORY, 'r', encoding='utf-8') as file:
             for line in file:
                 if '!!!#####ENDOFNEWS#####!!!'+date in line:
                     flag = False
@@ -88,7 +88,7 @@ def news_decompose(date: str, limit: int) -> dict:
     string_buffer = ''
 
     try:
-        with open(directory, 'r', encoding='utf-8') as file:
+        with open(DIRECTORY, 'r', encoding='utf-8') as file:
             for line in file:
                 if '!!!#####ENDOFNEWS#####!!!' + date in line:
                     flag = False
@@ -145,7 +145,7 @@ def news_log_add(url: str):
     flag_1 = False
     counter = 0
     try:
-        with open(directory, 'r', encoding='utf-8') as file:
+        with open(DIRECTORY, 'r', encoding='utf-8') as file:
             for line in file:
                 if url in line:
                     flag_1 = True

@@ -4,13 +4,13 @@ import logging
 import os
 import news
 
-this_directory = os.path.abspath(os.path.dirname(__file__))
+THIS_DIRECTORY = os.path.abspath(os.path.dirname(__file__))
 
-journalLog = 'logJournal.log'
-directory = os.path.join(this_directory, journalLog)
+JOURNAL_LOG = 'logJournal.log'
+DIRECTORY = os.path.join(THIS_DIRECTORY, JOURNAL_LOG)
 
 args = '%(asctime)s - %(levelname)s - %(message)s'
-logging.basicConfig(filename=directory, format=args, level=logging.INFO, filemode='a+')
+logging.basicConfig(filename=DIRECTORY, format=args, level=logging.INFO, filemode='a+')
 
 
 def new_session():
@@ -82,9 +82,15 @@ def log_err_exit():
 def print_log():
     """This function prints"""
 
-    with open(directory, 'r') as log:
+    with open(DIRECTORY, 'r') as log:
         for line in log:
             if 'INFO - News was written to local storage: url -' in line:
+                """
+                This code cuts line into two slices:
+                    url - slice with link
+                    info - slice with information
+                Since lines has the same pattern, the slices will be the same
+                """
                 url = line[73:]
                 info = line[0:66]
                 print(info)
@@ -99,7 +105,7 @@ def log_prepare() -> dict:
     log_journal = dict()
     counter = 0
 
-    with open(directory, 'r') as log:
+    with open(DIRECTORY, 'r') as log:
         for line in log:
             log_journal[counter] = line
             counter += 1
@@ -189,3 +195,27 @@ def log_log_html():
     """This function logs the conversion of log journal to html"""
 
     logging.info('Log journal was converted to html')
+
+
+def print_log_verbose_pdf():
+    """This function prints"""
+
+    str_1 = 'News from rss feed were converted to pdf'
+    str_2 = 'News from local storage vere converted to pdf'
+
+    with open(DIRECTORY, 'r') as log:
+        for line in log:
+            if (str_1 in line) or (str_2 in line):
+                print(line, end='')
+
+
+def print_log_verbose_html():
+    """This function prints"""
+
+    str_1 = 'News from rss feed were converted to html'
+    str_2 = 'News from local storage vere converted to html'
+
+    with open(DIRECTORY, 'r') as log:
+        for line in log:
+            if (str_1 in line) or (str_2 in line):
+                print(line, end='')

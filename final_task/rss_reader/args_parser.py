@@ -13,10 +13,10 @@ import os
 def get_parse(args_in='') -> dict:
     """This function takes the arguments from command line"""
 
-    parser = argparse.ArgumentParser(prog='RSSTaker', description='RSS reader. Takes the arguments from command line.')
+    parser = argparse.ArgumentParser(prog='RSS reader', description='RSS reader. Takes arguments from command line.')
 
     parser.add_argument('url', type=str, nargs='?', default='url', help='Link to RSS channel(line without spaces).')
-    parser.add_argument('-v', '--version', action='version', version='%(prog)s 3.0', help='Print version info.')
+    parser.add_argument('-v', '--version', action='version', version='%(prog)s 4.0', help='Print version info.')
     parser.add_argument('-j', '--json', action='store_const', const=True, help='Print result as json in stdout.')
     parser.add_argument('-b', '--verbose', action='store_const', const=True, help='Print all logs in stdout.')
     parser.add_argument('-l', '--limit', type=int, help='Limit of news topics (natural number).')
@@ -75,21 +75,15 @@ def validate_args(data: dict) -> bool:
         if data['date'] > int(date_time.strftime("%Y%m%d")):
             print('Date is wrong: today date ' + date_time.strftime("%Y%m%d") + ' is less than your date.')
             return False
-        else:
-            return True
 
     if data['pdf']:
         if not os.access(data['pdf'], os.W_OK):
             print('The path is either not exist or can not be reached.')
             return False
-        else:
-            return True
 
     if data['html']:
         if not os.access(data['html'], os.W_OK):
             print('The path is either not exist or can not be reached.')
             return False
-        else:
-            return True
 
     return True
