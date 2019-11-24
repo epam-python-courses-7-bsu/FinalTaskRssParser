@@ -93,7 +93,7 @@ class TestNewsConverter(unittest.TestCase):
         item_groups = [ItemGroup('feed1', [self.item1, self.item2]), ItemGroup('feed2', [self.item1])]
         expected_str = '<html><head><title>News</title>' \
                        '<meta content="text/html; charset=utf-8" http-equiv="Content-Type"><style>' \
-                       '@font-face {font-family: DejaVuSans;src: url("DejaVuSansCondensed.ttf");}' \
+                       '@font-face {font-family: DejaVuSans;src: url("../fonts/DejaVuSansCondensed.ttf");}' \
                        'body {font-family: DejaVuSans;}</style></head><body><div>' \
                        '<hr align=center size=3 width=70% color=green><h1 align=center>feed1</h1>' \
                        '<hr align=center size=3 width=70% color=green><div>' + self.expected_items_html + \

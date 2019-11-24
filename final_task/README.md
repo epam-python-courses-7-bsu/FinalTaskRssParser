@@ -4,7 +4,7 @@ RSS reader is a command-line utility.
 
 ### Usage
 ---------------------------------------------------------------------------
-usage: rss_reader.py [source] [-h] [--version] [--json] [--verbose] [--limit LIMIT] [--date DATE] [--to-pdf PATH] [--to-html PATH]  
+usage: rss_reader.py [source] [-h] [--version] [--json] [--verbose] [--limit LIMIT] [--date DATE] [--to-pdf PATH] [--to-html PATH] [--colorize]  
 
 Pure Python command-line RSS reader.  
 
@@ -20,6 +20,7 @@ optional arguments:
  - --date DATE            *News from the specified day will be printed out. Format: YYYYMMDD*  
  - --to-pdf PATH            *Create PDF file with news*  
  - --to-html PATH            *Create HTML file with news*  
+ - --colorize            *Print news in colorized mode*  
 
 It is mandatory to specify date or/and source.  
 If both are specified, then news will be searched by date and by source.  

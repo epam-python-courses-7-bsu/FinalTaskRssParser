@@ -2,6 +2,9 @@ import logging
 from copy import deepcopy
 
 
+colorize = False
+
+
 def merge_lists(list1, list2):
     """ Merge two lists """
     logging.info('Merging lists')

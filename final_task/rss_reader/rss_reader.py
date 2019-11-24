@@ -3,6 +3,7 @@ import logging
 import parser_rss
 import exceptions
 import news_converter
+import tools
 from item_group import get_item_group_from_feedparser
 from log import turn_on_logging
 from news_storage import save_news, get_news_by_date
@@ -30,6 +31,7 @@ def create_arg_parser():
                             help='News from the specified day will be printed out. Format: YYYYMMDD')
     arg_parser.add_argument('--to-pdf', type=str, help='Create PDF file with news', metavar='PATH')
     arg_parser.add_argument('--to-html', type=str, help='Create HTML file with news', metavar='PATH')
+    arg_parser.add_argument('--colorize', action='store_true', help='Print news in colorized mode')
 
     return arg_parser
 
@@ -113,6 +115,8 @@ def main():
         logging.error('Source or/and date must be specified.')
         arg_parser.print_help()
     elif not args.limit or args.limit > 0:
+        tools.colorize = args.colorize
+
         if args.date:
             work_with_local_storage(args)
         else:

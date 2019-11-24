@@ -28,7 +28,7 @@ setup(
              'rss_reader/parser_rss.py',
              'rss_reader/rss_reader.py',
              'rss_reader/tools.py'],
-    install_requires=['feedparser==5.2.1', 'bs4==0.0.1', 'requests==2.22.0', 'fpdf==1.7.2'],
+    install_requires=['feedparser==5.2.1', 'bs4==0.0.1', 'requests==2.22.0', 'fpdf==1.7.2', 'colorama==0.4.1'],
     entry_points={
         'console_scripts': ['rss-reader=rss_reader:main'],
     }

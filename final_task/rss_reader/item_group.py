@@ -1,9 +1,11 @@
 import logging
+import tools
 from dataclasses import dataclass
 from typing import List
 from item import Item
 from parser_rss import format_description
 from html import unescape as html_unescape
+from colorama import Style, Fore
 
 
 @dataclass
@@ -12,7 +14,10 @@ class ItemGroup:
     items: List[Item]
 
     def __repr__(self):
-        str_item_group = 'Feed: ' + self.feed + '\n\n'
+        if tools.colorize:
+            str_item_group = Style.BRIGHT + Fore.GREEN + 'Feed: ' + Style.NORMAL + Fore.GREEN + self.feed + '\n\n'
+        else:
+            str_item_group = 'Feed: ' + self.feed + '\n\n'
 
         for item in self.items:
             str_item_group += str(item) + '\n'
