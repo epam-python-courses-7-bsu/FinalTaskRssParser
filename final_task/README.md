@@ -28,3 +28,5 @@ optional arguments:
   -v, --verbose  Outputs verbose status messages
   --limit LIMIT  Limit news topics if this parameter provided
 ```
+### Licence
+This project is licensed under the MIT License - see the LICENSE file for details.
