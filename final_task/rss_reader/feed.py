@@ -6,6 +6,8 @@ import feedparser
 
 from . import html_to_text
 
+DATE_FORMAT = "%Y%m%d"
+
 
 class URLFormatError(ValueError):
     pass
@@ -28,7 +30,11 @@ class Feed:
         self.items = []
 
         self.limit = int(limit)
-        self._parse_remote()
+        if date is None:
+            self._parse_remote()
+        else:
+            pass
+
 
     def _parse_remote(self):
         parsed_rss = feedparser.parse(self.link)

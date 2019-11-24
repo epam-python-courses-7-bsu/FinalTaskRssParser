@@ -1,11 +1,21 @@
 import argparse
 import logging
+import time
 
-from .feed import Feed, URLFormatError, FeedNotFoundError, IncorrectRSSError
+from . import feed
 
 # temp
 __version__ = "0.2"
 PROG = "rss-reader"
+
+
+def date_str(string):
+    logging.info("Checking date argument")
+    try:
+        time.strptime(string, format=feed.DATE_FORMAT)
+    except ValueError:
+        raise argparse.ArgumentTypeError(f"Incorrect date format: {string}")
+    return string
 
 
 def main():
@@ -17,6 +27,11 @@ def main():
     parser.add_argument("--json", action="store_true", help="Print result as JSON in stdout")
     parser.add_argument("-v", "--verbose", action="store_true", help="Outputs verbose status messages")
     parser.add_argument("--limit", type=int, help="Limit news topics if this parameter provided")
+
+    # It is done because argparse treat '%' in parameters as old-style formatting
+    date_format_escaped = feed.DATE_FORMAT.replace("%", "%%")
+    parser.add_argument("--date", type=date_str,
+                        help=f"Load news with date ({date_format_escaped}) from cache, if this parameter provided")
 
     args = parser.parse_args()
 
@@ -33,14 +48,14 @@ def main():
     logging.info("Program starts")
 
     try:
-        feed = Feed(rss_url, limit)
-    except (URLFormatError, FeedNotFoundError, IncorrectRSSError) as e:
+        rss_feed = feed.Feed(rss_url, limit)
+    except (feed.URLFormatError, feed.FeedNotFoundError, feed.IncorrectRSSError) as e:
         logging.error(str(e))
     else:
         if not args.json:
-            print(feed.render_text())
+            print(rss_feed.render_text())
         else:
-            print(feed.render_json())
+            print(rss_feed.render_json())
 
     logging.info("Program finishes")
 
