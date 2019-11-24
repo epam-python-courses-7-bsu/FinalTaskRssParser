@@ -1,7 +1,7 @@
 import argparse
 import logging
 
-from feed import Feed, URLFormatError, FeedNotFoundError, IncorrectRSSError
+from .feed import Feed, URLFormatError, FeedNotFoundError, IncorrectRSSError
 
 # temp
 __version__ = "0.1"

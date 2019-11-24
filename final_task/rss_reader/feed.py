@@ -4,7 +4,7 @@ import json
 import logging
 import feedparser
 
-import html_to_text
+from . import html_to_text
 
 
 class URLFormatError(ValueError):

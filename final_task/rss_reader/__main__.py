@@ -1,3 +1,3 @@
-from rss_reader import main
+from .rss_reader import main
 
 main()
