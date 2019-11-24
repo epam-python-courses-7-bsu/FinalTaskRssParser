@@ -33,7 +33,7 @@ class Handler:
     # options of command line:
     @logging_decorator
     def option_version(self) -> None:
-        print("version ", self.version)
+        print(f"version {self.version}")
 
     @logging_decorator
     def option_html(self, path: str) -> None:
@@ -219,8 +219,11 @@ class Handler:
             entries = self.entries
 
         pdf = PDF()
-        pdf.add_font('DejaVuSans', '', 'DejaVuSans.ttf', uni=True)
-        pdf.set_font("DejaVuSans")
+        try:
+            pdf.add_font('DejaVuSans', '', 'DejaVuSans.ttf', uni=True)
+            pdf.set_font("DejaVuSans")
+        except RuntimeError:
+            raise RSSReaderException("Error. File with fonts not found")
         pdf.alias_nb_pages()
         pdf.add_page()
 

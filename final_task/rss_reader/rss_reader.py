@@ -21,7 +21,7 @@ def main():
     if not arg_parser_args.limit:
         arg_parser_args.limit = len(handler.parsed.entries)
         handler.limit = arg_parser_args.limit
-    if arg_parser_args.limit <= 0:
+    if arg_parser_args.limit <= 0 and not version:
         raise RSSReaderException("Error. Incorrect value of argument limit")
 
     if arg_parser_args.verbose:

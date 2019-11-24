@@ -1,0 +1,13 @@
+[
+  {
+    "Feed": "Yahoo News - Latest News & Headlines",
+    "Title": "Title 1",
+    "DateInt": "20191111",
+    "Date": "Wed, 06 Nov 2019",
+    "Link": "https://link1.com",
+    "Summary": "summary",
+    "Links": [
+      "https://link1.com"
+      ]
+  }
+]
