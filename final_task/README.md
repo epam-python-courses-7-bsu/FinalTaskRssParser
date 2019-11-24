@@ -1,5 +1,5 @@
-# Console RSS Reader
-Cli-based RSS Reader built with Python 3.8. 
+# RSS Reader
+Cli-based RSS reader built with Python 3.8. 
 Supports all RSS standards, can handle incorrect RSS. 
 Also partially supports Atom feeds. 
 
@@ -11,10 +11,25 @@ Also partially supports Atom feeds.
 ```
 pip install feedparser lxml beautifulsoup4
 ```
-### Usage
-The program runs from file `rss_parser.py`
+### Installation
 ```
-usage: rss_reader.py [-h] [--version] [--json] [-v] [--limit LIMIT] source
+pip install -i https://test.pypi.org/simple/ rss-reader-scarzdz
+```
+Also you can just download source code and install using: 
+```
+$ python final_task/setup.py install
+```
+### Running
+After installation, `rss-reader` command is added to PATH.
+
+Alternatively, the application can be run from the source file:
+``` 
+$ cd final_task
+$ python -m rss_reader ...
+```
+### Usage
+```
+usage: rss-reader [-h] [--version] [--json] [-v] [--limit LIMIT] source
 
 Pure Python command-line RSS reader.
 
