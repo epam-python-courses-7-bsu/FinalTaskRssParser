@@ -19,7 +19,7 @@ setup(
 
     #options
     packages=find_packages(),
-    install_requires=['html2text==2019.9.26'],
+    install_requires=['html2text==2019.9.26', 'dateutil==2.4.1'],
     package_data={
          '': ['*.py', '*.txt']
     },
@@ -28,6 +28,6 @@ setup(
         "console_scripts":
             "rss_reader=rss_reader.rss_reader:main"
     },
-    #test_suite='rss_reader.test',
+    #test_suite='test',
     zip_safe=False
 )

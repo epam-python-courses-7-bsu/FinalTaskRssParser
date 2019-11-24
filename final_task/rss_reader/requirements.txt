@@ -1,1 +1,4 @@
 html2text
+dateutil
+jinja
+xhtml2pdf

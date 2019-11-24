@@ -1,5 +1,6 @@
 README.md
 setup.py
+rss_reader/CSVEntities.py
 rss_reader/ClassNews.py
 rss_reader/__init__.py
 rss_reader/__main__.py
@@ -12,3 +13,5 @@ rss_reader.egg-info/entry_points.txt
 rss_reader.egg-info/not-zip-safe
 rss_reader.egg-info/requires.txt
 rss_reader.egg-info/top_level.txt
+test/RssUnitTest.py
+test/__init__.py

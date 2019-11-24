@@ -4,9 +4,14 @@ import requests
 import json
 import logging
 import sys
+from dataclasses import asdict
+from xhtml2pdf import pisa
 
-import rss_reader.ClassNews as ClassNews
-import rss_reader.CSVEntities as CSVEntities
+
+import ClassNews
+import CSVEntities
+import ToPDF
+import ToHTML
 
 VERSION = 1.1
 
@@ -20,6 +25,8 @@ def args_parser(args):
     parser.add_argument('--verbose', action='store_true', help='Outputs verbose status messages')
     parser.add_argument('--limit', type=int, help='Limit news topics if this parameter provided')
     parser.add_argument('--date', type=str, help='Date for selecting topics')
+    parser.add_argument('--to-pdf', type=str,help ='Convert news to pdf')
+    parser.add_argument('--to-html', type=str, help='Convert news to html')
 
     res_args = parser.parse_args(args)
     return res_args
@@ -48,17 +55,15 @@ def get_request(args_source, timeout=None):
     # Check status code
     status_code = rss_request.status_code
     logging.info("Status code {}".format(status_code))
-    # if status_code == 404:
-    #     raise requests.exceptions.HTTPError
     rss_request.raise_for_status()
 
     return rss_request
 
-
 def main():
     try:
         args = args_parser(sys.argv[1:])
-        res_dict_articles = ''
+        res_dict_articles = []
+        result_articles = []
         logging_level = logging.CRITICAL
         if args.verbose:
             logging_level = logging.INFO
@@ -83,9 +88,7 @@ def main():
 
                 logging.info('Print news:')
 
-                if main_title:
-                    print("\nFeed: {}".format(main_title))
-
+                print("\nFeed: {}".format(main_title))
                 result_articles = ClassNews.dicts_to_articles(res_dict_articles)
 
                 for article in result_articles:
@@ -99,18 +102,24 @@ def main():
 
         if args.date:
             logging.info('Print news by date: ')
-            res_list_articles = CSVEntities.return_news_to_date(args.date, "datecsv.csv", args.limit)
-            res_dict_articles=[]
-            if res_list_articles:
-                for article in res_list_articles:
-                    res_dict_articles.append(article.__dict__)
+            result_articles = CSVEntities.return_news_to_date(args.date, "datecsv.csv", args.limit)
+
+            if result_articles:
+                for article in result_articles:
+                    res_dict_articles.append(asdict(article))
+                    if not (args.to_html or args.to_pdf):
+                        print(article)
             else:
-                print("We don't have any news for the %s"%args.date)
+                print("We don't have any news in cache %s"%args.date)
 
         if args.json and res_dict_articles:
             logging.info('Print result as JSON in stdout')
             json_articles = json.dumps(res_dict_articles, indent=4)
             print(json_articles)
+        if args.to_pdf and result_articles:
+            ToPDF.print_article_list_to_pdf(result_articles, args.to_pdf)
+        if args.to_html and result_articles:
+            ToHTML.print_article_list_to_html(result_articles, args.to_html)
 
     except requests.exceptions.InvalidSchema:
         logging.critical('It is not http request!')
@@ -125,6 +134,8 @@ def main():
     except requests.exceptions.ConnectionError:
         logging.critical("Sorry, you have an proxy or SSL error")
         # A proxy or SSL error occurred.
+    except pisa:
+        logging.critical("Sorry, you have problem with converting to pdf")
 
 
 if __name__ == '__main__':

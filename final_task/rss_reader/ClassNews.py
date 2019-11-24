@@ -1,5 +1,7 @@
 import re
 import html2text
+from dataclasses import dataclass
+
 
 LINKS_TEMPLATE = '\"((http|https)://(\w|.)+?)\"'
 
@@ -38,7 +40,7 @@ def dicts_to_articles(dict_list):
     """This function receive list of dictionaries and convert it to list of articles """
     article_list = []
     for item in dict_list:
-        article_list.append(Article(item))
+        article_list.append(Article(item['title'], item['date'], item['link'], item['article'], item['links']))
     return article_list
 
 def html_text_to_list_links(html_links):
@@ -48,16 +50,17 @@ def html_text_to_list_links(html_links):
         list_links.append(group1.group(1))
     return list_links
 
-
+@dataclass
 class Article:
     """This is news class, which receives dictionary and have title, date, link, article and links keys fields"""
-    def __init__(self, article_dict):
-        self.date = article_dict['date']
-        self.title = article_dict['title']
-        self.link = article_dict['link']
-        self.article = article_dict['article']
-        self.links = html_text_to_list_links(article_dict['links'])
+    title: str
+    date: str
+    link: str
+    article: str
+    links :str
 
+    def __post_init__(self):
+        self.links = html_text_to_list_links(self.links)
 
     def __str__(self):
         result_string_article = "\nTitle: %s\nDate: %s\nLink: %s\n\n%s\n\n" % (self.title, self.date, self.link,

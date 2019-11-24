@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<body>
+{% for item in articles %}
+
+<h1>{{item.title}}</h1>
+<h2>{{item.date}}</h2>
+<a>{{item.link}}</a>
+
+<p>{{item.article}}</p>
+
+{% for links in item.links %}
+<p> {{links}}</p>
+{% endfor %}
+
+{% endfor %}
+</body>
+</html>
