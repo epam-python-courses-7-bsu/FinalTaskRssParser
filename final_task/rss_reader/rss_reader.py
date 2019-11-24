@@ -5,10 +5,11 @@ from .feed import Feed, URLFormatError, FeedNotFoundError, IncorrectRSSError
 
 # temp
 __version__ = "0.1"
+PROG = "rss-reader"
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Pure Python command-line RSS reader.")
+    parser = argparse.ArgumentParser(description="Pure Python command-line RSS reader.", prog=PROG)
 
     parser.add_argument("source", help="RSS URL")
     parser.add_argument("--version", action="version", version=f"{parser.prog}s {__version__}",
