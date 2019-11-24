@@ -7,7 +7,6 @@ import requests as r
 import printers
 import check
 import os
-import re
 import random
 
 
@@ -51,16 +50,26 @@ def create_pdf(items: list) -> None:
         pdf.ln(10)
         pdf.write(8, "Link: " + str(item['Link: ']))
         pdf.ln(15)
+        pdf.write(8, "Date: " + str(item['']))
         img_url = str(item['Media content:\n'])
         url_list = img_url.split("\n")
-        if check.internet_on and img_url != '':
+                if check.internet_on and img_url != '':
             for element in url_list:
                 if element.endswith(".png") or element.endswith(".jpg"):
                     image = r.get(element)
-                    img_path = str(len(element)) + str(random.randint(1, 128)) + str(img_url[-4:])
-                    with open(img_path, 'wb') as file:
-                        file.write(image.content)
-                        pdf.image(img_path, w=70, h=50)
+                    try:
+                        img_path = str(len(element)) + str(random.randint(1, 128)) + str(img_url[-4:])
+                        with open(img_path, 'wb') as file:
+                            file.write(image.content)
+                            pdf.image(img_path, w=70, h=50)
+                            pdf.ln(10)
+                    except RuntimeError:
+                        os.remove(img_path)
+                        img_path = str(len(element)) + str(random.randint(1, 128)) + '.jpeg'
+                        with open(img_path, 'wb') as file:
+                            file.write(image.content)
+                            pdf.image(img_path, w=70, h=50)
+                            pdf.ln(10)
                 elif element.endswith(".gif"):
                     pdf.write(8, "I can't display, but there's your link")
                     pdf.write(8, str(element))
@@ -72,6 +81,7 @@ def create_pdf(items: list) -> None:
                     with open(img_path, 'wb') as file:
                         file.write(image.content)
                         pdf.image(img_path, w=70, h=50)
+                        pdf.ln(10)
                 os.remove(img_path)
         else:
             pdf.write(8, "Media content: " + str(item['Media content:\n']))

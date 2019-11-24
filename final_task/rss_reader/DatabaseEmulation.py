@@ -27,6 +27,8 @@ class DatabaseEmulation(metaclass=Singleton):
         self.dates = {}
         with open(path_to_dates, "r") as data_file:
             for line in data_file:
+                if not line:
+                    continue
                 date, row_number = line.strip().split()
                 self.dates[date] = int(row_number)
         self.dates_file = open(path_to_dates, "a")
