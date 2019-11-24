@@ -1,22 +1,25 @@
 import datetime
-import json
 import feedparser
 import logging
 from bs4 import BeautifulSoup
 from RSSReaderException import RSSReaderException
 from NewsCache import NewsCache
+from unidecode import unidecode
+from output import get_output_function
 
-CACHE_FILE_NAME = "Cache_file.json"
+CACHE_FILE_NAME = "Cache file.json"
 
 
 class RSSReader:
 
-    def __init__(self):
+    def __init__(self, date, url, limit, is_json, is_pdf, is_epub):
         self.cache = NewsCache(CACHE_FILE_NAME)
-        self.date = None
-        self.url = None
-        self.is_json = False
-        self.limit = None
+        self.date = date
+        self.url = url
+        self.is_json = is_json
+        self.limit = limit
+        self.is_pdf = is_pdf
+        self.is_epub = is_epub
         self.logger = logging.getLogger(__name__)
 
     def url_parsing(self):
@@ -30,11 +33,11 @@ class RSSReader:
 
     def information_about_site(self, parsed_url):
         """Function which make dictionary with data of website"""
-        date = parsed_url.get('updated', datetime.datetime.now())
+        date = parsed_url.get('updated', str(datetime.datetime.now()))
         return {
-            'Feed': parsed_url['feed']['title'],
+            'Feed': unidecode(parsed_url['feed']['title']),
             'Updated': date,
-            'Version': parsed_url['version'],
+            'Version': unidecode(parsed_url['version']),
         }
 
     def make_news_data(self, news):
@@ -42,24 +45,26 @@ class RSSReader:
         Function which parsed HTML summary of news and make dictionary with all the necessary news data.
         :return dictionary
         """
+        image_link = 'No image'
         if 'summary' in news:
+            # convert_to_epub(news['summary'])
             bs = BeautifulSoup(news['summary'], 'html.parser')
             img = bs.find_all('img')
-            image_data = 'No image'
             if img:
-                image_data = '{}\nSource of image: {}'.format(img[0].get('alt', ""), img[0]['src'])
-            summary = bs.get_text()
+                image_description = unidecode(img[0].get('alt', 'no description'))
+                image_link = img[0].get('src')
+                img[0].replaceWith(f' [Image: {image_description}] ')
+            summary = unidecode(str(bs.text))
         else:
             summary = news['title']
-            image_data = 'No image'
         date_info = news['published_parsed'] if 'published' in news else news['updated_parsed']
         date_key = str("{}{}{}".format(date_info.tm_year, date_info.tm_mon, date_info.tm_mday))
         news_summary = {
-            'Title': news['title'],
+            'Title': unidecode(news['title']),
             'Date': news['published'] if 'published' in news else news['updated'],
             'Link': news['link'],
             'Summary': summary,
-            'Image': image_data,
+            'Source of image': image_link,
             'Date key': date_key
         }
         return news_summary
@@ -81,25 +86,6 @@ class RSSReader:
                 all_news.append(dictionary_of_news_data)  # make list of dictionaries of news data for optional output
         return all_news
 
-    def parse_to_json(self, dictionary):
-        return json.dumps(dictionary, indent=4)
-
-    def output(self, all_news, about_website=None):
-        """Function which print information about site and a set of news."""
-        if about_website is not None:
-            for key, value in about_website.items():
-                print('\n', key, ': ', value)
-        for number_of_news in all_news:
-            print("--------------------------------------------------------")
-            for key, value in number_of_news.items():
-                print(key, ': ', value)
-
-    def output_json(self, all_news, about_website=None):
-        if about_website is not None:
-            print(self.parse_to_json([about_website] + all_news))
-        else:
-            print(self.parse_to_json(all_news))
-
     def get_news(self):
         """Get news!"""
         if self.date is None:
@@ -118,13 +104,17 @@ class RSSReader:
         else:
             string_of_news_dictionaries = self.cache.returning(self.date, self.url)[:self.limit]
             about_website = None
-        # empty list and return
         if not string_of_news_dictionaries:
             self.logger.error('There is no news.')
             return
         if self.is_json:
-            self.logger.info('Convert to JSON-format')
-            self.output_json(string_of_news_dictionaries, about_website)
+            converter = 'json'
+        elif self.is_pdf:
+            converter = 'pdf'
+        elif self.is_epub:
+            converter = 'epub'
         else:
             self.logger.info('Output news')
-            self.output(string_of_news_dictionaries, about_website)
+            converter = 'text'
+        output = get_output_function(converter)
+        output(self.logger, string_of_news_dictionaries, about_website)

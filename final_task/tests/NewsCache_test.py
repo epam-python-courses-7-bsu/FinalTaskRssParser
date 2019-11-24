@@ -10,7 +10,7 @@ TEST_NEWS_LIST = [
              "Date": "Sun, 17 Nov 2019 15:35:00 -0500",
              "Link": "link",
              "Summary": "Test text",
-             "Image": "\nSource of image: img_link",
+             "Source of image": "img_link",
              "Date key": "20191117"}]
 
 FILE_CONTENTS = {"20191117":
@@ -20,7 +20,7 @@ FILE_CONTENTS = {"20191117":
              "Date": "Sun, 17 Nov 2019 15:35:00 -0500",
              "Link": "link",
              "Summary": "Test text",
-             "Image": "\nSource of image: img_link"}}}}
+             "Source of image": "img_link"}}}}
 
 
 class MyTestCase(unittest.TestCase):
@@ -42,7 +42,7 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(result[0].get('Date'), "Sun, 17 Nov 2019 15:35:00 -0500")
         self.assertEqual(result[0].get('Link'), "link")
         self.assertEqual(result[0].get('Summary'), "Test text")
-        self.assertEqual(result[0].get('Image'), "\nSource of image: img_link")
+        self.assertEqual(result[0].get('Source of image'), "img_link")
 
 
 if __name__ == '__main__':

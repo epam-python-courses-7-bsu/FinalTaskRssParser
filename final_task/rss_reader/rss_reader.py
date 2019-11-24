@@ -4,13 +4,13 @@ import logging
 from RSSReader import RSSReader
 
 
-VERSION = '2.0'
+VERSION = '4.0'
 
 
 def arg_parse(args):
     """Function which parsed command-line arguments."""
     parser = argparse.ArgumentParser(description='Pure Python command-line RSS reader.')
-    parser.add_argument("--source", type=str,
+    parser.add_argument("source", type=str, nargs='?',
                         help="RSS URL")
     parser.add_argument("--limit", type=int,
                         help="Limit news topics if this parameter provided")
@@ -22,6 +22,10 @@ def arg_parse(args):
                         help="Outputs verbose status messages")
     parser.add_argument("--date", type=str,
                         help="Return news from cache with that date.")
+    parser.add_argument("--to_pdf", action="store_true",
+                        help="Conversion of news in the pdf format.")
+    parser.add_argument("--to_epub", action="store_true",
+                        help="Conversion of news in the ___ format.")
     return parser.parse_args(args)
 
 
@@ -32,11 +36,7 @@ def main():
     if args.version:
         print('RSS-reader version {}'.format(VERSION))  # program version call
         return
-    reader = RSSReader()
-    reader.date = args.date
-    reader.url = args.source
-    reader.limit = args.limit
-    reader.is_json = args.json
+    reader = RSSReader(args.date, args.source, args.limit, args.json, args.to_pdf, args.to_epub)
     reader.get_news()
 
 
