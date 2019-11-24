@@ -9,7 +9,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='rss-reader',
-    version='4.0',
+    version='5.0',
     description='Pure Python command-line RSS reader',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -18,7 +18,10 @@ setup(
     author_email='k.ulitch@yandex.ru',
     license='MIT',
     zip_safe=False,
-    packages=find_packages(include=['fonts', 'fonts.*']),
+    package_data={
+      '': ['rss_reader/fonts/*.ttf'],
+	  },
+    include_package_data=True,
     scripts=['rss_reader/exceptions.py',
              'rss_reader/item.py',
              'rss_reader/item_group.py',

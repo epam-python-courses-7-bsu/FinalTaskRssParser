@@ -11,7 +11,7 @@ from datetime import datetime
 
 
 STORAGE_FILE = 'news.data'
-VERSION = '4.0'
+VERSION = '5.0'
 
 
 def create_arg_parser():
