@@ -1,7 +1,9 @@
+"""Module converts articles to pdf file"""
 import logging
 import os
 import urllib.request
-from datetime import date
+import datetime
+from typing import Optional
 
 from fpdf import FPDF, set_global
 from argparse_handler import check_the_connection
@@ -10,7 +12,7 @@ directory_to_module = os.path.abspath(os.path.dirname(__file__))
 FONT_PATH = os.path.join(directory_to_module, 'font')
 
 
-def convert_to_pdf(articles_list: list, path: str, rss_url: str) -> None:
+def convert_to_pdf(articles_list: list, path: str, rss_url: Optional[str]) -> None:
     """Converts articles to pdf format"""
     set_global("FPDF_CACHE_MODE", 1)
     pdf = FPDF(orientation='P', unit='mm', format='A4')
@@ -54,6 +56,11 @@ def convert_to_pdf(articles_list: list, path: str, rss_url: str) -> None:
                     try:
                         filename, headers = urllib.request.urlretrieve(link[0])
                         image_type = headers['content-type'].replace('image/', '')
+                        if image_type not in ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG']:
+                            pdf.multi_cell(w=0, h=5, txt=f'[{number}]: {link[0]}')
+                            pdf.ln(5)
+                            continue
+
                         pdf.cell(w=0, txt=f'[{number}]: ')
                         pdf.image(filename, x=20, y=pdf.get_y(), h=20, type=image_type)
                         pdf.ln(25)
@@ -76,7 +83,7 @@ def convert_to_pdf(articles_list: list, path: str, rss_url: str) -> None:
         pdf.ln(20)
 
     try:
-        today = date.today().strftime("%B %d, %Y")
+        today = datetime.date.today().strftime("%B %d, %Y")
         if rss_url:
             filename = f'{today} {urllib.request.urlparse(rss_url).netloc}.pdf'
         else:

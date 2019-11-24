@@ -1,3 +1,4 @@
+"""Module to work with rss and articles"""
 import dataclasses
 import datetime
 import html
@@ -70,7 +71,7 @@ def unescape(text_to_unescape: str) -> str:
     return html.unescape(text_to_unescape)
 
 
-def get_articles(parsed: feedparser.FeedParserDict, limit: int) -> List[single_article.SingleArticle]:
+def get_articles(parsed: feedparser.FeedParserDict, limit: Optional[int]) -> List[single_article.SingleArticle]:
     """Returns list with articles."""
     articles = []
     feed = parsed['feed']
@@ -116,7 +117,7 @@ def convert_dict_to_single_article(article_dict: dict) -> single_article.SingleA
 
 
 class CachedArticlesClass:
-
+    """Work with cache"""
     def __init__(self):
         self.cached_data_list = []
 

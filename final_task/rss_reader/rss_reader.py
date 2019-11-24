@@ -1,8 +1,9 @@
+"""Main module of program"""
 import argparse
 import logging
 import os
 import sys
-from typing import List
+from typing import List, Optional
 
 import coloredlogs
 from colorama import Fore
@@ -48,7 +49,7 @@ def setup_logger() -> None:
 
 
 def converting_starter(key: str, list_with_articles: List[single_article.SingleArticle], path_to_file: str,
-                       rss_link: str) -> None:
+                       rss_link: Optional[str]) -> None:
     """Starts the chosen conversion"""
     logging.info(f"Converting to {key} started")
     if key == 'html':
@@ -59,7 +60,7 @@ def converting_starter(key: str, list_with_articles: List[single_article.SingleA
 
 
 def arguments_logic(args: argparse.Namespace, list_of_articles: List[single_article.SingleArticle],
-                    rss_link: str = None) -> None:
+                    rss_link: Optional[str] = None) -> None:
     conversion = False
 
     if args.to_html:
@@ -71,7 +72,10 @@ def arguments_logic(args: argparse.Namespace, list_of_articles: List[single_arti
 
     if not conversion:
         if args.json:
-            print(articles_handler.create_rss_json(list_of_articles))
+            if colorizing_handler.COLORIZING_STATUS:
+                print(Fore.GREEN + articles_handler.create_rss_json(list_of_articles))
+            else:
+                print(articles_handler.create_rss_json(list_of_articles))
             logging.info('Articles was printed as json')
         else:
             articles_handler.print_rss_articles(list_of_articles)

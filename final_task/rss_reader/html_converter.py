@@ -1,6 +1,9 @@
+"""Module converts articles to html file"""
 import os
+from typing import Optional
+
 from argparse_handler import check_the_connection
-from datetime import date
+import datetime
 import urllib.request
 
 from jinja2 import Environment, FileSystemLoader
@@ -9,7 +12,7 @@ from bs4 import BeautifulSoup
 directory_to_module = os.path.abspath(os.path.dirname(__file__))
 
 
-def convert_to_html(articles_list: list, path: str, rss_url: str) -> None:
+def convert_to_html(articles_list: list, path: str, rss_url: Optional[str]) -> None:
     """Converts articles to html format"""
     templates_path = os.path.join(directory_to_module, 'templates')
     env = Environment(loader=FileSystemLoader(templates_path))
@@ -20,7 +23,7 @@ def convert_to_html(articles_list: list, path: str, rss_url: str) -> None:
     connection_info = check_the_connection('https://www.google.com/')
     connection = connection_info == 'ok'
 
-    today = date.today().strftime("%B %d, %Y")
+    today = datetime.date.today().strftime("%B %d, %Y")
     if rss_url:
         source = urllib.request.urlparse(rss_url).hostname
         filename = f'{today} {source}.html'
@@ -43,3 +46,4 @@ def convert_to_html(articles_list: list, path: str, rss_url: str) -> None:
             the_file.write(pretty_html)
     except PermissionError:
         print('You need to run program as system administrator, to save files in that location')
+

@@ -265,3 +265,4 @@ python rss_reader.py http://feeds.bbci.co.uk/news/rss.xml?edition=uk
 python rss_reader.py "http://billmaher.hbo.libsynpro.com/rss"
 python rss_reader.py "https://www.craigslist.org/about/best/all/index.rss"
 ```
+`coverage run --source=. -m unittest discover -s .\tests`

@@ -1,3 +1,4 @@
+"""Module for arguments processing"""
 import argparse
 import datetime
 import logging
@@ -27,8 +28,8 @@ def check_if_help_or_version_in_arguments() -> Optional[str]:
 
 
 def check_the_arguments_amount() -> None:
-    """Checks if there only 1 argument and raises exception"""
-    if len(sys.argv) == 1:
+    """Checks if there 1 or 0 arguments and raises exception"""
+    if len(sys.argv) < 2:
         raise custom_error.NotEnoughArgumentsError
 
 
@@ -76,11 +77,8 @@ def check_the_connection(rss_url: str) -> str:
 
 def check_if_url_is_valid(rss_url: str) -> bool:
     """Checks if link is valid"""
-    try:
-        result = urllib.request.urlparse(rss_url)
-        return all([result.scheme, result.netloc, "." in result.netloc, len(result.netloc) > 2])
-    except ValueError:
-        return False
+    result = urllib.request.urlparse(rss_url)
+    return all([result.scheme, result.netloc, "." in result.netloc, len(result.netloc) > 2])
 
 
 def valid_url(rss_url: str) -> str:
@@ -99,11 +97,11 @@ def valid_url(rss_url: str) -> str:
         raise custom_error.NotValidUrlError(msg)
 
 
-def valid_limit(limit: str) -> Optional[int]:
+def valid_limit(limit: Optional[str]) -> Optional[int]:
     """Checks if limit is valid"""
     try:
         limit = int(limit)
-        if (limit is None) or (limit > 0):
+        if limit > 0:
             return limit
         else:
             msg = f"Not a valid limit value: '{limit}'"
@@ -126,7 +124,7 @@ def valid_date(date: str) -> datetime.datetime:
         raise custom_error.NotValidDateError(msg)
 
 
-def valid_directory_path(path: str, key: str) -> str:
+def valid_directory_path(path: str) -> str:
     """Checks if path is valid"""
     if not path.endswith(os.path.sep):
         path += os.path.sep
@@ -134,17 +132,7 @@ def valid_directory_path(path: str, key: str) -> str:
     if os.path.isdir(path):
         return path
     else:
-        raise custom_error.NotValidPathError(f'Not valid path to {key}: {path}')
-
-
-def valid_directory_html(path: str) -> str:
-    """Checks if path is valid"""
-    return valid_directory_path(path, 'html')
-
-
-def valid_directory_pdf(path: str) -> str:
-    """Checks if path is valid"""
-    return valid_directory_path(path, 'pdf')
+        raise custom_error.NotValidPathError(f'Not valid path: {path}')
 
 
 def create_parser(checker: str) -> argparse.ArgumentParser:
@@ -164,9 +152,9 @@ def create_parser(checker: str) -> argparse.ArgumentParser:
     parser.add_argument("--limit", type=valid_limit, default=None, help="Limit news topics if this parameter provided")
     parser.add_argument("--date", type=valid_date,
                         help="Prints the cashed news from the specified day. Format - %%Y%%m%%d")
-    parser.add_argument("--to-html", type=valid_directory_html,
+    parser.add_argument("--to-html", type=valid_directory_path,
                         help="Converts news to html")
-    parser.add_argument("--to-pdf", type=valid_directory_pdf,
+    parser.add_argument("--to-pdf", type=valid_directory_path,
                         help="Converts news to pdf")
     parser.add_argument("--colorize", action="store_true", help="Prints the result of the utility in colorized mode.")
     return parser

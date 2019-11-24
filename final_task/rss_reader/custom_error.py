@@ -1,3 +1,6 @@
+"""Module with custom exceptions"""
+
+
 class Error(Exception):
     """Base class for other exceptions"""
 
@@ -41,6 +44,7 @@ class NotValidLimitError(Error):
 
 
 class NoDataInCacheFileError(Error):
+    """Raised when trying to get articles from empty cache file"""
     pass
 
 
