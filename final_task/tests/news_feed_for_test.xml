@@ -1,0 +1,26 @@
+<rss
+xmlns:media="http://www.foo.com/">
+	<channel>
+		<title>
+			CHANNEL TITLE
+		</title>
+		<description>
+			CHANNEL DESCRIPTION
+		</description>
+		<link>CHANNEL LINK</link>
+
+		<item>
+			<title>ITEM1 TITLE</title>
+			<link>ITEM1 LINK</link>
+			<pubDate>2003-12-31</pubDate>
+			<media:content url="http://www.foo.com/bar.jpg"/>
+		</item>
+		<item>
+			<title>ITEM2 TITLE</title>
+			<link>ITEM2 LINK</link>
+			<pubDate>2003-12-31</pubDate>
+			<media:content url="http://www.foo.com/bar.jpg"/>
+		</item>
+
+	</channel>
+</rss>

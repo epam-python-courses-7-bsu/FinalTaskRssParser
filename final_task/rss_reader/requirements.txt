@@ -5,3 +5,4 @@ dominate == 2.4.0
 Pillow == 6.2.1
 requests == 2.22.0
 reportlab == 3.5.32
+colorama == 0.4.1

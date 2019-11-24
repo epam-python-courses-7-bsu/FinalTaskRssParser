@@ -9,25 +9,14 @@ from exceptions import DataBaseEmpty
 MODULE_LOGGER = logging.getLogger("rss_reader.database")
 
 
-def get_param_for_connect(filename) -> dict:
-    logger = logging.getLogger("rss_reader.database.get_param_for_connect")
-    logger.info("get param for connect from config.txt")
-    dict_parameters = {}
-    with open(filename, "r") as file:
-        for line in file:
-            key, value = line.split()
-            dict_parameters[key] = value
-    return dict_parameters
-
-
 def connect_to_database():
     logger = logging.getLogger("rss_reader.database.connect_to_database")
     logger.info("connect to database")
-    con = sqlite3.connect("database.db")  # или :memory: чтобы сохранить в RAM
+    con = sqlite3.connect("database.db")
     return con
 
 
-def is_table():
+def is_table(table_name: str) -> bool:
     logger = logging.getLogger("rss_reader.database.is_table")
     logger.info("check exist table")
     flag_is_table = True
@@ -35,7 +24,7 @@ def is_table():
         cursor = con.cursor()
 
         try:
-            cursor.execute("SELECT * FROM NEWS")
+            cursor.execute(f"SELECT * FROM {table_name}")
         except sqlite3.OperationalError:
             flag_is_table = False
 
@@ -45,7 +34,7 @@ def is_table():
 def create_table(con, cursor):
     logger = logging.getLogger("rss_reader.database.create_table")
     logger.info("create table")
-    if not is_table():
+    if not is_table("NEWS"):
         cursor.execute('''CREATE TABLE NEWS     
                      (FEED TEXT ,
                      SOURCE_LINK TEXT,
@@ -107,7 +96,3 @@ def read_news(list_of_news: list, limit: int, source_link, date_of_news: datetim
     if not list_of_news:
         raise DataBaseEmpty(Exception("Your news story on is empty "))
 
-
-def clear_the_history(connect, cursor):
-    cursor.execute('DELETE  FROM NEWS')
-    connect.commit()

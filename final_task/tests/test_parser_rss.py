@@ -1,4 +1,5 @@
 import sys
+import os
 
 sys.path.insert(1, 'final_task/rss_reader')
 from parser_rss import *
@@ -6,6 +7,8 @@ from News import News
 import unittest
 from io import StringIO
 from unittest.mock import patch
+import feedparser
+import print_functions
 
 
 class TestParserRss(unittest.TestCase):
@@ -38,6 +41,13 @@ the Russian military intelligence service, according to a Western intelligence s
         self.result += '\n'
         self.result += '-' * 100
 
+        if os.path.isfile('final_task/tests/news_feed_for_test.xml'):
+            self.url = 'final_task/tests/news_feed_for_test.xml'
+        else:
+            self.url = 'news_feed_for_test.xml'
+
+        self.news_feed = feedparser.parse(self.url)
+
     def test_clear_text(self):
         self.assertEqual(clear_text("&#39;"), "'")
 
@@ -66,11 +76,18 @@ the Russian military intelligence service, according to a Western intelligence s
         with self.assertRaises(URLError) as error:
             get_news_feed(" https://news.tut.by/")
         self.assertEqual(str(error.exception), '<urlopen error not well-formed (invalid token)>')
+        self.assertEqual(get_news_feed(self.url), self.news_feed)
 
     def test_print_news(self):
         with patch('sys.stdout', new=StringIO()) as fake_out_put:
-            print_news([self.item, ])
+            print_functions.print_news([self.item, ])
             self.assertEqual(fake_out_put.getvalue().strip(), self.result)
+
+    def test_init_list_of_news(self):
+
+        list_of_news = []
+        init_list_of_news(list_of_news, self.news_feed, 2)
+        self.assertEqual(len(list_of_news), 2)
 
     def test_print_news_in_json(self):
         self.result = "[\n"
@@ -88,7 +105,7 @@ the Russian military intelligence service, according to a Western intelligence s
         self.result += "    }\n"
         self.result += "]"
         with patch('sys.stdout', new=StringIO()) as fake_out_put:
-            print_news_in_json([self.item, ])
+            print_functions.print_news_in_json([self.item, ])
             self.assertEqual(fake_out_put.getvalue().strip(), self.result)
 
     if __name__ == '__main__':

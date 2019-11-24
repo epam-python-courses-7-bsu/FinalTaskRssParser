@@ -16,28 +16,29 @@ from reportlab.pdfgen.canvas import Canvas
 MODULE_LOGGER = logging.getLogger("rss_reader.converter")
 
 
-def get_path(path, expansion_file):
+def get_path(path: str, expansion_file: str) -> str:
     logger = logging.getLogger("rss_reader.converter.get_path")
     logger.info("return correct path")
-    if not fnmatch.fnmatch(path, '*%s' % expansion_file):
-        raise FileNotFoundError("Invalid expansion ")
-    if not os.path.isdir(path[:path.rfind("/")]):
-        raise FileNotFoundError("File or directory not found")
-    result = path
+    if os.path.isdir(path):
+        result = path + 'News' + expansion_file
+    else:
+        if not fnmatch.fnmatch(path, '*%s' % expansion_file):
+            raise FileNotFoundError("Invalid expansion ")
+        if not os.path.isdir(path[:path.rfind("/")]):
+            raise FileNotFoundError("File or directory not found")
+        result = path
     return result
 
 
-def conversion_of_news_in_html(path, list_of_news: list):
+def get_html(list_of_news: list):
     logger = logging.getLogger("rss_reader.converter.conversion_of_news_in_html")
     logger.info("conversion of news in html")
-    correct_path = get_path(path, ".html")
-    with open(correct_path, 'w') as file:
-        for news in list_of_news:
-            doc = dominate.document(title='RSS READER')
-            with doc.head:
-                tags.link(rel='stylesheet', href='style.css')
-                tags.script(type='text/javascript', src='script.js')
-                tags.style("""\
+    doc = dominate.document(title='RSS READER')
+    for news in list_of_news:
+        with doc.head:
+            tags.link(rel='stylesheet', href='style.css')
+            tags.script(type='text/javascript', src='script.js')
+            tags.style("""\
                      body {
                          background-color: #F9F8F1;
                          color: #2C232A;
@@ -48,29 +49,40 @@ def conversion_of_news_in_html(path, list_of_news: list):
 
                  """)
 
-            with doc:
-                with tags.div(id='header'):
-                    tags.p("Feed: ", news.feed)
-                    tags.p("Title: ", news.title)
-                    tags.p("Date ", str(news.date))
-                    tags.p("Link: ", tags.a(news.link.title(), href=news.link, target="_blank"))
-                    tags.p("Info about image: ", news.info_about_image)
-                    tags.p("Briefly about news: ", news.briefly_about_news)
-                    tags.p("Links: ", )
-                    for reference in news.links_from_news:
-                        if reference:
-                            tags.li(tags.a(reference.title(), href=reference, target="_blank"))
-                    if news.links_from_news[1]:
-                        tags.a(tags.img(
-                            src=news.links_from_news[1],
-                            width="200", height="200", alt=news.info_about_image),
-                            href=news.links_from_news[1], target="_blank")
+        with doc:
+            with tags.div(id='header'):
+                tags.p("Feed: ", news.feed)
+                tags.p("Title: ", news.title)
+                tags.p("Date ", str(news.date))
+                tags.p("Link: ", tags.a(news.link.title(), href=news.link, target="_blank"))
+                tags.p("Info about image: ", news.info_about_image)
+                tags.p("Briefly about news: ", news.briefly_about_news)
+                tags.p("Links: ", )
+                for reference in news.links_from_news:
+                    if reference:
+                        tags.li(tags.a(reference.title(), href=reference, target="_blank"))
+                if news.links_from_news[1]:
+                    tags.a(tags.img(
+                        src=news.links_from_news[1],
+                        width="200", height="200", alt=news.info_about_image),
+                        href=news.links_from_news[1], target="_blank")
 
-            file.write(doc.render())
-        print("news successfully saved to file  ", path)
+    return doc
 
 
-def get_img(name, reference):
+def conversion_of_news_in_html(path, list_of_news):
+    correct_path = get_path(path, ".html")
+    html_content = get_html(list_of_news)
+    save_html(correct_path, html_content)
+
+
+def save_html(path, html_content):
+    with open(path, 'w') as file:
+        file.write(html_content.render())
+    print("news successfully saved to file  ", path)
+
+
+def get_img(image_name, reference):
     logger = logging.getLogger("rss_reader.converter.get_img")
     logger.info("return img")
     is_picture = False
@@ -79,7 +91,7 @@ def get_img(name, reference):
         img = Image.open(BytesIO(response.content))
         img = img.resize((100, 100))
         img = img.convert('RGB')
-        img.save(name, 'JPEG')
+        img.save(image_name, 'JPEG')
         is_picture = True
     except requests.exceptions.ConnectionError:
         logger = logging.getLogger("rss_reader.converter.get_img")
@@ -113,18 +125,6 @@ def print_text_in_pdf(canvas, text, x, y):
             y = 800
         y -= 25
         canvas.drawString(x, y, lines)
-    return y - 25
-
-
-def print_line_in_pdf(canvas, line, x, y):
-    logger = logging.getLogger("rss_reader.converter.print_line_in_pdf")
-    logger.info("print line in pdf")
-    if y < 25:
-        canvas.showPage()
-        canvas.setFont('FreeSans', 19)
-        y = 900
-    y -= 25
-    canvas.drawString(x, y, line)
     return y - 25
 
 
@@ -163,4 +163,4 @@ def conversion_of_news_in_pdf(path, list_of_news):
             y = 800
     logger.info("save news in pdf")
     canvas.save()
-    print("news successfully saved to file  ", path)
+    print("news successfully saved to file  ", correct_path)

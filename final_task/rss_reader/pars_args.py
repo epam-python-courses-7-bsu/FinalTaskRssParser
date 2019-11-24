@@ -11,7 +11,7 @@ def create_parser():
     logger.info("parse the command line ")
     parser = argparse.ArgumentParser(
         prog='rss_reader',
-        description=''' This program which receives RSS URL 
+        description=''' This program receives RSS URL 
                         and prints results in human-readable format.''',
         epilog='''Thank you for using this program'''
 
@@ -22,7 +22,7 @@ def create_parser():
 
     parser.add_argument('source', type=str, default="not url", help='RSS URL')
 
-    parser.add_argument('--version', action='version', help='Print version info', version='%s' % "4.0")
+    parser.add_argument('--version', action='version', help='Print version info', version=f'{5.0}')
 
     parser.add_argument('--json', action='store_const', const=True, default=False,
                         help='Print result as JSON in stdout')
@@ -38,6 +38,8 @@ def create_parser():
                         help='the conversion of news in html file')
     parser.add_argument('--to-pdf', type=str, metavar='PATH', default=None,
                         help='the conversion of news in pdf file')
+    parser.add_argument('--colorize', action='store_const', const=True, default=False,
+                        help='print news in multi colored format')
     return parser
 
 

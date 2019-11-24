@@ -1,16 +1,16 @@
 import datetime
-import json
+import html
+import logging
 import re
 import signal
-import logging
 from contextlib import contextmanager
 from urllib.error import URLError
+
 import feedparser
 from dateutil import parser
+
 import News
-import html
 from exceptions import TimeOutExeption
-from pars_args import get_args
 
 MODULE_LOGGER = logging.getLogger("rss_reader.parser_rss")
 
@@ -39,6 +39,17 @@ def valid_date(date_text):
     except ValueError:
         raise ValueError("Incorrect data format, should be YYYYMMDD")
     return date
+
+
+def get_link_image(summary: str) -> str:
+    """
+
+    """
+    tag = 'img src='
+    begin_position_link_img = summary.find(tag) + len(tag) + 1
+    end_position_link_img = summary.find('"', begin_position_link_img)
+    link = summary[begin_position_link_img:end_position_link_img + 1]
+    return link
 
 
 def clear_text(text: str) -> str:
@@ -99,7 +110,11 @@ def init_list_of_news(
         link = entry['link']
         info_about_image = get_info_about_image(summary)
         briefly_about_news = get_briefly_about_news(summary)
-        link_on_image = entry.get("media_content")[0]["url"]
+        try:
+            link_on_image = entry.get("media_content")[0]["url"]
+        except TypeError:
+            link_on_image = "link not found"
+            info_about_image = "info about image not found"
         news = News.News(feed=feed_title,
                          title=title,
                          date=date,
@@ -112,44 +127,9 @@ def init_list_of_news(
         list_of_news.append(news)
 
 
-def print_news(list_of_news: list):
-    """
-    This function print news in the console
-    :param feed_title:
-    :param list_of_news:
-    :return:
-    """
-    logger = logging.getLogger("rss_reader.parser_rss.print_news")
-    logger.info("print news in the console")
-    for number, news in enumerate(list_of_news):
-        print(number + 1)  # because number starts at 0
-        print(news)
-        print('-'*100)
 
 
-def print_news_without_cashing():
-    try:
-        args = get_args()
-        list_of_news = []
-        news_feed = get_news_feed(args.source)
-        init_list_of_news(list_of_news, news_feed, args.limit)
-        if args.json:
-            print_news_in_json(list_of_news)
-        else:
-            print_news(list_of_news)
-    except URLError as er:
-        print(er)
 
 
-def print_news_in_json(list_of_news: list):
-    """
-    This function print news in the console in json format
-    :param list_of_news:
-    :return:
-    """
-    logger = logging.getLogger("rss_reader.parser_rss.print_news_in_json")
-    logger.info("print news in the console in json format")
-    list_of_news_in_json = []
-    for news in list_of_news:
-        list_of_news_in_json.append(news.get_json())
-    print(json.dumps(list_of_news_in_json, indent=4, ensure_ascii=False))
+
+

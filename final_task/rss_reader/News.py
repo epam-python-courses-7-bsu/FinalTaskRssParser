@@ -44,12 +44,10 @@ class News:
             if link:
                 links += "[" + str(index) + "] " + link + "\n"
 
-        return "Feed: %s\n" \
-               "Title: %s \n" \
-               "Date: %s \n" \
-               "Link: %s\n" \
-               "Info about image: %s\n" \
-               "Briefly about news: %s\n" \
-               "Links: \n%s" % (self.feed, self.title, self.date,
-                                self.link, self.info_about_image,
-                                self.briefly_about_news, links)
+        return f"Feed: {self.feed}\n" \
+               f"Title: {self.title} \n" \
+               f"Date: {self.date} \n" \
+               f"Link: {self.link}\n" \
+               f"Info about image: {self.info_about_image}\n" \
+               f"Briefly about news: {self.briefly_about_news}\n" \
+               f"Links: \n{links}"

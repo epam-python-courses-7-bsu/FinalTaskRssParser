@@ -9,6 +9,7 @@ import database
 import pars_args
 import parser_rss
 from exceptions import DataBaseEmpty
+import print_functions
 
 
 def main():
@@ -48,9 +49,15 @@ def main():
                 parser_rss.init_list_of_news(list_of_news, news_feed, args.limit)
                 database.write_to(list_of_news, args.source, cursor)
             if args.json:
-                parser_rss.print_news_in_json(list_of_news)
+                if args.colorize:
+                    print_functions.print_news_in_json_in_multi_colored_format(list_of_news)
+                else:
+                    print_functions.print_news_in_json(list_of_news)
             else:
-                parser_rss.print_news(list_of_news)
+                if args.colorize:
+                    print_functions.print_news_in_multi_colored_format(list_of_news)
+                else:
+                    print_functions.print_news(list_of_news)
             if args.to_html:
                 converter.conversion_of_news_in_html(args.to_html, list_of_news)
             if args.to_pdf:
@@ -58,7 +65,7 @@ def main():
             con.commit()
 
     except sqlite3.OperationalError as er:
-        parser_rss.print_news_without_cashing()
+        print_functions.print_news_without_cashing()
         print("Check your database,"
               "news is not saved "
               "you cannot use --date\n"
@@ -73,6 +80,8 @@ def main():
     except ValueError as v:
         print(v)
     except FileNotFoundError as e:
+        print(e)
+    except Exception as e:
         print(e)
 
 

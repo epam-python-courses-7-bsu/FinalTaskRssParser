@@ -6,12 +6,12 @@ positional arguments:
   source         RSS URL
 
 optional arguments:
-  -h, --help     show this help message and exit
+  -h, --help     Show this help message and exit
   --version      Print version info
   --json         Print result as JSON in stdout
   --verbose      Outputs verbose status messages
   --limit LIMIT  Limit news topics if this parameter provided
-  --date DATE    to search in cache for news by date in the format in YYYYmmdd
+  --date DATE    To search in cache for news by date in the format in YYYYmmdd
 
 
 
@@ -27,13 +27,14 @@ Example : rss-reader  https://news.yahoo.com/rss
 News caching: 
 In order to see the history you must enter an additional parameter --date
 Example: rss-reader https://news.tut.by/rss/ --limit 2 --date 20191122
-Search by date and source
+Searching by date and source
 
 Format converter:
 1)Use --to-pdf to save news in pdf format
 2)Use --to-html to save news in html format
 3)If no internet connection, get a file without images
-4)Enter the full path to the file
+4)Enter the full path to the file 
+5)If you enter path to directory,news successfully saved to file "your path+News.(pdf or html)"
 
 
 
