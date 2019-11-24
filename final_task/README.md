@@ -16,7 +16,7 @@ optional arguments:
 ````
 JSON structure:
 ```
-{
+[
 	{
 		"title":   "A black man was put in handcuffs after a police officer stopped him on a trainplatform because he was eating",
 		"article": "Bay Area Rapid Transit police said Steve Foster, of Concord, California,violated state law by eating a sandwich on a BART station's platform.  ",
@@ -31,7 +31,7 @@ JSON structure:
 		...
 	},
 	...
-}
+]
 ```
 
 ## Iteration 2

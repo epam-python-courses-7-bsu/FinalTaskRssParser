@@ -1,4 +1,4 @@
 html2text
 dateutil
-jinja
+jinja2
 xhtml2pdf

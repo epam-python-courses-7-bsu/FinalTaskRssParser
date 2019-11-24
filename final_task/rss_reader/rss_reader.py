@@ -5,7 +5,7 @@ import json
 import logging
 import sys
 from dataclasses import asdict
-from xhtml2pdf import pisa
+import jinja2.exceptions
 
 
 import ClassNews
@@ -13,7 +13,8 @@ import CSVEntities
 import ToPDF
 import ToHTML
 
-VERSION = 1.1
+
+VERSION = 1.4
 
 
 def args_parser(args):
@@ -25,7 +26,7 @@ def args_parser(args):
     parser.add_argument('--verbose', action='store_true', help='Outputs verbose status messages')
     parser.add_argument('--limit', type=int, help='Limit news topics if this parameter provided')
     parser.add_argument('--date', type=str, help='Date for selecting topics')
-    parser.add_argument('--to-pdf', type=str,help ='Convert news to pdf')
+    parser.add_argument('--to-pdf', type=str, help='Convert news to pdf')
     parser.add_argument('--to-html', type=str, help='Convert news to html')
 
     res_args = parser.parse_args(args)
@@ -48,7 +49,6 @@ def get_dict_from_xml(rss_request, limit):
 
 
 def get_request(args_source, timeout=None):
-
     logging.info('Start parsing')
     rss_request = requests.get(args_source, timeout=timeout)
 
@@ -56,14 +56,38 @@ def get_request(args_source, timeout=None):
     status_code = rss_request.status_code
     logging.info("Status code {}".format(status_code))
     rss_request.raise_for_status()
-
     return rss_request
+
+
+def articles_to_dict_articles(res_articles):
+    dict_articles = []
+    for article in res_articles:
+        dict_articles.append(asdict(article))
+    return dict_articles
+
+
+def print_list(res_list):
+    for article in res_list:
+        print(article)
+
+
+def convert_to_pdf(list_articles, path):
+    ToPDF.print_article_list_to_pdf(list_articles, path)
+
+
+def convert_to_html(list_articles, path):
+    ToHTML.print_article_list_to_html(list_articles, path)
+
+
+def convert_articles_to_json(res_dict_articles):
+    json_articles = json.dumps(res_dict_articles, indent=4)
+    return json_articles
+
 
 def main():
     try:
         args = args_parser(sys.argv[1:])
         res_dict_articles = []
-        result_articles = []
         logging_level = logging.CRITICAL
         if args.verbose:
             logging_level = logging.INFO
@@ -91,42 +115,36 @@ def main():
                 print("\nFeed: {}".format(main_title))
                 result_articles = ClassNews.dicts_to_articles(res_dict_articles)
 
-                for article in result_articles:
-                    print(article)
+                print_list(result_articles)
 
                 res = CSVEntities.csv_to_python(result_articles, "datecsv.csv")
             else:
                 logging.info(rss_request.headers['content-type'])
                 logging.warning('We received not an xml file from api, sorry')
 
-
         if args.date:
             logging.info('Print news by date: ')
             result_articles = CSVEntities.return_news_to_date(args.date, "datecsv.csv", args.limit)
-
+            res_dict_articles = articles_to_dict_articles(result_articles)
             if result_articles:
-                for article in result_articles:
-                    res_dict_articles.append(asdict(article))
-                    if not (args.to_html or args.to_pdf):
-                        print(article)
+                if not (args.to_html or args.to_pdf):
+                    print_list(result_articles)
             else:
-                print("We don't have any news in cache %s"%args.date)
+                print("We don't have any news in cache %s" % args.date)
 
         if args.json and res_dict_articles:
             logging.info('Print result as JSON in stdout')
-            json_articles = json.dumps(res_dict_articles, indent=4)
-            print(json_articles)
-        if args.to_pdf and result_articles:
-            ToPDF.print_article_list_to_pdf(result_articles, args.to_pdf)
-        if args.to_html and result_articles:
-            ToHTML.print_article_list_to_html(result_articles, args.to_html)
+            print(convert_articles_to_json(res_dict_articles))
+        if args.to_pdf:
+            convert_to_pdf(result_articles, args.to_pdf)
+
+        if args.to_html:
+            convert_to_html(result_articles, args.to_html)
 
     except requests.exceptions.InvalidSchema:
         logging.critical('It is not http request!')
-    except requests.exceptions.ConnectTimeout:
+    except requests.exceptions.Timeout:
         logging.critical('Time to connect is out')
-    except requests.exceptions.ReadTimeout:
-        logging.critical('Time to read is out')
     except requests.exceptions.HTTPError as httpserr:
         logging.critical("Sorry, page not found")
     except requests.exceptions.InvalidURL:
@@ -134,8 +152,14 @@ def main():
     except requests.exceptions.ConnectionError:
         logging.critical("Sorry, you have an proxy or SSL error")
         # A proxy or SSL error occurred.
-    except pisa:
-        logging.critical("Sorry, you have problem with converting to pdf")
+    except ToPDF.PisaError:
+        logging.critical(ToPDF.PisaError.message)
+    except FileNotFoundError:
+        logging.critical("Sorry, path do not exist")
+    except PermissionError:
+        logging.critical("Sorry, you do not have access to this file.")
+    except jinja2.exceptions.TemplateNotFound:
+        logging.critical("Sorry, you forgot the template")
 
 
 if __name__ == '__main__':

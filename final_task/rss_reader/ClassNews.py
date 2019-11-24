@@ -40,7 +40,7 @@ def dicts_to_articles(dict_list):
     """This function receive list of dictionaries and convert it to list of articles """
     article_list = []
     for item in dict_list:
-        article_list.append(Article(item['title'], item['date'], item['link'], item['article'], item['links']))
+        article_list.append(Article(**item))
     return article_list
 
 def html_text_to_list_links(html_links):

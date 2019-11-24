@@ -1,9 +1,14 @@
 from jinja2 import Environment, FileSystemLoader
+import os
+
+FILENAME_HTML = "articles.html"
 
 
 def print_article_list_to_html(list_articles, path):
+    if not os.path.exists(path):
+        raise FileNotFoundError
     html_stream = print_article_list(list_articles)
-    with open(path, "w", encoding='utf-8') as html:
+    with open(os.path.join(path, FILENAME_HTML), "w", encoding='utf-8') as html:
         html.write(html_stream)
 
 
