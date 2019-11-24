@@ -4,9 +4,10 @@ from fpdf import FPDF
 from News import News
 from dominate.tags import html, head, meta, body, div, img, p, b, br, h1, a
 
+from Log import log_decore
 from RssException import RssException
 
-
+@log_decore
 def convert_Dict_to_News(arr_news_dict):
     all_news = []
     for item_news in arr_news_dict:
@@ -20,8 +21,8 @@ def convert_Dict_to_News(arr_news_dict):
         all_news.append(item_of_list_news)
     return all_news
 
-
-def create_html_news(path, News=[]):
+@log_decore
+def create_html_news(path, News):
     try:
         os.path.isdir(path) is False
     except:
@@ -61,8 +62,8 @@ def create_html_news(path, News=[]):
     except FileNotFoundError:
         raise RssException('Error. No such folder\n')
 
-
-def create_pdf_news(path, News=[]):
+@log_decore
+def create_pdf_news(path, News):
     try:
         os.path.isdir(path) is False
     except:

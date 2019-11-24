@@ -14,9 +14,9 @@ pass the dictionary to a function and write to a file json
 def save_img(url, name):
     if os.path.exists("images"):
         if name.find(".jpg") == -1:
-            urllib.request.urlretrieve(url, f"images/{name}.jpg")
+            urllib.request.urlretrieve(url, f'images/{name}.jpg')
         else:
-            urllib.request.urlretrieve(url, f"images/{name}")
+            urllib.request.urlretrieve(url, f'images/{name}')
     else:
         os.makedirs("images")
         urllib.request.urlretrieve(url, f"images/{name}.jpg")
@@ -33,7 +33,8 @@ def write_json_to_cache(entry_dict):
 
     if not [item_news for item_news in load_news if item_news["title"] == entry_dict["title"]]:
         load_news.append(entry_dict)
-        save_img(entry_dict["links"][0], entry_dict["title"][:15])
+        if(entry_dict["links"][0] != ''):
+            save_img(entry_dict["links"][0], entry_dict["title"][:15])
 
     with open("cache.json", "w") as cache:
         json.dump(load_news, cache, indent=3)
