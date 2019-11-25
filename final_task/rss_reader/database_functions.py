@@ -1,21 +1,23 @@
 import logging
 import sqlite3
 import json
+from contextlib import closing
+from information_about_news import InfoAboutNews
 
 
-def check_existance() -> bool:
-    con = open_database()
-    flag = False
-    try:
-        if con:
-            cur = con.cursor()
-            cur.execute("SELECT * from cache")
-            logging.debug("Table exists")
-            flag = True
-            con.close()
-    except Exception:
+def check_existance(name) -> bool:
+    with closing(open_database()) as con:
         flag = False
-    return flag
+        try:
+            if con:
+                cur = con.cursor()
+                cur.execute("SELECT * from " + name)
+                logging.debug("Table exists")
+                flag = True
+        except Exception:
+            flag = False
+        return flag
+
 
 def create_table():
     con = open_database()
@@ -25,6 +27,7 @@ def create_table():
                     "UNIQUE (title, date) ON CONFLICT IGNORE)")
         con.commit()
     con.close()
+
 
 def open_database():
     con = None
@@ -37,46 +40,34 @@ def open_database():
         logging.error(error)
         return None
 
+
 def put_into_db(url, title, date, text, link, link_of_img):
     """ Writes infomation about news in database"""
 
-    exists = check_existance()
+    exists = check_existance("cache")
     if not exists:
         create_table()
-    con = open_database()
-    if con:
-        cur = con.cursor()
-        if date.tm_hour >= 21:
-            date_of_publishing = (str(date.tm_year) + (str(date.tm_mon)) + (str(date.tm_mday + 1)))
-        else:
+    with closing(open_database()) as con:
+        if con:
+            cur = con.cursor()
             date_of_publishing = (str(date.tm_year) + (str(date.tm_mon)) + (str(date.tm_mday)))
-        cur.execute("INSERT INTO cache VALUES (?, ?, ?, ?, ?, ?)", (url, title, date_of_publishing, text, link, link_of_img))
-        con.commit()
-    return None
+            cur.execute("INSERT INTO cache VALUES (?, ?, ?, ?, ?, ?)", (url, title, date_of_publishing, text, link,
+                                                                        link_of_img))
+            con.commit()
+
 
 def json_from_cashe(rows):
     """ Convets news from cache in json format"""
 
     list_to_json_format = []
     for row in rows:
-        dictionary = {"Title": row[1],
-                      "Date": row[2],
-                      "Description": row[3],
-                      "Link [1]": row[4]}
-        if row[5] != "":
-            dictionary.update({"Link [2]": row[5]})
+        news_info = InfoAboutNews(row)
+        dictionary = {"Title": news_info.title,
+                      "Date": news_info.date,
+                      "Description": news_info.description,
+                      "Link [1]": news_info.link}
+        if news_info.link_of_img:
+            dictionary.update({"Link [2]": news_info.link_of_img})
         list_to_json_format.append(dictionary)
-    jsonData = json.dumps(list_to_json_format, indent=5, ensure_ascii=False)
-    print(jsonData)
-    return None
-
-def printing(args):
-    """ Just prints news"""
-
-    if args[5] != "":
-        print("Title: %s\nDate: %s\nLink: %s\n\n%s\n\nLinks:\n[1]: %s\n[2]: %s" %
-              (args[1], args[2], args[4], args[3], args[4], args[5]))
-    else:
-        print("Title: %s\nDate: %s\nLink: %s\n\n%s\n\nLinks:\n[1]: %s" %
-              (args[1], args[2], args[4], args[3], args[4]))
-    print("__________________________________________________________________")
+    json_data = json.dumps(list_to_json_format, indent=5, ensure_ascii=False)
+    print(json_data)

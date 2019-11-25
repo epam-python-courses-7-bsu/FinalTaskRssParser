@@ -9,8 +9,7 @@ After that you can install our app, enter 'python setup.py install' in command l
 in folder final_task, where setup.py is lying.
 By this point if you want to launch the application, enter 'rss-reader [arguments]'.
 
-For work with conversion, you should download font ARIALUNI TTF, you can do it from the website
-https://brushez.com/arialuni-ttf-2.html, put it into folder rss_reader.
+For work with conversion, in your folder rss_reader should be ARIALUNI.ttf.
 
 USING
 ------------

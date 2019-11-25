@@ -1,6 +1,7 @@
 import argparse
 import logging
 
+
 def parse_args():
     parser = argparse.ArgumentParser(description="Pure Python command-line RSS reader.")
     parser.add_argument("source", help="RSS url")
@@ -15,6 +16,7 @@ def parse_args():
                         help="Convert news in pdf format, need path, where the file will be saved")
     args = parser.parse_args()
     return args
+
 
 def get_args(args):
     source = args.source
@@ -43,4 +45,10 @@ def get_args(args):
     if args.to_pdf:
         to_pdf = True
         path = args.to_pdf
-    return [source, limit, json, date, path, to_html, to_pdf]
+    return {"url": source,
+            "lim": limit,
+            "json": json,
+            "date": date,
+            "path": path,
+            "html": to_html,
+            "pdf": to_pdf}
