@@ -7,7 +7,7 @@ with open(path.join(directory, 'README.md'), encoding='utf-8') as project_descri
     long_description = project_description.read()
 
 setup(
-    name='rss-reader_5.0',
+    name='rss-reader',
     version='5.0',
     packages=find_packages(),
     include_package_data=True,
