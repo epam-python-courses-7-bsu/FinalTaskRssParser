@@ -9,6 +9,7 @@ The recommended way to install rss-reader is with pip:
 ```
 usage: rss_reader.py [-h] [--limit LIMIT] [--version] [--json] [--verbose]
                      [--date DATE] [--to_pdf TO_PDF] [--to_epub TO_EPUB]
+                     [--colorize]
                      [source]
 
 Pure Python command-line RSS reader.
@@ -22,9 +23,10 @@ optional arguments:
   --version          Print version info
   --json             Print result as JSON in stdout
   --verbose          Outputs verbose status messages
-  --date DATE        Return news from cache with that date.
-  --to_pdf TO_PDF    Conversion of news in the pdf format.
-  --to_epub TO_EPUB  Conversion of news in the ___ format.
+  --date DATE        Return news from cache with that date
+  --to_pdf TO_PDF    Conversion of news in the pdf format
+  --to_epub TO_EPUB  Conversion of news in the epub format
+  --colorize         Print news in colorized mode in stdout
 ```
 
 To run the program from the command line, you must write the file name and string with URL-address of news site.
@@ -55,7 +57,7 @@ aWQ9eXRhY2h5b247aD04Njt3PTEzMDs-/https://media.zenfs.com/en-US/business_insider_
 articles_888/7a21ff2ee09c3b4285094c4e64e9602c
 ```
 ###Nice features
-You can To please the eyes you can read the news from console in a colorful format.
+To please the eyes you can read news from console in a colorful format.
 For this enter such parameter like --colorize and enjoy.
 
 But this parameter work only for MAC and Linux console.

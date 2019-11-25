@@ -21,13 +21,13 @@ def arg_parse(args):
     parser.add_argument("--verbose", action="store_true",
                         help="Outputs verbose status messages")
     parser.add_argument("--date", type=str,
-                        help="Return news from cache with that date.")
+                        help="Return news from cache with that date")
     parser.add_argument("--to_pdf", type=str,
-                        help="Conversion of news in the pdf format.")
+                        help="Conversion of news in the pdf format")
     parser.add_argument("--to_epub", type=str,
-                        help="Conversion of news in the epub format.")
+                        help="Conversion of news in the epub format")
     parser.add_argument("--colorize", action="store_true",
-                        help="Print the result of the utility in colorized mode")
+                        help="Print news in colorized mode in stdout")
     return parser.parse_args(args)
 
 
