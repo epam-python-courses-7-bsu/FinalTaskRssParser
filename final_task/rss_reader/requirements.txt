@@ -1,0 +1,9 @@
+feedparser==5.2.1
+argparse==1.4.0
+jsonpickle==1.2
+tinydb==3.15.1
+requests==2.22.0
+dominate==2.4.0
+beautifulsoup4==4.8.1
+fpdf==1.7.2
+colorama==0.4.1
