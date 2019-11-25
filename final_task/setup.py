@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="rss-reader_scarzdz",
-    version="0.3",
+    version="0.3.post1",
     url="https://github.com/scarzdz/FinalTaskRssParser",
     license="MIT",
     author="Denis Marfonov",
