@@ -49,21 +49,39 @@ def add_news_to_pdf_file(news, pdf, com_line_args, logger):
     pdf.set_text_color(0, 255, 0)
     pdf.ln(10)
     pdf.multi_cell(0, 10, align="C", txt="News")
+    pdf.set_text_color(0, 0, 255)
+    pdf.write(10, "Feed title: ")
     pdf.set_text_color(0, 0, 0)
-    pdf.multi_cell(0, 10, txt=f"Feed title: {news.feed_title}")
-    pdf.multi_cell(0, 10, txt=f"News title: {news.title}")
-    pdf.multi_cell(0, 10, txt=f"News publication date: {news.date}")
-    pdf.multi_cell(0, 10, txt=f"Summary: {news.summary}")
+    pdf.multi_cell(0, 10, txt=f" {news.feed_title}")
+    pdf.set_text_color(0, 0, 255)
+    pdf.write(10, "News title: ")
+    pdf.set_text_color(0, 0, 0)
+    pdf.multi_cell(0, 10, txt=f"{news.title}")
+    pdf.set_text_color(0, 0, 255)
+    pdf.write(10, "News publication date: ")
+    pdf.set_text_color(0, 0, 0)
+    pdf.multi_cell(0, 10, txt=f"{news.date}")
+    pdf.set_text_color(0, 0, 255)
+    pdf.write(10, "Summary: ")
+    pdf.set_text_color(0, 0, 0)
+    pdf.multi_cell(0, 10, txt=f"{news.summary}")
+    pdf.set_text_color(0, 0, 255)
+    pdf.write(10, "News link: ")
+    pdf.set_text_color(0, 0, 0)
 
-    pdf.write(10, f"News link: {news.link}")
+    pdf.multi_cell(0, 10, txt=f"{news.link}")
 
     if news.image_links:
         if com_line_args.date:
+            pdf.set_text_color(0, 0, 255)
             pdf.write(10, "Images links: ")
+            pdf.set_text_color(0, 0, 0)
             for num, image_link in enumerate(news.image_links):
                 pdf.write(10, f"[{num + 1}]: {image_link}" + '\n')
         else:
+            pdf.set_text_color(0, 0, 255)
             pdf.write(10, "Images to summary: ")
+            pdf.set_text_color(0, 0, 0)
             for num, img_link in enumerate(news.image_links):
                 add_image(num + 1, img_link, pdf, logger)
 
@@ -79,7 +97,7 @@ def add_image(num, image_link, pdf, logger):
         logger.info(f"Image from {image_link} is not in an appropriate format.")
         pdf.write(10, f"[{num}]: {image_link}" + '\n')
     else:
-        pdf.image(filename, x=50, y=pdf.get_y(), h=50, type=image_format, link=image_link)
+        pdf.image(filename, x=50, y=pdf.get_y(), h=30, type=image_format, link=image_link)
         pdf.ln(50)
         os.remove(filename)
 
@@ -120,7 +138,7 @@ def add_news_to_html_file(news, html_file, com_line_args):
                 if com_line_args.date:
                     b("Images links: ")
                     for image_link in news.image_links:
-                        a("Image link", href=image_link)
+                        a("Link to image", href=image_link)
                 else:
                     b("Images to summary: ")
                     for img_link in news.image_links:

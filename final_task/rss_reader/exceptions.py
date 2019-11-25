@@ -14,6 +14,10 @@ class EmptyCollectionError(Error):
     pass
 
 
+class ComLineArgError(Error):
+    pass
+
+
 class FilePathError(Error):
     pass
 

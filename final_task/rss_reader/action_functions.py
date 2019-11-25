@@ -3,23 +3,21 @@
     Functions:
     create_logger(com_line_args) -> logger
     get_com_line_args() -> com_line_args
-    clean_str(string) -> clean_string
     get_news(command_line_args, logger) -> news_collection
     print_news_stdout(news_collection) -> None
     print_news_json(news_collection) -> None
     print_news(news_collection, com_line_args, logger) -> None
     print_cache_news(news_collection, logger) -> None
     print_cache_news_json(news_collection, logger) -> None
-    convert_date(date_str, logger) -> str_date   """
+    convert_date(date_str, logger) -> str_date
+    clean_str(string) -> clean_string """
 
 import feedparser
-import re
 from bs4 import BeautifulSoup
 import html
 import argparse
 import json
 import logging
-
 from datetime import datetime
 from exceptions import Error
 from models import NewsEntry
@@ -61,9 +59,8 @@ def create_logger(com_line_args):
 def get_com_line_args():
     """ Function to get command line arguments. """
     parser = argparse.ArgumentParser(description="Pure Python command-line RSS reader.", add_help=True)
-    parser.add_argument("source", type=str, nargs="?", help="RSS URL")
     parser.add_argument("--date", type=convert_date,
-                        help="Gets a date in %Y%m%d format. Print news from the specified date.")
+                        help="Gets a date in %%Y%%m%%d format. Print news from the specified date.")
     parser.add_argument("--to-html", type=str,
                         help="Gets file path. Convert news to html and save them to html file.")
     parser.add_argument("--to-pdf", type=str,
@@ -72,6 +69,7 @@ def get_com_line_args():
     parser.add_argument("--json", action="store_true", help="Print result as JSON in stdout")
     parser.add_argument("--verbose", action="store_true", help="Outputs verbose status messages")
     parser.add_argument("--limit", type=int, help="Limit news topics if this parameter provided")
+    parser.add_argument("source", type=str, nargs="?", help="RSS URL")
 
     return parser.parse_args()
 
@@ -87,11 +85,6 @@ def get_limit_news_collection(news_collection, com_line_args, logger):
         return news_collection
     else:
         return news_collection[:limit]
-
-
-def clean_str(string):
-    clean_string = re.sub(u"(\u2018|\u2019|\u2014|\u2013)", "'", html.unescape(string))
-    return clean_string
 
 
 def get_news(command_line_args, logger):
@@ -124,7 +117,8 @@ def get_news(command_line_args, logger):
         images = soup.findAll("img")
 
         for img in images:
-            news_entry.image_links.append(img["src"])
+            if img["src"]:
+                news_entry.image_links.append(img["src"])
 
         news_collection.append(news_entry)
 
@@ -179,3 +173,7 @@ def convert_date(date_str):
     except ValueError as e:
         raise Error("Invalid date argument. Please, check your input.")
 
+
+def clean_str(string):
+    clean_string = html.unescape(string).encode('ascii', 'ignore').decode("utf-8")
+    return clean_string

@@ -13,7 +13,7 @@ import requests
 import os
 from urllib.request import Request, urlopen
 from urllib.error import URLError
-from exceptions import Error, EmptyCollectionError, FilePathError
+from exceptions import Error, EmptyCollectionError, FilePathError, ComLineArgError
 
 
 def check_url(com_line_args, logger):
@@ -70,13 +70,17 @@ def check_version_arg(com_line_args, logger):
 
 def check_limit_arg(com_line_args, logger):
     """ Check --limit argument function. """
-    if com_line_args.limit or com_line_args.limit == 0:
-        return True
-    if not com_line_args.limit:
-        return False
-    if com_line_args.limit < 0:
+    limit = com_line_args.limit
+    if not limit:
+        if limit == 0:
+            return True
+        else:
+            return False
+    elif com_line_args.limit < 0:
         logger.error("Command line argument limit is invalid.")
-        raise EmptyCollectionError("Command line argument limit should not be negative.")
+        raise ComLineArgError("Command line argument limit should not be negative.")
+    else:
+        return True
 
 
 def check_date_arg(com_line_args, logger):

@@ -16,9 +16,8 @@ class NewsEntry:
     summary: str = ""
     date: str = ""
     link: str = ""
-    image_links: list = field(default_factory=list)
     source: str = ""
-    id: str = ""
+    image_links: list = field(default_factory=list)
 
     def print_entry(self):
         print("-------------------------------------------------------------",
@@ -30,7 +29,9 @@ class NewsEntry:
               "Source: " + self.source + '\n',
               "Link: " + self.link + '\n',
               sep='\n')
+
         if self.image_links:
             print("Images links: ")
             for num, img_link in enumerate(self.image_links):
-                print(f"[{num+1}] {img_link}")
+                if img_link:
+                    print(f"[{num+1}] {img_link}")

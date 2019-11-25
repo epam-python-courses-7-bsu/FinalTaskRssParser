@@ -3,7 +3,7 @@ from action_functions import get_limit_news_collection, get_news, get_com_line_a
     create_logger, print_news
 from validation_functions import check_url, check_version_arg, check_internet_connection, \
     check_emptiness
-import exceptions
+from exceptions import Error
 from caching_functions import get_cached_news, cache_news
 from conversion_functions import create_and_fill_pdf_file, create_and_fill_html_file
 
@@ -42,7 +42,7 @@ def main():
                 else:
                     # account of --json argument
                     print_news(news_collection, com_line_args, logger)
-    except exceptions.Error as e:
+    except Error as e:
         print(e)
 
 
