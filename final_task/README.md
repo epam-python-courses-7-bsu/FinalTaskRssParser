@@ -1,6 +1,13 @@
 # Pyhton RSS reader
 
 ## How to install:
+**1st way**
+* You need to have git installed. Run:
+> $ git clone https://github.com/kirill-stp/FinalTaskRssParser.git
+* when you are in your workspace folder. Then run:
+> $ python setup.py install
+* when you are in **final task** folder
+**2nd way:**
 * To install this package, you must have Python added to your user environment.
 * Download the distribution archive
 * run $ pip install ./python_rss_reader-1.0.tar.gz  
@@ -50,4 +57,7 @@ Cached data stored in rss_reder/cached_feeds.db file using **shelve**. Database 
 
 ## HTML and PDF converting:
 You can use **--to-html** and **--to-pdf** to save feed in given format. If there is no internet connection, it will paste image links (clickable in pdf). If we have internet connection, then program will download images and paste it to the file. Titles in pdf also clickable.
+
+## Colorizing
+This program can colorize normal and json output, using **termcolor**. To add some color to your life, use **--colorize** argument
  
