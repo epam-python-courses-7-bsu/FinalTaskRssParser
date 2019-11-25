@@ -14,4 +14,8 @@ class EmptyCollectionError(Error):
     pass
 
 
+class FilePathError(Error):
+    pass
+
+
 

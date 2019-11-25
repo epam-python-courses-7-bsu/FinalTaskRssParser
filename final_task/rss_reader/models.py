@@ -22,19 +22,6 @@ class NewsEntry:
 
     def print_entry(self):
         print("-------------------------------------------------------------",
-              "News title: " + self.title + '\n',
-              "Summary: " + self.summary + '\n',
-              "Publication date: " + self.date + '\n',
-              "Source: " + self.source + '\n',
-              "Link: " + self.link + '\n',
-              sep='\n')
-        if self.image_links:
-            print("Images links: ")
-            for num, img_link in enumerate(self.image_links):
-                print(f"[{num+1}] {img_link}")
-
-    def print_cache_entry(self):
-        print("-------------------------------------------------------------",
               "Feed title: " + self.feed_title + '\n',
               "Feed language: " + self.feed_language + '\n' + '\n',
               "News title: " + self.title + '\n',

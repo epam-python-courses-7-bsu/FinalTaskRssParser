@@ -7,7 +7,7 @@ with open(path.join(directory, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name="rss_reader_Anna_Gonchar",
-    version="3.0",
+    version="3.4",
     description="RSS reader - simple command-line utility.",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -20,7 +20,7 @@ setup(
         "Operating System :: OS Independent",
     ],
     python_requires='>=3.8',
-    install_requires=['feedparser', 'requests', 'beautifulsoup4==4.8.1'],
+    install_requires=['feedparser', 'requests', 'beautifulsoup4==4.8.1', 'fpdf', 'dominate'],
     entry_points={
         'console_scripts':
             ['rss-reader = rss_reader.rss_reader:main']

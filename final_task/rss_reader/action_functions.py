@@ -3,6 +3,7 @@
     Functions:
     create_logger(com_line_args) -> logger
     get_com_line_args() -> com_line_args
+    clean_str(string) -> clean_string
     get_news(command_line_args, logger) -> news_collection
     print_news_stdout(news_collection) -> None
     print_news_json(news_collection) -> None
@@ -12,6 +13,7 @@
     convert_date(date_str, logger) -> str_date   """
 
 import feedparser
+import re
 from bs4 import BeautifulSoup
 import html
 import argparse
@@ -61,15 +63,35 @@ def get_com_line_args():
     parser = argparse.ArgumentParser(description="Pure Python command-line RSS reader.", add_help=True)
     parser.add_argument("source", type=str, nargs="?", help="RSS URL")
     parser.add_argument("--date", type=convert_date,
-                        help="Take a date in %Y%m%d format. Print news from the specified date.")
-    # --to-epub
-    # --to-pdf
+                        help="Gets a date in %Y%m%d format. Print news from the specified date.")
+    parser.add_argument("--to-html", type=str,
+                        help="Gets file path. Convert news to html and save them to html file.")
+    parser.add_argument("--to-pdf", type=str,
+                        help="Gets file path. Convert news to pdf and save them to pdf file.")
     parser.add_argument("--version", action="store_true", help="Print version info")
     parser.add_argument("--json", action="store_true", help="Print result as JSON in stdout")
     parser.add_argument("--verbose", action="store_true", help="Outputs verbose status messages")
     parser.add_argument("--limit", type=int, help="Limit news topics if this parameter provided")
 
     return parser.parse_args()
+
+
+def get_limit_news_collection(news_collection, com_line_args, logger):
+    if not check_limit_arg(com_line_args, logger):
+        limit = len(news_collection)
+    else:
+        limit = com_line_args.limit
+
+    if len(news_collection) < limit:
+        logger.warning("The number of news is less than the value of the argument limit.")
+        return news_collection
+    else:
+        return news_collection[:limit]
+
+
+def clean_str(string):
+    clean_string = re.sub(u"(\u2018|\u2019|\u2014|\u2013)", "'", html.unescape(string))
+    return clean_string
 
 
 def get_news(command_line_args, logger):
@@ -80,11 +102,9 @@ def get_news(command_line_args, logger):
     logger.info("Getting news.")
     news_feed = feedparser.parse(command_line_args.source)
 
-    # convert title string to unicode
-    feed = {"title": html.unescape(news_feed.feed.get("title", "")),
+    feed = {"title": clean_str(news_feed.feed.get("title", "")),
             "language": news_feed.feed.get("language", "")}
-    news_collection = {"feed": feed,
-                       "entries": []}
+    news_collection = []
     source = command_line_args.source
 
     for entry in news_feed.entries:
@@ -93,96 +113,59 @@ def get_news(command_line_args, logger):
         news_entry.feed_language = feed["language"]
 
         news_entry.source = source
-        news_entry.title = html.unescape(entry.get("title", ""))
+        news_entry.title = clean_str(entry.get("title", ""))
         news_entry.date = entry.get("published", "")
         news_entry.link = entry.get("link", "")
 
         # get rid of html tags
         soup = BeautifulSoup(entry.get("summary", ""), "html.parser")
-        news_entry.summary = html.unescape(soup.text)
+        news_entry.summary = clean_str(soup.text)
         # get images links
         images = soup.findAll("img")
-        #mayby add images_alt text in future
+
         for img in images:
             news_entry.image_links.append(img["src"])
 
-        news_collection["entries"].append(news_entry)
+        news_collection.append(news_entry)
 
     return news_collection
 
 
 def print_news_stdout(news_collection):
     """ Function for print news to stdout in text format. """
-    print("################################################################################\n",
-          "Feed: " + news_collection["feed"]["title"],
-          "Language: " + news_collection["feed"]["language"] + '\n',
-          sep='\n')
-
-    for entry in news_collection["entries"]:
-        entry.print_entry()
+    if news_collection:
+        for entry in news_collection:
+            entry.print_entry()
 
 
 def print_news_json(news_collection):
     """ Function for print news to stdout in json format. """
-    news_collection_for_json = {"feed": news_collection["feed"],
-                                "entries": []}
+    news_collection_for_json = []
 
-    for entry in news_collection["entries"]:
+    for entry in news_collection:
         entry_for_json = asdict(entry)
-        news_collection_for_json["entries"].append(entry_for_json)
+        news_collection_for_json.append(entry_for_json)
 
     print(json.dumps(news_collection_for_json, indent=4))
 
 
 def print_news(news_collection, com_line_args, logger):
     """ Function for print news to stdout,
-        that take account of limit and json arguments. """
+        that take account of json argument. """
 
-    # get valid limit argument
-    # if not initialize limit argument
-    if not check_limit_arg(com_line_args, logger):
-        limit = len(news_collection["entries"])
-    else:
-        limit = com_line_args.limit
-
-    if len(news_collection["entries"]) < limit:
-        logger.warning("The number of news is less than the value of the argument limit.")
-        new_news_collection = news_collection
-    else:
-        new_news_collection = {"feed": news_collection["feed"],
-                               "entries": news_collection["entries"][:limit]}
-
+    # news_collection already get valid limit argument
     logger.info("Printing news.")
+    if com_line_args.date:
+        logger.info("Printing cache news.")
+    else:
+        logger.info("Printing news.")
+
     if com_line_args.json:
         logger.info("Printing news in json format.")
-        print_news_json(new_news_collection)
+        print_news_json(news_collection)
     else:
         logger.info("Printing news stdout.")
-        print_news_stdout(new_news_collection)
-
-
-def print_cache_news(cached_news_collection, com_line_args, logger):
-    """ Function for print cached news to stdout,
-        that take account of json argument. """
-    if cached_news_collection:    # for the case when limit = 0
-        if com_line_args.json:
-            print_cache_news_json(cached_news_collection, logger)
-        else:
-            logger.info("Printing cache news.")
-            for entry in cached_news_collection:
-                entry.print_cache_entry()
-
-
-def print_cache_news_json(cached_news_collection, logger):
-    """ Function for print cached news to stdout in json format."""
-    if cached_news_collection:   # for the case when limit = 0
-        logger.info("Printing cache news in json format.")
-        news_collection_for_json = []
-        for entry in cached_news_collection:
-            entry_for_json = asdict(entry)
-            news_collection_for_json.append(entry_for_json)
-
-        print(json.dumps(news_collection_for_json, indent=4))
+        print_news_stdout(news_collection)
 
 
 def convert_date(date_str):
@@ -190,6 +173,9 @@ def convert_date(date_str):
     try:
         datetime_obj = datetime.strptime(date_str, '%Y%m%d')
         str_date = datetime_obj.strftime("%d %b %Y")
+        if str_date[0] == '0':
+            str_date = str_date[1:]
         return str_date
     except ValueError as e:
         raise Error("Invalid date argument. Please, check your input.")
+

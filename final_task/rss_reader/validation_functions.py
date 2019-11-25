@@ -6,12 +6,14 @@
     check_emptiness(news_collection, logger) -> True
     check_version_arg(com_line_args, logger) -> True/False
     check_limit_arg(news_collection, com_line_args, logger) -> limit (int)
-    check_date_arg(com_line_args, logger) -> True/False   """
+    check_date_arg(com_line_args, logger) -> True/False
+    check_path_to_directory(path_to_directory, logger) -> True   """
 
 import requests
+import os
 from urllib.request import Request, urlopen
 from urllib.error import URLError
-from exceptions import Error, EmptyCollectionError
+from exceptions import Error, EmptyCollectionError, FilePathError
 
 
 def check_url(com_line_args, logger):
@@ -49,7 +51,7 @@ def check_internet_connection(logger):
 def check_emptiness(news_collection, logger):
     """ Function for checking news availability in news collection. """
     logger.info("Checking news collection emptiness.")
-    if not (news_collection["feed"] and news_collection["entries"]):
+    if not news_collection:
         logger.error("Empty RSS-feed.")
         raise Error("Please, check URL.")
     else:
@@ -60,7 +62,7 @@ def check_version_arg(com_line_args, logger):
     """ Check --version argument function. """
     if com_line_args.version:
         logger.info("View program version.")
-        print("rss_reader.py 1.0")
+        print("rss_reader.py 4.0")
         return True
     else:
         return False
@@ -70,6 +72,8 @@ def check_limit_arg(com_line_args, logger):
     """ Check --limit argument function. """
     if com_line_args.limit or com_line_args.limit == 0:
         return True
+    if not com_line_args.limit:
+        return False
     if com_line_args.limit < 0:
         logger.error("Command line argument limit is invalid.")
         raise EmptyCollectionError("Command line argument limit should not be negative.")
@@ -82,3 +86,15 @@ def check_date_arg(com_line_args, logger):
         return True
     else:
         return False
+
+
+def check_path_to_directory(path_to_directory, logger):
+    logger.info("Checking path to file directory.")
+    if os.path.isdir(path_to_directory) is False:
+        logger.error("Path to directory is invalid. Path not to folder.")
+        raise FilePathError("Path to directory is invalid. Path not to folder.")
+    elif not os.path.exists(path_to_directory):
+        logger.error("Path to file is invalid.")
+        raise FilePathError("Received path to file is invalid.")
+    else:
+        return True
