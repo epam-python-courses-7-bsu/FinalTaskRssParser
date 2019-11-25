@@ -68,15 +68,15 @@ class RSSTestCase(unittest.TestCase):
 
     def test_arg_parse(self):
         parser = arg_parse(['source', '--limit', '1', '--json', '--verbose', '--version',
-                            '--date', '20191117', '--to_pdf', '--to_epub'])
+                            '--date', '20191117', '--to_pdf', 'pdf_file','--to_epub', 'epub_file'])
         self.assertTrue(parser.limit == 1)
         self.assertTrue(parser.source == 'source')
         self.assertTrue(parser.json)
         self.assertTrue(parser.verbose)
         self.assertTrue(parser.version)
         self.assertTrue(parser.date == '20191117')
-        self.assertTrue(parser.to_pdf)
-        self.assertTrue(parser.to_epub)
+        self.assertTrue(parser.to_pdf == 'pdf_file')
+        self.assertTrue(parser.to_epub == 'epub_file')
 
 
 if __name__ == '__main__':

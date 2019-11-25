@@ -22,9 +22,9 @@ def arg_parse(args):
                         help="Outputs verbose status messages")
     parser.add_argument("--date", type=str,
                         help="Return news from cache with that date.")
-    parser.add_argument("--to_pdf", action="store_true",
+    parser.add_argument("--to_pdf", type=str,
                         help="Conversion of news in the pdf format.")
-    parser.add_argument("--to_epub", action="store_true",
+    parser.add_argument("--to_epub", type=str,
                         help="Conversion of news in the ___ format.")
     return parser.parse_args(args)
 

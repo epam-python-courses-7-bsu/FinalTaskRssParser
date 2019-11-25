@@ -8,25 +8,24 @@ The recommended way to install rss-reader is with pip:
 ##Description and Functions
 ```
 usage: rss_reader.py [-h] [--limit LIMIT] [--version] [--json] [--verbose]
-                     [--date DATE] [--to-pdf] [--to-]
+                     [--date DATE] [--to_pdf TO_PDF] [--to_epub TO_EPUB]
                      [source]
 
 Pure Python command-line RSS reader.
 
 positional arguments:
-  source         RSS URL
+  source             RSS URL
 
 optional arguments:
-  -h, --help     show this help message and exit
-  --limit LIMIT  Limit news topics if this parameter provided
-  --version      Print version info
-  --json         Print result as JSON in stdout
-  --verbose      Outputs verbose status messages
-  --date DATE    Return news from cache with that date.
-  --to-pdf       Conversion of news in the pdf format.
-  --to-          Conversion of news in the ___ format.
+  -h, --help         show this help message and exit
+  --limit LIMIT      Limit news topics if this parameter provided
+  --version          Print version info
+  --json             Print result as JSON in stdout
+  --verbose          Outputs verbose status messages
+  --date DATE        Return news from cache with that date.
+  --to_pdf TO_PDF    Conversion of news in the pdf format.
+  --to_epub TO_EPUB  Conversion of news in the ___ format.
 ```
-
 
 To run the program from the command line, you must write the file name and string with URL-address of news site.
 
@@ -64,8 +63,8 @@ It is also possible to select news from a specific source of a certain date, for
 and --date that you want.
 
 ###What formats can you convert to? How to do it.
-Program can convert news in ```--to_pdf``` and ```--to_epub``` format in certain files. 
-The name of the file generates automatically like 'RSS Reader.pdf/epub'. Also program convert news in ```--json``` format
+Program can convert news in ```--to_pdf``` and ```--to_epub``` format. 
+Specify the path to the file yourself. Also program convert news in ```--json``` format
 but print result as JSON in stdout.
 
 JSON format example:
@@ -89,14 +88,16 @@ JSON format example:
 - *You can convert from cache*
 
 For this case news conversion is not depend on internet.
-With ```rss_reader.py --date 20191117 --limit 1 --to_pdf``` one news for the specified day
-would be converted (the same with ```--to_epub```) and would be generated or overwritten file 'RSS reader.pdf'.
+With ```rss_reader.py --date 20191117 --limit 1 --to_pdf /folder1/folder2/file_name.pdf``` one news for the specified day
+would be converted (the same with ```--to_epub```) and would be generated or overwritten file 'file_name.pdf'
+in folder what you choose.
 
 - *You can convert news from the Internet*
 
-For this case Internet is required. With ```rss_reader.py https://news.yahoo.com/rss/ --limit 1 --to_pdf``` one news
-from listed link would be converted (the same with ```--to_epub```)and would be generated or overwritten
-file 'RSS reader.pdf'
+For this case Internet is required.
+With ```rss_reader.py https://news.yahoo.com/rss/ --limit 1 --to_pdf /folder1/folder2/file_name.pdf``` one news
+from specified link would be converted (the same with ```--to_epub```)and would be generated or overwritten
+file 'file_name.epub' in folder what you choose.
 
 
 

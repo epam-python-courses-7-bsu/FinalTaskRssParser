@@ -6,6 +6,7 @@ from fpdf import FPDF
 
 
 def get_output_function(converter):
+    """Output factory"""
     if converter == 'json':
         return output_json
     elif converter == 'pdf':
@@ -16,7 +17,7 @@ def get_output_function(converter):
         return output
 
 
-def output(logger, all_news, about_website=None, ):
+def output(logger, all_news, about_website=None, file_name=None):
     """Function which print information about site and a set of news."""
     logger.info('Output news')
     if about_website is not None:
@@ -32,7 +33,8 @@ def parse_to_json(dictionary):
     return json.dumps(dictionary, indent=4)
 
 
-def output_json(logger, all_news, about_website=None):
+def output_json(logger, all_news, about_website=None, file_name=None):
+    """Function which print news in stdout in json-format."""
     if about_website is not None:
         logger.info('Convert to JSON-format')
         print(parse_to_json([about_website] + all_news))
@@ -41,7 +43,8 @@ def output_json(logger, all_news, about_website=None):
         print(parse_to_json(all_news))
 
 
-def output_pdf(logger, all_news, about_website=None):
+def output_pdf(logger, all_news, about_website=None, file_name=None):
+    """Function which create or overwrites PDF-file with selected fresh or cached news"""
     logger.info('Convert to PDF-format')
     pdf = FPDF()
     pdf.add_page()
@@ -68,7 +71,7 @@ def output_pdf(logger, all_news, about_website=None):
                     pdf.ln(31)
                     os.remove(filename)
                 except Exception as ex:
-                    logger.error("Error finding image: {}, {}.".format(type(ex), ex))
+                    logger.warning("Error finding image: {}, {}.".format(type(ex), ex))
                 pdf.multi_cell(190, 6, txt=f'{key}: {value}', align="L")
         position_y = pdf.get_y()
         pdf.set_line_width(1)
@@ -76,13 +79,14 @@ def output_pdf(logger, all_news, about_website=None):
         pdf.line(10, position_y, 200, position_y)
     logger.info('Creating of PDF-file')
     try:
-        pdf.output("RSS news.pdf")
+        pdf.output(file_name)
         logger.info('Converted successfully!')
     except Exception as ex:
-        logger.error("Error finding image: {}, {}.".format(type(ex), ex))
+        logger.error("PDF file writing error : {}, {}.".format(type(ex), ex))
 
 
-def output_epub(logger, all_news, about_website=None):
+def output_epub(logger, all_news, about_website=None, file_name=None):
+    """Function which create or overwrites EPUB-file with selected fresh or cached news"""
     logger.info('Convert to EPUB-format')
     book = epub.EpubBook()
     if about_website is not None:
@@ -110,7 +114,7 @@ def output_epub(logger, all_news, about_website=None):
     book.spine = chapters
     logger.info('Creating of PDF-file')
     try:
-        epub.write_epub('RSS news.epub', book, {})
+        epub.write_epub(file_name, book, {})
         logger.info('Converted successfully!')
     except Exception as ex:
         logger.error("Error finding image: {}, {}.".format(type(ex), ex))

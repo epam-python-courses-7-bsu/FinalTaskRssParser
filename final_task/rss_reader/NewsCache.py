@@ -4,6 +4,9 @@ import logging
 
 
 class NewsCache:
+    """Class which create json-file with cached news,
+    saved all fresh news and return them with certain date
+    and from certain url-address if such url will be introduced."""
 
     def __init__(self, file_name):
         self.logger = logging.getLogger(__name__)
@@ -22,6 +25,8 @@ class NewsCache:
             self.cache_news = {}
 
     def caching(self, all_news, url):
+        """Function which create JSON-file
+        and save news."""
         for dictionary in all_news:
             date_in_news = dictionary.pop('Date key')
             title = dictionary['Title']
@@ -31,6 +36,8 @@ class NewsCache:
             file_to_write.write(json.dumps(self.cache_news))
 
     def returning(self, desired_date, desired_url=None):
+        """Function which return news from cache-file with certain date
+        and from certain url-address if such url will be introduced."""
         self.logger.info('News search in cache...')
         caching_news_list = []
         if desired_url is not None:

@@ -23,7 +23,7 @@ FILE_CONTENTS = {"20191117":
              "Source of image": "img_link"}}}}
 
 
-class MyTestCase(unittest.TestCase):
+class NewsCacheTestCase(unittest.TestCase):
 
     def setUp(self):
         self.cache = NewsCache('Test_file.json')
