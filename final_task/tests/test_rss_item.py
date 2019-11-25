@@ -1,10 +1,12 @@
 import sys
 import unittest
+from colorama import Fore, Back, Style, init
 from io import StringIO
 from unittest.mock import patch
 
 sys.path.insert(1, 'final_task/rss_reader')
 from rss_item import RssItem
+init()
 
 
 class TestRssItem(unittest.TestCase):
@@ -13,11 +15,11 @@ class TestRssItem(unittest.TestCase):
         self.item = RssItem('title', 'date', 'description', 'link', 'media', 'source', 'date_parsed', 'base64 image')
 
     def test_string(self):
-        expected_result = 'TITLE: title\
-            \n\t|| DESCRIPTION: description\
-            \n\t|| PUBLISHED: date\
-            \n\t|| LINK: link\
-            \n\t|| MEDIA: media'
+        expected_result = 'TITLE: ' + Back.BLACK + Fore.WHITE + 'title' + Style.RESET_ALL\
+            + '            \n\t|| DESCRIPTION: ' + Fore.MAGENTA + 'description' + Fore.RESET\
+            + '            \n\t|| PUBLISHED: ' + Fore.GREEN + 'date' + Fore.RESET\
+            + '            \n\t|| LINK: ' + Fore.BLUE + 'link' + Fore.RESET\
+            + '            \n\t|| MEDIA: ' + Fore.YELLOW + 'media' + Fore.RESET
         self.assertEqual(self.item.__str__(), expected_result)
 
     def test_to_json(self):

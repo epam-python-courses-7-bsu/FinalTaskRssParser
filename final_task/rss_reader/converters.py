@@ -12,6 +12,7 @@ from fpdf import FPDF
 from exceptions_ import ConvertionError
 
 FONT_BLACK = resource_filename(__name__, 'Arial-Unicode-Regular.ttf')
+
 LOGGER = logging.getLogger('rss_logger')
 
 

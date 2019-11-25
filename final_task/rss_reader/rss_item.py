@@ -1,9 +1,11 @@
 import html
 import re
+from colorama import Fore, Back, Style, init
 from codecs import encode, decode
 from dataclasses import asdict, dataclass
 
 import jsonpickle
+init()
 
 
 @dataclass
@@ -35,11 +37,11 @@ class RssItem:
         return cls(**item_dict)
 
     def __str__(self):
-        return f'TITLE: {self.title}\
-            \n\t|| DESCRIPTION: {self.description}\
-            \n\t|| PUBLISHED: {self.published}\
-            \n\t|| LINK: {self.link}\
-            \n\t|| MEDIA: {self.media}'
+        return f'TITLE: {Back.BLACK + Fore.WHITE + self.title + Style.RESET_ALL}\
+            \n\t|| DESCRIPTION: {Fore.MAGENTA + self.description + Fore.RESET}\
+            \n\t|| PUBLISHED: {Fore.GREEN + self.published + Fore.RESET}\
+            \n\t|| LINK: {Fore.BLUE + self.link + Fore.RESET}\
+            \n\t|| MEDIA: {Fore.YELLOW + self.media + Fore.RESET}'
 
     def to_json(self):
         jsonpickle.load_backend('json', 'dumps', 'loads')

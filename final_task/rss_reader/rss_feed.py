@@ -6,9 +6,11 @@ from codecs import encode, decode
 
 import jsonpickle
 import requests
+from colorama import Fore, Back, Style, init
 from tinydb import Query, TinyDB, where
 
 LOGGER = logging.getLogger('rss_logger')
+init()
 
 
 class RssFeed:
@@ -26,13 +28,13 @@ class RssFeed:
     def print_feed(self):
         result = '\n'
         result += ' '*36 + self.title + '\n'
-        result += ' '*36 + '='*len(self.title) + '\n'
+        result += ' '*36 + Back.BLACK + '='*len(self.title) + Back.RESET + '\n'
         # This line do some math to align descrtiption and title
         result += ' '*int(abs((36 + len(self.title)/2 - len(self.description)/2))) + self.description + '\n\n'
-        result += '='*120 + '\n'
+        result += Back.RED + '='*120 + Back.RESET + '\n'
         for _, item in enumerate(self.news_list):
             result += str(item) + '\n'
-            result += '='*120 + '\n'
+            result += Back.RED + '='*120 + Back.RESET + '\n'
         print(result)
 
     def to_json(self):

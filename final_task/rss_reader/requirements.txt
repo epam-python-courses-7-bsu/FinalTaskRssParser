@@ -6,3 +6,4 @@ requests==2.22.0
 dominate==2.4.0
 beautifulsoup4==4.8.1
 fpdf==1.7.2
+colorama==0.4.1

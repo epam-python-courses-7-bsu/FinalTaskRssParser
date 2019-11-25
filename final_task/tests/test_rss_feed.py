@@ -1,11 +1,13 @@
 import sys
 import unittest
+from colorama import Back, init
 from io import StringIO
 from unittest.mock import patch, mock_open
 
 sys.path.insert(1, 'final_task/rss_reader')
 from rss_feed import RssFeed
 from rss_reader import init_feed
+init()
 
 
 class TestRssFeed(unittest.TestCase):
@@ -16,13 +18,13 @@ class TestRssFeed(unittest.TestCase):
     def test_printfeed(self):
         result = '\n'
         result += ' '*36 + self.feed.title + '\n'
-        result += ' '*36 + '='*len(self.feed.title) + '\n'
+        result += ' '*36 + Back.BLACK + '='*len(self.feed.title) + Back.RESET + '\n'
         result += ' '*int(abs((36 + len(self.feed.title)/2 - len(self.feed.description)/2))) +\
             self.feed.description + '\n\n'
-        result += '='*120 + '\n'
+        result += Back.RED + '='*120 + Back.RESET + '\n'
         for _, item in enumerate(self.feed.news_list):
             result += str(item) + '\n'
-            result += '='*120 + '\n'
+            result += Back.RED + '='*120 + Back.RESET + '\n'
         result += '\n'
 
         with patch('sys.stdout', new=StringIO()) as fake_out:
