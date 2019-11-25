@@ -1,0 +1,8 @@
+python-dateutil
+feedparser
+bs4
+fpdf
+jinja2
+colorama
+termcolor
+coloredlogs
