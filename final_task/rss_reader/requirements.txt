@@ -1,0 +1,8 @@
+argparse
+feedparser==5.2.1
+lxml==4.4.1
+requests==2.22.0
+EbookLib==0.17.1
+dominate==2.4.0
+termcolor==1.1.0
+coloredlogs==10.0

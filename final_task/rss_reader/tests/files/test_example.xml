@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" media="screen" href="/~d/styles/rss2full.xsl"?>
+<?xml-stylesheet type="text/css" media="screen" href="http://rss.cnn.com/~d/styles/itemcontent.css"?>
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xmlns:feedburner="http://rssnamespace.org/feedburner/ext/1.0" version="2.0">
+  <channel>
+    <title><![CDATA[CNN.com - RSS Channel - HP Hero]]></title>
+    <description><![CDATA[CNN.com delivers up-to-the-minute news and information on the latest top stories, weather, entertainment, politics and more.]]></description>
+    <link>https://www.cnn.com/index.html</link>
+    <image>
+      <url>http://i2.cdn.turner.com/cnn/2015/images/09/24/cnn.digital.png</url>
+      <title>CNN.com - RSS Channel - HP Hero</title>
+      <link>https://www.cnn.com/index.html</link>
+    </image>
+    <generator>coredev-bumblebee</generator>
+    <lastBuildDate>Thu, 31 Oct 2019 09:11:31 GMT</lastBuildDate>
+    <pubDate>Thu, 31 Oct 2019 09:05:08 GMT</pubDate>
+    <copyright><![CDATA[Copyright (c) 2019 Turner Broadcasting System, Inc. All Rights Reserved.]]></copyright>
+    <language><![CDATA[en-US]]></language>
+    <ttl>10</ttl>
+    <atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="self" type="application/rss+xml" href="http://rss.cnn.com/rss/cnn_topstories"/>
+    <feedburner:info uri="rss/cnn_topstories"/>
+    <atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="hub" href="http://pubsubhubbub.appspot.com/"/>
+    <thespringbox:skin xmlns:thespringbox="http://www.thespringbox.com/dtds/thespringbox-1.0.dtd">http://rss.cnn.com/rss/cnn_topstories?format=skin</thespringbox:skin>
+    <item>
+      <title><![CDATA[An impeachment net is closing around Trump with the House poised to cast its first vote in the bid to oust him]]></title>
+      <description>An impeachment net is fast closing around President Donald Trump, with the House of Representatives poised to cast its highly symbolic first vote Thursday in the Democratic bid to oust the President.&lt;div class="feedflare"&gt;
+&lt;a href="http://rss.cnn.com/~ff/rss/cnn_topstories?a=0yorQIkIJGk:Sht6XkuB3rs:yIl2AUoC8zA"&gt;&lt;img src="http://feeds.feedburner.com/~ff/rss/cnn_topstories?d=yIl2AUoC8zA" border="0"&gt;&lt;/img&gt;&lt;/a&gt; &lt;a href="http://rss.cnn.com/~ff/rss/cnn_topstories?a=0yorQIkIJGk:Sht6XkuB3rs:7Q72WNTAKBA"&gt;&lt;img src="http://feeds.feedburner.com/~ff/rss/cnn_topstories?d=7Q72WNTAKBA" border="0"&gt;&lt;/img&gt;&lt;/a&gt; &lt;a href="http://rss.cnn.com/~ff/rss/cnn_topstories?a=0yorQIkIJGk:Sht6XkuB3rs:V_sGLiPBpWU"&gt;&lt;img src="http://feeds.feedburner.com/~ff/rss/cnn_topstories?i=0yorQIkIJGk:Sht6XkuB3rs:V_sGLiPBpWU" border="0"&gt;&lt;/img&gt;&lt;/a&gt; &lt;a href="http://rss.cnn.com/~ff/rss/cnn_topstories?a=0yorQIkIJGk:Sht6XkuB3rs:qj6IDK7rITs"&gt;&lt;img src="http://feeds.feedburner.com/~ff/rss/cnn_topstories?d=qj6IDK7rITs" border="0"&gt;&lt;/img&gt;&lt;/a&gt; &lt;a href="http://rss.cnn.com/~ff/rss/cnn_topstories?a=0yorQIkIJGk:Sht6XkuB3rs:gIN9vFwOqvQ"&gt;&lt;img src="http://feeds.feedburner.com/~ff/rss/cnn_topstories?i=0yorQIkIJGk:Sht6XkuB3rs:gIN9vFwOqvQ" border="0"&gt;&lt;/img&gt;&lt;/a&gt;
+&lt;/div&gt;&lt;img src="http://feeds.feedburner.com/~r/rss/cnn_topstories/~4/0yorQIkIJGk" height="1" width="1" alt=""/&gt;</description>
+      <link>http://rss.cnn.com/~r/rss/cnn_topstories/~3/0yorQIkIJGk/index.html</link>
+      <guid isPermaLink="false">https://www.cnn.com/2019/10/31/politics/donald-trump-impeachment-democrats/index.html</guid>
+      <pubDate>Thu, 31 Oct 2019 05:39:41 GMT</pubDate>
+      <media:group>
+        <media:content medium="image" url="https://cdn.cnn.com/cnnnext/dam/assets/191025080357-01-donald-trump-silhouette-file-super-169.jpg" height="619" width="1100" type="image/jpeg"/>
+        <media:content medium="image" url="https://cdn.cnn.com/cnnnext/dam/assets/191025080357-01-donald-trump-silhouette-file-large-11.jpg" height="300" width="300" type="image/jpeg"/>
+        <media:content medium="image" url="https://cdn.cnn.com/cnnnext/dam/assets/191025080357-01-donald-trump-silhouette-file-vertical-large-gallery.jpg" height="552" width="414" type="image/jpeg"/>
+        <media:content medium="image" url="https://cdn.cnn.com/cnnnext/dam/assets/191025080357-01-donald-trump-silhouette-file-video-synd-2.jpg" height="480" width="640" type="image/jpeg"/>
+        <media:content medium="image" url="https://cdn.cnn.com/cnnnext/dam/assets/191025080357-01-donald-trump-silhouette-file-live-video.jpg" height="324" width="576" type="image/jpeg"/>
+        <media:content medium="image" url="https://cdn.cnn.com/cnnnext/dam/assets/191025080357-01-donald-trump-silhouette-file-t1-main.jpg" height="250" width="250" type="image/jpeg"/>
+        <media:content medium="image" url="https://cdn.cnn.com/cnnnext/dam/assets/191025080357-01-donald-trump-silhouette-file-vertical-gallery.jpg" height="360" width="270" type="image/jpeg"/>
+        <media:content medium="image" url="https://cdn.cnn.com/cnnnext/dam/assets/191025080357-01-donald-trump-silhouette-file-story-body.jpg" height="169" width="300" type="image/jpeg"/>
+        <media:content medium="image" url="https://cdn.cnn.com/cnnnext/dam/assets/191025080357-01-donald-trump-silhouette-file-t1-main.jpg" height="250" width="250" type="image/jpeg"/>
+        <media:content medium="image" url="https://cdn.cnn.com/cnnnext/dam/assets/191025080357-01-donald-trump-silhouette-file-assign.jpg" height="186" width="248" type="image/jpeg"/>
+        <media:content medium="image" url="https://cdn.cnn.com/cnnnext/dam/assets/191025080357-01-donald-trump-silhouette-file-hp-video.jpg" height="144" width="256" type="image/jpeg"/>
+      </media:group>
+      <feedburner:origLink>https://www.cnn.com/2019/10/31/politics/donald-trump-impeachment-democrats/index.html</feedburner:origLink>
+    </item>
+  </channel>
+</rss>
