@@ -1,3 +1,4 @@
+import sys
 import os
 from setuptools import setup, find_packages
 
@@ -7,7 +8,7 @@ def read(fname):
 setup(
 # metadata
     name='rss_reader',
-    version='1.1',
+    version='1.4',
     author='Elizaveta Lapunova',
     author_email='liza.lapunova99@gmail.com',
     url='https://github.com/ElizabethUniverse/FinalTaskRssParser',
@@ -19,15 +20,15 @@ setup(
 
     #options
     packages=find_packages(),
-    install_requires=['html2text==2019.9.26', 'dateutil==2.4.1'],
+    install_requires=['html2text==2019.9.26', 'python-dateutil==2.8.0', 'jinja2==2.10.1','fpdf==1.7.2'],
     package_data={
          '': ['*.py', '*.txt']
     },
-    python_requires ='>=3.7.0',
+    python_requires='>=3.7.0',
     entry_points={
         "console_scripts":
             "rss_reader=rss_reader.rss_reader:main"
     },
-    #test_suite='test',
+    test_suite='test',
     zip_safe=False
 )

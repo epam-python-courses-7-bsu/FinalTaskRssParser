@@ -57,7 +57,7 @@ class Article:
     date: str
     link: str
     article: str
-    links :str
+    links: str
 
     def __post_init__(self):
         self.links = html_text_to_list_links(self.links)

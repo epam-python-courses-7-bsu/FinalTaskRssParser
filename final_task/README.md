@@ -38,7 +38,7 @@ JSON structure:
 to run rss parser on your computer you need to:
 1) clone repository from https://github.com/ElizabethUniverse/FinalTaskRssParser
 2) `$cd final_task`
-3)  `$python setup.py sdist upload`
+3)  `$python setup.py sdist bdist_wheel`
 4)  `$cd dist`
 3) `$pip install rss_reader-1.1.tar.gz`
 4) run `$rss_reader https://news.yahoo.com/rss --limit 2 --verbose`
@@ -56,3 +56,15 @@ If you want to receive news for the 15/11/2019, please enter the following comma
 `$python rss_reader.py https://news.yahoo.com/rss --date 20191115`
 
 --date argument works without internet connection and with --verbose, --json, --limit LIMIT arguments the same way.
+
+##Iteration 4 
+
+News can be converted to pdf or html.
+
+If you want to convert news to pdf:
+
+`$python rss_reader.py https://news.yahoo.com/rss --to-pdf path`
+
+to html:
+
+`$python rss_reader.py https://news.yahoo.com/rss --to-html path`

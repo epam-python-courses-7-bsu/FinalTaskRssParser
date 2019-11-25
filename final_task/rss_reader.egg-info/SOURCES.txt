@@ -2,6 +2,8 @@ README.md
 setup.py
 rss_reader/CSVEntities.py
 rss_reader/ClassNews.py
+rss_reader/ToHTML.py
+rss_reader/ToPDF.py
 rss_reader/__init__.py
 rss_reader/__main__.py
 rss_reader/requirements.txt

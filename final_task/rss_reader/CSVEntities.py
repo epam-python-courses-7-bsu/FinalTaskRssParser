@@ -12,7 +12,7 @@ FIELDNAMES = ['date', 'title', 'link', 'article', 'links']
 def csv_to_python(articles_list, csv_file):
     """This function inserts news to the source csv file that has never been seen in it."""
     if not os.path.exists(csv_file):
-        open(csv_file, 'x', encoding='utf-8')
+        open(csv_file, 'x', encoding='utf-8').close()
 
     articles_list_from_csv = []
     with open(csv_file, "r", encoding='utf-8') as file:

@@ -1,12 +1,14 @@
 import unittest
 import sys
 import requests.exceptions as rexc
+import os
 sys.path.append('../rss_reader')
 import rss_reader
 import CSVEntities
 import ClassNews
 import ToPDF
 import ToHTML
+import logging
 
 
 TEST_LIST = [
@@ -153,6 +155,15 @@ class RssReaderTestCase(unittest.TestCase):
         self.assertEqual(parser.date, '20191119')
         self.assertEqual(parser.to_pdf, 'd:/set')
         self.assertEqual(parser.to_html, 'd:/set')
+    def test_pdf_writing(self):
+        path = os.path.dirname(__file__)
+        self.assertEqual(ToPDF.print_article_list_to_pdf(TEST_LIST, path), True)
+    def test_pdf_writing(self):
+        path = os.path.dirname(__file__)
+        self.assertEqual(rss_reader.convert_to_pdf(TEST_LIST, path), True)
+
+    def test_requests(self):
+        self.assertEqual(rss_reader.get_request('https://news.yahoo.com/rss').status_code, 200)
 
     def test_requests_exceptions_inv_schema(self):
         self.assertRaises(rexc.InvalidSchema, rss_reader.get_request, 'htps://news.yahoo.com')
@@ -201,6 +212,20 @@ class RssReaderTestCase(unittest.TestCase):
             }
         ]
     )
+
+    def test_logger_critical(self):
+        logging_level = logging.CRITICAL
+        logging.basicConfig(format='%(levelname)s:%(message)s', level=logging_level)
+        self.assertEqual(rss_reader.rss_logging(logging, "message", 'critical'), logging.critical("message"))
+        self.assertEqual(rss_reader.rss_logging(logging, "message", 'warning'),  logging.warning("message"))
+        self.assertEqual(rss_reader.rss_logging(logging, "message", 'info'),  logging.info("message"))
+
+    def test_logger_info(self):
+        logging_level = logging.INFO
+        logging.basicConfig(format='%(levelname)s:%(message)s', level=logging_level)
+        self.assertEqual(rss_reader.rss_logging(logging, "message", 'critical'), logging.critical("message"))
+        self.assertEqual(rss_reader.rss_logging(logging, "message", 'warning'), logging.warning("message"))
+        self.assertEqual(rss_reader.rss_logging(logging, "message", 'info'), logging.info("message"))
 
     def test_list_to_json(self):
         self.assertEqual(

@@ -3,15 +3,18 @@
 <body>
 {% for item in articles %}
 
-<h1>{{item.title}}</h1>
-<h2>{{item.date}}</h2>
-<a>{{item.link}}</a>
+    <h1>{{item.title}}</h1>
+    <h2>{{item.date}}</h2>
+    <h4>{{item.link}}</h4>
 
-<p>{{item.article}}</p>
+    {%for link in item.links[1:]%}
+        <img height="86" src="{{item.links[1]}}" width="130"/>
+    {% endfor%}
+    <p>{{item.article}}</p>
 
-{% for links in item.links %}
-<p> {{links}}</p>
-{% endfor %}
+    {% for links in item.links %}
+        <p> {{links}}</p>
+    {% endfor %}
 
 {% endfor %}
 </body>
