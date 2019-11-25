@@ -2,8 +2,8 @@
 Program is named rss_reader.py.
 ##Instalation
 The recommended way to install rss-reader is with pip:
-* pip install rss_reader - for Windows
-* sudo pip install rss_reader - for Linux and Mac
+* pip install rss_reader-5.0.tar.gz - for Windows
+* sudo pip install rss_reader-5.0.tar.gz - for Linux and Mac
 
 ##Description and Functions
 ```

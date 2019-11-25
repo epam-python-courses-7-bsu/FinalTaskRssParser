@@ -1,6 +1,9 @@
 import sys
+import os
 import argparse
 import logging
+dir_add = os.path.abspath(os.path.dirname(__file__))
+sys.path.append(dir_add)
 from RSSReader import RSSReader
 
 
