@@ -5,7 +5,7 @@ import time
 from . import feed
 
 # temp
-__version__ = "0.2"
+__version__ = "0.3"
 PROG = "rss-reader"
 DATE_FORMAT = "%Y%m%d"
 
