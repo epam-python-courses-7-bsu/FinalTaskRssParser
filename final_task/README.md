@@ -29,7 +29,9 @@ $ python -m rss_reader ...
 ```
 ### Usage
 ```
-usage: rss-reader [-h] [--version] [--json] [-v] [--limit LIMIT] source
+usage: rss-reader [-h] [--json | --html PATH | --epub PATH] [--version] [-v]
+                  [--limit LIMIT] [--date DATE]
+                  source
 
 Pure Python command-line RSS reader.
 
@@ -38,8 +40,10 @@ positional arguments:
 
 optional arguments:
   -h, --help     show this help message and exit
-  --version      Print version info
   --json         Print result as JSON in stdout
+  --html PATH    Generate html book on path
+  --epub PATH    Generate epub book an path
+  --version      Print version info
   -v, --verbose  Outputs verbose status messages
   --limit LIMIT  Limit news topics if this parameter provided
   --date DATE    Load news with date (%Y%m%d) from cache, if this parameter
