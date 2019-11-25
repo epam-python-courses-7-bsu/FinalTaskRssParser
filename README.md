@@ -24,3 +24,9 @@ N news with that date to file(s) pdf or/and html
 we use usual color (grey-white)
 ## Important!
 When using pdf or html converting input your path in look like this: "C:\\Test\\" or "C:\\Test"
+
+When input arguments to parse any page first of all put link, EXAMPLE: 
+python rss_reader.py https://bla-bla-bla.by --limit 1 
+
+If you don't want to input link and want to get news stored in local storage input for EXAMPLE
+ like this: python rss_reader.py --colorize --limit 15
