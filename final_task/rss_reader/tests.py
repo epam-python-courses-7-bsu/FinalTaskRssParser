@@ -8,6 +8,8 @@ from unittest.mock import patch, mock_open, MagicMock
 
 
 class TestHandler(unittest.TestCase):
+    """Class for testing Handler methods"""
+
     def test__init__(self):
         handler = Handler("https://news.yahoo.com/rss/", 1, 1.0)
         self.assertIsInstance(handler, Handler)
@@ -75,7 +77,7 @@ class TestHandler(unittest.TestCase):
         self.assertNotIsInstance(self.handler.get_entry_from_dict(entry_dict), Handler)
 
     def test_option_date_exc(self):
-        self.assertRaises(RSSReaderException, lambda: self.handler.option_date("19950514", False, False, ""))
+        self.assertRaises(RSSReaderException, lambda: self.handler.option_date("19950514", False, "", ""))
 
     def test_print_entry(self):
         expected_entry = 'Feed: feed\n\nTitle: title\nDate: Wed, 20 Nov 2019\nLink: link\n\n' \
@@ -89,7 +91,8 @@ class TestHandler(unittest.TestCase):
     def test_print_to_json(self):
         expected_json = '{\n  "Feed": "Yahoo News - Latest News & Headlines",\n  "Title": "Title 1",' \
                         '\n  "DateInt": "20191211",\n  "Date": "Wed, 06 Nov 2019",' \
-                        '\n  "Link": "https://link1.com",\n  "Summary": "summary",\n  "Links": [\n    "https://link1.com"\n  ]\n}\n'
+                        '\n  "Link": "https://link1.com",\n  "Summary": "summary",\n  "Links": ' \
+                        '[\n    "https://link1.com"\n  ]\n}\n'
         with patch('sys.stdout', new=StringIO()) as fake_out:
             entry_dict = dict(Feed="Yahoo News - Latest News & Headlines", Title="Title 1", DateInt="20191211",
                               Date="Wed, 06 Nov 2019", Link="https://link1.com", Summary="summary",
@@ -98,7 +101,7 @@ class TestHandler(unittest.TestCase):
             self.assertEqual(expected_json, fake_out.getvalue())
 
     def test_correct_title(self):
-        expected_corrected_title = "title_of_article_correct_ed"
+        expected_corrected_title = "title_of_articl"
         title = 'title?of:article correct"ed'
         self.assertEqual(expected_corrected_title, self.handler.correct_title(title))
 
@@ -156,9 +159,15 @@ class TestHandler(unittest.TestCase):
         with patch("Handler.open", open_mock, create=True):
             self.handler.write_entries_to_html(os.path.abspath(os.path.dirname(__file__)), (entry,))
 
-        open_mock.assert_called_with(f"{os.path.abspath(os.path.dirname(__file__))}\\RSS_News.html", "w", encoding='utf-8')
+        open_mock.assert_called_with(
+            f"{os.path.abspath(os.path.dirname(__file__))}\\RSS_News.html", "w", encoding='utf-8')
         open_mock.return_value.write.assert_called_once()
-        open_mock.return_value.write.assert_called_once_with('<html>\n  <head>\n    <meta charset="utf-8">\n  </head>\n  <body>\n    <div>\n      <h1>title</h1>\n      <p>\n        <b>Feed: </b>\n        <a>feed</a>\n      </p>\n      <p>\n        <b>Date: </b>\n        <a>Wed, 20 Nov 2019</a>\n      </p>\n      <img src="file:///F:\\Introduction to Python\\Final Task\\FinalTaskRssParser\\final_task\\rss_reader/images/title0.jpg"><br><br>\n      <p>some_text<br><br></p>\n    </div>\n  </body>\n</html>')
+        open_mock.return_value.write.assert_called_once_with(
+            '<html>\n  <head>\n    <meta charset="utf-8">\n  </head>\n  <body>\n    <div>\n      <h1>title</h1>\n      '
+            '<p>\n        <b>Feed: </b>\n        <a>feed</a>\n      </p>\n      <p>\n        <b>Date: </b>\n        <a>'
+            'Wed, 20 Nov 2019</a>\n      </p>\n      <img src="file:///F:\\Introduction to Python\\Final Task\\FinalTas'
+            'kRssParser\\final_task\\rss_reader/images/title0.jpg"><br><br>\n      <p>some_text<br><br></p>\n    </div>'
+            '\n  </body>\n</html>')
 
     def test_write_entries_to_html_without_img(self):
         open_mock = mock_open()
@@ -167,7 +176,8 @@ class TestHandler(unittest.TestCase):
         with patch("Handler.open", open_mock, create=True):
             self.handler.write_entries_to_html(os.path.abspath(os.path.dirname(__file__)), (entry,))
 
-        open_mock.assert_called_with(f"{os.path.abspath(os.path.dirname(__file__))}\\RSS_News.html", "w", encoding='utf-8')
+        open_mock.assert_called_with(
+            f"{os.path.abspath(os.path.dirname(__file__))}\\RSS_News.html", "w", encoding='utf-8')
         open_mock.return_value.write.assert_called_once()
         open_mock.return_value.write.assert_called_once_with(
             '<html>\n  <head>\n    <meta charset="utf-8">\n  </head>\n  <body>\n    <div>\n      <h1>title</h1>\n      '
@@ -195,6 +205,8 @@ class TestHandler(unittest.TestCase):
 
 
 class TestEntry(unittest.TestCase):
+    """Class for testing Entry methods"""
+
     def test__init__(self):
         entry = Entry()
         self.assertIsInstance(entry, Entry)
@@ -205,10 +217,9 @@ class TestEntry(unittest.TestCase):
                            summary="some_text", links=("article_link", "img_link"))
 
     def test_parse_html(self):
-        self.assertEqual(self.entry.parse_html
-            (
+        self.assertEqual(self.entry.parse_html(
             "Graham now says Trump&#39;s Ukraine policy was too &#39;incoherent&#39; for quid pro quo"
-        ), "Graham now says Trump's Ukraine policy was too 'incoherent' for quid pro quo"
+             ), "Graham now says Trump's Ukraine policy was too 'incoherent' for quid pro quo"
         )
         self.assertEqual(self.entry.parse_html(
             '<p><a href="https://news.yahoo.com/graham-trump-ukraine-incoherent-quid-pro-quo-192210175.html">'
@@ -282,7 +293,7 @@ class TestEntry(unittest.TestCase):
         expected_links = 'Links:\n[0] article_link (link)\n[1] img_link (image)\n\n\n'
         with patch('sys.stdout', new=StringIO()) as fake_out:
             self.entry.print_links()
-            self.assertEqual(expected_links ,fake_out.getvalue())
+            self.assertEqual(expected_links, fake_out.getvalue())
 
 
 if __name__ == '__main__':

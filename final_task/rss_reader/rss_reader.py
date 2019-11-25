@@ -1,7 +1,6 @@
 import os
 import sys
 import logging
-
 this_dir = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(this_dir)
 from Handler import Handler
@@ -21,7 +20,7 @@ def main():
     if not arg_parser_args.limit:
         arg_parser_args.limit = len(handler.parsed.entries)
         handler.limit = arg_parser_args.limit
-    if arg_parser_args.limit <= 0 and not version:
+    elif arg_parser_args.limit <= 0:
         raise RSSReaderException("Error. Incorrect value of argument limit")
 
     if arg_parser_args.verbose:
@@ -54,3 +53,5 @@ if __name__ == "__main__":
         print("Error, close the file for output of news")
     except RSSReaderException as rss_exc:
         print(rss_exc)
+    except TimeoutError:
+        print("Error, check your internet-connection")

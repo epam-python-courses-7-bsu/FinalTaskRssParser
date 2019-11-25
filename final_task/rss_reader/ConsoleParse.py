@@ -2,6 +2,7 @@ import argparse
 
 
 def get_arguments_from_console():
+    """Reading command line arguments"""
     arg_parser = argparse.ArgumentParser(description="Pure Python command-line RSS reader.")
     arg_parser.add_argument("source", nargs='?', type=str, default="", help="RSS URL")
     arg_parser.add_argument("--version", action="store_true", help="Print version info")

@@ -15,7 +15,6 @@ from dominate.tags import html, head, meta, body, div, img, p, b, br, h1, a
 
 class Handler:
     """class for handling different options: --version, --json, --limit Limit, --date"""
-
     @logging_decorator
     def __init__(self, source: str, limit: int, version: float):
         self.source = source
@@ -28,15 +27,19 @@ class Handler:
                 self.parsed.feed.title, ent.title, ent.published, ent.link, ent.summary,
                 tuple([link["href"] for link in ent.links]), ent.published_parsed)
             )
+        if not len(self.entries):
+            raise RSSReaderException("Error, no news. Check your internet-connection")
         logging.info("Handler object created")
 
     # options of command line:
     @logging_decorator
     def option_version(self) -> None:
+        """case when command line argument --version is selected"""
         print(f"version {self.version}")
 
     @logging_decorator
     def option_html(self, path: str) -> None:
+        """case when command line argument --to-html is selected"""
         for entry in self.entries:
             self.write_cache(self.convert_Entry_to_dict(entry))
         self.write_entries_to_html(path)
@@ -44,6 +47,7 @@ class Handler:
 
     @logging_decorator
     def option_pdf(self, path: str) -> None:
+        """case when command line argument --to-pdf is selected"""
         for entry in self.entries:
             self.write_cache(self.convert_Entry_to_dict(entry))
         self.write_entries_to_pdf(path)
@@ -51,19 +55,21 @@ class Handler:
 
     @logging_decorator
     def option_json(self) -> None:
+        """case when command line argument --json is selected"""
         for entry in self.entries:
             self.write_cache(self.convert_Entry_to_dict(entry))
             self.print_to_json(self.convert_Entry_to_dict(entry))
 
     @logging_decorator
     def option_default(self) -> None:
+        """case when no one of optional command line attributes is selected"""
         for entry in self.entries:
             self.write_cache(self.convert_Entry_to_dict(entry))
             self.print_entry(entry)
 
     @logging_decorator
     def correct_title(self, title: str) -> str:
-        return title.replace('"', "_").replace("?", "_").replace(":", "_").replace("'", "_").replace(" ", "_")[:30]
+        return title.replace('"', "_").replace("?", "_").replace(":", "_").replace("'", "_").replace(" ", "_")[:15]
 
     @logging_decorator
     def write_cache(self, entry_dict: dict) -> None:
@@ -89,6 +95,7 @@ class Handler:
 
     @logging_decorator
     def save_image(self, img_url: str, img_name: str) -> None:
+        """saving images to cache"""
         if os.path.exists("images"):
             if img_name.find(".jpg") == -1:
                 urllib.request.urlretrieve(img_url, f"images/{img_name}.jpg")
@@ -100,8 +107,9 @@ class Handler:
 
     @logging_decorator
     def option_date(self, date: str, do_json: bool, html_path: str = "", pdf_path: str = ""):
-        """add entries from cache.json into daily_news: list if they have date that is equal to user's --date DATE
-            and then raise an exception or print to console or to outputs to html"""
+        """case when command line argument --date is selected add entries from cache.json into daily_news: list
+         if they have date that is equal to user's --date DATE and then raise an exception in case when such articles
+         don't exist or print to console or to files in html or pdf formats"""
         if os.path.exists("cache.json"):
             try:
                 with open("cache.json") as cache:
@@ -131,6 +139,7 @@ class Handler:
 
     @logging_decorator
     def print_entry(self, entry: Entry) -> None:
+        """output of instance of class Entry to console"""
         entry.print_feed()
         entry.print_title()
         entry.print_date()
@@ -161,16 +170,23 @@ class Handler:
 
     @logging_decorator
     def write_entries_to_html(self, path: str, entries=()) -> None:
+        """writing of text view of instances of Entry class to html file"""
         # in case of reading news from cache list of entries are got as dict
         # and in case of online reading news only the path is passed to the method without list of entries
+        if os.path.exists(path) is False:
+            raise RSSReaderException('Error. No such folder. Check the correctness of the entered path \n')
         if os.path.isdir(path) is False:
             raise RSSReaderException("Error. It isn't a folder")
 
         if not entries:
             entries = self.entries
-
-        if isinstance(entries[0], dict):
-            entries = [self.get_entry_from_dict(entry) for entry in entries]
+        # in case of reading news from cache, entries is the list of dicts and they are converted to Entry-object
+        # in case of absence of internet connection list of entries is empty
+        try:
+            if isinstance(entries[0], dict):
+                entries = [self.get_entry_from_dict(entry) for entry in entries]
+        except IndexError:
+            raise RSSReaderException("Error, no news. Try to check your internet-connection")
 
         _html = html()
         _html.add(head(meta(charset='utf-8')))
@@ -212,8 +228,11 @@ class Handler:
 
     @logging_decorator
     def write_entries_to_pdf(self, path: str, entries=()) -> None:
+        """writing of text view of instances of Entry class to pdf file"""
         # in case of reading news from cache list of entries are got as dict
         # and in case of online reading news only the path is passed to the method without list of entries
+        if os.path.exists(path) is False:
+            raise RSSReaderException('Error. No such folder. Check the correctness of the entered path \n')
         if os.path.isdir(path) is False:
             raise RSSReaderException("Error. It isn't a folder")
 
@@ -228,10 +247,14 @@ class Handler:
             raise RSSReaderException("Error. File with fonts not found")
         pdf.alias_nb_pages()
         pdf.add_page()
-
         # in case of reading news from cache, entries is the list of dicts and they are converted to Entry-object
-        if isinstance(entries[0], dict):
-            entries = [self.get_entry_from_dict(entry) for entry in entries]
+        # in case of absence of internet connection list of entries is empty
+        try:
+            if isinstance(entries[0], dict):
+                entries = [self.get_entry_from_dict(entry) for entry in entries]
+        except IndexError:
+            raise RSSReaderException("Error, no news. Try to check your internet-connection")
+
         for entry in entries:
             text = entry.summary
             # adding of an image if the entry has image
