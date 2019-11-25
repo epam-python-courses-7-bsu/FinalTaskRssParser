@@ -1,11 +1,13 @@
+import json
+import pprint
+import logging as log
+
 from collections import OrderedDict
 from collections import defaultdict
-import logging as log
-import json
-import rss_get_items as filters
-import pprint
 from colorama import Fore
 from colorama import Style
+
+import rss_get_items as filters
 
 
 def split_string_by_lines(input_string: str, word_number: int) -> str:
@@ -25,13 +27,13 @@ def prepare_one_item(item_xml: defaultdict) -> OrderedDict:
     with title, date, description and media content
 
     """
-    title = item_xml['title']
-    date = filters.pubdate(item_xml['pubDate'])
+    title = filter_title(item_xml['title'])
+    date = (item_xml['pubDate'])
     date = data_split(date)
     news_link = item_xml['link']
     description = split_string_by_lines(
         filters.description(item_xml['description']),
-        10
+        11
     )
     media_content = split_string_by_lines(
         ' '.join(item_xml['content']),
@@ -45,6 +47,11 @@ def prepare_one_item(item_xml: defaultdict) -> OrderedDict:
     prepared_news["Description: "] = description
     prepared_news["Media content:\n"] = media_content
     return prepared_news
+
+
+def filter_title(title: str) -> str:
+    new_title = title.replace("&#39;", '')
+    return new_title
 
 
 def print_one_item(news_item: OrderedDict) -> None:
@@ -71,7 +78,7 @@ def make_json(items: list) -> dict:
         Convert article data in json format
     """
     log.info('Start make json format')
-    jsons = {}
+    json_format = {}
     for idx, item in enumerate(items):
         item = prepare_one_item(item)
         json_item = {
@@ -81,9 +88,9 @@ def make_json(items: list) -> dict:
             'date': item['Date:'],
             'title': item['Title:'],
         }
-        jsons[idx] = json_item
+        json_format[idx] = json_item
     log.info("End make json format")
-    return jsons
+    return json_format
 
 
 def print_json(items: list) -> None:
@@ -97,13 +104,14 @@ def print_json(items: list) -> None:
 
 
 def data_split(date: str) -> str:
+    print(date)
+    log.info("Converting date")
     month = {
         'Dec': '12', 'Jan': '01', 'Feb': '02',
         'Mar': '03', 'Apr': '04', 'May': '05',
         'Jun': '06', 'Jul': '07', 'Aug': '08',
         'Sep': '09', 'Oct': '10', 'Nov': '11'
     }
-
     new_date = date
     new_date = (new_date.split(' ')[1:4])
     new_date[1] = month[new_date[1]]

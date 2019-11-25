@@ -7,7 +7,7 @@ from collections import defaultdict
 import check
 
 
-def get_items(url: str):
+def get_items(url: str) -> list:
     if check.internet_on:
         log.info("Start get items from url")
         request = urllib.request.Request(url)
@@ -45,8 +45,3 @@ def description(description_element: str) -> str:
     """
     log.info("Try to delete all html in description")
     return BeautifulSoup(description_element, "html.parser").getText()
-
-
-def pubdate(pub_date: str) -> str:
-    """reformat publication date"""
-    return pub_date

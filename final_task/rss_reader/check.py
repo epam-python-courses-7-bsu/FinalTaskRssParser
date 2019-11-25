@@ -1,10 +1,10 @@
-import urllib.error
-import urllib.request
+import requests
 
 
 def internet_on():
+    """ Check internet connection function. """
     try:
-        urllib.error.urlopen("http://216.58.192.142", timeout=10)
+        requests.get("http://google.com", timeout=5)
         return True
-    except urllib.request.URLError:
-        return False
+    except requests.exceptions.ConnectionError:
+        print("Please, check your internet connection.")
