@@ -4,6 +4,10 @@
 import os
 import sys
 
+current_dir = os.path.abspath(os.path.dirname(__file__))
+sys.path.append(current_dir)
+os.chdir(current_dir)
+
 from cache import cache_news, get_cached_news
 from cmd_line_parser import make_arg_parser, output_json, output_verbose
 from html_converter import convert_news_to_html
@@ -13,11 +17,6 @@ import rss_exceptions as er
 from rss_parser import RSSparser
 from utils import output_txt_news
 import validator as valid
-
-
-current_dir = os.path.abspath(os.path.dirname(__file__))
-sys.path.append(current_dir)
-os.chdir(current_dir)
 
 
 def main():
