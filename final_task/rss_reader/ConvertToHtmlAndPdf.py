@@ -23,11 +23,9 @@ def convert_Dict_to_News(arr_news_dict):
 
 @log_decore
 def create_html_news(path, News):
-    try:
-        os.path.isdir(path) is False
-    except:
+   
+    if os.path.isdir(path) is False:
         raise RssException("Error. It isn't a folder")
-
     path = os.path.join(path, "News.html")
 
     news_html = html()
@@ -64,9 +62,8 @@ def create_html_news(path, News):
 
 @log_decore
 def create_pdf_news(path, News):
-    try:
-        os.path.isdir(path) is False
-    except:
+    
+    if os.path.isdir(path) is False:
         raise RssException("Error. It isn't a folder")
     path = os.path.join(path, "News.pdf")
 
