@@ -1,0 +1,17 @@
+# Editors
+.idea/
+
+# Environments
+venv/
+
+# Byte-compiled / optimized
+__pycache__/
+*.py[cod]
+
+*.log
+
+# Distribution / packaging
+*.egg-info/
+build/
+develop-eggs/
+dist/
