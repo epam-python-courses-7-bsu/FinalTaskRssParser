@@ -93,13 +93,13 @@ class TestArgparseHandler(unittest.TestCase):
     @patch('argparse_handler.urllib.request.urlopen')
     def test_check_the_connection(self, mock_urlopen):
         """Testing with good connection, with HTTPError and with URLError """
-        self.assertEqual(argparse_handler.check_the_connection('https://news.tut.by/'), 'ok')
+        self.assertEqual(argparse_handler.check_the_connection('https://news.tut.by/'), (True, 'connection success'))
 
         mock_urlopen.side_effect = urllib.request.HTTPError(None, '404', 'Not found', None, None)
-        self.assertEqual(argparse_handler.check_the_connection('https://news.tut.by/404'), '404: Not found')
+        self.assertEqual(argparse_handler.check_the_connection('https://news.tut.by/404'),  (False, '404: Not found'))
 
         mock_urlopen.side_effect = urllib.request.URLError('message')
-        self.assertEqual(argparse_handler.check_the_connection('https://news'), 'message')
+        self.assertEqual(argparse_handler.check_the_connection('https://news'), (False, 'message'))
 
     def test_check_if_url_is_valid(self):
         """Testing different links"""
@@ -119,10 +119,10 @@ class TestArgparseHandler(unittest.TestCase):
     def test_valid_url(self, mock_connection, mock_url_is_valid):
         """Testing good url, bad connection, not valid url"""
         mock_url_is_valid.return_value = True
-        mock_connection.return_value = 'ok'
+        mock_connection.return_value = (True, 'ss')
         self.assertEqual(argparse_handler.valid_url('https://news.tut.by/'), 'https://news.tut.by/')
 
-        mock_connection.return_value = 'not ok'
+        mock_connection.return_value = (False, 'error')
         with self.assertRaises(custom_error.ConnectionFailedError):
             argparse_handler.valid_url('https://news.tuuut.by/')
 

@@ -6,6 +6,12 @@ colorama.init()
 
 
 def set_colorizing_status() -> None:
-    """Sets COLORIZING_STATUS to true if --colorize in arguments"""
+    """Sets COLORIZING_STATUS to true"""
     global COLORIZING_STATUS
     COLORIZING_STATUS = True
+
+
+def reset_colorizing_status() -> None:
+    """Resets COLORIZING_STATUS to false"""
+    global COLORIZING_STATUS
+    COLORIZING_STATUS = False

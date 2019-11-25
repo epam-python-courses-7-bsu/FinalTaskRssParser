@@ -39,7 +39,7 @@ class TestArticlesHandler(unittest.TestCase):
     @patch('html_converter.check_the_connection')
     def test_convert_to_html(self, mock_connection, mock_date, mock_open_file):
         """Testing conversion to html with/without connection"""
-        mock_connection.return_value = 'ok'
+        mock_connection.return_value = (True, 'connection success')
 
         test_date = 'November 23, 2019'
         mock_date.today.return_value = datetime.datetime.strptime(test_date, '%B %d, %Y')
@@ -72,7 +72,7 @@ class TestArticlesHandler(unittest.TestCase):
         mock_open_file.assert_called_with(test_path2, 'w', encoding='utf-8')
         mock_open_file().write.assert_has_calls(calls)
 
-        mock_connection.return_value = 'not ok'
+        mock_connection.return_value = (False, 'no connection')
         with open(os.path.join(path, 'expected_result_files', 'html_converter_expected_result3.html'),
                   'r', encoding="utf-8") as the_file:
             expected_result3 = the_file.read()

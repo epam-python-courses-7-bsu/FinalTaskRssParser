@@ -124,7 +124,7 @@ class CachedArticlesClass:
     def get_articles_from_cache(self) -> None:
         """Gets articles from cache file if it exists"""
         if not os.path.exists(CACHE_FILE_NAME) or os.stat(CACHE_FILE_NAME).st_size == 0:
-            raise custom_error.NoDataInCacheFileError
+            raise custom_error.NoDataInCacheFileError()
 
         with open(CACHE_FILE_NAME, 'r') as cache_file:
             loaded_data_list = json.load(cache_file)

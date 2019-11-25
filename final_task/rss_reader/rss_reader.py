@@ -113,8 +113,7 @@ def main() -> None:
 
             arg_parser.parse_args()
         elif switcher == 'link_only':
-            global COLORIZE_STATUS
-            COLORIZE_STATUS = True
+
             arg_parser = argparse_handler.create_parser('full')
             logging.info('Argument parser created')
 

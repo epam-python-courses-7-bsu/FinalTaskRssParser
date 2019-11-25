@@ -13,6 +13,7 @@ import io
 
 class TestArticlesHandler(unittest.TestCase):
     """Tests article_handler"""
+
     def setUp(self) -> None:
         self.first_article = single_article.SingleArticle(feed='Yahoo News',
                                                           feed_url='https://www.yahoo.com/news',
@@ -47,8 +48,8 @@ class TestArticlesHandler(unittest.TestCase):
 
     def test_print_rss_articles(self):
         """Testing all articles print"""
-        expected_out = str(f"{'-' * 120}\n{self.first_article}\n{'-' * 120}\n") + \
-                       str(f"{'-' * 120}\n{self.second_article}\n{'-' * 120}\n")
+        expected_out = str(f"{'-' * 120}\n{self.first_article}\n{'-' * 120}\n" +
+                           f"{'-' * 120}\n{self.second_article}\n{'-' * 120}\n")
         with patch('sys.stdout', new=io.StringIO()) as fake_out:
             articles_handler.print_rss_articles([self.first_article, self.second_article])
 

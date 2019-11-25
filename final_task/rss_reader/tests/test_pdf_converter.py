@@ -5,6 +5,7 @@ import os
 import unittest
 from unittest.mock import patch
 
+import custom_error
 import pdf_converter
 from single_article import SingleArticle
 
@@ -34,24 +35,32 @@ class TestArticlesHandler(unittest.TestCase):
                                               'image'],
                                              ['https://news.yahoo.com/trump.html', 'other']])
 
-    @patch('pdf_converter.FPDF.output')
     @patch('pdf_converter.datetime.date')
     @patch('pdf_converter.check_the_connection')
-    def test_convert_to_pdf(self, mock_connection, mock_date, mock_output):
+    def test_convert_to_pdf(self, mock_connection, mock_date):
         """Testing conversion to pdf"""
         test_date = 'November 23, 2019'
         mock_date.today.return_value = datetime.datetime.strptime(test_date, '%B %d, %Y')
 
         path = os.path.abspath(os.path.dirname(__file__))
-        test_path = os.path.join(path, test_date + ".pdf")
 
-        mock_connection.return_value = 'not ok'
-        mock_output.side_effect = PermissionError
-        with patch('sys.stdout', new=io.StringIO()) as fake_out:
-            pdf_converter.convert_to_pdf([self.article1, self.article2], path, None)
-            expected_out = 'Please, close pdf file before converting or you need to run program as system ' \
-                           'administrator, to save files in that location\n'
-            self.assertEqual(fake_out.getvalue(), expected_out)
+        with patch('pdf_converter.FPDF.add_font') as mock_font_add:
+            mock_font_add.side_effect = RuntimeError
+
+            with patch('sys.stdout', new=io.StringIO()) as fake_out:
+                pdf_converter.convert_to_pdf([self.article1, self.article2], path, None)
+                expected_out = "Can't find dejavusans.ttf font. Can't convert to PDF.\n"
+                self.assertEqual(fake_out.getvalue(), expected_out)
+
+        mock_connection.return_value = (False, 'no connection')
+        with patch('pdf_converter.FPDF.output') as mock_font_add:
+            mock_font_add.side_effect = PermissionError
+
+            with patch('sys.stdout', new=io.StringIO()) as fake_out:
+                pdf_converter.convert_to_pdf([self.article1, self.article2], path, None)
+                expected_out = 'Please, close pdf file before converting or you need to run program as system ' \
+                               'administrator, to save files in that location\n'
+                self.assertEqual(fake_out.getvalue(), expected_out)
 
 
 if __name__ == '__main__':

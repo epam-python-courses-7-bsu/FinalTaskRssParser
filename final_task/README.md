@@ -1,26 +1,29 @@
 ﻿
 
 
+
 #  RSS Reader v.5.0, Evgeny Androsik (androsikei95@gmail.com)
 
 **1-5** iterations.
 1. [Creation and Installation](#creation-and-installation)  
 	1.1. [Package creation](#package-creation)  
 	1.2. [Package installation](#package-installation)  
-3. [Application launch](#application-launch)  
+2. [Application launch](#application-launch)  
 	2.1. [Direct launch](#direct-launch)  
 	2.2 [Launch as CLI utility](#launch-as-cli-utility)  
-4. [Usage](#usage)  
-5. [Examples](#examples)  
+3. [Usage](#usage)  
+4. [Examples](#examples)  
 	4.1.  [Direct launch examples](#direct-launch-examples)  
 	4.2.  [CLI utility examples](#cli-utility-examples)  
-6. [About project](#about-project)  
+5. [About project](#about-project)  
 	6.1. [Project Structure](#project-structure)  
-	6.2 [Iteration 1](#iteration-1-rss-reader.)  
+	6.2 [Iteration 1](#iteration-1-rss-reader)  
 	6.3 [Iteration 2](#iteration-2-distribution)  
 	6.4 [Iteration 3](#iteration-3-news-caching)  
 	6.5 [Iteration 4](#iteration-4-format-converter)  
-	6.6 [Iteration 5](#iteration-5-output-colorization)
+	6.6 [Iteration 5](#iteration-5-output-colorization)  
+6. [Tests](#tests)  
+7. [For fast use](#for-fast-use)  
 
 ##  Creation and Installation
 
@@ -55,12 +58,11 @@
 
 #### Requirements:
 To run this app directly you need to install this external python libraries in your environment:  
-1. feedparser (**Windows**: `pip install feedparser` **/** **Linux**: `sudo pip3 install feedparser`)  
-2. bs4 (**Windows**: `pip install bs4` **/** **Linux**: `sudo apt-get install python3-bs4`)  
-3. dateutil (**Windows**: `pip install python-dateutil` **/** **Linux**: `
-sudo apt-get install python3-dateutil`)  
-4. fpdf [https://pypi.org/project/fpdf/](https://pypi.org/project/fpdf/)  
-5. jinja2 [https://pypi.org/project/Jinja2/](https://pypi.org/project/Jinja2/)  
+1. feedparser [https://pypi.org/project/feedparser/](https://pypi.org/project/feedparser/)   
+2. bs4 [https://pypi.org/project/bs4/](https://pypi.org/project/bs4/)  
+3. dateutil [https://pypi.org/project/python-dateutil/](https://pypi.org/project/python-dateutil/)  
+4. fpdf [https://pypi.org/project/fpdf/](https://pypi.org/project/fpdf/)   
+5. jinja2 [https://pypi.org/project/Jinja2/](https://pypi.org/project/Jinja2/)   
 6. colorama [https://pypi.org/project/colorama/](https://pypi.org/project/colorama/)  
 7. termcolor [https://pypi.org/project/termcolor/](https://pypi.org/project/termcolor/)  
 8. coloredlogs [https://pypi.org/project/coloredlogs/](https://pypi.org/project/coloredlogs/)  
@@ -171,15 +173,31 @@ Usage: `rss_reader.py [-h] [ --version ] [ --json ] [ --verbose ] [ --limit LIMI
 │   ├── __init__.py
 │   ├── argparse_handler.py
 │   ├── articles_handler.py
-│   ├── html_converter.py
-│   ├── pdf_converter.py
 │   ├── colorizing_handler.py
 │   ├── custom_error.py
+│   ├── html_converter.py
+│   ├── pdf_converter.py
+│   ├── requirements.txt
 │   ├── rss_reader.py
 │   ├── single_article.py
 │   ├── 📁tests
 │   │   ├── __init__.py
-│   │   └── test_module_1.py
+│   │   ├── test_argparse_handler.py
+│   │   ├── test_articles_handler.py
+│   │   ├── test_colorizing_handler.py
+│   │   ├── test_html_converter.py
+│   │   ├── test_pdf_converter.py
+|   |   ├── test_rss_reader.py
+│   │   ├── 📁data_for_testing
+│   │   │   └── rss1.xml
+│   │   └── 📁expected_result_files
+│   │       ├── html_converter_expected_result1.html
+│   │       ├── html_converter_expected_result2.html
+│   │       ├── html_converter_expected_result3.html
+│   │       ├── rss_reader_expected_out_1.txt
+│   │       ├── rss_reader_expected_out_2.txt
+│   │       ├── rss_reader_expected_out_3.txt
+│   │       └── rss_reader_expected_out_4.txt
 │   ├── 📁templates
 │   │   ├── base.html
 │   │   └── style.css
@@ -192,16 +210,16 @@ Usage: `rss_reader.py [-h] [ --version ] [ --json ] [ --verbose ] [ --limit LIMI
 └── setup.py
 ```
 
-### [Iteration 1] RSS reader.  
+### [Iteration 1] RSS reader  
 
 ### [Iteration 2] Distribution
 
-Utility was wrapped into distribution package with setuptools . This package can be exported as CLI utility named rss-reader .
+Utility was wrapped into distribution package with setuptools . This package can be exported as CLI utility named rss-reader .  
 
 ### [Iteration 3] News caching  
 
-The news cache saving in `cache.json` file in json format.
-`dateutil` - powerful extensions to datetime
+The news cache saving in `cache.json` file in json format.  
+`dateutil` - powerful extensions to datetime.  
 I'm using `dateutil.parser` to parse dates from cache to datetime.datetime.
 
  `--date DATE` also works with `source`, `--json`, `--limit LIMIT`, `--verbose`  
@@ -250,11 +268,18 @@ If Internet conection is on images will be loaded, else only URL's.
 
 ### [Iteration 5] Output colorization  
 
-**colorama** and **termcolor** was used to colorize output
-**coloredlogs** was used to colorize logs
+**colorama** and **termcolor** was used to colorize output  
+**coloredlogs** was used to colorize logs  
 
 ### [Iteration 6] Web-server  
+**Not implemented**  
 
+## Tests
+Install [https://pypi.org/project/coverage/](https://pypi.org/project/coverage/) for coverage details.  
+Go to the `rrs_reader` directory and run commands:  
+`coverage run --source=. -m unittest discover -s .\tests`  
+`coverage report -m` - coverage report in command line  
+`coverage html` - coverage report as html, creates .\htmlcov  
 
 ## For fast use
 ```
@@ -265,4 +290,3 @@ python rss_reader.py http://feeds.bbci.co.uk/news/rss.xml?edition=uk
 python rss_reader.py "http://billmaher.hbo.libsynpro.com/rss"
 python rss_reader.py "https://www.craigslist.org/about/best/all/index.rss"
 ```
-`coverage run --source=. -m unittest discover -s .\tests`

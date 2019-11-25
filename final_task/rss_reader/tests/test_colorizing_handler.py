@@ -5,11 +5,14 @@ import colorizing_handler
 
 class TestArticlesHandler(unittest.TestCase):
     """Tests colorizing_handler"""
+
     def test_set_colorizing_status(self):
-        """Testing status set"""
+        """Testing status set and reset"""
         self.assertFalse(colorizing_handler.COLORIZING_STATUS)
         colorizing_handler.set_colorizing_status()
         self.assertTrue(colorizing_handler.COLORIZING_STATUS)
+        colorizing_handler.reset_colorizing_status()
+        self.assertFalse(colorizing_handler.COLORIZING_STATUS)
 
 
 if __name__ == '__main__':

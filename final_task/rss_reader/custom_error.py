@@ -51,3 +51,8 @@ class NoDataInCacheFileError(Error):
 class NotValidPathError(Error):
     """Raised when path is not valid"""
     pass
+
+
+class FontNotFoundError(Error):
+    """Raised if font was deleted or replaced"""
+    pass

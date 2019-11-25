@@ -5,7 +5,7 @@ import logging
 import os
 import sys
 import urllib.request
-from typing import Optional
+from typing import Optional, Tuple
 
 import custom_error
 
@@ -30,7 +30,7 @@ def check_if_help_or_version_in_arguments() -> Optional[str]:
 def check_the_arguments_amount() -> None:
     """Checks if there 1 or 0 arguments and raises exception"""
     if len(sys.argv) < 2:
-        raise custom_error.NotEnoughArgumentsError
+        raise custom_error.NotEnoughArgumentsError()
 
 
 def link_found() -> bool:
@@ -54,7 +54,7 @@ def check_if_url_or_date_in_arguments() -> str:
             if link_found():
                 return 'link_only'
             else:
-                raise custom_error.UrlNotFoundInArgsError
+                raise custom_error.UrlNotFoundInArgsError()
         else:
             if link_found():
                 return 'link_and_date'
@@ -64,15 +64,15 @@ def check_if_url_or_date_in_arguments() -> str:
         return flag
 
 
-def check_the_connection(rss_url: str) -> str:
+def check_the_connection(rss_url: str) -> Tuple[bool, str]:
     """Checks the connection"""
     try:
         urllib.request.urlopen(rss_url)
-        return 'ok'
+        return True, 'connection success'
     except urllib.request.HTTPError as e:
-        return f'{e.code}: {e.reason}'
+        return False, f'{e.code}: {e.reason}'
     except urllib.request.URLError as e:
-        return f'{e.reason}'
+        return False, f'{e.reason}'
 
 
 def check_if_url_is_valid(rss_url: str) -> bool:
@@ -82,13 +82,13 @@ def check_if_url_is_valid(rss_url: str) -> bool:
 
 
 def valid_url(rss_url: str) -> str:
-    """Checks if url is valid and connection successful"""
+    """Return url if it is valid and connection successful, else raises exceptions"""
     if check_if_url_is_valid(rss_url):
         logging.info('Valid url')
 
-        connection = check_the_connection(rss_url)
-        if connection != 'ok':
-            raise custom_error.ConnectionFailedError(f"Connection failed: {connection}")
+        connection, message = check_the_connection(rss_url)
+        if not connection:
+            raise custom_error.ConnectionFailedError(f"Connection failed: {message}")
 
         logging.info('Connection successful')
         return rss_url
@@ -97,8 +97,8 @@ def valid_url(rss_url: str) -> str:
         raise custom_error.NotValidUrlError(msg)
 
 
-def valid_limit(limit: Optional[str]) -> Optional[int]:
-    """Checks if limit is valid"""
+def valid_limit(limit: str) -> int:
+    """Return limit if it is valid, else raises exceptions"""
     try:
         limit = int(limit)
         if limit > 0:
@@ -112,7 +112,7 @@ def valid_limit(limit: Optional[str]) -> Optional[int]:
 
 
 def valid_date(date: str) -> datetime.datetime:
-    """Checks if date is valid"""
+    """Return datetime.datetime date if date is valid, else raises exceptions"""
     try:
         if len(date) != 8:
             msg = f'Date must be 8 digits (yyyymmdd)'
@@ -125,7 +125,7 @@ def valid_date(date: str) -> datetime.datetime:
 
 
 def valid_directory_path(path: str) -> str:
-    """Checks if path is valid"""
+    """Return path if it is valid and exists, else raises exceptions"""
     if not path.endswith(os.path.sep):
         path += os.path.sep
 
