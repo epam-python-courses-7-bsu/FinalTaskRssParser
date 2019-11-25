@@ -1,8 +1,8 @@
 import argparse
 
-
 def parsargs():
     parser = argparse.ArgumentParser(description='Getting info from sites')
+
     parser.add_argument('source', type=str, help='RSS URL')
 
     parser.add_argument(
@@ -29,8 +29,14 @@ def parsargs():
         help='Outputs verbose status messages'
     )
 
+    parser.add_argument(
+        '--date', 
+        type=int, 
+        help='Take date in format %Y%m%d'
+    )
+
     args = parser.parse_args()
     
     return args
 
-vers = 1.0
+VERSION = 1.0
