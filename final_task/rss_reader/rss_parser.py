@@ -1,10 +1,15 @@
 #!/usr/bin/env python3.8
+"""
+Module for parsing news from the given link, extracting required info from it
+and filling the list with dictionaries containing received data
+"""
 
 import html
 
 from bs4 import BeautifulSoup
 import feedparser
 
+from logger import LOGGER
 from validator import check_limit_value, check_news_collection
 
 
@@ -13,38 +18,36 @@ class RSSparser:
     Parsed the RSS news from received link, extracts required amount of news
 
     Parameters:
-        cmd_args: dict: parsed arguments out of sys.argv;
-        logger: LOGGER: tracks events that occur during program execution.
+        cmd_args: dict: parsed arguments out of sys.argv
 
     Returns:
         all_news: list of dictionaries with extracted info of required amount of parsed news
     """
 
-    def __init__(self, cmd_args, logger):
+    def __init__(self, cmd_args):
         self.url = cmd_args.source
         self.limit = cmd_args.limit
-        self.logger = logger
-        check_limit_value(self.limit, self.logger)
+        check_limit_value(self.limit)
 
-        self.logger.info(f'Get RSS_url {self.url} and value = {self.limit} (limits amount of output news)')
+        LOGGER.info(f'Get RSS_url {self.url} and value = {self.limit} (limits amount of output news)')
 
         self.response = self.get_the_response()
 
         # Extract the news-site name converting it to the unicode
         self.feed_name = html.unescape(self.response.feed.get('title', ''))
 
-        self.logger.info('Trying to separate news from the URL.')
+        LOGGER.info('Trying to separate news from the URL.')
 
         # Extract all news separately in one list
         self.news = self.response.entries
-        check_news_collection(self.news, self.logger)
+        check_news_collection(self.news)
 
     def get_the_response(self):
         """
         Get the response from the url.
         """
         response = feedparser.parse(self.url)
-        self.logger.info(f'Getting the response from the URL: {self.url}.')
+        LOGGER.info(f'Getting the response from the URL: {self.url}.')
         return response
 
     def parse_feed(self):
@@ -54,10 +57,11 @@ class RSSparser:
         """
         all_news = []
 
-        self.logger.info('Extract the required data from the separated news '
-                         'and fill the dictionaries with required data.')
+        LOGGER.info('Extract the required data from the separated news and fill the dictionaries with required data.')
 
-        for info in self.news[:self.limit]:
+        limit = self.limit or len(self.news)
+
+        for info in self.news[:limit]:
             img_link, img_title = [], []
             info_title = html.unescape(info.title)
             info_link = info.link

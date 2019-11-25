@@ -1,1 +1,3 @@
 recursive-include rss_reader/templates *
+recursive-include rss_reader/tests/files *
+recursive-include rss_reader/fonts *

@@ -33,5 +33,6 @@ setup(
             'rss-reader = rss_reader.rss_reader:main',
         ],
     },
+    test_suite='rss_reader.tests',
     python_requires='>=3.8',
 )

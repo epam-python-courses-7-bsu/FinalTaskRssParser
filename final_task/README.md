@@ -29,10 +29,11 @@ optional arguments:
 ```
 
 In addition to the --verbose argument, the utility also provides recording logging events in a event_tracker.log file that remembering all messages from earlier runs.
+In case of --limit is 0 or greater than amount of received news - all available news will be displayed.
 
 
 
-## Requirements
+## [Requirements](https://github.com/brechka/FinalTaskRssParser/blob/master/final_task/rss_reader/requirements.txt)
 
 The REST API was created using Python 3.8. To run the APP you need to install with pip packages listed in [requirements.txt](https://github.com/brechka/FinalTaskRssParser/blob/master/final_task/rss_reader/requirements.txt) 
 (better to use virtual environment):
@@ -45,13 +46,16 @@ pip install -r requirements.txt
 
 ## Usage of RSS-reader
 
+For usage the utility use followed option:
+
+clone current repository and install the requirements (see the description above), it's better to use isolated environment with virtualenv. 
 The entire application is contained within the rss_reader.py file. For running the utility use previously listed command line arguments. For example:
 
 ```
-rss_reader.py https://news.yahoo.com/rss/ --limit 1
+rss-reader https://news.yahoo.com/rss/ --limit 1
 ```
 
-The output will be the following structure:
+The output would be the following structure:
 
 ```
 Feed: Yahoo News - Latest News & Headlines

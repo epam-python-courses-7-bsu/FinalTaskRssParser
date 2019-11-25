@@ -1,4 +1,5 @@
 #!/usr/bin/env python3.8
+"""Module for parsing command line arguments and processing two of them: --json and --verbose"""
 
 import argparse
 import datetime
@@ -9,6 +10,7 @@ import sys
 import coloredlogs
 from termcolor import cprint
 
+from logger import LOGGER
 from rss_exceptions import FormatDateError
 
 
@@ -45,18 +47,18 @@ def convert_date(date):
         raise FormatDateError("Invalid date format. Date format should be like '%Y%m%d' -> 20191120.")
 
 
-def output_json(all_news, cmd_args, logger):
+def output_json(all_news, cmd_args):
     """
     If the 'json' argument was passed - converts data in json format and prints it
     """
     if cmd_args.json:
-        logger.info('Convert RSS data in JSON format')
+        LOGGER.info('Convert RSS data in JSON format')
         news_in_json = json.dumps(all_news, indent=4, ensure_ascii=False)
         if cmd_args.colorize:
-            logger.info('Output result of parsing RSS in colorized JSON format')
+            LOGGER.info('Output result of parsing RSS in colorized JSON format')
             cprint(news_in_json, 'cyan')
         else:
-            logger.info('Output result of parsing RSS in JSON format')
+            LOGGER.info('Output result of parsing RSS in JSON format')
             print(news_in_json)
 
 

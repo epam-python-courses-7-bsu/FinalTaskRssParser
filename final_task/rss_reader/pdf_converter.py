@@ -1,10 +1,12 @@
 #!/usr/bin/env python3.8
+"""Module for creating and filling unique PDF file with required news"""
 
 import os
 import urllib.request
 
 from fpdf import FPDF, set_global
 
+from logger import LOGGER
 from rss_exceptions import PATHError
 from utils import create_path_to_file
 
@@ -13,20 +15,20 @@ CUR_DIRECTORY = os.path.abspath(os.path.dirname(__file__))
 FONT_PATH = os.path.join(CUR_DIRECTORY, 'fonts')
 
 
-def convert_news_to_pdf(cmd_args, all_news, logger):
+def convert_news_to_pdf(cmd_args, all_news):
     """
     If the 'to-pdf' argument was passed - creates PDF file and push data in it.
     """
     if cmd_args.to_pdf:
-        logger.info("Call function for creation PDF file")
-        create_pdf_file(cmd_args, all_news, logger)
+        LOGGER.info("Call function for creation PDF file")
+        create_pdf_file(cmd_args, all_news)
 
 
-def create_pdf_file(cmd_args, all_news, logger):
+def create_pdf_file(cmd_args, all_news):
     """
     Creates and fills in the PDF file with the required data
     """
-    path_to_pdf = create_path_to_file(cmd_args.to_pdf, 'RSS_NEWS.pdf', logger)
+    path_to_pdf = create_path_to_file(cmd_args.to_pdf, 'RSS_NEWS.pdf')
 
     # --- normal cache mode ---
     set_global("FPDF_CACHE_MODE", 0)
@@ -45,9 +47,9 @@ def create_pdf_file(cmd_args, all_news, logger):
     pdf.set_text_color(0, 0, 0)
 
     for new in all_news:
-        add_new_to_pdf(cmd_args, new, pdf, logger)
+        add_new_to_pdf(cmd_args, new, pdf)
 
-    logger.info(f'Download PDF file with required news to the {path_to_pdf}')
+    LOGGER.info(f'Download PDF file with required news to the {path_to_pdf}')
 
     try:
         pdf.output(path_to_pdf, 'F')
@@ -55,7 +57,7 @@ def create_pdf_file(cmd_args, all_news, logger):
         raise PATHError('Setted PATH is invalid')
 
 
-def add_new_to_pdf(cmd_args, new, pdf, logger):
+def add_new_to_pdf(cmd_args, new, pdf):
     """
     Add one new to PDF file
     """
@@ -75,11 +77,11 @@ def add_new_to_pdf(cmd_args, new, pdf, logger):
     pdf.ln(10)
 
     if not cmd_args.date:
-        logger.info('Add image(s) from the received links to the file')
+        LOGGER.info('Add image(s) from the received links to the file')
 
         for num, link in enumerate(new.get('img_link'), 1):
             if link:
-                add_downloaded_image(num, link, pdf, logger)
+                add_downloaded_image(num, link, pdf)
     else:
         pdf.cell(200, 8, txt='Links to the image(s): ')
         pdf.ln(8)
@@ -93,25 +95,25 @@ def add_new_to_pdf(cmd_args, new, pdf, logger):
     pdf.ln(10)
 
 
-def add_downloaded_image(num, link, pdf, logger):
+def add_downloaded_image(num, link, pdf):
     """
     Download image, add it to PDF file and delete it
     """
-    logger.info(f'Download image № {num} from {link} from received URL.')
+    LOGGER.info(f'Download image № {num} from {link} from received URL.')
 
-    (filename, headers) = urllib.request.urlretrieve(link)
+    filename, headers = urllib.request.urlretrieve(link)
     image_format = headers['content-type'].replace('image/', '')
 
     if image_format not in ('jpeg', 'png'):
-        logger.info(f"Image № {num} from {link} is not in an appropriate format.")
+        LOGGER.info(f"Image № {num} from {link} is not in an appropriate format.")
         add_image_link(num, link, pdf)
     else:
-        logger.info(f"Format of image № {num} from {link} is appropriate.")
+        LOGGER.info(f"Format of image № {num} from {link} is appropriate.")
 
         pdf.image(filename, x=70, y=pdf.get_y(), h=40, type=image_format, link=link)
         pdf.ln(40)
 
-        logger.info(f'Delete downloaded image № {num} from {link}.')
+        LOGGER.info(f'Delete downloaded image № {num} from {link}.')
         os.remove(filename)
 
 

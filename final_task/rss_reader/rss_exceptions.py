@@ -1,4 +1,5 @@
 #!/usr/bin/env python3.8
+"""Module with custom exceptions"""
 
 
 class Error(Exception):
@@ -13,6 +14,11 @@ class LimitSignError(Error):
 
 class FeedError(Error):
     """Exception is raised for link without news"""
+    pass
+
+
+class UndefinedURL(Error):
+    """Exception is raised if URL is not define"""
     pass
 
 

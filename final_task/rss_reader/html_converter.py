@@ -1,27 +1,28 @@
 #!/usr/bin/env python3.8
+"""Module for creating and filling unique HTML file with required news"""
 
 import dominate
 import dominate.tags as tag
 
+from logger import LOGGER
+from rss_exceptions import PATHError
 from utils import create_path_to_file
 
-from rss_exceptions import PATHError
 
-
-def convert_news_to_html(cmd_args, all_news, logger):
+def convert_news_to_html(cmd_args, all_news):
     """
     If the 'to-html' argument was passed - creates HTML file and push data in it.
     """
     if cmd_args.to_html:
-        logger.info("Call function for creation HTML file")
-        create_html_file(cmd_args, all_news, logger)
+        LOGGER.info("Call function for creation HTML file")
+        create_html_file(cmd_args, all_news)
 
 
-def create_html_file(cmd_args, all_news, logger):
+def create_html_file(cmd_args, all_news):
     """
     Creates and fills in the HTML file with the required data
     """
-    path_to_html = create_path_to_file(cmd_args.to_html, 'RSS_NEWS.html', logger)
+    path_to_html = create_path_to_file(cmd_args.to_html, 'RSS_NEWS.html')
 
     rss_html_doc = dominate.document(title='RSS NEWS')
 
@@ -29,16 +30,16 @@ def create_html_file(cmd_args, all_news, logger):
         tag.h1("RSS News")
 
     for num, new in enumerate(all_news, 1):
-        logger.info(f'Add new № {num} in HTML file.')
+        LOGGER.info(f'Add new № {num} in HTML file.')
         rss_html_doc = convert_new_in_html(cmd_args, new, rss_html_doc)
 
     try:
-        logger.info('Create HTML file in the specified directory.')
+        LOGGER.info('Create HTML file in the specified directory.')
 
         with open(path_to_html, 'w') as file:
             file.write(str(rss_html_doc))
 
-        logger.info("HTML file was created and filled in successfully")
+        LOGGER.info("HTML file was created and filled in successfully")
 
     except FileNotFoundError:
         raise PATHError('Setted PATH is invalid')
