@@ -3,6 +3,7 @@ from output_functions import getting_full_info, getting_pack_of_news, converting
     writing_to_cache, getting_from_database_to_pack
 from pdf_and_html_converting import converting_to_pdf, converting_to_html, pdf_path, html_path
 import logging
+import re
 
 
 class RSSParser:
@@ -106,6 +107,16 @@ class RSSParser:
             print("\nJSON VIEW OF NEWS:", converting_to_json(pack_of_news, the_feed))
         elif '--json' in self.list_of_args and '--date' in self.list_of_args:
             print("\nJSON VIEW OF NEWS:", converting_to_json(self.news_for_date(), the_feed))
+
+        self.news_if_not_source(the_feed)
+
+    def news_if_not_source(self, the_feed):
+        # Looking for url address: if it is => doing all the thing; if it is not => printing all the news
+        chk_pat = '(?:{})'.format('|'.join(self.list_of_args))
+        s = 'http'
+        if not bool(re.search(s, chk_pat, flags=re.I)):
+            pack_of_news = getting_from_database_to_pack()
+            getting_full_info(the_feed, pack_of_news, self.list_of_args)
 
     def news_for_date(self):
         """

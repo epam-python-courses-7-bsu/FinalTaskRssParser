@@ -23,4 +23,4 @@ N news with that date to file(s) pdf or/and html
 * If '--colorize' is in console args then we colorize our news in random colors. If there is no '--colorize'
 we use usual color (grey-white)
 ## Important!
-When using pdf or html converting input your path in look like this: "C:\Test\"
+When using pdf or html converting input your path in look like this: "C:\\Test\\" or "C:\\Test"
