@@ -1,17 +1,17 @@
 import os
+
 from setuptools import setup, find_packages
 
 
 this_directory = os.path.abspath(os.path.dirname(__file__))
-with open(os.path.join(this_directory, 'README.md'), encoding='utf-8') as foo:
+with open(os.path.join(this_directory, 'README.md')) as foo:
     long_description = foo.read()
 
 
 setup(
     name="rss_reader",
-    version="4.0",
+    version="5.0",
     packages=find_packages(),
-    install_requires=['beautifulsoup4', 'feedparser', 'urllib.error'],
     author="Stacy Merkushova",
     author_email="st.merkush@gmail.com",
     url="https://github.com/Clonder/FinalTaskRssParser.git",
