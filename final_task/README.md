@@ -57,7 +57,7 @@ If you want to receive news for the 15/11/2019, please enter the following comma
 
 --date argument works without internet connection and with --verbose, --json, --limit LIMIT arguments the same way.
 
-##Iteration 4 
+## Iteration 4 
 
 News can be converted to pdf or html.
 
