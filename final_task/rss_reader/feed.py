@@ -13,7 +13,7 @@ class FeedError(Exception):
     pass
 
 
-class URLFormatError(FeedError, ValueError):
+class URLFormatError(FeedError):
     pass
 
 
@@ -127,7 +127,10 @@ class Feed:
         limit = -1
         if self.limit > 0:
             limit = self.limit
-        db_feed = self.db.get_feed(self.link, self.date, limit)
+        try:
+            db_feed = self.db.get_feed(self.link, self.date, limit)
+        except DBError:
+            raise LocalCacheError("Unable to load items from cache")
         if db_feed is not None:
             logging.info("Feed successfully loaded")
             self.title = db_feed["title"]
@@ -137,7 +140,10 @@ class Feed:
 
     def _save_to_cache(self):
         if self.db is not None:
-            self.db.store_feed(self.link, self.title, self.items)
+            try:
+                self.db.store_feed(self.link, self.title, self.items)
+            except DBError:
+                raise LocalCacheError("Unable to save feed to cache")
             logging.info("Feed saved to cache")
 
     def render_text(self):
