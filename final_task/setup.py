@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="rss-reader_scarzdz",
-    version="0.3.post1",
+    version="0.4",
     url="https://github.com/scarzdz/FinalTaskRssParser",
     license="MIT",
     author="Denis Marfonov",
@@ -24,7 +24,8 @@ setup(
     install_requires=[
         "beautifulsoup4",
         "feedparser",
-        "lxml"
+        "lxml",
+        "ebooklib"
     ],
     entry_points={
         "console_scripts": [

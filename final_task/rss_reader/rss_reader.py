@@ -6,7 +6,7 @@ import os.path
 from . import feed
 
 # temp
-__version__ = "0.3"
+__version__ = "0.4"
 PROG = "rss-reader"
 DATE_FORMAT = "%Y%m%d"
 

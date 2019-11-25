@@ -1,3 +1,4 @@
 lxml~=4.4.1
 feedparser~=5.2.1
 beautifulsoup4~=4.8.1
+ebooklib~=0.17.1
