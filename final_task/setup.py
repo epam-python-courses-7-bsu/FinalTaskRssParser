@@ -18,10 +18,10 @@ setup(
     author_email='k.ulitch@yandex.ru',
     license='MIT',
     zip_safe=False,
-    package_data={
-      '': ['rss_reader/fonts/*.ttf'],
-	  },
-    include_package_data=True,
+    packages=find_packages(),
+    data_files=[('rss_reader', ['rss_reader/fonts/DejaVuSansCondensed.ttf',
+                                'rss_reader/fonts/DejaVuSansCondensed-Bold.ttf',
+                                'rss_reader/fonts/DejaVuSansCondensed-Oblique.ttf'])],
     scripts=['rss_reader/exceptions.py',
              'rss_reader/item.py',
              'rss_reader/item_group.py',
@@ -33,6 +33,7 @@ setup(
              'rss_reader/tools.py'],
     install_requires=['feedparser==5.2.1', 'bs4==0.0.1', 'requests==2.22.0', 'fpdf==1.7.2', 'colorama==0.4.1'],
     entry_points={
-        'console_scripts': ['rss-reader=rss_reader:main'],
-    }
+        'console_scripts': ['rss-reader=rss_reader.rss_reader:main'],
+    },
+    include_package_data=True
 )

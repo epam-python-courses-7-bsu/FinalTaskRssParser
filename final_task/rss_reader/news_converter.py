@@ -142,7 +142,7 @@ def news2pdf(item_groups, file_path):
                 try:
                     img = requests.get(link)
                     if img.status_code != 200 or imghdr.what(None, img.content) != 'jpeg':
-                        raise requests.exceptions.ConnectionError
+                        raise requests.exceptions.ConnectionError()
 
                 except requests.exceptions.ConnectionError:
                     pdf.set_font('DejaVuOblique', size=14)

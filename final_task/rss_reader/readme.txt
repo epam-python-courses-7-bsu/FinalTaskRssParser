@@ -1,0 +1,2 @@
+There may be problems with imports and pathes due to a name conflict: "rss_reader" is the name of both the folder and the module.
+But I can’t change it, because I will violate the requirements for the project structure.
