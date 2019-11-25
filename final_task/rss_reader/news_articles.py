@@ -36,4 +36,3 @@ class NewsArticle:
     def __eq__(self, other):
         if isinstance(other, NewsArticle):
             return self.__key() == other.__key()
-        return NotImplemented

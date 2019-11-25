@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>RSS reader</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css">
+      .container {
+        overflow: auto;
+        margin-top: 20px;
+        max-width: 500px;
+        border: 1px solid black;
+        border-right: 3px dotted black;
+        border-left: 3px dotted black;
+        padding: 10px;
+        font-size: 12px;
+      }
+      img {
+        margin-right: 5px;
+        border: solid 1px black;
+        max-width: 120px;
+      }
+      p {
+        margin-top: -8px;
+      }
+      .links {
+        font-size: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    {% for article in news_articles %}
+    <div class="container">
+      <div>
+        <p style="margin-top: 5px;">Feed: {{article.news_outlett_name}}</p>
+        <p>Title: {{article.news_title}}</p>
+        <p>Date: {{article.pub_date}}</p>
+        {% if article.img_src or article.img_alt %}
+        <p style="float: left"><img width="120px" src="{{article.img_src}}" alt="[image 2: {{article.img_alt}}[2]"></p>
+        {% endif %}
+        <p style="float:none">{{article.news_description}}</p>
+      </div>
+      <div style="float: left; margin-top: 10px">
+        <p>Links:</p>
+        <p class="links"><a href="{{article.news_link}}" target="_blank">[1]: {{article.news_link}}</a></p>
+        {% if article.img_src %}
+        <p class="links"><a href="{{article.img_src}}" target="_blank">[2]: {{article.img_src}}</a></p>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </body>
+</html>

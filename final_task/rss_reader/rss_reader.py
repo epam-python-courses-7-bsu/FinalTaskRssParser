@@ -1,11 +1,16 @@
 #! /usr/bin/env python
-import argparse
 import json
 import logging
 import sys
-from urllib import request, error
-from parser import xml_parser
-from cache import update_cache, read_cache
+import os
+from urllib import request
+
+sys.path.append(os.path.abspath(os.path.dirname(__file__)))  # noqa #402
+
+from exceptions import CacheNotFoundError, GoForRssError, WrongResponseTypeError, NoDataToConvertError
+from rss_parser import xml_parser, get_args
+from cache import save_cache, read_cache
+from converter import converter
 
 
 def go_for_rss(url):
@@ -14,10 +19,18 @@ def go_for_rss(url):
         logging.info(f'Started getting data from {url}')
         response = request.urlopen(url)
         logging.info(f'Data recieved from {url}')
-    except error.HTTPError as ex:
-        logging.info(ex)
-        raise
-    return response
+        return response
+    except Exception:
+        raise GoForRssError
+
+
+def check_response(response):
+    """check content-type if it is a rss feed or not"""
+    content_types = ["application/xml", "application/rss+xml", "text/xml"]
+    for type_ in content_types:
+        if response.headers['Content-Type'].startswith(type_):
+            return response
+    raise WrongResponseTypeError
 
 
 def output_format(news_articles, json_output):
@@ -45,40 +58,33 @@ def print_result(result, limit):
             print(article)
 
 
-def get_args():
-    """get arguments passed to script and parse it"""
-    parser = argparse.ArgumentParser(description="Pure python command-line RSS reader")
-    parser.add_argument("source", help="RSS URL")
-    parser.add_argument("--version", help="Print version info", action="version", version='rss_reader 0.3.0')
-    parser.add_argument("--json", help="Print result as JSON in stdout", action="store_true")
-    parser.add_argument("--verbose", help="Outputs verbose status messages", action="store_true")
-    parser.add_argument("--limit", type=int, help="Limit news topics if this parameter provided")
-    parser.add_argument("--date", type=int, help=("""Read cached news for provided URL.
-                                                     If "ALL" provided - prints all cached news for this date"""))
-
-    return parser.parse_args()
-
-
 def main():
     """Entry point for RSS reader"""
-    args = get_args()
-    if args.verbose:
-        logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
+    try:
+        args = get_args()
+        if args.verbose:
+            logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
 
-    if not args.date:
-        try:
-            response = go_for_rss(args.source)
-        except Exception as ex:
-            print(ex)
-            print('Website is not working or Url is not correct. Please, restart the program with a correct url')
-            return None
-        news_articles = xml_parser(response, args.limit)
-        update_cache(news_articles, args.source)
-    else:
-        news_articles = read_cache(args.date, args.source)
+        if not args.date:
+            response = check_response(go_for_rss(args.source))
+            news_articles = xml_parser(response, args.limit)
+            save_cache(news_articles, args.source)
+        else:
+            news_articles = read_cache(args.date, args.source, args.limit)
 
-    result = output_format(news_articles, args.json)
-    print_result(result, args.limit)
+        if args.to_html or args.to_pdf:
+            converter(news_articles, args.to_html, args.to_pdf)
+        else:
+            result = output_format(news_articles, args.json)
+            print_result(result, args.limit)
+    except CacheNotFoundError as ex:
+        print(ex.__doc__)
+    except GoForRssError as ex:
+        print(ex.__doc__)
+    except WrongResponseTypeError as ex:
+        print(ex.__doc__)
+    except NoDataToConvertError as ex:
+        print(ex.__doc__)
 
 
 if __name__ == "__main__":
