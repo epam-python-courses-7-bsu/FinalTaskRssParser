@@ -7,6 +7,7 @@ import feedparser
 
 from . import html_to_text
 from .database import DB, DBError
+from . import book_gen
 
 
 class FeedError(Exception):
@@ -184,6 +185,12 @@ class Feed:
         feed_dict = {"title": self.title, "link": self.link, "items": self.items}
         s = json.dumps(feed_dict, indent=2)
         return s
+
+    def create_html(self, path):
+        book_gen.create_book(self.title, self.items, path, self.date, html=True)
+
+    def create_epub(self, path):
+        book_gen.create_book(self.title, self.items, path, self.date)
 
     @staticmethod
     def _try_fix_url(url):
