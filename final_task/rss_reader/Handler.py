@@ -28,7 +28,7 @@ class Handler:
                 tuple([link["href"] for link in ent.links]), ent.published_parsed)
             )
         if not len(self.entries):
-            raise RSSReaderException("Error, no news. Check your internet-connection")
+            raise RSSReaderException("Error, no news. Check correctness of the url or your internet-connection")
         logging.info("Handler object created")
 
     # options of command line:
@@ -126,8 +126,10 @@ class Handler:
         # different cases of command line arguments
         if pdf_path:
             self.write_entries_to_pdf(pdf_path, daily_news[:self.limit])
+            print("PDF document created successfully")
         if html_path:
             self.write_entries_to_html(html_path, daily_news[:self.limit])
+            print("HTML document created successfully")
         if do_json:
             for news_json in daily_news[:self.limit]:
                 self.print_to_json(news_json)
@@ -182,11 +184,9 @@ class Handler:
             entries = self.entries
         # in case of reading news from cache, entries is the list of dicts and they are converted to Entry-object
         # in case of absence of internet connection list of entries is empty
-        try:
-            if isinstance(entries[0], dict):
-                entries = [self.get_entry_from_dict(entry) for entry in entries]
-        except IndexError:
-            raise RSSReaderException("Error, no news. Try to check your internet-connection")
+
+        if isinstance(entries[0], dict):
+            entries = [self.get_entry_from_dict(entry) for entry in entries]
 
         _html = html()
         _html.add(head(meta(charset='utf-8')))
@@ -249,11 +249,9 @@ class Handler:
         pdf.add_page()
         # in case of reading news from cache, entries is the list of dicts and they are converted to Entry-object
         # in case of absence of internet connection list of entries is empty
-        try:
-            if isinstance(entries[0], dict):
-                entries = [self.get_entry_from_dict(entry) for entry in entries]
-        except IndexError:
-            raise RSSReaderException("Error, no news. Try to check your internet-connection")
+
+        if isinstance(entries[0], dict):
+            entries = [self.get_entry_from_dict(entry) for entry in entries]
 
         for entry in entries:
             text = entry.summary
