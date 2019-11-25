@@ -46,5 +46,8 @@ for example:
 ```
 ## Local news storage:
 When **--date** argument is not provided, the news that you received will be saved to the database, if it wasn’t there yet.
-Cached data stored in rss_reder/cached_feeds.db file using **shelve**. Database stores dictionary-like object, where the key is the publication date and the value is object of **Article** class.
+Cached data stored in rss_reder/cached_feeds.db file using **shelve**. Database stores dictionary-like object, where the key is the publication date and the value is instance of **Article** class.
 
+## HTML and PDF converting:
+You can use **--to-html** and **--to-pdf** to save feed in given format. If there is no internet connection, it will paste image links (clickable in pdf). If we have internet connection, then program will download images and paste it to the file. Titles in pdf also clickable.
+ 
