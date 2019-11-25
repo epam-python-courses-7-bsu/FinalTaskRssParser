@@ -3,6 +3,7 @@ import datetime
 import logging
 import os
 import warnings
+import platform
 
 import requests
 from dominate import document
@@ -30,7 +31,17 @@ def path_validation(path, mode):
     LOGGER.debug('CHECKING PATH...')
     if os.path.exists(path):
         LOGGER.debug('PATH IS OK')
-        path += '/feed-' + str(datetime.datetime.now()) + get_extention(mode)
+        if platform.system() == 'Linux' or platform.system() == 'Darwin':
+            path += '/feed-' + str(datetime.datetime.now()) + get_extention(mode)
+        elif platform.system() == 'Windows':
+            # Processing path to be valid in Windows
+            path += '\\feed-' + str(datetime.datetime.now()) + get_extention(mode)
+            # Second replace replaces ':', so path will be like C-/Users/...
+            # Third replace restores correct path C:/Users/...
+            # Had to say that I'm not proud of this solution at all
+            path = path.replace(' ', '_').replace(':', '-').replace('-', ':', 1)
+        else:
+            raise ConvertionError('Unknown OS. Try Windows or UNIX/XNU')
         return path
     else:
         raise ConvertionError('Wrong path')

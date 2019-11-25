@@ -8,7 +8,7 @@ except ImportError:
 
 setup(
    name='rss_reader',
-   version='1.4',
+   version='1.5',
    description='RSS reader',
    author='Roman Shagun',
    author_email='rshag17@gmail.com',

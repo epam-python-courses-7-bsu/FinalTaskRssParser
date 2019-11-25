@@ -2,7 +2,8 @@ import argparse
 import base64
 import html
 import logging
-import os, sys
+import os
+import sys
 
 import feedparser
 import requests
@@ -108,7 +109,7 @@ def init_news_list(feed_dict, limit, url):
 def init_feed(url, limit):
     feed_dict = feedparser.parse(url)
     if feed_dict.bozo:
-        raise FeedError('Invalid feed')
+        raise FeedError('Invalid feed. Maybe there is / at end of the feed link?')
 
     LOGGER.debug('GOT FEED FROM SOURCE')
     LOGGER.debug('FEED INIT')
@@ -177,7 +178,7 @@ def main():
 
     try:
         if args.version:
-            print('version 1.4')
+            print('version 1.5')
         # if get news from cache
         elif args.date:
             get_news_by_date(args)
