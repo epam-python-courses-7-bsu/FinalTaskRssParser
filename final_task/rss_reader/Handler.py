@@ -40,12 +40,14 @@ class Handler:
         for entry in self.entries:
             self.write_cache(self.convert_Entry_to_dict(entry))
         self.write_entries_to_html(path)
+        print("HTML document created successfully")
 
     @logging_decorator
     def option_pdf(self, path: str) -> None:
         for entry in self.entries:
             self.write_cache(self.convert_Entry_to_dict(entry))
         self.write_entries_to_pdf(path)
+        print("PDF document created successfully")
 
     @logging_decorator
     def option_json(self) -> None:
