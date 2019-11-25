@@ -20,7 +20,7 @@ def create_parser():
     # add information about the expected parameters
     # using the add_argument method one call for each parameter).
 
-    parser.add_argument('source', type=str, default="not url", help='RSS URL')
+    parser.add_argument('source', type=str, nargs='?', default="", help='RSS URL')
 
     parser.add_argument('--version', action='version', help='Print version info', version=f'{5.0}')
 
@@ -40,6 +40,8 @@ def create_parser():
                         help='the conversion of news in pdf file')
     parser.add_argument('--colorize', action='store_const', const=True, default=False,
                         help='print news in multi colored format')
+    parser.add_argument('--clear', action='store_const', const=True, default=False,
+                        help='Clears news story')
     return parser
 
 

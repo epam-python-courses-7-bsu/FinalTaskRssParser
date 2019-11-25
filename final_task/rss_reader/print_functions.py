@@ -5,15 +5,18 @@ import parser_rss
 from pars_args import get_args
 import colorama
 from colorama import Fore, Back, Style
+import converter
+
+MODULE_LOGGER = logging.getLogger("rss_reader.print_functions")
 
 
 def print_news_in_json(list_of_news: list):
     """
-    This function print news in the console in json format
+     Print news in the console in json format
     :param list_of_news:
     :return:
     """
-    logger = logging.getLogger("rss_reader.parser_rss.print_news_in_json")
+    logger = logging.getLogger("rss_reader.print_functions.print_news_in_json")
     logger.info("print news in the console in json format")
     list_of_news_in_json = []
     for news in list_of_news:
@@ -22,24 +25,46 @@ def print_news_in_json(list_of_news: list):
 
 
 def print_news_without_cashing():
+    """
+    If you have problems with the database
+    user can use the program without caching
+    :return:
+    """
     try:
+        logger = logging.getLogger("rss_reader.print_functions.print_news_without_cashing")
+        logger.info("print news without cashing")
         args = get_args()
         list_of_news = []
         news_feed = parser_rss.get_news_feed(args.source)
         parser_rss.init_list_of_news(list_of_news, news_feed, args.limit)
         if args.json:
-            print_news_in_json(list_of_news)
+            if args.colorize:
+                print_news_in_json_in_multi_colored_format(list_of_news)
+            else:
+                print_news_in_json(list_of_news)
         else:
-            print_news(list_of_news)
+            if args.colorize:
+                print_news_in_multi_colored_format(list_of_news)
+            else:
+                print_news(list_of_news)
+        if args.to_html:
+            converter.conversion_of_news_in_html(args.to_html, list_of_news)
+        if args.to_pdf:
+            converter.conversion_of_news_in_pdf(args.to_pdf, list_of_news)
+        logger.info("print news without cashing  completed successfully")
     except URLError as er:
+        logger = logging.getLogger("rss_reader.print_functions.print_news_without_cashing")
+        logger.error(er)
         print(er)
     except Exception as e:
+        logger = logging.getLogger("rss_reader.print_functions.print_news_without_cashing")
+        logger.error(e)
         print(e)
 
 
 def print_news(list_of_news: list):
     """
-    This function print news in the console
+    Print news in the console
     :param feed_title:
     :param list_of_news:
     :return:
@@ -53,6 +78,12 @@ def print_news(list_of_news: list):
 
 
 def print_news_in_multi_colored_format(list_of_news: list):
+    """
+    Print news in the console in colorized mode
+    :param list_of_news:
+    :return:
+    """
+    logger = logging.getLogger("rss_reader.parser_rss.print_news_in_multi_colored_format")
     colorama.init()
     for number, news in enumerate(list_of_news):
         links = ""
@@ -66,9 +97,17 @@ def print_news_in_multi_colored_format(list_of_news: list):
         print(Style.RESET_ALL + Fore.YELLOW + f'Info about image: {news.info_about_image}')
         print(Style.RESET_ALL + Fore.GREEN + f'Briefly about news: {news.briefly_about_news}')
         print(Style.RESET_ALL + Fore.CYAN + f'Links: \n{links}')
+    logger.info("print completed successfully")
 
 
 def print_news_in_json_in_multi_colored_format(list_of_news: list):
+    """
+    Print news in json format in the console in colorized mode
+
+    :param list_of_news:
+    :return:
+    """
+    logger = logging.getLogger("rss_reader.parser_rss.print_news_in_json_in_multi_colored_format")
     result = "\033[1m\033[35m[\033[0m\n"
     for number, news in enumerate(list_of_news):
 
@@ -93,3 +132,4 @@ def print_news_in_json_in_multi_colored_format(list_of_news: list):
 
     result += "\033[1m\033[35m]\033[0m"
     print(result)
+    logger.info("print completed successfully")

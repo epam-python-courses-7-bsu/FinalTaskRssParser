@@ -1,14 +1,11 @@
-import sys
 import os
+import sys
 
 sys.path.insert(1, 'final_task/rss_reader')
 from parser_rss import *
 from News import News
 import unittest
-from io import StringIO
-from unittest.mock import patch
 import feedparser
-import print_functions
 
 
 class TestParserRss(unittest.TestCase):
@@ -78,35 +75,12 @@ the Russian military intelligence service, according to a Western intelligence s
         self.assertEqual(str(error.exception), '<urlopen error not well-formed (invalid token)>')
         self.assertEqual(get_news_feed(self.url), self.news_feed)
 
-    def test_print_news(self):
-        with patch('sys.stdout', new=StringIO()) as fake_out_put:
-            print_functions.print_news([self.item, ])
-            self.assertEqual(fake_out_put.getvalue().strip(), self.result)
-
     def test_init_list_of_news(self):
 
         list_of_news = []
         init_list_of_news(list_of_news, self.news_feed, 2)
         self.assertEqual(len(list_of_news), 2)
 
-    def test_print_news_in_json(self):
-        self.result = "[\n"
-        self.result += "    {\n"
-        self.result += '''        "Feed": "feed",\n'''
-        self.result += '''        "Title": "title",\n'''
-        self.result += '''        "Date": "2019-11-17 10:44:20-05:00",\n'''
-        self.result += '''        "Link": "link",\n'''
-        self.result += '''        "Info about image": "info_about_image",\n'''
-        self.result += '''        "Briefly about news": "briefly_about_news",\n'''
-        self.result += '''        "Links": [\n'''
-        self.result += '''            "link",\n'''
-        self.result += '''            "link_on_image"\n'''
-        self.result += "        ]\n"
-        self.result += "    }\n"
-        self.result += "]"
-        with patch('sys.stdout', new=StringIO()) as fake_out_put:
-            print_functions.print_news_in_json([self.item, ])
-            self.assertEqual(fake_out_put.getvalue().strip(), self.result)
 
-    if __name__ == '__main__':
-        unittest.main()
+if __name__ == '__main__':
+    unittest.main()

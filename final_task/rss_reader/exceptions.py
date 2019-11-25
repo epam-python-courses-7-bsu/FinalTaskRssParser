@@ -1,2 +1,7 @@
-class TimeOutExeption(Exception): pass
-class DataBaseEmpty(Exception):pass
+class TimeOutExeption(Exception):
+    pass
+
+
+class DataBaseEmpty(Exception):
+    pass
+

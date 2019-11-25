@@ -12,7 +12,7 @@ class TestParsArgs(unittest.TestCase):
                 return_value=argparse.Namespace(source='https://news.tut.by/rss/',
                                                 version='2.0',
                                                 json=False,
-                                                verbose = False,
+                                                verbose=False,
                                                 limit=2,
                                                 date="20191212"))
     def test_command(self, mock_args):
@@ -23,3 +23,7 @@ class TestParsArgs(unittest.TestCase):
         self.assertEqual(data.verbose, False)
         self.assertEqual(data.limit, 2)
         self.assertEqual(data.date, "20191212")
+
+
+if __name__ == '__main__':
+    unittest.main()

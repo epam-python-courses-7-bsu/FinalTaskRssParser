@@ -12,16 +12,16 @@ class TestConverters(unittest.TestCase):
     def test_get_path(self):
         with self.assertRaises(FileNotFoundError) as error:
             converter.get_path('path_not_exist.txt', '.pdf')
-        self.assertEqual(str(error.exception), 'Invalid expansion ')
+        self.assertEqual(str(error.exception), 'Invalid expansion path_not_exist.txt')
         with self.assertRaises(FileNotFoundError) as error:
             converter.get_path('path_not_exist.pdf', '.pdf')
-        self.assertEqual(str(error.exception), 'File or directory not found')
+        self.assertEqual(str(error.exception), 'File or directory not found path_not_exist.pdf')
         with self.assertRaises(FileNotFoundError) as error:
             converter.get_path('path_not_exist.txt', '.html')
-        self.assertEqual(str(error.exception), 'Invalid expansion ')
+        self.assertEqual(str(error.exception), 'Invalid expansion path_not_exist.txt')
         with self.assertRaises(FileNotFoundError) as error:
             converter.get_path('path_not_exist.html', '.html')
-        self.assertEqual(str(error.exception), 'File or directory not found')
+        self.assertEqual(str(error.exception), 'File or directory not found path_not_exist.html')
 
     def test_get_img(self):
         self.assertEqual(converter.get_img("name", "not link"), False)
@@ -90,3 +90,7 @@ class TestConverters(unittest.TestCase):
 
         document_of_html = converter.get_html(list_of_new)
         self.assertEqual(document_of_html.render(), verifiable_info)
+
+
+if __name__ == '__main__':
+    unittest.main()

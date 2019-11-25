@@ -8,7 +8,6 @@ setup(
     author_email='matyushenoksergei@yandex.by',
     package_dir={'rss_reader': 'rss_reader'},
     scripts=['rss_reader/News.py',
-             'config.txt',
              'rss_reader/pars_args.py',
              'rss_reader/parser_rss.py',
              'rss_reader/exceptions.py',

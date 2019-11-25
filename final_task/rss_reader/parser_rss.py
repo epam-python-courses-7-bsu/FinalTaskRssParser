@@ -18,7 +18,7 @@ MODULE_LOGGER = logging.getLogger("rss_reader.parser_rss")
 @contextmanager
 def timeout_sec(seconds):
     """
-       contextmanager to check the expectation of a response
+       Contextmanager to check the expectation of a response
        and if the response does not come for a long time, an error
     """
 
@@ -33,7 +33,13 @@ def timeout_sec(seconds):
         signal.alarm(0)
 
 
-def valid_date(date_text):
+def valid_date(date_text: str) -> datetime.datetime:
+    """
+    Checks the entered date and and throws an exception
+    if the date does not match the format
+    :param date_text:
+    :return:
+    """
     try:
         date = datetime.datetime.strptime(date_text, '%Y%m%d')
     except ValueError:
@@ -43,7 +49,9 @@ def valid_date(date_text):
 
 def get_link_image(summary: str) -> str:
     """
-
+    Selects a photo link from html
+    :param summary:
+    :return:
     """
     tag = 'img src='
     begin_position_link_img = summary.find(tag) + len(tag) + 1
@@ -54,7 +62,7 @@ def get_link_image(summary: str) -> str:
 
 def clear_text(text: str) -> str:
     """
-     cleans text from problems that occurred when decoding formats
+     Cleans text from problems that occurred when decoding formats
     """
     logger = logging.getLogger("rss_reader.parser_rss.clear_text")
     logger.info("clear text from news")
@@ -62,6 +70,11 @@ def clear_text(text: str) -> str:
 
 
 def get_info_about_image(summary: str) -> str:
+    """
+     Selects a info about image from html
+    :param summary:
+    :return:
+    """
     logger = logging.getLogger("rss_reader.parser_rss.get_info_about_image")
     logger.info("return info about image")
     tag = 'alt='
@@ -72,6 +85,11 @@ def get_info_about_image(summary: str) -> str:
 
 
 def get_briefly_about_news(summary: str) -> str:
+    """
+    Selects a info about news from html
+    :param summary:
+    :return:
+    """
     logger = logging.getLogger("rss_reader.parser_rss.get_briefly_about_news")
     logger.info("return briefly info about news")
     result = re.compile(r'<.*?>')
@@ -81,18 +99,17 @@ def get_briefly_about_news(summary: str) -> str:
 
 def get_news_feed(sourse_url: str) -> feedparser.parse:
     logger = logging.getLogger("rss_reader.parser_rss.get_news_feed")
-    logger.info("return news Feed")
+
     with timeout_sec(10):
         news_feed = feedparser.parse(sourse_url)
     if news_feed['bozo'] != 0:
+        logger.error(news_feed['bozo_exception'].args[0])
         raise URLError(news_feed['bozo_exception'].args[0])
+    logger.info("return news Feed")
     return news_feed
 
 
-def init_list_of_news(
-        list_of_news: list,
-        news_feed: feedparser.parse,
-        limit: int):
+def init_list_of_news(list_of_news: list, news_feed: feedparser.parse, limit: int):
     """
     Fills the list with news
     """
@@ -125,11 +142,4 @@ def init_list_of_news(
                          )
 
         list_of_news.append(news)
-
-
-
-
-
-
-
-
+    logger.info("list completed successfully")

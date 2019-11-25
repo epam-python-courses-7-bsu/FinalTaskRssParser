@@ -17,22 +17,39 @@ MODULE_LOGGER = logging.getLogger("rss_reader.converter")
 
 
 def get_path(path: str, expansion_file: str) -> str:
+    """
+    Checks the correctness of the entered path
+    if received path to directory check her on exist
+    if directory exist add News and expansion file
+    if received path to file check his on exist and check correctness expansion file
+    :param path:
+    :param expansion_file:
+    :return:
+    """
     logger = logging.getLogger("rss_reader.converter.get_path")
-    logger.info("return correct path")
+    logger.info("check path")
     if os.path.isdir(path):
-        result = path + 'News' + expansion_file
+        logger.info("path specified to directory")
+        result = path + '/News' + expansion_file
     else:
         if not fnmatch.fnmatch(path, '*%s' % expansion_file):
-            raise FileNotFoundError("Invalid expansion ")
-        if not os.path.isdir(path[:path.rfind("/")]):
-            raise FileNotFoundError("File or directory not found")
+            logger.error("Invalid expansion ")
+            raise FileNotFoundError(f"Invalid expansion {path}")
+        if not os.path.isdir(path[:path.rfind("/") + 1]):
+            logger.error("File or directory not found")
+            raise FileNotFoundError(f"File or directory not found {path}")
         result = path
     return result
 
 
 def get_html(list_of_news: list):
-    logger = logging.getLogger("rss_reader.converter.conversion_of_news_in_html")
-    logger.info("conversion of news in html")
+    """
+    Forms html content
+    :param list_of_news:
+    :return:
+    """
+    logger = logging.getLogger("rss_reader.converter.get_html")
+    logger.info("getting html content")
     doc = dominate.document(title='RSS READER')
     for news in list_of_news:
         with doc.head:
@@ -66,23 +83,44 @@ def get_html(list_of_news: list):
                         src=news.links_from_news[1],
                         width="200", height="200", alt=news.info_about_image),
                         href=news.links_from_news[1], target="_blank")
-
+    logger.info("html content received")
     return doc
 
 
 def conversion_of_news_in_html(path, list_of_news):
+    logger = logging.getLogger("rss_reader.converter.conversion_of_news_in_html")
+    logger.info("conversion of news in html")
     correct_path = get_path(path, ".html")
     html_content = get_html(list_of_news)
     save_html(correct_path, html_content)
+    logger.info("conversion of news in html successful completed")
 
 
 def save_html(path, html_content):
-    with open(path, 'w') as file:
-        file.write(html_content.render())
-    print("news successfully saved to file  ", path)
+    """
+    Save news in file
+    :param path:
+    :param html_content:
+    :return:
+    """
+    logger = logging.getLogger("rss_reader.converter.save_html")
+    try:
+        with open(path, 'w') as file:
+            file.write(html_content.render())
+        print("news successfully saved to file ", path)
+        logger.info("news successfully saved to file  ")
+    except MemoryError:
+        logger.error("not enough memory to save html file")
+        print("You do not have enough memory to save html file")
 
 
 def get_img(image_name, reference):
+    """
+    Download image in file
+    :param image_name:
+    :param reference:
+    :return: True if image successfully downloaded
+    """
     logger = logging.getLogger("rss_reader.converter.get_img")
     logger.info("return img")
     is_picture = False
@@ -106,11 +144,17 @@ def get_img(image_name, reference):
     return is_picture
 
 
-def text_separator(text: str, break_long_words) -> str:
+def text_separator(text: str, break_long_words: bool) -> list:
+    """
+    Breaks text into lines of 50 characters
+    :param text:
+    :param break_long_words:
+    :return:
+    """
     logger = logging.getLogger("rss_reader.converter.text_separator")
-    logger.info("return text")
     format_text = textwrap.fill(text, width=50, break_long_words=break_long_words)
     ls = format_text.split('\n')
+    logger.info("text successfully broken")
     return ls
 
 
@@ -130,7 +174,6 @@ def print_text_in_pdf(canvas, text, x, y):
 
 def conversion_of_news_in_pdf(path, list_of_news):
     logger = logging.getLogger("rss_reader.converter.conversion_of_news_in_pdf")
-    logger.info("conversion_of_news_in_pdf")
     correct_path = get_path(path, ".pdf")
     canvas = Canvas(correct_path, pagesize=A4)
     pdfmetrics.registerFont(TTFont('FreeSans', 'FreeSans.ttf'))

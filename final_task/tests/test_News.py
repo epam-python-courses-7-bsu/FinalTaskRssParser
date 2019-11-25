@@ -40,3 +40,5 @@ class TestNews(unittest.TestCase):
         self.assertEqual(data['Links'], ['link', 'link_on_image'])
 
 
+if __name__ == '__main__':
+    unittest.main()
