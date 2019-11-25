@@ -1,0 +1,5 @@
+__init__.py
+[__pycache__]/
+*.pyc
+.test_cache
+event_tracker.log
