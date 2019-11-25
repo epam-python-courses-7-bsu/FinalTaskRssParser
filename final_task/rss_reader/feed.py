@@ -181,8 +181,8 @@ class Feed:
 
     def render_json(self):
         logging.info("Generating json representation of feed")
-        feed_dict = {"title": self.title, "items": self.items}
-        s = json.dumps(feed_dict, indent="\t")
+        feed_dict = {"title": self.title, "link": self.link, "items": self.items}
+        s = json.dumps(feed_dict, indent=2)
         return s
 
     @staticmethod
