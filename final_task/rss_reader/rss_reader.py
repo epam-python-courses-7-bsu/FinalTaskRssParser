@@ -84,11 +84,13 @@ def collect_news(items, limit) -> list:
                 news_item['image'] = images
             if soup.find('img'):
                 for alt in soup.findAll('img'):
-                    alts.append(alt['alt'])
+                    if not alt['alt'] in alts:
+                        alts.append(alt['alt'])
             if item.find('media:text'):
                 soup = BeautifulSoup(item.find('media:text').text, 'lxml')
                 for alt in soup:
-                    alts.append(alt.find('img')['alt'])
+                    if not alt.find('img')['alt'] in alts:
+                        alts.append(alt.find('img')['alt'])
             if not alts:
                 news_item['alt'] = None
             else:
@@ -106,37 +108,39 @@ def collect_news(items, limit) -> list:
 
 def print_one(item, color):
     colorizer.print_blink('-------------------------------------------------------------', color)
-    print("Title: ", end='')
+    colorizer.print_main("Title: ", color)
     colorizer.printc(item['title'], color)
-    print("Date: ", end='')
+    colorizer.print_main("Date: ", color)
     colorizer.printc(item['date'], color)
-    print("Description: ", end='')
+    colorizer.print_main("Description: ", color)
     colorizer.printc(item['description'], color)
     if item['image'] and len(item['image']) > 1:
         for ind, image in enumerate(item['image']):
-            print(f'Image {ind + 1}: ' + image)
+            colorizer.print_main(f'Image {ind + 1}: ' + image, color)
+            print()
     elif item['image'] and item['image'][0]:
-        print("Image:", end='')
+        colorizer.print_main("Image:", color)
         colorizer.print_link(item['image'][0], color)
     if not item['image']:
-        print("Alt: ", end='')
+        colorizer.print_main("Alt: ", color)
         colorizer.printc(item['title'], color)
     elif item['alt'] and len(item['alt']) > 1 and len(item['image']) > 1:
         for ind, alt in enumerate(item['alt']):
-            print(f'Alt {ind + 1}:', end='')
+            colorizer.print_main(f'Alt {ind + 1}:', color)
             colorizer.printc(alt, color)
             if ind + 1 == len(item['image']):
                 break
     elif item['alt'] and item['alt'][0]:
-        print("Alt: ", end='')
+        colorizer.print_main("Alt: ", color)
         colorizer.printc(item['alt'][0], color)
-    print("Link: ", end='')
+    colorizer.print_main("Link: ", color)
     colorizer.print_link(item['link'], color)
 
 
 def print_news(list_of_news, channel, color):
     try:
         if channel:
+            LOG.info('Searching for channel...')
             print("Feed: " + channel.title.text + '\n\n')
         for item in list_of_news:
             print_one(item, color)
@@ -170,10 +174,13 @@ def write_cache(news):
     flag = True
     exists = True
     try:
+        LOG.info('Trying to open cache file...')
         open('cache.json')
     except FileNotFoundError:
+        LOG.info('Cache file does not exist yet')
         exists = False
     if exists:
+        LOG.info('Creating a new cache file...')
         json_list = json.load(open('cache.json'))
         for item in news:
             for elem in json_list:
@@ -195,11 +202,14 @@ def get_by_date(datestr, source, limit, path_html, path_pdf, color, json_flag):
         date = datetime.strptime(datestr, '%Y%m%d').strftime("%d %b %Y")
         date = str(date)
         try:
+            LOG.info('Opening cache...')
             with open('cache.json') as file:
                 json_list = json.load(file)
         except FileNotFoundError:
+            LOG.error('No news in cache')
             colorizer.printerr('No news in cache yet', color)
         else:
+            LOG.info('Reading news from cache...')
             if source:
                 source = source[8:source.find('/', 8)]
                 for ind, item in enumerate(json_list):

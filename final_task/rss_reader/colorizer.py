@@ -21,8 +21,16 @@ def print_blink(text, color):
     else:
         print(text)
 
+
 def printerr(text, color):
     if color:
         cprint(text, 'red')
     else:
         print(text)
+
+
+def print_main(text, color):
+    if color:
+        cprint(text, 'magenta', end='')
+    else:
+        print(text, end='')
