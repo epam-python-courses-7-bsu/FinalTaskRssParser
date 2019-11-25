@@ -1,0 +1,6 @@
+bs4
+feedparser
+unidecode
+fpdf
+ebooklib
+colored
