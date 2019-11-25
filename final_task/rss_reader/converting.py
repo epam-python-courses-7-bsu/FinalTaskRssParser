@@ -77,7 +77,7 @@ def create_pdf(items: list) -> None:
         # get images from the Internet
         # So we should use temporary files
 
-        if not check.internet_on:
+        if check.internet_on() and img_url != '':
             log.info("There is connection")
             try:
                 for element in url_list:
@@ -136,7 +136,7 @@ def create_pdf(items: list) -> None:
         # Cases where we don't have the Internet
         else:
             log.info("There isn't connection")
-            pdf.write(8, "Media content: " + str(item['Media content:\n']))
+            pdf.write(8, str(item['Media content:\n']))
         pdf.ln(15)
         pdf.write(8, "Description: " + str(item['Description: ']))
         pdf.ln(10)

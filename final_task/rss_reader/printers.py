@@ -104,7 +104,6 @@ def print_json(items: list) -> None:
 
 
 def data_split(date: str) -> str:
-    print(date)
     log.info("Converting date")
     month = {
         'Dec': '12', 'Jan': '01', 'Feb': '02',

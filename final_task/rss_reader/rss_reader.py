@@ -84,7 +84,7 @@ try:
         converting.create_pdf(items)
 
 except (TypeError, RuntimeError):
-    if check.internet_on:
+    if check.internet_on():
         print('Something go wrong, check arguments and database file')
     else:
         print("Something go wrong, If you don't have internet,"
