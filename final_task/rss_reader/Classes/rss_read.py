@@ -27,7 +27,6 @@ class RSSParser:
         try:
             logging.info("Trying to get page from feedparser!")
             the_feed = feedparser.parse(self.feed_url)
-            print(the_feed)
             logging.info("Got it (the page)!")
             if the_feed.get('bozo'):
                 if '--date' in self.list_of_args:
@@ -49,7 +48,6 @@ class RSSParser:
                 else:
                     logging.info("Got some problems due to connection!")
         except ConnectionError:
-            print("CONNE ERROR")
             logging.critical("CONNECTION ERROR, HELP!")
             print("You have some connection problems!")
             if '--date' in self.list_of_args:
@@ -99,8 +97,6 @@ class RSSParser:
                 logging.info("Getting full info!")
                 if not the_feed.get('bozo') and '--json' not in self.list_of_args:
                     getting_full_info(the_feed, pack_of_news, self.list_of_args)
-                else:
-                    getting_full_info(the_feed, pack_of_news_for_db, self.list_of_args)
                 logging.info("Got full info!")
 
         if '--json' in self.list_of_args and '--date' not in self.list_of_args:
@@ -108,15 +104,13 @@ class RSSParser:
         elif '--json' in self.list_of_args and '--date' in self.list_of_args:
             print("\nJSON VIEW OF NEWS:", converting_to_json(self.news_for_date(), the_feed))
 
-        self.news_if_not_source(the_feed)
-
     def news_if_not_source(self, the_feed):
         # Looking for url address: if it is => doing all the thing; if it is not => printing all the news
         chk_pat = '(?:{})'.format('|'.join(self.list_of_args))
         s = 'http'
         if not bool(re.search(s, chk_pat, flags=re.I)):
-            pack_of_news = getting_from_database_to_pack()
-            getting_full_info(the_feed, pack_of_news, self.list_of_args)
+            pack_of, pack_db = getting_pack_of_news(the_feed, self.feed_url, self.list_of_args, self.number)
+            getting_full_info(the_feed, pack_db, self.list_of_args)
 
     def news_for_date(self):
         """

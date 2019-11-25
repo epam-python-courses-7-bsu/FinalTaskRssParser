@@ -14,8 +14,6 @@ class GetInfo(unittest.TestCase):
         item = Novelty(1, 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h')
         novelty = f"\n{1}.\nTitle: '{'a'}'\nDate: {'b'}\nLink: '{'c'}'\nDescription:\n '{'d'}'\n" \
                   f"Images links:'{'e'}'\nAlternative text:'{'f'}'\n Main source: {'h'}"
-        print(novelty)
-        print(getting_info_into_file(item))
         self.assertRaises(AssertionError and TypeError, getting_info_into_file(item), novelty)
 
 

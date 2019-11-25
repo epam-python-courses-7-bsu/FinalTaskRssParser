@@ -44,7 +44,6 @@ def main(link, limit, list_of_arguments):
 
 if __name__ == '__main__':
     list_of_args = tuple(sys.argv)
-    print(list_of_args)
     if '--version' in list_of_args:
         print("VERSION 1.0")
     if path.isfile("snake.log"):
