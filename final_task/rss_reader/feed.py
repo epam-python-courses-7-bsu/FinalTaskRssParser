@@ -9,19 +9,23 @@ from . import html_to_text
 from .database import DB, DBError
 
 
-class URLFormatError(ValueError):
+class FeedError(Exception):
     pass
 
 
-class FeedNotFoundError(Exception):
+class URLFormatError(FeedError, ValueError):
     pass
 
 
-class IncorrectRSSError(Exception):
+class FeedNotFoundError(FeedError):
     pass
 
 
-class LocalCacheError(Exception):
+class IncorrectRSSError(FeedError):
+    pass
+
+
+class LocalCacheError(FeedError):
     pass
 
 
@@ -32,9 +36,18 @@ class Feed:
         logging.info(f'The link to the rss feed is "{self.link}"')
         self.title = None
         self.items = []
-
         self.limit = int(limit)
         self.date = date
+        self.db = None
+
+    def __enter__(self):
+        self.load()
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.close()
+
+    def load(self):
         try:
             self.db = DB()
         except DBError:
@@ -44,12 +57,14 @@ class Feed:
                 self.db = None
                 logging.warning("Unable to open local cache. Feed items will not be saved.")
 
-        if date is None:
+        if self.date is None:
             self._parse_remote()
             self._save_to_cache()
         else:
-            self.date = date
             self._load_cache()
+
+    def close(self):
+        self.db.close()
 
     def _parse_remote(self):
         logging.info("Parsing feed from remote source")
@@ -128,8 +143,7 @@ class Feed:
     def render_text(self):
         logging.info("Generating plain text representation of feed")
 
-        s = []
-
+        s = ["\nFeed: "]
         title = self.title or "no title"
         s.append(title)
         s.append("\n")
@@ -153,7 +167,6 @@ class Feed:
                     s.append("Enclosure: " + item["enclosure"]+"\n")
                     s.append("\n")
 
-                s.append("Description: ")
                 description = item["description_parsed"] or item["description"] or "no description"
                 s.append(description)
 

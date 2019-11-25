@@ -49,17 +49,12 @@ def main():
     logging.info("Program starts")
 
     try:
-        if args.date is None:
-            rss_feed = feed.Feed(rss_url, limit)
-        else:
-            rss_feed = feed.Feed(rss_url, limit, date=args.date)
-    except (feed.URLFormatError, feed.FeedNotFoundError, feed.IncorrectRSSError, feed.LocalCacheError) as e:
+        with feed.Feed(rss_url, limit, date=args.date) as rss_feed:
+            if not args.json:
+                print(rss_feed.render_text())
+            else:
+                print(rss_feed.render_json())
+    except feed.FeedError as e:
         logging.error(str(e))
-
-    else:
-        if not args.json:
-            print(rss_feed.render_text())
-        else:
-            print(rss_feed.render_json())
 
     logging.info("Program finishes")
