@@ -5,7 +5,7 @@ setup(
     name='rss_reader',
     version=VERSION,
     packages=find_packages(),
-    install_requires=['feedparser', 'bs4', 'unidecode', 'fpdf', 'ebooklib'],
+    install_requires=['feedparser', 'bs4', 'unidecode', 'fpdf', 'ebooklib', 'colored'],
     author="Victoria Kondrat'eva",
     author_email='sam.kondrateva@gmail.com',
     url='https://github.com/Victoria-Sam',

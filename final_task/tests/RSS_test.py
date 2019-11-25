@@ -37,7 +37,7 @@ RSS_DICT_TEST = {
 
 class RSSTestCase(unittest.TestCase):
     def setUp(self):
-        self.rss = RSSReader(None, None, None, None, None, None)
+        self.rss = RSSReader(None, None, None, None, None, None, None)
 
     def test_make_news_data(self):
         result = self.rss.make_news_data(RSS_DICT_TEST['entries'][0])
@@ -68,7 +68,7 @@ class RSSTestCase(unittest.TestCase):
 
     def test_arg_parse(self):
         parser = arg_parse(['source', '--limit', '1', '--json', '--verbose', '--version',
-                            '--date', '20191117', '--to_pdf', 'pdf_file','--to_epub', 'epub_file'])
+                            '--date', '20191117', '--to_pdf', 'pdf_file','--to_epub', 'epub_file', '--colorize'])
         self.assertTrue(parser.limit == 1)
         self.assertTrue(parser.source == 'source')
         self.assertTrue(parser.json)
@@ -77,6 +77,7 @@ class RSSTestCase(unittest.TestCase):
         self.assertTrue(parser.date == '20191117')
         self.assertTrue(parser.to_pdf == 'pdf_file')
         self.assertTrue(parser.to_epub == 'epub_file')
+        self.assertTrue(parser.colorize)
 
 
 if __name__ == '__main__':

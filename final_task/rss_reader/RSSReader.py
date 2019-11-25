@@ -12,7 +12,7 @@ CACHE_FILE_NAME = "Cache file.json"
 
 class RSSReader:
 
-    def __init__(self, date, url, limit, is_json, pdf_file_name, epub_file_name):
+    def __init__(self, date, url, limit, is_json, pdf_file_name, epub_file_name, color):
         self.cache = NewsCache(CACHE_FILE_NAME)
         self.date = date
         self.url = url
@@ -20,6 +20,7 @@ class RSSReader:
         self.limit = limit
         self.pdf_file_name = pdf_file_name
         self.epub_file_name = epub_file_name
+        self.color = color
         self.logger = logging.getLogger(__name__)
 
     def url_parsing(self):
@@ -116,6 +117,8 @@ class RSSReader:
         elif self.epub_file_name:
             converter = 'epub'
             file_name = self.epub_file_name
+        elif self.color:
+            converter = 'color'
         else:
             self.logger.info('Output news')
             converter = 'text'

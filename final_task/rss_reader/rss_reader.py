@@ -4,7 +4,7 @@ import logging
 from RSSReader import RSSReader
 
 
-VERSION = '4.0'
+VERSION = '5.0'
 
 
 def arg_parse(args):
@@ -25,7 +25,9 @@ def arg_parse(args):
     parser.add_argument("--to_pdf", type=str,
                         help="Conversion of news in the pdf format.")
     parser.add_argument("--to_epub", type=str,
-                        help="Conversion of news in the ___ format.")
+                        help="Conversion of news in the epub format.")
+    parser.add_argument("--colorize", action="store_true",
+                        help="Print the result of the utility in colorized mode")
     return parser.parse_args(args)
 
 
@@ -36,7 +38,7 @@ def main():
     if args.version:
         print('RSS-reader version {}'.format(VERSION))  # program version call
         return
-    reader = RSSReader(args.date, args.source, args.limit, args.json, args.to_pdf, args.to_epub)
+    reader = RSSReader(args.date, args.source, args.limit, args.json, args.to_pdf, args.to_epub, args.colorize)
     reader.get_news()
 
 

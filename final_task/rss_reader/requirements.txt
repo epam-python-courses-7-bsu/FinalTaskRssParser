@@ -3,3 +3,4 @@ feedparser
 unidecode
 fpdf
 ebooklib
+colored

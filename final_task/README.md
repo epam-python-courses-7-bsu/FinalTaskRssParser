@@ -54,6 +54,11 @@ Source of image: http://l2.yimg.com/uu/api/res/1.2/3h5JxcDjAP1pHR6KUD2JMQ--/YXBw
 aWQ9eXRhY2h5b247aD04Njt3PTEzMDs-/https://media.zenfs.com/en-US/business_insider_
 articles_888/7a21ff2ee09c3b4285094c4e64e9602c
 ```
+###Nice features
+You can To please the eyes you can read the news from console in a colorful format.
+For this enter such parameter like --colorize and enjoy.
+
+But this parameter work only for MAC and Linux console.
 
 ###How to read saving news:
 If you want to read saved news of a certain date, you must enter a --date in %Y%m%d format and the program will work

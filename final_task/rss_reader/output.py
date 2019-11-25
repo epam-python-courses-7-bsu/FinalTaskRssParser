@@ -1,6 +1,7 @@
 import os
 import json
 import urllib
+from colored import attr, fg, bg
 from ebooklib import epub
 from fpdf import FPDF
 
@@ -13,8 +14,30 @@ def get_output_function(converter):
         return output_pdf
     elif converter == 'epub':
         return output_epub
+    elif converter == 'color':
+        return colored_output
     elif converter == 'text':
         return output
+
+
+def colored_output(logger, all_news, about_website=None, file_name=None):
+    """Function which print information about site  and a set of news with multi-colored text."""
+    logger.info('Output multi-colored news =)')
+    red = fg(1)
+    black = fg(0)
+    green = fg(28)
+    blue = fg(21)
+    purple = fg(55)
+    background_site = bg(225)
+    background_news = bg(195)
+    reset = attr(0)
+    if about_website is not None:
+        for key, value in about_website.items():
+            print(f'{background_site}\n{red}{key}: {purple}{value}{reset}')
+    for number_of_news in all_news:
+        print(f"{background_news}{black}--------------------------------------------------------{reset}")
+        for key, value in number_of_news.items():
+            print(f'{background_news}{green}{key}: {blue}{value}{reset}')
 
 
 def output(logger, all_news, about_website=None, file_name=None):
