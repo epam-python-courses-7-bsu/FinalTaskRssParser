@@ -20,3 +20,7 @@ pdf or/and html file(s) news for that date.
 '--limit N' arguments, we take N news from our DB. 
 * If in addition to '--to-pdf' or/and '--to-html' and '--date Y%M%D' there is '--limit N' we write down 
 N news with that date to file(s) pdf or/and html
+* If '--colorize' is in console args then we colorize our news in random colors. If there is no '--colorize'
+we use usual color (grey-white)
+## Important!
+When using pdf or html converting input your path in look like this: "C:\Test\"

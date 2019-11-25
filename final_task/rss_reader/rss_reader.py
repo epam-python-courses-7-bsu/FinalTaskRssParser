@@ -38,12 +38,13 @@ def main(link, limit, list_of_arguments):
         logging.info("Finished rss_reader with args")
     elif limit is not None and '--date' in list_of_arguments:
         RSSParser(link, limit, list_of_arguments).news_for_date()
-    elif link:
+    elif link or not link:
         RSSParser(link, limit, list_of_arguments).parse()
 
 
 if __name__ == '__main__':
     list_of_args = tuple(sys.argv)
+    print(list_of_args)
     if '--version' in list_of_args:
         print("VERSION 1.0")
     if path.isfile("snake.log"):

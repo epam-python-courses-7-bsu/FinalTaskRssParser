@@ -1,6 +1,6 @@
 import feedparser
 from output_functions import getting_full_info, getting_pack_of_news, converting_to_json, \
-    writing_to_file, getting_from_database_to_pack
+    writing_to_cache, getting_from_database_to_pack
 from pdf_and_html_converting import converting_to_pdf, converting_to_html, pdf_path, html_path
 import logging
 
@@ -26,8 +26,9 @@ class RSSParser:
         try:
             logging.info("Trying to get page from feedparser!")
             the_feed = feedparser.parse(self.feed_url)
+            print(the_feed)
             logging.info("Got it (the page)!")
-            if the_feed.get('bozo') == 1:
+            if the_feed.get('bozo'):
                 if '--date' in self.list_of_args:
                     if '--to-pdf' in self.list_of_args:
                         path_pdf = pdf_path(self.list_of_args)
@@ -40,11 +41,14 @@ class RSSParser:
                     else:
                         logging.info("Getting news for date!")
                         news = self.news_for_date()
-                        getting_full_info(the_feed, news, self.list_of_args)
+                        if '--json' not in self.list_of_args:
+                            getting_full_info(the_feed, news, self.list_of_args)
+                            print("\nJSON VIEW OF NEWS:", converting_to_json(news, the_feed))
                         logging.info("Got news for date!")
                 else:
                     logging.info("Got some problems due to connection!")
         except ConnectionError:
+            print("CONNE ERROR")
             logging.critical("CONNECTION ERROR, HELP!")
             print("You have some connection problems!")
             if '--date' in self.list_of_args:
@@ -57,15 +61,19 @@ class RSSParser:
                     pack_news = self.news_for_date()
                     converting_to_html(path_html, pack_news)
                 else:
-                    self.news_for_date()
+                    logging.info("Getting news for date!")
+                    news = self.news_for_date()
+                    if '--json' not in self.list_of_args:
+                        getting_full_info(the_feed, news, self.list_of_args)
+                        print("\nJSON VIEW OF NEWS:", converting_to_json(news, the_feed))
+                    logging.info("Got news for date!")
 
         logging.info("Getting pack of news!")
-        pack_of_news, pack_of_news_for_db = getting_pack_of_news(the_feed, self.feed_url, self.number)
+        pack_of_news, pack_of_news_for_db = getting_pack_of_news(the_feed, self.feed_url,
+                                                                 self.list_of_args, self.number)
         logging.info("Got pack of news!")
-        if '--json' in self.list_of_args:
-            print("\nJSON VIEW OF NEWS:", converting_to_json(pack_of_news, the_feed))
         logging.info("Writing news from source and DB to file!")
-        writing_to_file(pack_of_news, pack_of_news_for_db, 'news_cache.txt')
+        writing_to_cache(pack_of_news, pack_of_news_for_db, 'news_cache.txt')
         logging.info("News are in the file!")
         if '--to-html' in self.list_of_args:
             path_html = html_path(self.list_of_args)
@@ -81,16 +89,23 @@ class RSSParser:
                 converting_to_pdf(path_pdf, pack)
             else:
                 converting_to_pdf(path_pdf, pack_of_news)
-
-        else:
-            if '--date' in self.list_of_args:
+        if '--to-pdf' not in self.list_of_args and '--to-html' not in self.list_of_args:
+            if '--date' in self.list_of_args and '--json' not in self.list_of_args:
                 logging.info("Getting full info!")
                 getting_full_info(the_feed, self.news_for_date(), self.list_of_args)
                 logging.info("Got full info!")
             else:
                 logging.info("Getting full info!")
-                getting_full_info(the_feed, pack_of_news, self.list_of_args)
+                if not the_feed.get('bozo') and '--json' not in self.list_of_args:
+                    getting_full_info(the_feed, pack_of_news, self.list_of_args)
+                else:
+                    getting_full_info(the_feed, pack_of_news_for_db, self.list_of_args)
                 logging.info("Got full info!")
+
+        if '--json' in self.list_of_args and '--date' not in self.list_of_args:
+            print("\nJSON VIEW OF NEWS:", converting_to_json(pack_of_news, the_feed))
+        elif '--json' in self.list_of_args and '--date' in self.list_of_args:
+            print("\nJSON VIEW OF NEWS:", converting_to_json(self.news_for_date(), the_feed))
 
     def news_for_date(self):
         """
@@ -137,8 +152,6 @@ class RSSParser:
                     print("No news have been found for your source")
                 else:
                     print("No news have been found for this date!")
-            if '--json' in self.list_of_args:
-                print("\nJSON VIEW OF NEWS:", converting_to_json(news_for_date_needed))
             return news_for_date_needed
         except IndexError:
             print("You forgot to enter date in format %Y%m%d")

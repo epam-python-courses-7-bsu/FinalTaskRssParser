@@ -1,3 +1,5 @@
-feedparser
-bs4
-fdpf
+feedparser==5.2.1
+bs4==0.0.1
+fpdf==1.7.2
+Pillow==6.2.1
+colorama==0.4.1

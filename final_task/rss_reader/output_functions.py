@@ -1,3 +1,4 @@
+import dataclasses
 import json
 import logging
 import re
@@ -6,9 +7,6 @@ import sqlite3
 from datetime import datetime
 from itertools import groupby
 from html import unescape
-import random
-from termcolor import cprint
-from colorama import init, Fore, Back
 import colorama
 
 from bs4 import BeautifulSoup
@@ -99,7 +97,7 @@ def getting_alt_text(the_feed, num_of_news):
     return pack_of_alts
 
 
-def getting_pack_of_news(the_feed, main_source, num_of_news=None):
+def getting_pack_of_news(the_feed, main_source, list_of_args, num_of_news=None):
     """
     Creating full novelty
     1. Adding list of images, correct it if some duplicates are there
@@ -109,6 +107,9 @@ def getting_pack_of_news(the_feed, main_source, num_of_news=None):
     if getting_num_of_news(the_feed, num_of_news) > len(the_feed.entries):
         print("You want to get more news than we can get!")
         print("Printing all news from the storage!")
+        pack = getting_from_database_to_pack()
+        getting_full_info(the_feed, pack[:int(list_of_args[list_of_args.index('--limit') + 1])],
+                          list_of_args)
 
     pack_of_news = []
     pack_of_news_for_db = []
@@ -135,29 +136,31 @@ def getting_novelty(item, number, corrected_pack_of_images_links, corrected_pack
         alt_text = corrected_pack_of_alts[number]
     except IndexError:
         alt_text = 'No alternative text.'
-    novelty = Novelty(number + 1, unescape(item.get('title', '')),
-                      item.get('published', ''),
-                      item.get('link', ''),
-                      unescape(clean_html(item.get('description', ''))),
-                      corrected_pack_of_images_links[number],
-                      unescape(alt_text),
-                      getting_corrected_time(item),
-                      main_source)
+    # Making a readable 'table' of class Novelty parameters
+    number_of_novelty = number + 1
+    title_of_novelty = unescape(item.get('title', ''))
+    time_of_publishing = item.get('published', '')
+    source_link = item.get('link', '')
+    description = unescape(clean_html(item.get('description', '')))
+    image_link = corrected_pack_of_images_links[number]
+    alternative_text = unescape(alt_text)
+    corrected_time = getting_corrected_time(item)
+    main_link = main_source
+    # creating Novelty class object
+    novelty = Novelty(number_of_novelty,
+                      title_of_novelty,
+                      time_of_publishing,
+                      source_link,
+                      description,
+                      image_link,
+                      alternative_text,
+                      corrected_time,
+                      main_link)
+    # creating a tuple from Novelty class object to put it in the database
     novelty_for_database = (novelty.number_of_novelty, novelty.title_of_novelty, novelty.time_of_novelty,
                             novelty.source_link, novelty.description, novelty.images_links,
                             novelty.alt_text, novelty.date_corrected, novelty.main_source)
     return novelty, novelty_for_database
-
-"""
-colors = list(vars(colorama.Fore).values())
-random.choice(colors)
-"""
-
-
-def colirizing(colors_list):
-    init()
-    colors = colors_list
-    return random.choice(colors)
 
 
 def getting_full_info(the_feed, pack_of_news, list_of_args):
@@ -166,35 +169,41 @@ def getting_full_info(the_feed, pack_of_news, list_of_args):
     try-except for printing links and alternative text
     """
     logging.info("Getting news to output!")
-    if '--colorize' in list_of_args:
-        colorama.init()
-        colors_list = list(vars(colorama.Fore).values())
-    else:
-        colorama.init()
-        colors_list = [""]
     print("------------------------")
-    print(colirizing(colors_list) + "Source: " + printing_title(the_feed))
+    if the_feed.get('feed', '').get('title') is not None:
+        source_title = the_feed.get('feed', '').get('title')
+    else:
+        source_title = "No title."
+    print(f"Source: {source_title}")
     for novelty in pack_of_news:
         logging.info("Getting novelty to output!")
-        print(colirizing(colors_list) + f"\n{novelty.number_of_novelty}." + "Title: " + novelty.title_of_novelty)
-        print(colirizing(colors_list) + "Published: " + novelty.time_of_novelty)
-        print(colirizing(colors_list) + "Link: " + novelty.source_link)
-        print(colirizing(colors_list) + "Description: ")
-        print(pprint.pformat(novelty.description, width=115))
+        if '--colorize' in list_of_args:
+            colorama.init()
+            print(colorama.Fore.BLUE + f"\n{novelty.number_of_novelty}. Title: {novelty.title_of_novelty}")
+        else:
+            print(f"\n{novelty.number_of_novelty}. Title: {novelty.title_of_novelty}")
+        print(f"Published: {novelty.time_of_novelty}")
+        print(f"Link: {novelty.source_link}")
+        print("Description: ")
+        if '--colorize' in list_of_args:
+            colorama.init()
+            print(colorama.Fore.YELLOW + pprint.pformat(novelty.description, width=115))
+        else:
+            print(pprint.pformat(novelty.description, width=115))
         try:
-            print(colirizing(colors_list) + f"\n[{1}] {novelty.source_link}")
+            print(f"\n[{1}] {novelty.source_link}")
             if novelty.images_links != novelty.number_of_novelty - 1:
-                print(colirizing(colors_list) + f"[{2}] {novelty.images_links}")
+                print(f"[{2}] {novelty.images_links}")
             else:
-                print(colirizing(colors_list) + f"[{2}] {'no image'}")
+                print(f"[{2}] no image")
             if novelty.alt_text != str(novelty.number_of_novelty - 1):
-                print(colirizing(colors_list) + "Alternative text: " + novelty.alt_text)
+                print(f"Alternative text: {novelty.alt_text}")
             else:
-                print(colirizing(colors_list) + "Alternative text: " + "no alternative text.")
+                print("Alternative text: no alternative text")
         except AttributeError:
-            print(colirizing(colors_list) + f"\n[{1}] {novelty.source_link}")
-            print(colirizing(colors_list) + f"[{2}] {'no image'}")
-            print(colirizing(colors_list) + "Alternative text: " + "no alt")
+            print(f"\n[{1}] {novelty.source_link}")
+            print(f"[{2}] no image")
+            print("Alternative text: no alt")
         logging.info("Got novelty!")
 
 
@@ -206,17 +215,7 @@ def converting_to_json(pack_of_news, the_feed=''):
         source = ''
     news_dict = {
             "Source": source,
-            "Number of news": len(pack_of_news),
-            "News": [{"number": item.number_of_novelty,
-                      "title": item.title_of_novelty,
-                      "published": item.time_of_novelty,
-                      "link": item.source_link,
-                      "description": item.description,
-                      "images links": item.images_links,
-                      "alternative text": item.alt_text,
-                      "corrected time": item.date_corrected,
-                      "main source": item.main_source,
-                      } for num, item in enumerate(pack_of_news)]
+            "News": [dataclasses.asdict(item) for item in pack_of_news]
         }
     logging.info("Converted to json view!")
     return json.dumps(news_dict)
@@ -227,16 +226,16 @@ def getting_info_into_file(item):
     Preparing information to be written into the file in more readable way
     """
     logging.info("Getting novelty into file!")
-    novelty = "\n{0}.\nTitle: {1}\nDate: {2}\nLink: {3}\nDescription:\n {4}\nImages links:{5}\nAlternative text:{6}\n" \
-              "Main source: {7}" \
-        .format(item.number_of_novelty,
-                pprint.pformat(item.title_of_novelty, width=115),
-                item.time_of_novelty,
-                pprint.pformat(item.source_link, width=115),
-                pprint.pformat(item.description.replace("\xa0", " "), width=115),
-                pprint.pformat(item.images_links),
-                pprint.pformat(item.alt_text, width=115),
-                item.main_source)
+    number = item.number_of_novelty
+    title = pprint.pformat(item.title_of_novelty, width=115)
+    time = item.time_of_novelty
+    source_link = pprint.pformat(item.source_link, width=115)
+    description = pprint.pformat(item.description.replace("\xa0", " "), width=115)
+    images_links = pprint.pformat(item.images_links)
+    alt_text = pprint.pformat(item.alt_text, width=115)
+    main_source = item.main_source
+    novelty = f"\n{number}.\nTitle: {title}\nDate: {time}\nLink: {source_link}\nDescription:\n {description}" \
+              f"\nImages links:{images_links}\nAlternative text:{alt_text}\nMain source: {main_source}"
     logging.info("Got novelty into file!")
     return novelty
 
@@ -251,17 +250,12 @@ def getting_corrected_time(item):
     return corrected_date.strftime('%Y%m%d')
 
 
-def getting_time_for_json(item):
-    corrected_date = datetime.strptime(item, '%a, %d %b %Y %X %z')
-    return corrected_date.strftime('%Y%m%d')
-
-
 def reading_file(name_of_file):
     with open(name_of_file, 'r', encoding='utf-8') as news_cache:
         return news_cache.read()
 
 
-def writing_to_file(pack_of_news, pack_of_news_for_db, filename):
+def writing_to_cache(pack_of_news, pack_of_news_for_db, filename):
     """
     Writing information into 2 files: news_cache.txt and News_cache_json.json
     Creating 2 files because it's easier to read information into computer from JSON file than another file
@@ -344,12 +338,17 @@ def getting_from_database_to_pack():
     pack_of_news = []
     with sqlite3.connect("database.db") as conn:
         cursor = conn.cursor()
-        for item in cursor.execute("SELECT * FROM projects"):
-            (number, title, date, source, description, im_links, alt, date_corr, main_source) = item
-            novelty = Novelty(number, title, date, source, description, im_links, alt, date_corr, main_source)
-            pack_of_news.append(novelty)
-    logging.info("Got news from DB!")
+        try:
+            for item in cursor.execute("SELECT * FROM projects"):
+                (number, title, date, source, description, im_links, alt, date_corr, main_source) = item
+                number = len(pack_of_news) + 1
+                novelty = Novelty(number, title, date, source, description, im_links, alt, date_corr, main_source)
+                pack_of_news.append(novelty)
+            logging.info("Got news from DB!")
+        except sqlite3.OperationalError:
+            print("Get some news first!")
     return pack_of_news
+
 
 
 
