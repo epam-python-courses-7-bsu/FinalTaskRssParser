@@ -9,7 +9,7 @@ def get_console_argument():
     arg.add_argument('--json', help="print result as json in stdout", action='store_true')
     arg.add_argument('--version', help="print version info", action='store_true')
     arg.add_argument('--date', help="print news from cache for your date",  type=int)
-    arg.add_argument('--to_html', help="create html file with news")
-    arg.add_argument('--to_pdf', help="create pdf file with news")
+    arg.add_argument('--to-html', help="create html file with news")
+    arg.add_argument('--to-pdf', help="create pdf file with news")
 
     return arg.parse_args()

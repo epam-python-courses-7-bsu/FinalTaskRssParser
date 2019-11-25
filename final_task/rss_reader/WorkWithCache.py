@@ -10,6 +10,12 @@ import urllib.request
 pass the dictionary to a function and write to a file json
 '''
 
+
+@log_decore
+def correct_title(title):
+    return title.replace('"', "_").replace("?", "_").replace(":", "_").replace("'", "_").replace(" ", "_")[:15]
+
+
 @log_decore
 def save_img(url, name):
     if os.path.exists("images"):
@@ -34,7 +40,7 @@ def write_json_to_cache(entry_dict):
     if not [item_news for item_news in load_news if item_news["title"] == entry_dict["title"]]:
         load_news.append(entry_dict)
         if(entry_dict["links"][0] != ''):
-            save_img(entry_dict["links"][0], entry_dict["title"][:15])
+            save_img(entry_dict["links"][0], correct_title(entry_dict["title"]))
 
     with open("cache.json", "w") as cache:
         json.dump(load_news, cache, indent=3)

@@ -32,10 +32,10 @@ class TestEntry(unittest.TestCase):
         self.assertIsInstance(hand.get_all()[0], News)
         self.assertEqual(len(hand.get_all()), lim)
 
-    def test_link(self):
-        link = "https://news.yahoo.com/rss/"
-        hand = Handler("https://news.yahoo.com/rss/", 3)
-        self.assertEqual(hand.get_link(link), "https://news.yahoo.com")
+    # def test_link(self):
+    #     link = "https://news.yahoo.com/rss/"
+    #     hand = Handler("https://news.yahoo.com/rss/", 3)
+    #     self.assertEqual(hand.get_link(link), "https://news.yahoo.com")
 
     def test_img_link(self):
         text = 'img src="http://l.yimg.com/uu/api/res/1.2/I4AtbbFWPM.66LesQWxLqQ--/YXBwaWQ9eXRhY2h5b247aD04Njt3PTEzM' \
@@ -140,16 +140,9 @@ class TestEntry(unittest.TestCase):
         save_img(url, name)
         self.assertTrue(os.path.exists(f'images/{name}.jpg'))
 
-    def test_read_file(self):
-        news=read_from_file(20191121,1)
-        self.assertEqual(news[0]["title"],"House Democrats ponder expanding impeachment probe after Sondland 'game change"
-                                       "r' testimony")
-    def test_read_filee(self):
-        news = read_from_file(20191121, 1)
-        self.assertEqual(news[0]["link"],"https://news.yahoo.com")
     def test_read_file_lenght(self):
         lim=3
-        news = read_from_file(20191121, 3)
+        news = read_from_file(20191124, 3)
         self.assertEqual(len(news), lim)
 if __name__ == '__main__':
     unittest.main()

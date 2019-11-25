@@ -1,7 +1,8 @@
 from dataclasses import dataclass
 from typing import List
 
-''' in this class, we store news in the required format and 
+''' 
+    in this class, we store news in the required format and 
     implement all the logic for processing news in the class Handler
 '''
 

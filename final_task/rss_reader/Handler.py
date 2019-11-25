@@ -36,7 +36,7 @@ class Handler:
         # for every news, which user will see we create object
         while self.numb_news < limit:
             tmp_img_link = self.get_img_links(self.get_news(self.numb_news))
-            tmp_link=self.get_link(url)
+            tmp_link = self.get_link(self.numb_news)
             tmp_news = self.parse_html(self.get_news(self.numb_news))
             tmp_title = self.get_title(self.numb_news)
             tmp_date = self.get_date(self.numb_news)
@@ -53,8 +53,8 @@ class Handler:
             pass
 
     @log_decore
-    def get_link(self, url):
-        return url[:-5]
+    def get_link(self, index):
+        return self.article.entries[index].link
 
 
     @log_decore

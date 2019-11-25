@@ -12,18 +12,22 @@ from ConvertToHtmlAndPdf import create_html_news
 from ConvertToHtmlAndPdf import create_pdf_news
 from ConvertToHtmlAndPdf import convert_Dict_to_News
 
+
 def main():
     arg = get_console_argument()
     link = arg.link
     lim = -1
-
+    if arg.version:
+        print("version:  4.0")
+    if arg.verbose:
+        logging.getLogger().setLevel(logging.INFO)
     # if user enter to_html
     if arg.to_html:
         # if user enter link
         if arg.link:
             if arg.limit:
                 if arg.limit <= 0:
-                    raise RssException("Error count news <0")
+                    raise RssException("Error count news <=0")
                 lim = arg.limit
 
             hand = Handler(link, lim)
@@ -32,8 +36,8 @@ def main():
         elif arg.date:
             if arg.limit:
                 lim = arg.limit
-            dict_news=read_from_file(arg.date, lim)
-            news=convert_Dict_to_News(dict_news)
+            dict_news = read_from_file(arg.date, lim)
+            news = convert_Dict_to_News(dict_news)
         else:
             raise RssException("Error. Please enter url or --date")
         create_html_news(arg.to_html, news)
@@ -44,7 +48,7 @@ def main():
         if arg.link:
             if arg.limit:
                 if arg.limit <= 0:
-                    raise RssException("Error count news <0")
+                    raise RssException("Error count news <=0")
                 lim = arg.limit
 
             hand = Handler(link, lim)
@@ -53,8 +57,8 @@ def main():
         elif arg.date:
             if arg.limit:
                 lim = arg.limit
-            dict_news=read_from_file(arg.date, lim)
-            news=convert_Dict_to_News(dict_news)
+            dict_news = read_from_file(arg.date, lim)
+            news = convert_Dict_to_News(dict_news)
         else:
             raise RssException("Error. Please enter url or --date")
         create_pdf_news(arg.to_pdf, news)
@@ -72,14 +76,9 @@ def main():
     else:
         # standart value -1, in handler we  will process and get all the value
 
-        if arg.version:
-            print("version:  1.0")
-            return
-        if arg.verbose:
-            logging.getLogger().setLevel(logging.INFO)
-        if arg.limit:
+        if arg.limit or arg.limit == 0:
             if arg.limit <= 0:
-                raise RssException("Error count news <0")
+                raise RssException("Error count news <=0")
             lim = arg.limit
         hand = Handler(link, lim)
         news = hand.get_all()
@@ -98,7 +97,10 @@ if __name__ == "__main__":
     try:
         main()
     except AttributeError:
-         print("Error no have attribute")
+        print("Error no have attribute")
+    except PermissionError:
+        print("error the file in which the news is recorded is open")
+    except TimeoutError:
+        print("poor internet connection")
     except RssException as exc:
         print(exc)
-
