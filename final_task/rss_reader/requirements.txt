@@ -1,0 +1,5 @@
+feedparser == 5.2.1
+doc == 0.1.0
+yattag == 1.12.2
+fpdf == 1.7.2
+requests == 2.22.0
