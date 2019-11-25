@@ -2,10 +2,14 @@
 
 import unittest
 from unittest.mock import Mock
-import functions.process_func as proc_f
-from functions.print_func import limit_news_collections
-import classes.exceptions as exc
 import feedparser
+import argparse
+import os
+
+import functions.process_func as proc_f
+import functions.print_func as print_f
+import classes.exceptions as exc
+from tests.test_caching import news_collection
 
 
 class TestProcessFunctions(unittest.TestCase):
@@ -13,18 +17,20 @@ class TestProcessFunctions(unittest.TestCase):
 
     def setUp(self):
         # Get description root from local xml
-        feed = feedparser.parse('tests/files/test_example.xml')
-        description = feed.entries[0].get("description", "")
+        self.path_to_tests = os.path.abspath(os.path.dirname(__file__))
+        self.feed = feedparser.parse(os.path.join(self.path_to_tests, "files/test_example.xml"))
+        description = self.feed.entries[0].get("description", "")
         self.root = proc_f.get_xml_root(description)
+        self.logger = Mock()
 
 
     def test_extract_text_from_description(self):
         """Tests function extract_text_from_description()"""
         # Assert description that was got by function and local file description
-        with open('tests/files/test_description.txt', 'r') as text:
+        with open(os.path.join(self.path_to_tests, "files/test_description.txt"), 'r') as text:
             local_file_description = text.read()
             self.assertEqual(proc_f.extract_text_from_description(self.root),
-                             local_file_description)
+                            local_file_description)
 
     def test_extract_links_from_description(self):
         """Tests function extract_links_from_description()"""
@@ -44,31 +50,60 @@ class TestProcessFunctions(unittest.TestCase):
         self.assertEqual(proc_f.extract_links_from_description(self.root), links)
 
 
+    def test_parse_date(self):
+        """Tests function parse_date"""
+        date_str_from_func = proc_f.parse_date("20191122")
+        self.assertEqual(date_str_from_func, "22 Nov 2019")
+
+        with self.assertRaises(argparse.ArgumentTypeError):
+            proc_f.parse_date("20191133")
+
+        with self.assertRaises(argparse.ArgumentTypeError):
+            proc_f.parse_date("201111bb")
+
+
+    def test_process_feed(self):
+        """Tests process_feed function"""
+        command_line_args = Mock()
+        command_line_args.source = "https://news.yahoo.com/rss/"
+        news_collection = proc_f.process_feed(command_line_args, self.feed, self.logger)
+        self.assertEqual(len(news_collection), 1)
+
+        news = news_collection[0]
+        self.assertEqual(news.command_line_args.source, "https://news.yahoo.com/rss/")
+        date = "Thu, 31 Oct 2019 05:39:41 GMT"
+        self.assertEqual(news.date, date)
+
+
 class TestPrintFunctions(unittest.TestCase):
-    """Class for testing output functions"""
 
     def test_limit_news_collections(self):
-        """Test function limit_news_collections"""
-        # Mocking objects
+        """Tests function limit_news_collections"""
         command_line_args = Mock()
         news_collection = [num for num in range(10)]
         logger = Mock()
 
-        # Assert function check_limit_argument()
-        # Limit is negative
         command_line_args.limit = -5
         with self.assertRaises(exc.LimitArgumentError):
-            limit_news_collections(command_line_args, news_collection, logger)
+            print_f.limit_news_collections(command_line_args, news_collection, logger)
 
-        # Limit is positive and less than news_collection length
         command_line_args.limit = 5
-        self.assertEqual(len(limit_news_collections(command_line_args,
+        self.assertEqual(len(print_f.limit_news_collections(command_line_args,
                                                   news_collection, logger)), 5)
 
-        # Limit is more than news_collection
         command_line_args.limit = 15
-        self.assertEqual(len(limit_news_collections(command_line_args,
+        self.assertEqual(len(print_f.limit_news_collections(command_line_args,
                                                   news_collection, logger)), 10)
+
+
+    def test_generate_news_json(self):
+        """Tests function generate news json"""
+        logger = Mock()
+        path_to_tests = os.path.abspath(os.path.dirname(__file__))
+        js_from_func = print_f.generate_news_json(news_collection, logger)
+        with open(os.path.join(path_to_tests, "files/json_example"), 'r') as file:
+            js_from_file = file.read()
+        self.assertEqual(js_from_func, js_from_file)
 
 
 if __name__ == '__main__':

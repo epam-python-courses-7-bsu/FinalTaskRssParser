@@ -5,6 +5,7 @@ import feedparser
 from lxml import etree
 import datetime
 import argparse
+
 from classes.news_class import News
 from functions.check_func import check_feed_status
 
@@ -24,8 +25,7 @@ def parse_date(date_time_str):
 
 def get_arguments(parser):
     """Getting command-line arguments"""
-
-    parser.add_argument('--version', action='version', version='rss-reader 5.7')
+    parser.add_argument('--version', action='version', version='rss-reader 5.12')
     parser.add_argument("--json", help="Print result as JSON in stdout",
                         action="store_true")
     parser.add_argument("--verbose", help="Outputs verbose status messages",
@@ -47,7 +47,6 @@ def get_arguments(parser):
 
 def parse_feed(command_line_args, logger):
     """Get feed by url using feedparser"""
-
     logger.info("Parsing feeds...")
     url = command_line_args.source
     feed = feedparser.parse(url)
@@ -73,9 +72,10 @@ def extract_text_from_description(root):
     Function uses inside process_feed() function
     """
     # Get text from description tree
+
     list_of_text = root.xpath("//text()")
     # Turn list of strings into string
-    text = ''.join(list_of_text)
+    text = ''.join(list_of_text).strip()
     return text
 
 
@@ -89,9 +89,9 @@ def extract_links_from_description(root):
     list_of_img_links = []
 
     # find href and img links
+
     href_links = root.xpath('.//a/@href')
     img_links = root.xpath('.//img/@src')
-
     # Add links in list of links
     list_of_href_links.extend(href_links)
     list_of_img_links.extend(img_links)
@@ -119,12 +119,15 @@ def process_feed(command_line_args, feed, logger):
 
         # Process description
         description = entry.get("description", "")
-        root = get_xml_root(description)
-        text = extract_text_from_description(root)
-        links = extract_links_from_description(root)
-
+        if description:
+            root = get_xml_root(description)
+            text = extract_text_from_description(root)
+            links = extract_links_from_description(root)
+        else:
+            text = ''
+            links = ([''], [''])
         # Get title, date, link from entry
-        title = entry.get("title", "").replace('&#39;', "'")
+        title = entry.get("title", "").replace('&#39;', "'").replace('&#8217;', "'")
         date = entry.get("published", "")
         link = entry.get("link", "")
 

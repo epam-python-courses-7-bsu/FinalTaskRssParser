@@ -2,14 +2,14 @@
 
 from dataclasses import dataclass
 from termcolor import cprint
-import argparse
 
 @dataclass
 class News:
     """Class that represent single entry of news
 
-    Uses for storing title, date, link, text, links from text, source and feed_title as an attributes of class.
-    Class have attribute "command_line_args", that passes inside functions.process_func.process_feed() function and is
+    Uses for storing title, date, link, text, links from text, source and
+    feed_title as an attributes of class. Class have attribute "command_line_args",
+    that passes inside functions.process_func.process_feed() function and is
     instance of argparse.Namespace.
     """
     title: str
@@ -23,14 +23,12 @@ class News:
 
     def create_list_of_links(self):
         """Turn tuple ([href_links], [img_links]) into list of links"""
-        # Merge list of links
         list_of_links = self.links[0] + self.links[1]
         return list_of_links
 
 
     def create_string_of_links(self):
         """Turn tuple ([href_links], [img_links]) of lists into formatted string"""
-        # Merge list of links
         list_of_links = self.create_list_of_links()
 
         string_repr_of_links = ''
@@ -59,7 +57,8 @@ class News:
         cprint('Title: '+self.title, list_of_colors[0])
         cprint('Date: '+self.date, list_of_colors[0])
         cprint('Link: '+self.link, list_of_colors[0], end='\n\n')
-        cprint(self.text, list_of_colors[1], end='\n\n')
+        if self.text:
+            cprint(self.text, list_of_colors[1], end='\n\n')
         links = self.create_string_of_links()
         if links:
             cprint('Links:', list_of_colors[2])

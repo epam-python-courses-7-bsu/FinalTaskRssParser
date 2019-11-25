@@ -1,6 +1,6 @@
 #!rss_virtual_env/bin/python
 
-"""rss-reader.py 5.7
+"""rss-reader.py 5.12
 
 Usage:
     rss_reader.py (-h | --help)      Show help message and exit
@@ -15,7 +15,7 @@ Usage:
                                      source or database. Receive the path where file will be saved
     rss_reader.py --to-html TO_HTML  Create a file in html format from internet
                                      source or database. Receive the path where file will be saved
-    rss_reader.py --colorize        Print the result of the utility in colorized mode
+    rss_reader.py --colorize         Print the result of the utility in colorized mode
 """
 try:
     import argparse
@@ -28,6 +28,7 @@ try:
 except ModuleNotFoundError as E:
     print(E)
     exit()
+
 
 def main():
     """Main function that runs the program"""

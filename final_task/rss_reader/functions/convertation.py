@@ -1,14 +1,14 @@
 """Module for epub and html convertation"""
 
-from functions.check_func import check_internet_connection
-from classes.exceptions import InternetConnectionError, DirectoryError
-from functions.print_func import limit_news_collections
-
 from ebooklib import epub
 import os
 import requests
 import dominate
 import dominate.tags as tag
+
+from functions.check_func import check_internet_connection
+from classes.exceptions import InternetConnectionError, DirectoryError
+from functions.print_func import limit_news_collections
 
 
 def set_internet_flag(logger):
@@ -43,7 +43,7 @@ def create_html(command_line_args, news_collection, logger):
             html_obj.write(str(doc_html))
         logger.info("HTML file is created")
     except FileNotFoundError:
-        raise DirectoryError("No such directory")
+        raise DirectoryError(f"There are no directory {command_line_args.to_html}")
 
 
 def create_html_news_entry(news, doc_html, internet):
@@ -148,7 +148,7 @@ def create_epub(command_line_args, news_collection, logger):
     if os.path.exists(path_to_ebook):
         logger.info("Epub book is created")
     else:
-        raise DirectoryError("No such directory")
+        raise DirectoryError(f"There are no directory {command_line_args.to_epub}")
 
 
 def create_html_news_entry_for_epub(news, doc_html, internet, list_of_image_objects):

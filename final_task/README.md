@@ -4,9 +4,9 @@
 
 1) from the source distribution,
 
-- download the [zipped folder](https://github.com/AntonZimahorau/FinalTaskRssParser/tree/master/final_task/dist/rss_reader_Anton_Zimahorau-2.2.tar.gz), then:
+- download the [zipped folder](https://github.com/AntonZimahorau/FinalTaskRssParser/tree/master/final_task/dist/rss_reader_Anton_Zimahorau-5.12.tar.gz), then:
 
-	$ pip install ./rss_reader_Anton_Zimahorau-2.2.tar.gz
+	$ pip install ./rss_reader_Anton_Zimahorau-5.12.tar.gz
 
 ### Usage
 
@@ -32,7 +32,7 @@
 
 `$ rss-reader.py --date DATE`
 
-- Take a date in %%Y%%m%%d format. Print cached news, published on this date.
+- Take a date in %Y%m%d format. Print cached news, published on this date.
   If source argument passed, print only news from this source
 
 `$ rss-reader.py --limit LIMIT`
@@ -79,14 +79,14 @@ source or database. Receive the path where file will be saved
      {
         ...
      }
-	    ]
+	 ]
 }
 ```
 
 ### News storage
 >Store all fetched news.
 >For news storage a “shelve”, persistent, dictionary-like object was used.
->"Shelve object will be situated in your home directory. 
+>Shelve object will be situated in your home directory. 
 >All fetched news will be saved in "shelve" object.
 >The keys for search is a rss publication date string. 
 >The values is python News() objects.

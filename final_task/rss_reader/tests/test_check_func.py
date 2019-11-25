@@ -2,25 +2,24 @@
 
 import unittest
 from unittest.mock import patch, Mock
-import functions.check_func as ch_f
-import requests
-import classes.exceptions as exc
 import feedparser
+import requests
+
+import classes.exceptions as exc
+import functions.check_func as ch_f
 
 
 class TestCheckFunctions(unittest.TestCase):
     """Tests functions from check_func.py"""
-
     def setUp(self):
         self.logger = Mock()
         self.command_line_args = Mock()
 
     def test_check_internet_connection(self):
-
+        """Tests check_internet_connection() function"""
         with patch('requests.get'):
             self.assertTrue(ch_f.check_internet_connection(self.logger))
 
-        # If internet is not avaliable should raise InternetConnectionError
         with self.assertRaises(exc.InternetConnectionError):
             with patch('requests.get', side_effect=requests.ConnectionError):
                 ch_f.check_internet_connection(self.logger)

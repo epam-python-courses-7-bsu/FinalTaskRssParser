@@ -1,9 +1,10 @@
 """Contain formatting output functions"""
 
 import json
-import classes.exceptions as exc
 from termcolor import cprint
 from dataclasses import asdict
+
+import classes.exceptions as exc
 
 
 def limit_news_collections(command_line_args, news_collection, logger):
@@ -71,6 +72,7 @@ def print_feeds_from_database(news_collection, command_line_args, logger):
                 logger.info("Printing news №{}:".format(num+1))
                 news.print_feed_title()
                 news.print_news()
+
 
 def col_print(text, command_line_arguments, color):
     """If colorize argument, prints in color"""

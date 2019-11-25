@@ -34,7 +34,6 @@ def check_verbose(command_line_args):
 
 def check_feed_status(feed):
     """Check HTTP status code"""
-
     try:
         status = feed.status
         if 500 > status >= 400:
