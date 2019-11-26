@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" media="screen" href="/~d/styles/rss2full.xsl"?>
+<?xml-stylesheet type="text/css" media="screen" href="http://rss.cnn.com/~d/styles/itemcontent.css"?>
+<rss
+  xmlns:media="http://search.yahoo.com/mrss/"
+  xmlns:feedburner="http://rssnamespace.org/feedburner/ext/1.0" version="2.0">
+  <channel>
+    <title>CNN.com - Science and Space</title>
+    <link>http://edition.cnn.com/TECH/space/?eref=edition_space</link>
+    <description>CNN.com delivers up-to-the-minute news and information on the latest top stories, weather, entertainment, politics and more.</description>
+    <language>en-us</language>
+    <copyright>� 2008 Cable News Network LP, LLLP.</copyright>
+    <pubDate>Wed, 31 Dec 2008 10:36:24 EST</pubDate>
+    <ttl>10</ttl>
+    <image>
+      <title>CNN.com - Science and Space</title>
+      <link>http://edition.cnn.com/TECH/space/?eref=edition_space</link>
+      <url>http://i2.cdn.turner.com/cnn/.element/img/1.0/logo/cnn.logo.rss.gif</url>
+      <width>144</width>
+      <height>33</height>
+      <description>CNN.com delivers up-to-the-minute news and information on the latest top stories, weather, entertainment, politics and more.</description>
+    </image>
+    <item>
+      <title>Mars Science Lab launch delayed two years</title>
+      <guid isPermaLink="false">http://edition.cnn.com/2008/TECH/space/12/04/nasa.mars.delay/index.html?eref=edition_space</guid>
+      <link>http://rss.cnn.com/~r/rss/edition_space/~3/OkAPP_GA5mE/index.html</link>
+      <description>NASA's launch of the Mars Science Laboratory -- hampered by technical difficulties and cost overruns -- has been delayed until the fall of 2011, NASA officials said at a news conference Thursday in Washington.&lt;img src="http://feeds.feedburner.com/~r/rss/edition_space/~4/OkAPP_GA5mE" height="1" width="1" alt=""/&gt;</description>
+      <pubDate>Fri, 05 Dec 2008 10:34:54 EST</pubDate>
+      <feedburner:origLink>http://edition.cnn.com/2008/TECH/space/12/04/nasa.mars.delay/index.html?eref=edition_space</feedburner:origLink>
+    </item>
+    <item>
+      <title>Shuttle lands at California air base</title>
+      <guid isPermaLink="false">http://edition.cnn.com/2008/TECH/space/11/30/space.shuttle/index.html?eref=edition_space</guid>
+      <link>http://rss.cnn.com/~r/rss/edition_space/~3/YzjKXjuxFKY/index.html</link>
+      <description>NASA officials Sunday waved off the first opportunity for space shuttle Endeavour to return to Earth, citing poor weather conditions.&lt;img src="http://feeds.feedburner.com/~r/rss/edition_space/~4/YzjKXjuxFKY" height="1" width="1" alt=""/&gt;</description>
+      <pubDate>Mon, 01 Dec 2008 00:17:51 EST</pubDate>
+      <feedburner:origLink>http://edition.cnn.com/2008/TECH/space/11/30/space.shuttle/index.html?eref=edition_space</feedburner:origLink>
+    </item>
+    <item>
+      <title>iReporters watch planets, moon align</title>
+      <guid isPermaLink="false">http://edition.cnn.com/2008/TECH/space/12/02/planetsalign.irpt/index.html?eref=edition_space</guid>
+      <link>http://rss.cnn.com/~r/rss/edition_space/~3/lNpVH39eh3U/index.html</link>
+      <description>&lt;img src="http://feeds.feedburner.com/~r/rss/edition_space/~4/lNpVH39eh3U" height="1" width="1" alt=""/&gt;</description>
+      <pubDate>Tue, 02 Dec 2008 12:52:24 EST</pubDate>
+      <feedburner:origLink>http://edition.cnn.com/2008/TECH/space/12/02/planetsalign.irpt/index.html?eref=edition_space</feedburner:origLink>
+    </item>
+    <item>
+      <title>Inspiration for 'Contact' still listening</title>
+      <guid isPermaLink="false">http://edition.cnn.com/2008/TECH/space/11/26/aliens.tarter/index.html?eref=edition_space</guid>
+      <link>http://rss.cnn.com/~r/rss/edition_space/~3/84C0ckrT5D4/index.html</link>
+      <description>From a remote valley in Northern California, Jill Tarter is listening to the universe.&lt;img src="http://feeds.feedburner.com/~r/rss/edition_space/~4/84C0ckrT5D4" height="1" width="1" alt=""/&gt;</description>
+      <pubDate>Wed, 26 Nov 2008 12:02:33 EST</pubDate>
+      <feedburner:origLink>http://edition.cnn.com/2008/TECH/space/11/26/aliens.tarter/index.html?eref=edition_space</feedburner:origLink>
+    </item>
+    <item>
+      <title>Indian lunar orbiter hit by heat rise</title>
+      <guid isPermaLink="false">http://edition.cnn.com/2008/TECH/space/11/26/india.moon.probe/index.html?eref=edition_space</guid>
+      <link>http://rss.cnn.com/~r/rss/edition_space/~3/utoHWQBr1hc/index.html</link>
+      <description>Scientists have switched off several on-board instruments to halt rising temperatures inside India's first unmanned lunar spacecraft.&lt;img src="http://feeds.feedburner.com/~r/rss/edition_space/~4/utoHWQBr1hc" height="1" width="1" alt=""/&gt;</description>
+      <pubDate>Wed, 26 Nov 2008 07:26:44 EST</pubDate>
+      <feedburner:origLink>http://edition.cnn.com/2008/TECH/space/11/26/india.moon.probe/index.html?eref=edition_space</feedburner:origLink>
+    </item>
+  </channel>
+</rss>

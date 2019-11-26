@@ -1,0 +1,23 @@
+
+{% for item in all_news -%}
+Feed: {{ item['feed_title']}}
+
+Title: {{item['title']}}
+
+Date: {{item['date']}}
+Link: {{item['link']}}
+
+{% if item['img_title'] %}{% for title in item['img_title'] -%}
+{% if title %}[image {{loop.index+1}}: {{title}}]
+{% endif -%}{% endfor %}{% endif -%}
+{{item['text']}}
+
+Links:
+[1]: {{item['link']}} (link to the article)
+
+{% if item['img_link'] %}{% for link in item['img_link'] -%}
+{% if link|length %}[{{loop.index+1}}]: {{link}}{% else %}[{{loop.index+1}}]: Missed link
+{% endif %}
+{% endfor %}
+{% endif -%}
+{% endfor %}
