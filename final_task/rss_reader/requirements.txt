@@ -1,0 +1,4 @@
+html2text
+dateutil
+jinja2
+fpdf
