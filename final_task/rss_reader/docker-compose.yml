@@ -1,0 +1,29 @@
+version: '3.7'
+
+services:
+
+  flask:
+    build: .
+    restart: always
+    container_name: flask_app
+    ports:
+      - 5000:5000
+    volumes:
+      - .:/rss_reader_app
+    # env_file: 
+    #   - ./.env.dev
+    depends_on: 
+      - db
+    links: 
+      - db
+
+  db:
+    image: postgres:12.1-alpine
+    restart: always
+    ports:
+      - 5432:5432
+    volumes: 
+      - 'pg_data:/var/lib/postgresql/data'
+
+volumes: 
+  pg_data:

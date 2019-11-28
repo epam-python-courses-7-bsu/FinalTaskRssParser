@@ -1,0 +1,19 @@
+FROM python:3.8.0-slim
+
+WORKDIR /rss_reader_app
+
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# install psycopg2 dependencies
+RUN apt update \
+    && apt install -y libpq-dev gcc python3-dev
+
+COPY ./requirements.txt /rss_reader_app/requirements.txt
+RUN pip install -r requirements.txt
+
+# copy project
+COPY . /rss_reader_app
+
+CMD [ "flask", "run" , "--host=0.0.0.0"]

@@ -1,0 +1,10 @@
+beautifulsoup4==4.8.1
+colored==1.4.0
+dominate==2.4.0
+feedparser==5.2.1
+requests==2.22.0
+urllib3==1.25.6
+xhtml2pdf==0.2.3
+argparse==1.4.0
+psycopg2==2.8.4
+flask==1.1.1

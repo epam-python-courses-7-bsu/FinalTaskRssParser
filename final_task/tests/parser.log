@@ -1,0 +1,20 @@
+ERROR    [2019-11-27 01:01:27,452] cannot unpack non-iterable NoneType object
+DEBUG    [2019-11-27 01:01:27,453] Title: item_title
+DEBUG    [2019-11-27 01:01:27,453] Date: item_date
+DEBUG    [2019-11-27 01:01:27,453] Link: item_link
+DEBUG    [2019-11-27 01:01:27,454] Description: item_description
+DEBUG    [2019-11-27 01:01:27,454] Links:
+[1]: item_link(link)
+[2]: media_link_url
+
+ERROR    [2019-11-27 01:01:27,659] cannot unpack non-iterable NoneType object
+DEBUG    [2019-11-27 01:01:27,660] Title: item_title
+DEBUG    [2019-11-27 01:01:27,660] Date: item_date
+DEBUG    [2019-11-27 01:01:27,661] Link: item_link
+DEBUG    [2019-11-27 01:01:27,661] Description: item_description
+DEBUG    [2019-11-27 01:01:27,662] Links:
+[1]: item_link(link)
+[2]: media_link_url
+
+ERROR    [2019-11-27 01:01:27,884] cannot unpack non-iterable NoneType object
+ERROR    [2019-11-27 01:03:26,385] cannot unpack non-iterable NoneType object

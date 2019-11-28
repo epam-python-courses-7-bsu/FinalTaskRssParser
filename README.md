@@ -31,6 +31,3 @@ Congrats! You have successfully forked our repository.
 3. Pull request which have any other name format, or invalid e-mail  *will be ignored completely until you fix it*. So make sure you specified correct e-mail.  
 4. In pull request description specify your current iteration. You also can add there any other info you want us to know before we start code review.  
 5. *Pull request must NOT contain any .pyc files, any virtual environment files/folders, any IDE technical files*.
-
-
-

@@ -1,0 +1,6 @@
+__pycache__/
+.vscode/
+final_task/rss_reader/parser.log
+final_task/rss_reader/client/parser.log
+final_task/rss_reader/client/__pycache__/
+final_task/env/
