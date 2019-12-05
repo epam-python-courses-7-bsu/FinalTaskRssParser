@@ -1,11 +1,15 @@
+import os
+import sys
 import argparse
 import unittest
 from unittest.mock import patch, call
 
-from parser import check_digit, check_positive
+sys.path.insert(1, os.path.abspath(os.path.dirname(os.path.dirname(__file__)) + '/rss_reader'))  # noqa #402
+
+from rss_parser import check_digit, check_positive
 
 
-class TestParser(unittest.TestCase):
+class TestRssParser(unittest.TestCase):
 
     def test_check_digit(self):
         self.assertEqual(check_digit('5'), '5')
@@ -16,7 +20,7 @@ class TestParser(unittest.TestCase):
     def test_check_positive(self):
         self.assertEqual(check_positive('5'), 5)
         self.assertRaises(argparse.ArgumentTypeError, check_positive, '-5')
-        with patch('parser.check_digit') as mocked_check:
+        with patch('rss_parser.check_digit') as mocked_check:
             check_positive('100')
             mocked_check.assert_called_with('100')
 

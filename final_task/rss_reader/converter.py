@@ -1,13 +1,12 @@
-import weasyprint
+import os
+import sys
 import logging
 import pkg_resources
 
+import weasyprint
 from jinja2 import Environment, FileSystemLoader
 
 from exceptions import NoDataToConvertError
-
-
-STATIC_PATH = pkg_resources.resource_filename('rss_reader', 'static/')
 
 
 def converter(news_articles, path_to_html, path_to_pdf):
@@ -23,9 +22,9 @@ def converter(news_articles, path_to_html, path_to_pdf):
 
 def convert_to_html(news_articles):
     """convert news_articles to HTML"""
-    file_loader = FileSystemLoader(f'{STATIC_PATH}')
+    file_loader = FileSystemLoader(os.path.abspath(os.path.dirname(__file__)) + '/templates/')
     env = Environment(loader=file_loader)
-    template = env.get_template('template.html')
+    template = env.get_template(os.path.basename('template.html'))
     if news_articles:
         output = template.render(news_articles=news_articles)
         return output

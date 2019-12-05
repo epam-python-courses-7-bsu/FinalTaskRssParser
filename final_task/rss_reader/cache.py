@@ -2,6 +2,7 @@ import pickle
 import logging
 from os import path, makedirs
 from dateutil.parser import parse
+import time
 
 from exceptions import CacheNotFoundError
 
@@ -40,9 +41,8 @@ def read_cache(date, url, limit):
         else:
             # get news only for these url and date
             if cache.get(url):
-                for article in cache[url]:
-                    if len(news_articles) == limit:
-                        break
+                list_of_articles = list(cache[url])[:limit]
+                for article in list_of_articles:
                     news_articles.append(article)
             else:
                 raise CacheNotFoundError

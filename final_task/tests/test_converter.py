@@ -1,7 +1,11 @@
+import os
+import sys
 import unittest
 from unittest.mock import patch, call
 
-import exceptions
+sys.path.insert(1, os.path.abspath(os.path.dirname(os.path.dirname(__file__)) + '/rss_reader'))  # noqa #402
+
+from exceptions import NoDataToConvertError
 from news_articles import NewsArticle
 from converter import converter, convert_to_html, save_html, save_pdf
 
@@ -42,7 +46,7 @@ class TestConverter(unittest.TestCase):
                 mocked_save_pdf.assert_called_with(mocked_convert_to_html(), self.path_to_pdf)
 
     def test_convert_to_html(self):
-        self.assertRaises(exceptions.NoDataToConvertError, convert_to_html, [])
+        self.assertRaises(NoDataToConvertError, convert_to_html, [])
         with patch('converter.Environment.get_template') as mocked_get_template:
             convert_to_html(self.news_articles)
             mocked_get_template.assert_called_with('template.html')

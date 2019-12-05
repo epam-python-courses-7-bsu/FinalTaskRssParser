@@ -1,8 +1,12 @@
+import os
+import sys
 import json
 import unittest
 from unittest.mock import patch, call
 
-import exceptions
+sys.path.insert(1, os.path.abspath(os.path.dirname(os.path.dirname(__file__)) + '/rss_reader'))  # noqa #402
+
+from exceptions import WrongResponseTypeError
 from rss_reader import go_for_rss, check_response, output_format, print_result
 from news_articles import NewsArticle
 
@@ -30,9 +34,9 @@ class TestRssReader(unittest.TestCase):
             self.headers['Content-Type'] = type_
             self.assertEqual(check_response(self), self)
         self.headers['Content-Type'] = 'AbraCadabra'
-        self.assertRaises(exceptions.WrongResponseTypeError, check_response, self)
+        self.assertRaises(WrongResponseTypeError, check_response, self)
         self.headers['Content-Type'] = ''
-        self.assertRaises(exceptions.WrongResponseTypeError, check_response, self)
+        self.assertRaises(WrongResponseTypeError, check_response, self)
 
     def test_output_format(self):
         output_format_result = list(output_format([self.news_article_1], True))

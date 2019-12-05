@@ -1,7 +1,11 @@
+import os
+import sys
 import unittest
 from unittest.mock import patch, call
 
-import exceptions
+sys.path.insert(1, os.path.abspath(os.path.dirname(os.path.dirname(__file__)) + '/rss_reader'))  # noqa #402
+
+from exceptions import CacheNotFoundError
 from news_articles import NewsArticle
 from cache import format_cache, update_cache, read_from_file, read_cache, write_to_file, save_cache
 
@@ -64,13 +68,13 @@ class TestCache(unittest.TestCase):
                 read_cache(self.date, self.url, limit=100)
                 read_cache(self.date, 'ALL', limit=100)
             # if provided wrong source
-            self.assertRaises(exceptions.CacheNotFoundError, read_cache, self.date, 'wrong source', limit=100)
+            self.assertRaises(CacheNotFoundError, read_cache, self.date, 'wrong source', limit=100)
             # if no elem in cache
             mocked_read.return_value = None
-            self.assertRaises(exceptions.CacheNotFoundError, read_cache, self.date, 'ALL', limit=100)
+            self.assertRaises(CacheNotFoundError, read_cache, self.date, 'ALL', limit=100)
 
     def test_read_from_file(self):
-        test_file_path = f'cache/{self.date}.cache'
+        test_file_path = f'/tmp/rss_reader/cache/{self.date}.cache'
         with patch('builtins.open') as file_mock:
             with patch('pickle.load') as mocked_load:
                 read_from_file(self.date)
@@ -78,7 +82,7 @@ class TestCache(unittest.TestCase):
                 mocked_load.assert_called_with(file_mock().__enter__())
 
     def test_write_to_file(self):
-        test_file_path = f'cache/{self.date}.cache'
+        test_file_path = f'/tmp/rss_reader/cache/{self.date}.cache'
         with patch('builtins.open') as file_mock:
             with patch('pickle.dump') as mocked_dump:
                 write_to_file(self.cache, self.date)
