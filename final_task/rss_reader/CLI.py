@@ -4,6 +4,7 @@ import argparse as arp
 def parse():
     """Parsing arguments from command line"""
     parser = arp.ArgumentParser("RSS parser")
+    parser.add_argument("-c", "--colorize", help='Colorizes output if this parameter provided', action='store_true')
     parser.add_argument("-V", "--version", help='Print version info', action='store_true')
     parser.add_argument("--json", help='Prints result into JSON in stdout', action='store_true')
     parser.add_argument("-v", "--verbose", help='Outputs verbose status messages', action='store_true')

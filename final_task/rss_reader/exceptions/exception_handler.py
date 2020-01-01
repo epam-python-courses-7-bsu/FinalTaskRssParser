@@ -1,6 +1,3 @@
-import feedparser
-
-
 class ExceptionHandler(Exception):
     """Handles all exception that I provided"""
 
