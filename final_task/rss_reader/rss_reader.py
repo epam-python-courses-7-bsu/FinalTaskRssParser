@@ -1,9 +1,12 @@
+import CLI
+from data import RSSDataHandler
+from html import unescape
+from Logger import Logger
 import os
-import FinalTaskRssParser.final_task.rss_reader.CLI as CLI
-from FinalTaskRssParser.final_task.rss_reader.rss_parser import rss_handler
-from FinalTaskRssParser.final_task.rss_reader.logs import Logger
-from FinalTaskRssParser.final_task.rss_reader.data.rss_data_handler import RSSDataHandler
-from FinalTaskRssParser.final_task.rss_reader.output_handler.output import OutputHandler
+from output_handler import OutputHandler
+from pprint import pprint
+from rss_parser import rss_handler
+import sys
 
 
 def main():
@@ -15,6 +18,7 @@ def main():
     # Prints version of rss_reader and directory where it's placed
     if cl_args.get('version'):
         print(f"\nRSS-Reader {version}" + " from " + str(os.getcwd()))
+        sys.exit()
 
     # Allow logger to print logs to command-line
     Logger().set_stream_logging(cl_args.get('verbose'))
@@ -24,14 +28,14 @@ def main():
 
     data = RSSDataHandler(*rss_handler(cl_args.get('source')), cl_args.get('json'), cl_args.get('limit'))
 
-    if not cl_args.get('json'):
-        output = OutputHandler(data)
-        for text in output.to_readable():
-            print(text)
+    output = OutputHandler(data, cl_args.get('colorize'))
+    if cl_args.get('json'):
+        pprint(unescape(output.format_to_json_string()))
     else:
-        print(data.json_data)
+        for text in output.format_news():
+            print(text, end="\n\n")
 
 
 if __name__ == '__main__':
-    version = '0.1'     # Version of the program
+    version = '0.2'     # Version of the program
     main()

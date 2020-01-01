@@ -1,11 +1,11 @@
-from FinalTaskRssParser.final_task.rss_reader.logs import Logger
-import feedparser
+from Logger import Logger
 from feedparser import parse
+import feedparser
 
 
 def rss_handler(url: str) -> tuple or None:
     """Download RSS from the web"""
-    logger = Logger().get_logger("rss_parser")
+    logger = Logger().get_logger(__name__)
     logger.info("Attempt to follow the link...")
 
     try:

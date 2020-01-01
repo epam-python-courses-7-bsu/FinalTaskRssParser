@@ -1,16 +1,16 @@
+from exceptions import ExceptionHandler
+from Logger import Logger
 import re
-import json
-from FinalTaskRssParser.final_task.rss_reader.data.RSSFeed import Feed
-from FinalTaskRssParser.final_task.rss_reader.data.RSSItem import Item
-from FinalTaskRssParser.final_task.exceptions.exception_handler import ExceptionHandler
+from .RSSFeed import Feed
+from .RSSItem import Item
 
 
 class RSSDataHandler:
     """
-    Get's data from rss_parser and converts it into needed format
+        Get's data from rss_parser and converts it into needed format
     """
 
-    def __init__(self, feed, entries, json_flag, limit):
+    def __init__(self, feed, entries, is_json_generated, limit):
         self.limit = limit
         self.feed = Feed(feed.get("title"), description_handler(feed.get("description")))
         self.entries = list()
@@ -24,32 +24,28 @@ class RSSDataHandler:
                      element.get("published")
                      ))
 
-        if json_flag:
-            self.json_data = self.to_json()
-        else:
-            self.json_data = None
+    def create_data_dict(self):
+        logger = Logger().get_logger(__name__)
+        logger.info("Converting to JSON...")
+        data_dict = dict()
 
-    def to_json(self):
-        data = dict()
-
-        data['feed'] = {
+        data_dict['feed'] = {
             "title": self.feed.title,
             "description": self.feed.description,
         }
-        data['items'] = list()
+        data_dict['items'] = list()
 
-        for i, element in enumerate(self.entries):
-            data['items'].append({'title': element.title})
-            data['items'].append({'link': element.link})
+        for element in self.entries:
+            data_dict['items'].append({'title': element.title})
+            data_dict['items'].append({'link': element.link})
             for links in element.image_links:
-                data['items'].append({'image_links': links.get('href')})
-            data['items'].append({'description': element.description})
-            data['items'].append({'pub_date': element.pub_date})
+                data_dict['items'].append({'image_links': links.get('href')})
+            data_dict['items'].append({'description': element.description})
+            data_dict['items'].append({'pub_date': element.pub_date})
 
-            if i + 1 == self.limit:
-                break
+        data_dict['items'] = data_dict['items'][:self.limit]
 
-        return json.dumps(data, indent=2)
+        return data_dict
 
     def get_entries(self) -> list:
         if not self.limit:
