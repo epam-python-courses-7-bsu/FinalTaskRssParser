@@ -1,5 +1,11 @@
-class ExceptionHandler(Exception):
-    """Handles all exception that I provided"""
+import feedparser
 
-    def __init__(self, exc):
-        self.exc = exc
+
+class ContentTypeException(Exception):
+    # raise feedparser.NonXMLContentType
+    pass
+
+class LimitException(Exception):
+    pass
+
+

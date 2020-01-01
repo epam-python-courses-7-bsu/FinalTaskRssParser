@@ -17,7 +17,7 @@ def main():
 
     # Prints version of rss_reader and directory where it's placed
     if cl_args.get('version'):
-        print(f"\nRSS-Reader {version}" + " from " + str(os.getcwd()))
+        print(f"RSS-Reader {version}" + " from " + str(os.getcwd()))
         sys.exit()
 
     # Allow logger to print logs to command-line

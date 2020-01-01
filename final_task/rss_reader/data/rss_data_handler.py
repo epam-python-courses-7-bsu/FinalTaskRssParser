@@ -1,4 +1,4 @@
-from exceptions import ExceptionHandler
+import exceptions
 from Logger import Logger
 import re
 from .RSSFeed import Feed
@@ -53,7 +53,7 @@ class RSSDataHandler:
         elif self.limit > 0:
             out = self.entries[:self.limit]
         else:
-            raise ExceptionHandler
+            raise exceptions.LimitException
         return out
 
 

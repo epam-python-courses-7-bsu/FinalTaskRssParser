@@ -1,3 +1,4 @@
+from exceptions import *
 from Logger import Logger
 from feedparser import parse
 import feedparser
@@ -12,9 +13,9 @@ def rss_handler(url: str) -> tuple or None:
         rss_data = parse(url)
         if rss_data.bozo:
             logger.error("Parsing failed...")
-            raise rss_data.bozo_exception
+            raise ContentTypeException# rss_data.bozo_exception
 
-    except feedparser.NonXMLContentType:
+    except ContentTypeException:
         logger.error("Parsing failed...\n"
                     "Can't parse RSS from this site:\n"
                     "Feeds isn't well-formed")
