@@ -32,7 +32,7 @@ def main():
 
         if arg_parser_args.date:
             handler.option_date(str(arg_parser_args.date), arg_parser_args.json,
-                                arg_parser_args.to_html, arg_parser_args.to_pdf
+                                arg_parser_args.to_html, arg_parser_args.to_pdf, arg_parser_args.source
                                 )
             return
         if arg_parser_args.json:

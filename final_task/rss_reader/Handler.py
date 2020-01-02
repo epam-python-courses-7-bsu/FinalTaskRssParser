@@ -106,7 +106,7 @@ class Handler:
             urllib.request.urlretrieve(img_url, f"images/{img_name}.jpg")
 
     @logging_decorator
-    def option_date(self, date: str, do_json: bool, html_path: str = "", pdf_path: str = ""):
+    def option_date(self, date: str, do_json: bool, html_path: str = "", pdf_path: str = "", source: str = ""):
         """case when command line argument --date is selected add entries from cache.json into daily_news: list
          if they have date that is equal to user's --date DATE and then raise an exception in case when such articles
          don't exist or print to console or to files in html or pdf formats"""
@@ -120,8 +120,10 @@ class Handler:
             raise RSSReaderException("Error. You have no cache. Try to run app with internet-connection")
 
         # list of entries with the same date as user's --date DATE
-        daily_news = [entry for entry in entries if entry["DateInt"] == date]
-
+        if source:
+            daily_news = [entry for entry in entries if entry["DateInt"] == date and entry["Source"] == source]
+        else:
+            daily_news = [entry for entry in entries if entry["DateInt"] == date]
         if not self.limit:
             self.limit = len(daily_news)
         if not daily_news:
@@ -177,7 +179,8 @@ class Handler:
             "Date": entry.date,
             "Link": entry.article_link,
             "Summary": entry.summary,
-            "Links": entry.links
+            "Links": entry.links,
+            "Source": self.source
         }
 
     @logging_decorator
