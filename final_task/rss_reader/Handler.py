@@ -91,10 +91,7 @@ class Handler:
                     self.save_image(img_l, self.correct_title(entry_dict["Title"]) + str(num_img_l))
 
         with open("cache.json", "w") as cache:
-            try:
-                json.dump(entries, cache, indent=2, ensure_ascii=False)
-            except UnicodeEncodeError:
-                json.dump(entries, cache, indent=2)
+            json.dump(entries, cache, indent=2)
 
     @logging_decorator
     def save_image(self, img_url: str, img_name: str) -> None:
