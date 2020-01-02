@@ -27,7 +27,7 @@ class Handler:
                 self.parsed.feed.title, ent.title, ent.published, ent.link, ent.summary,
                 tuple([link["href"] for link in ent.links]), ent.published_parsed)
             )
-        if not len(self.entries):
+        if not len(self.entries) and self.source:
             raise RSSReaderException("Error, no news. Check correctness of the url or your internet-connection")
         logging.info("Handler object created")
 
@@ -41,7 +41,7 @@ class Handler:
     def option_html(self, path: str) -> None:
         """case when command line argument --to-html is selected"""
         for entry in self.entries:
-            self.write_cache(self.convert_Entry_to_dict(entry))
+            self.write_cache(self.convert_entry_to_dict(entry))
         self.write_entries_to_html(path)
         print("HTML document created successfully")
 
@@ -49,7 +49,7 @@ class Handler:
     def option_pdf(self, path: str) -> None:
         """case when command line argument --to-pdf is selected"""
         for entry in self.entries:
-            self.write_cache(self.convert_Entry_to_dict(entry))
+            self.write_cache(self.convert_entry_to_dict(entry))
         self.write_entries_to_pdf(path)
         print("PDF document created successfully")
 
@@ -57,14 +57,14 @@ class Handler:
     def option_json(self) -> None:
         """case when command line argument --json is selected"""
         for entry in self.entries:
-            self.write_cache(self.convert_Entry_to_dict(entry))
-            self.print_to_json(self.convert_Entry_to_dict(entry))
+            self.write_cache(self.convert_entry_to_dict(entry))
+            self.print_to_json(self.convert_entry_to_dict(entry))
 
     @logging_decorator
     def option_default(self) -> None:
         """case when no one of optional command line attributes is selected"""
         for entry in self.entries:
-            self.write_cache(self.convert_Entry_to_dict(entry))
+            self.write_cache(self.convert_entry_to_dict(entry))
             self.print_entry(entry)
 
     @logging_decorator
@@ -91,7 +91,10 @@ class Handler:
                     self.save_image(img_l, self.correct_title(entry_dict["Title"]) + str(num_img_l))
 
         with open("cache.json", "w") as cache:
-            json.dump(entries, cache, indent=2)
+            try:
+                json.dump(entries, cache, indent=2, ensure_ascii=False)
+            except UnicodeEncodeError:
+                json.dump(entries, cache, indent=2)
 
     @logging_decorator
     def save_image(self, img_url: str, img_name: str) -> None:
@@ -121,6 +124,9 @@ class Handler:
 
         # list of entries with the same date as user's --date DATE
         daily_news = [entry for entry in entries if entry["DateInt"] == date]
+
+        if not self.limit:
+            self.limit = len(daily_news)
         if not daily_news:
             raise RSSReaderException("Error. News aren't found")
         # different cases of command line arguments
@@ -156,14 +162,21 @@ class Handler:
 
     @logging_decorator
     def print_to_json(self, obj: dict) -> None:
-        print(json.dumps(obj, indent=2))
+        try:
+            print(json.dumps(obj, indent=2, ensure_ascii=False))
+        except UnicodeEncodeError:
+            print(json.dumps(obj, indent=2))
 
     @logging_decorator
-    def convert_Entry_to_dict(self, entry: Entry) -> dict:
+    def convert_entry_to_dict(self, entry: Entry) -> dict:
         return {
             "Feed": entry.feed,
             "Title": entry.title,
-            "DateInt": str(entry.publish_year) + str(entry.publish_month) + str(entry.publish_day),
+            "DateInt": str(entry.publish_year)
+                       +
+                (str(entry.publish_month) if len(str(entry.publish_month)) == 2 else '0'+str(entry.publish_month))
+                       +
+                (str(entry.publish_day) if len(str(entry.publish_day)) == 2 else '0'+str(entry.publish_day)),
             "Date": entry.date,
             "Link": entry.article_link,
             "Summary": entry.summary,
