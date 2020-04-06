@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from typing import List
-from colorama import init as init_color, Fore, Style
+from colorama import Fore, Style
 import tools
 
 
@@ -14,7 +14,6 @@ class Item:
 
     def __repr__(self):
         if tools.colorize:
-            init_color()
             str_item = f'{Style.BRIGHT + Fore.LIGHTBLUE_EX}Title: {Style.NORMAL + Fore.LIGHTBLUE_EX + self.title}' \
                        f'{Style.BRIGHT + Fore.LIGHTMAGENTA_EX}\nDate: ' \
                        f'{Style.NORMAL + Fore.LIGHTMAGENTA_EX + self.date}' \

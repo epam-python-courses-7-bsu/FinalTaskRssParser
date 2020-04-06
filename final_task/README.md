@@ -15,12 +15,12 @@ optional arguments:
  - -h, --help            *show this help message and exit*  
  - --version            *Print version info*  
  - --json            *Print result as JSON in stdout*  
- - --verbose            *Outputs verbose status messages*  
+ - --verbose            *Output verbose status messages*  
  - --limit LIMIT            *Limit news topics if this parameter provided*  
  - --date DATE            *News from the specified day will be printed out. Format: YYYYMMDD*  
  - --to-pdf PATH            *Create PDF file with news*  
  - --to-html PATH            *Create HTML file with news*  
- - --colorize            *Print news in colorized mode*  
+ - --colorize            *Print news in colorized mode (not for json mode)*  
 
 It is mandatory to specify date or/and source.  
 If both are specified, then news will be searched by date and by source.  
@@ -51,7 +51,7 @@ When using the --date argument, news is searched by specified date from *news.da
 ### How to install application
 ---------------------------------------------------------------------------
  - To install application you should have setuptools. Open cmd and enter 'pip install -U setuptools'.  
- - Using 'pyhton setup.py install' in cmd to install application.  
+ - Use 'python setup.py install' in cmd to install application.  
  - You are now ready to run the application. Use 'rss-reader [arguments]' to run it.  
  
 Warning: If path to rss-reader is not in Path variable, use full path to file at running.  

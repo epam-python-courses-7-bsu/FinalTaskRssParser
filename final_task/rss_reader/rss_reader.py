@@ -8,6 +8,7 @@ from item_group import get_item_group_from_feedparser
 from log import turn_on_logging
 from news_storage import save_news, get_news_by_date
 from datetime import datetime
+from colorama import init as init_color
 
 
 STORAGE_FILE = 'news.data'
@@ -25,13 +26,13 @@ def create_arg_parser():
     arg_parser.add_argument('source', type=str, help='RSS URL', nargs='?')
     arg_parser.add_argument('--version', action='version', help='Print version info', version='%(prog)s v' + VERSION)
     arg_parser.add_argument('--json', action='store_true', help='Print result as JSON in stdout')
-    arg_parser.add_argument('--verbose', action='store_true', help='Outputs verbose status messages')
+    arg_parser.add_argument('--verbose', action='store_true', help='Output verbose status messages')
     arg_parser.add_argument('--limit', type=int, default=0, help='Limit news topics if this parameter provided')
     arg_parser.add_argument('--date', type=lambda d: datetime.strptime(d, '%Y%m%d'),
                             help='News from the specified day will be printed out. Format: YYYYMMDD')
     arg_parser.add_argument('--to-pdf', type=str, help='Create PDF file with news', metavar='PATH')
     arg_parser.add_argument('--to-html', type=str, help='Create HTML file with news', metavar='PATH')
-    arg_parser.add_argument('--colorize', action='store_true', help='Print news in colorized mode')
+    arg_parser.add_argument('--colorize', action='store_true', help='Print news in colorized mode (not for json mode)')
 
     return arg_parser
 
@@ -116,6 +117,7 @@ def main():
         arg_parser.print_help()
     elif not args.limit or args.limit > 0:
         tools.colorize = args.colorize
+        init_color()
 
         if args.date:
             work_with_local_storage(args)

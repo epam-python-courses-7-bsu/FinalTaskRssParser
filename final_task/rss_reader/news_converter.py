@@ -1,7 +1,7 @@
 from json import dumps as jdumps
 from dataclasses import asdict
 from fpdf import FPDF
-from os import remove
+from os import remove, path
 import imghdr
 import requests
 
@@ -112,9 +112,12 @@ def news2pdf(item_groups, file_path):
     pdf = FPDF()
     pdf.add_page()
 
-    pdf.add_font('DejaVu', '', 'fonts/DejaVuSansCondensed.ttf', uni=True)
-    pdf.add_font('DejaVuBold', '', 'fonts/DejaVuSansCondensed-Bold.ttf', uni=True)
-    pdf.add_font('DejaVuOblique', '', 'fonts/DejaVuSansCondensed-Oblique.ttf', uni=True)
+    current_dir = path.dirname(path.abspath(__file__))
+    fonts_dir = current_dir[:current_dir.find('EGG-INFO')] + path.join('rss_reader', 'fonts')
+
+    pdf.add_font('DejaVu', '', path.join(fonts_dir, 'DejaVuSansCondensed.ttf'), uni=True)
+    pdf.add_font('DejaVuBold', '', path.join(fonts_dir, 'DejaVuSansCondensed-Bold.ttf'), uni=True)
+    pdf.add_font('DejaVuOblique', '', path.join(fonts_dir, 'DejaVuSansCondensed-Oblique.ttf'), uni=True)
 
     num = 0
 

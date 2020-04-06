@@ -36,7 +36,10 @@ def get_item_group_from_feedparser(parser):
 
     logging.info('Loop for retrieving items.')
     for item in parser.entries:
-        text, img_links = format_description(item.description)
+        try:
+            text, img_links = format_description(item.description)
+        except AttributeError:
+            continue
 
         if text:
             new_item = Item(
