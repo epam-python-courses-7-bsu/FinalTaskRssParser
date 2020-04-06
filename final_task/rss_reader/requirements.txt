@@ -1,0 +1,5 @@
+feedparser==5.2.1
+bs4==0.0.1
+requests==2.22.0
+fpdf==1.7.2
+colorama==0.4.1
